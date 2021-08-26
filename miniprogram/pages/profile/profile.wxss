@@ -1,0 +1,13 @@
+/* pages/profile/profile.wxss */
+page {
+  height: 100%;
+}
+
+.indicator {
+  position: absolute;
+  height: 16rpx;
+  background: #d1d8f7;
+  width: 80rpx;
+  top: 20rpx;
+  z-index: -1;
+}

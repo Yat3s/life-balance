@@ -1,0 +1,76 @@
+/* pages/activity/activity.wxss */
+
+.header-text {
+  font-size: 14pt;
+}
+
+.section-title {
+  font-size: 14pt;
+  font-weight: bold;
+  color: #1C2D48;
+  padding-left: var(--inset);
+  padding-right: var(--inset);
+}
+
+.popular-item {
+  border-radius: 24rpx;
+}
+
+.category-item-selected {
+  border: 6rpx solid red;
+}
+
+.activity-filter-highlight {
+  color: #1C2D48;
+  font-size: 10pt;
+  font-weight: bold;
+  background: #e3ebfc;
+  border-radius: 24rpx;
+  padding: 8rpx 24rpx;
+}
+
+.activity-filter {
+  color: gray;
+  font-size: 10pt;
+  padding: 8rpx 24rpx;
+}
+
+.category-item {
+  border-radius: 24rpx;
+  width: 180rpx;
+  flex-grow: 0;
+  flex-shrink: 0;
+  position: relative;
+  padding: 20rpx;
+  margin-right: 24rpx;
+  color: white;
+}
+
+.shine {
+  background: #f6f7f8;
+  background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+  background-repeat: no-repeat;
+  background-size: 800px 104px;
+  display: inline-block;
+  position: relative;
+
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeholderShimmer;
+  animation-timing-function: linear;
+}
+
+@keyframes placeholderShimmer {
+  0% {
+    background-position: -468px 0;
+  }
+
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+.category-accessory {
+  position: absolute;
+}

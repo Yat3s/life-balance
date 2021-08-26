@@ -1,0 +1,48 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "Activity Detail",
+          "pathName": "pages/activity/activitydetail/activitydetail",
+          "query": "id=8937eaa961164cb304809af34183df06",
+          "scene": null
+        },
+        {
+          "name": "draftactivity",
+          "pathName": "pages/activity/draftactivity/draftactivity",
+          "query": "type=new",
+          "scene": null
+        },
+        {
+          "name": "userinfo",
+          "pathName": "pages/profile/userinfo/userinfo",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "Edit Activity",
+          "pathName": "pages/activity/draftactivity/draftactivity",
+          "query": "type=edit&id=8937eaa961164cb304809af34183df06",
+          "scene": null
+        },
+        {
+          "name": "Auth",
+          "pathName": "pages/auth/auth",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

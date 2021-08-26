@@ -1,0 +1,7 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "activity": "/pages/activity/activity",
+    "profile": "/pages/profile/profile"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/activity/activity",
+    "pages/socialcircle/socialcircle",
+    "pages/profile/profile",
+    "pages/activity/activitydetail/activitydetail",
+    "pages/activity/draftactivity/draftactivity",
+    "pages/profile/userinfo/userinfo",
+    "pages/auth/auth"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "useExtendedLib": {
+    "weui": true
+  },
+  "usingComponents": {
+    "mp-navigation-bar": "weui-miniprogram/navigation-bar/navigation-bar",
+    "toolbar": "/colorui/components/toolbar"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于获取附近的活动信息"
+    }
+  }
+}

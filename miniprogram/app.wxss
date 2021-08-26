@@ -1,0 +1,68 @@
+/**app.wxss**/
+@import 'colorui/main.wxss';
+@import 'colorui/icon.wxss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+} 
+
+button {
+  background: initial;
+}
+
+button:focus{
+  outline: 0;
+}
+
+button::after{
+  border: none;
+}
+
+.bg-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.plr {
+  padding-left: var(--inset);
+  padding-right: var(--inset);
+}
+
+.title {
+  font-size: 20pt;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.single-line {
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  align-content: center;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+page {
+  background: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  /* Theme */
+  --primary: #4749A0;
+  --inset: 40rpx;
+}

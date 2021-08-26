@@ -1,0 +1,16 @@
+<!--miniprogram/pages/auth/auth.wxml-->
+
+
+<view style="height: 100vh" class="center">
+  <view style="width: 200rpx; height: 200rpx; border-radius: 50%; overflow: hidden;">
+    <open-data type="userAvatarUrl"></open-data>
+  </view>
+
+  <view class="margin-top-sm text-bold text-black text-lg">
+    <open-data type="userNickName"></open-data>
+  </view>
+
+  <button style="margin-top: 100rpx;" class="margin-top-lg bg-primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">授权登录</button>
+  <view class="text-sm margin-top-sm text-grey">为了保证活动安全，请授权完善个人信息</view>
+
+</view>

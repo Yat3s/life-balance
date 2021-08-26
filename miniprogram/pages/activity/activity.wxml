@@ -1,0 +1,77 @@
+<!-- Header -->
+<view style="height: {{toolbarHeight}}px;  width: 100%; z-index: 1;  margin-top: 100rpx;"
+  class="plr flex align-center justify-end">
+
+</view>
+
+<view class="plr header-text text-bold margin-bottom-lg">
+  <text class="cuIcon-locationfill"> {{city}}
+  </text>
+</view>
+
+<view class="plr" style="border-radius: 50%; border: 4rpx"></view>
+
+<!-- Categories -->
+<view class="flex align-center justify-between padding-right margin-top">
+  <view class="section-title">活动</view>
+
+  <view style="background: #8F97FD; border-radius: 16rpx; padding: 0rpx 16rpx; font-size: 9pt; height: 60rpx;"
+    bindtap="onClickDraftActivity" class="cu-btn text-bold text-white flex align-center">
+    <text style="font-size: 12pt" class="cuIcon-roundaddfill"></text>
+    <view class="margin-left-xs">发布活动</view>
+  </view>
+</view>
+
+<scroll-view class="" scroll-x="true">
+  <view class="flex plr padding-top-sm padding-bottom margin-top-sm">
+
+    <view wx:if="{{!categories}}" wx:key="nonthing" wx:for="{{3}}" style="border-radius: 16rpx;" class="margin-right bg-white padding-sm">
+      <view class="shine" style="width: 180rpx; height: 130rpx; border-radius: 12rpx;"></view>
+    </view>
+
+    <view bindtap="onCategorySelected" data-category="{{item}}"
+      class="category-item {{selectedCategory._id == item._id? 'category-item-selected shadow-blur' : ''}} "
+      style="background: {{item.accessory.bgColor}}; " wx:for="{{categories}}" wx:key="name">
+      <image class="category-accessory" src="../../images/{{item.accessory.iconRes}}" style="{{item.accessory.css}}"
+        mode="{{item.accessory.imgMode}}"></image>
+
+      <view style="position: relative; z-index: 1">
+        <view class="flex justify-end ">
+        </view>
+        <view class="text-bold margin-top-xs" style="font-size: 12pt">{{item.name}}</view>
+        <view class="" style="color: #f1f1f1; font-size: 8pt">{{item.count || 0}} 个活动</view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+
+
+<!-- Activities -->
+<view class="flex align-center justify-between padding-right margin-top plr">
+
+  <view bindtap="onSelectFilter" data-id="{{item.id}}" wx:for="{{activityFilters}}" wx:key="name"
+    class="{{selectedActivityFilterId == item.id ? 'activity-filter-highlight' : 'activity-filter'}}">{{item.name}}
+  </view>
+
+</view>
+
+<view class="margin-top">
+
+  <!-- Shimmer layout -->
+  <view wx:if="{{!activities}}" wx:key="nonthing" wx:for="{{3}}" style="margin: 0 var(--inset) 30rpx var(--inset); border-radius: 16rpx;"
+    class="bg-white padding">
+
+    <view class="flex">
+      <view class="shine" style="flex-grow: 0; flex-shrink: 0; width: 180rpx; height: 240rpx; border-radius: 12rpx;" />
+
+      <view style="" class="margin-left">
+        <view class="shine" style="width: 400rpx; height: 40rpx" />
+        <view class="shine margin-top-lg" style="width: 300rpx; height: 30rpx" />
+        <view class="shine margin-top-xs" style="width: 300rpx; height: 30rpx" />
+        <view class="shine margin-top-xs" style="width: 300rpx; height: 30rpx" />
+      </view>
+    </view>
+  </view>
+
+  <activityItem activity="{{item}}" wx:for="{{activities}}" wx:if="{{(selectedCategory._id == 'all' || selectedCategory._id == item.category) && ((selectedActivityFilterId == 'end' && item.ended) || (selectedActivityFilterId != 'end' && !item.ended))}}" wx:key="_id"></activityItem>
+</view>

@@ -1,0 +1,63 @@
+.cover {
+  width: 100%;
+  height: 800rpx;
+  position: fixed;
+  z-index: -1;
+  filter: brightness(0.6);
+}
+
+.content-container {
+  margin-top: 700rpx;
+  border-radius: 40rpx;
+  padding: 48rpx 40rpx 200rpx 40rpx;
+  background: white;
+}
+
+.section {
+  display: flex;
+  margin-top: 60rpx;
+}
+
+.title {
+  font-size: 12pt;
+  font-weight: bold;
+  color: black;
+}
+
+.desc-content {
+  font-size: 10pt;
+  color: grey;
+}
+
+.text-grey {
+  color: grey;
+}
+
+.desc-icon {
+  color: rgb(66, 66, 66);
+}
+
+.indicator {
+  background: #f1f1f1;
+  width: 12rpx;
+  border-radius: 12rpx;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.map {
+  height: 200rpx;
+  overflow: hidden;
+  border-radius: 12rpx;
+}
+
+.participant-indicator-progress {
+  height: 100%;
+  border-radius: 12rpx;
+}
+
+.participant-indicator {
+  flex: 1;
+  border-radius: 12rpx;
+  height: 12rpx;
+}

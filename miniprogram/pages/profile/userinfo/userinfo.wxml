@@ -1,0 +1,34 @@
+<toolbar isBack="{{true}}" bgColor="bg-blue" />
+<view>
+  <form bindsubmit="onUserInfoSubmit">
+    <view style="margin-top: 2rpx;" class="form-section">
+      <view class="form-section-title">生日</view>
+      <picker mode="date" bindchange="onBirthdayPicked">
+        <view class="{{birthday ? '' : 'unset'}} picker">{{birthday ? birthday : '未设置'}}</view>
+      </picker>
+    </view>
+
+    <view style="margin-top: 2rpx;" class="form-section">
+      <view class="form-section-title">家乡</view>
+      <picker mode="region" bindchange="onHometownPicked">
+        <view class="{{hometown ? '' : 'unset'}} picker">{{hometown ? hometown : '未设置'}}</view>
+      </picker>
+    </view>
+
+    <view style="margin-top: 2rpx;" class="form-section">
+      <view class="form-section-title">学校名称</view>
+      <input placeholder="学校名称" name="school"  value="{{school}}"></input>
+    </view>
+
+    <view style="margin-top: 2rpx;" class="form-section">
+      <view class="form-section-title">一句话介绍自己</view>
+      <input placeholder="30字以内" name="desc"  value="{{desc}}"></input>
+    </view>
+
+    <!-- Submit -->
+    <view style="margin-top: 100rpx;" class="flex justify-end">
+      <button form-type="submit" style="width: 200rpx; border-radius: 16rpx;" class="cu-btn bg-primary">提交</button>
+    </view>
+
+  </form>
+</view>

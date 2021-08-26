@@ -1,0 +1,27 @@
+/* miniprogram/pages/profile/userinfo/userinfo.wxss */
+
+.form-section {
+  padding: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+}
+
+.form-section input {
+  text-align: right;
+}
+
+.form-section-title {
+  font-size: 11pt;
+}
+
+.input-placeholder {
+  color: rgb(161, 166, 172);
+  font-size: 10pt;
+}
+
+.unset {
+  color: rgb(161, 166, 172);
+  font-size: 10pt;
+}

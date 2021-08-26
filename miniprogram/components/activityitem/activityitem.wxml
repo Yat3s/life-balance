@@ -1,0 +1,37 @@
+<view bindtap="onActivityItemClick" data-id="{{activity._id}}" class="activity-item bg-white shadow-lg">
+
+  <image class="activity-item-image" mode="aspectFill" src="{{activity.picture}}"></image>
+
+  <view class="margin-left">
+
+    <view class="activity-item-title single-line">{{activity.title}}</view>
+
+    <!-- tags -->
+    <view class="flex margin-top-xs">
+      <view wx:for="{{activity.tags}}" wx:for-item="tag" wx:key="tag" class="activity-item-tag">{{tag}}</view>
+    </view>
+
+    <!-- Start time -->
+    <view class="activity-item-desc margin-top">
+      <text class="cuIcon-timefill activity-item-desc-icon"></text>
+      <text class="margin-left-xs">{{activity.startDateStr}}</text>
+    </view>
+
+    <!-- Location -->
+    <view class="activity-item-desc">
+      <text class="cuIcon-locationfill activity-item-desc-icon"></text>
+      <text class="margin-left-xs single-line">{{activity.distanceStr}} {{activity.location.name}}</text>
+    </view>
+
+    <!-- Participant -->
+    <view class="activity-item-desc">
+      <text class="cuIcon-friendfill activity-item-desc-icon"></text>
+      <text class="margin-left-xs single-line">{{activity.participants && activity.participants.length ?
+        activity.participants.length : 0}} / {{activity.maxParticipant}} 人</text>
+    </view>
+
+  </view>
+
+  <view wx:if="{{!activity.published}}"  class="activity-item-waterprint">
+    审核中</view>
+</view>

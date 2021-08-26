@@ -1,0 +1,4 @@
+<!--pages/socialcircle/socialcircle.wxml-->
+<view style="height: 100vh" class="center text-lg text-bold">
+  Maintaining
+</view>
