@@ -1,134 +1,135 @@
-<view class="flex align-center plr"
-  style="position: fixed; height: {{toolbarHeight}}px; width: 100%; top: {{statusBarHeight}}px;">
-  <text bindtap="back" style="font-size: 16pt;" class="cuIcon-back text-black">
-  </text>
-</view>
+<view style="padding-bottom: 1000rpx">
+  <view class="flex align-center plr"
+    style="position: fixed; height: {{toolbarHeight}}px; width: 100%; top: {{statusBarHeight}}px;">
+    <text bindtap="back" style="font-size: 16pt;" class="cuIcon-back text-black">
+    </text>
+  </view>
 
-<view style="margin: 200rpx 40rpx; border-radius: 24rpx;" class="bg-white shadow-lg padding-lg">
-  <image class="margin-top-lg" src="../../../images/img_bg_activity.png" style="width: 100%;" mode="widthFix"></image>
-  <view class="text-bold text-black margin-top">创建你的活动</view>
+  <view style="margin: 200rpx 40rpx; border-radius: 24rpx;" class="bg-white shadow-lg padding-lg">
+    <image class="margin-top-lg" src="../../../images/img_bg_activity.png" style="width: 100%;" mode="widthFix"></image>
+    <view class="text-bold text-black margin-top">创建你的活动</view>
 
-  <view class="margin-top">
-    <form bindsubmit="onSubmit">
-      <!-- Title -->
-      <view class="section-title">活动标题*</view>
-      <input value="{{title}}" name="title" type="text" class="inp margin-top-xs" placeholder="限定 30 字"></input>
+    <view class="margin-top">
+      <form bindsubmit="onSubmit">
+        <!-- Title -->
+        <view class="section-title">活动标题*</view>
+        <input value="{{title}}" name="title" type="text" class="inp margin-top-xs" placeholder="限定 30 字"></input>
 
-      <!-- Time -->
-      <view class="section-title margin-top-lg">活动时间</view>
-      <view class="flex align-center justify-between margin-top-xs">
-        <view>
-          <view style="font-size: 8pt;" class="text-grey text-bold">开始</view>
-          <view class="flex">
-            <view class="picker margin-top-xs ">
-              <picker mode="date" bindchange="onStartDatePicked">
-                <view>{{startDateStr}}</view>
-              </picker>
+        <!-- Time -->
+        <view class="section-title margin-top-lg">活动时间</view>
+        <view class="flex align-center justify-between margin-top-xs">
+          <view>
+            <view style="font-size: 8pt;" class="text-grey text-bold">开始</view>
+            <view class="flex">
+              <view class="picker margin-top-xs ">
+                <picker mode="date" bindchange="onStartDatePicked">
+                  <view>{{startDateStr}}</view>
+                </picker>
+              </view>
+
+              <view style="" class="picker margin-top-xs margin-left-xs">
+                <picker mode="time" value="{{startTimeStr}}" bindchange="onStartTimePicked">
+                  <view>{{startTimeStr}}</view>
+                </picker>
+              </view>
             </view>
+          </view>
 
-            <view style="" class="picker margin-top-xs margin-left-xs">
-              <picker mode="time" value="{{startTimeStr}}" bindchange="onStartTimePicked">
-                <view>{{startTimeStr}}</view>
-              </picker>
+          <view>
+            <view style="font-size: 8pt;" class="text-grey text-bold">结束</view>
+            <view class="flex">
+              <view class="picker margin-top-xs ">
+                <picker mode="date" bindchange="onEndDatePicked">
+                  <view>{{endDateStr}}</view>
+                </picker>
+              </view>
+
+              <view style="" class="picker margin-top-xs margin-left-xs">
+                <picker mode="time" value="{{endTimeStr}}" bindchange="onEndTimePicked">
+                  <view>{{endTimeStr}}</view>
+                </picker>
+              </view>
             </view>
           </view>
         </view>
 
-        <view>
-          <view style="font-size: 8pt;" class="text-grey text-bold">结束</view>
-          <view class="flex">
-            <view class="picker margin-top-xs ">
-              <picker mode="date" bindchange="onEndDatePicked">
-                <view>{{endDateStr}}</view>
-              </picker>
-            </view>
+        <!-- Category -->
+        <view class="section-title margin-top-lg">活动分类*</view>
+        <picker range="{{categories}}" range-key="name" bindchange="onCategoryPicked">
+          <view class="text-sm text-grey">{{category ? category.name : '请选择活动类型'}}</view>
+        </picker>
 
-            <view style="" class="picker margin-top-xs margin-left-xs">
-              <picker mode="time" value="{{endTimeStr}}" bindchange="onEndTimePicked">
-                <view>{{endTimeStr}}</view>
-              </picker>
-            </view>
+        <!-- Location -->
+        <view class="section-title margin-top-lg">活动地址*</view>
+
+        <view class="flex align-center margin-top-xs">
+          <input style="flex: 1" name="locationName" type="text" class="inp" value="{{location.name}}"
+            placeholder="填写活动地址"></input>
+          <view class="text-sm text-grey margin-left" bindtap="chooseLocation"><text
+              class="cuIcon-locationfill"></text>地图选点</view>
+
+        </view>
+        <view class="text-sm text-grey">{{location.address}}</view>
+
+
+        <!-- Fee -->
+        <view class="section-title margin-top-lg">预估费用</view>
+        <view class="flex align-center  margin-top-xs">
+          <input value="{{fee}}" style="flex: 1;" name="fee" type="digit" class="inp" placeholder="默认为免费"></input>
+          <view class="text-sm text-grey margin-left-sm">元/人</view>
+        </view>
+
+        <!-- Max participants -->
+        <view class="section-title margin-top-lg flex align-center justify-between">
+          <view>最大参与人数</view>
+          <view class="flex align-center">
+            <switch checked="{{genderRequired}}" type="switch" style="zoom: 0.7" class="margin-left"
+              bindchange="onGenderSwitch"></switch>
+            <view style="font-size: 8pt;" class="margin-left-xs text-grey">限制性别</view>
           </view>
         </view>
-      </view>
 
-      <!-- Category -->
-      <view class="section-title margin-top-lg">活动分类*</view>
-      <picker range="{{categories}}" range-key="name" bindchange="onCategoryPicked">
-        <view class="text-sm text-grey">{{category ? category.name : '请选择活动类型'}}</view>
-      </picker>
+        <input value="{{maxParticipant}}" wx:if="{{!genderRequired}}" name="maxParticipant" type="number"
+          class="inp margin-top-xs" placeholder="默认为无限制(最大100)"></input>
+        <view wx:if="{{genderRequired}}" class="flex margin-top-xs align-center">
+          <view class="flex">
+            <view class="text-grey text-sm margin-top-xs">男生：</view>
+            <input style="width: 120rpx;" value="{{maxParticipantMale}}" name="maxParticipantMale" type="number"
+              class="inp " placeholder="最大100"></input>
+          </view>
 
-      <!-- Location -->
-      <view class="section-title margin-top-lg">活动地址*</view>
+          <view class="flex margin-left align-center">
+            <view style="" class="text-grey text-sm margin-top-xs">女生：</view>
+            <input style="width: 120rpx;" value="{{maxParticipantFemale}}" name="maxParticipantFemale" type="number"
+              class="inp" placeholder="最大100"></input>
+          </view>
 
-      <view class="flex align-center margin-top-xs">
-        <input style="flex: 1" name="locationName" type="text" class="inp" value="{{location.name}}"
-          placeholder="填写活动地址"></input>
-        <view class="text-sm text-grey margin-left" bindtap="chooseLocation"><text
-            class="cuIcon-locationfill"></text>地图选点</view>
-
-      </view>
-      <view class="text-sm text-grey">{{location.address}}</view>
-
-
-      <!-- Fee -->
-      <view class="section-title margin-top-lg">预估费用</view>
-      <view class="flex align-center  margin-top-xs">
-        <input value="{{fee}}" style="flex: 1;" name="fee" type="digit" class="inp" placeholder="默认为免费"></input>
-        <view class="text-sm text-grey margin-left-sm">元/人</view>
-      </view>
-
-      <!-- Max participants -->
-      <view class="section-title margin-top-lg flex align-center justify-between">
-        <view>最大参与人数</view>
-        <view class="flex align-center">
-          <switch checked="{{genderRequired}}" type="switch" style="zoom: 0.7" class="margin-left"
-            bindchange="onGenderSwitch"></switch>
-          <view style="font-size: 8pt;" class="margin-left-xs text-grey">限制性别</view>
-        </view>
-      </view>
-
-      <input value="{{maxParticipant}}" wx:if="{{!genderRequired}}" name="maxParticipant" type="number"
-        class="inp margin-top-xs" placeholder="默认为无限制(最大100)"></input>
-      <view wx:if="{{genderRequired}}" class="flex margin-top-xs align-center">
-        <view class="flex">
-          <view class="text-grey text-sm margin-top-xs">男生：</view>
-          <input style="width: 120rpx;" value="{{maxParticipantMale}}" name="maxParticipantMale" type="number"
-            class="inp " placeholder="男生人数（最大100）"></input>
         </view>
 
-        <view class="flex margin-left align-center">
-          <view style="" class="text-grey text-sm margin-top-xs">女生：</view>
-          <input style="width: 120rpx;" value="{{maxParticipantFemale}}" name="maxParticipantFemale" type="number"
-            class="inp" placeholder="女生人数（最大100）"></input>
+        <!-- Description -->
+        <view class="section-title margin-top-lg">活动封面*</view>
+        <view bindtap="uploadCover" class="text-grey center margin-top-xs"
+          style="background: #f1f1f1; height: 240rpx; width: 100%; border-radius: 12rpx;">
+          {{coverFileId ? '' : '点击上传封面'}}
+          <image wx:if="{{coverFileId}}" style="width: 100%" src="{{coverFileId}}">
+          </image>
         </view>
 
-      </view>
 
-      <!-- Description -->
-      <view class="section-title margin-top-lg">活动封面*</view>
-      <view bindtap="uploadCover" class="text-grey center margin-top-xs"
-        style="background: #f1f1f1; height: 240rpx; width: 100%; border-radius: 12rpx;">
-        {{coverFileId ? '' : '点击上传封面'}}
-        <image wx:if="{{coverFileId}}" style="width: 100%" src="{{coverFileId}}">
-        </image>
-      </view>
+        <!-- Description -->
+        <view class="section-title margin-top-lg">活动说明</view>
+        <textarea maxlength="500" value="{{detail}}" name="detail" class="margin-top-xs"
+          placeholder="最多 500 字，推荐填写活动相关的“活动介绍”，“活动要求”，“注意事项”等等。"
+          style="font-size: 11pt; background: #f1f1f1; width: 100%; min-height: 200rpx; border-radius: 12rpx; padding: 16rpx;"></textarea>
 
 
-      <!-- Description -->
-      <view class="section-title margin-top-lg">活动说明</view>
-      <textarea value="{{detail}}" name="detail" class="margin-top-xs"
-        placeholder="最多 500 字，推荐填写活动相关的“活动介绍”，“活动要求”，“注意事项”等等。"
-        style="font-size: 11pt; background: #f1f1f1; width: 100%; height: 200rpx; border-radius: 12rpx; padding: 16rpx;"></textarea>
+        <!-- Tags -->
+        <view class="section-title margin-top-lg">活动标签</view>
+        <input name="tags" value="{{tags}}" type="text" class="inp margin-top-xs"
+          placeholder="多个标签用空格分割，例如：羽毛球 户外运动"></input>
 
-
-      <!-- Tags -->
-      <view class="section-title margin-top-lg">活动标签</view>
-      <input name="tags" value="{{tags}}" type="text" class="inp margin-top-xs"
-        placeholder="多个标签用空格分割，例如：羽毛球 户外运动"></input>
-
-      <!-- QR code -->
-      <!-- <view class="section-title margin-top-lg">微信群二维码</view>
+        <!-- QR code -->
+        <!-- <view class="section-title margin-top-lg">微信群二维码</view>
       <view bindtap="uploadQrcode" class="text-grey center margin-top-xs"
         style="background: #f1f1f1; height: 300rpx; width: 200rpx; border-radius: 12rpx; font-size: 9pt;">
         {{qrcodeFileId ? '' : '点击上传'}}
@@ -136,17 +137,18 @@
         </image>
       </view> -->
 
-      <!-- Submit -->
-      <view style="margin-top: 100rpx;" class="flex align-center">
-        <view wx:if="{{activityId}}" bindtap="onClickDeleteActivity" style="border-radius: 16rpx; font-size: 10pt;"
-          class="cu-btn bg-red">删除活动
+        <!-- Submit -->
+        <view style="margin-top: 100rpx;" class="flex align-center">
+          <button wx:if="{{activityId}}" bindtap="onClickDeleteActivity" style="width: 200rpx; border-radius: 16rpx;"
+            class="cu-btn bg-red">删除活动
+          </button>
+
+          <button form-type="submit" style="width: 200rpx; border-radius: 16rpx;" class="cu-btn bg-primary">{{type ==
+            'new' ? '创建活动' : '更新活动'}}</button>
         </view>
 
-        <button bindtap="onButtonSumit" form-type="submit" style="width: 200rpx; border-radius: 16rpx;"
-          class="cu-btn bg-primary">{{type == 'new' ? '创建活动' : '更新活动'}}</button>
-      </view>
+      </form>
+    </view>
 
-    </form>
   </view>
-
 </view>

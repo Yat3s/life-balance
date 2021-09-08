@@ -1,4 +1,30 @@
 /* miniprogram/pages/index/index.wxss */
 
-page {
+.tab {
+  color: #240846;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: width 0.5s;
+  height: 70%;
+  background: white;
+}
+
+.tab-highlight {
+  color: #240846;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: width 0.5s;
+  height: 70%;
+  background: var(--lightBlue);
+  border-radius: 200rpx;
+}
+
+.tab-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 10pt;
+  font-weight: bold;
 }

@@ -19,15 +19,31 @@ Page({
         wx.hideLoading();
 
         const { origin } = this.data;
-        if (origin == router.AUTH_ORIGIN_DRAFT_ACTIVITY) {
-          router.navigateToDraftActivity();
-        } else {
-          wx.navigateBack({
-            delta: 0,
-          })
-        }
+        wx.navigateBack({
+          delta: 0,
+        }).then(res => {
+          if (origin == router.AUTH_ORIGIN_DRAFT_ACTIVITY) {
+            router.navigateToDraftActivity();
+          }
+        }).catch(err => {
+          if (origin == router.AUTH_ORIGIN_DRAFT_ACTIVITY) {
+            router.navigateToDraftActivity();
+          }
+        })
       }).catch(err => {
-        console.log(err);
+        wx.hideLoading();
+
+        wx.showToast({
+          duration: 1000,
+          icon: 'error',
+          title: "授权失败" + err,
+        })
+
+        setTimeout(() => {
+          wx.navigateBack({
+            delta: 1
+          });
+        }, 1000);
       })
     })
   },

@@ -2,12 +2,12 @@ import QQMapWX from '../../common/qqmap-wx-jssdk.min.js';
 
 const activityRepo = require('../../repository/activityRepo');
 const userRepo = require('../../repository/userRepo');
-
 const router = require('../router');
 const util = require('../../common/util');
+const pref = require('../../common/preference');
 const app = getApp();
 
-const PREFERENCE_CITY = "preference-city";
+const NEARBY_RANGE = 200; // km
 
 const CATEGORY_ALL = {
   _id: 'all',
@@ -80,6 +80,15 @@ Component({
         this.fetchActivityCategories();
         this.requestLocation();
       }
+
+      if (app.globalData.pendingMessage) {
+        wx.showToast({
+          icon: 'none',
+          duration: 3000,
+          title: app.globalData.pendingMessage,
+        })
+        app.globalData.pendingMessage = null;
+      }
     }
   },
 
@@ -90,9 +99,14 @@ Component({
 
       this.setData({
         selectedActivityFilterId
-      });
+      }, this.checkContentEmpty);
 
       this.sortActivityByFilter(selectedActivityFilterId);
+    },
+
+    isNearby(activity) {
+      const distance = activity.distance || activity.distanceFromOrganizer || 100000;
+      return distance < NEARBY_RANGE;
     },
 
     sortActivityByFilter(filterId) {
@@ -106,6 +120,20 @@ Component({
       switch (filterId) {
         case 'popular':
           compare = (a, b) => {
+            const isNearbyA = this.isNearby(a);
+            const isNearbyB = this.isNearby(b);
+            if (isNearbyA && !isNearbyB) {
+              return -1;
+            }
+            if (!isNearbyA && isNearbyB) {
+              return 1;
+            }
+            if (!isNearbyA && !isNearbyB) {
+              const distanceA = a.distance || a.distanceFromOrganizer || 100000;
+              const distanceB = b.distance || b.distanceFromOrganizer || 100000;
+              return distanceA - distanceB;
+            }
+
             const priorityA = a.priority || 0;
             const priorityB = b.priority || 0;
 
@@ -117,16 +145,32 @@ Component({
             const participantB = b.participants ? b.participants.length : 0;
             return participantB - participantA;
           }
-        break;
+          break;
 
         case 'nearby':
           compare = (a, b) => {
-            return a.distance || 10000 - b.distance || 10000;
+            const distanceA = a.distance || a.distanceFromOrganizer || 100000;
+            const distanceB = b.distance || b.distanceFromOrganizer || 100000;
+            return distanceA - distanceB;
           }
-        break;
+          break;
 
         case 'upcoming':
           compare = (a, b) => {
+            const isNearbyA = this.isNearby(a);
+            const isNearbyB = this.isNearby(b);
+            if (isNearbyA && !isNearbyB) {
+              return -1;
+            }
+            if (!isNearbyA && isNearbyB) {
+              return 1;
+            }
+            if (!isNearbyA && !isNearbyB) {
+              const distanceA = a.distance || a.distanceFromOrganizer || 100000;
+              const distanceB = b.distance || b.distanceFromOrganizer || 100000;
+              return distanceA - distanceB;
+            }
+
             const diffStartA = a.startDate - now;
             const diffStartB = b.startDate - now;
 
@@ -147,20 +191,22 @@ Component({
               return 1;
             }
           }
-        break;
+          break;
 
         case 'end':
           compare = (a, b) => {
             return b.startDate - a.startDate;
           }
-        break;
+          break;
       }
 
       if (!compare) {
         return;
       }
       activities.sort(compare);
-      this.setData({ activities });
+      this.setData({
+        activities
+      }, this.checkContentEmpty);
     },
 
     requestLocation() {
@@ -177,13 +223,15 @@ Component({
           longitude
         });
 
+        pref.setLocation(latitude, longitude);
+
         this.calcDistance();
         this.retrieveCityInfo(latitude, longitude);
       });
     },
 
     retrieveCityInfo(latitude, longitude) {
-      let city = wx.getStorageSync(PREFERENCE_CITY);
+      let city = pref.getCity();
       if (city) {
         this.setData({
           city
@@ -204,17 +252,25 @@ Component({
         },
         success(res) {
           city = res.result.ad_info.city;
+
+          if (!city) {
+            wx.showToast({
+              icon: 'error',
+              title: '获取所在城市失败',
+            })
+            return;
+          }
           that.setData({
             city
           });
 
-          wx.setStorage({
-            key: PREFERENCE_CITY,
-            data: city
-          });
+          pref.setCity(city);
         },
         fail(err) {
-          wx.showToast('获取城市失败')
+          wx.showToast({
+            icon: 'error',
+            title: '获取所在城市失败',
+          })
         }
       })
     },
@@ -234,7 +290,7 @@ Component({
         }
         this.setData({
           categories
-        });
+        }, this.checkContentEmpty);
 
         this.fetchAllActivities();
       });
@@ -246,19 +302,31 @@ Component({
           categories
         } = this.data;
 
+        let validActivities = [];
+        // Remove all no participant activity
+        activities.forEach(activity => {
+          const ended = activity.endDate < Date.now();
+          if (!ended || activity.participants && activity.participants.length > 1) {
+            validActivities.push(activity);
+          }
+        })
+
+        console.log(validActivities);
+
         categories.forEach(category => {
           category.count = 0;
-          activities.forEach(activity => {
-            if (activity.category == category._id || category._id == 'all') {
+          validActivities.forEach(activity => {
+            const ended = activity.endDate < Date.now();
+            if (!ended && (activity.category == category._id || category._id == 'all')) {
               category.count++;
             }
-            activity.ended = activity.endDate < Date.now();
+            activity.ended = ended
           });
         });
         this.setData({
-          activities,
+          activities: validActivities,
           categories
-        });
+        }, this.checkContentEmpty);
 
         this.calcDistance();
         this.sortActivityByFilter(this.data.selectedActivityFilterId);
@@ -282,18 +350,39 @@ Component({
           activity.distance = distance;
           activity.distanceStr = `(${distance}km)`;
         }
+
+        const organizerLocation = activity.organizerLocation;
+        if (organizerLocation && organizerLocation.latitude) {
+          activity.distanceFromOrganizer = util.distance(organizerLocation.latitude, organizerLocation.longitude, latitude, longitude);
+        }
       }
 
       this.setData({
         activities
-      });
+      }, this.checkContentEmpty);
     },
 
     onCategorySelected(e) {
       const selectedCategory = e.currentTarget.dataset.category;
+
+
       this.setData({
         selectedCategory
-      });
+      }, this.checkContentEmpty);
+    },
+
+    checkContentEmpty() {
+      wx.createSelectorQuery().in(this).select('#activityContainer').boundingClientRect(rect => {
+        const isEmpty = rect.height <= 0;
+        const {
+          showEmptyMessage
+        } = this.data;
+        if (isEmpty != showEmptyMessage) {
+          this.setData({
+            showEmptyMessage: isEmpty
+          });
+        }
+      }).exec()
     },
 
     onClickDraftActivity() {

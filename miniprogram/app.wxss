@@ -30,6 +30,10 @@ button::after{
   color: var(--primary);
 }
 
+.text-secondary {
+  color: var(--secondary);
+}
+
 .plr {
   padding-left: var(--inset);
   padding-right: var(--inset);
@@ -64,5 +68,7 @@ page {
 
   /* Theme */
   --primary: #4749A0;
+  --secondary: #8F97FD;
+  --lightBlue: #ECF4FF;
   --inset: 40rpx;
 }

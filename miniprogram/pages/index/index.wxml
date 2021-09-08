@@ -4,13 +4,11 @@
 
   <!-- Bottom tab -->
   <view class="padding-left padding-right cu-bar bg-white shadow foot" style="display:flex; height: 100rpx;">
-    <view bindtap="onTabSelect" class="{{currentTab==item.id?'round':''}} flex padding-top padding-bottom"
-      data-tabid="{{item.id}}"
-      style="color:#240846; background:{{currentTab==item.id?'#ECF4FF':white}}; align-items:center;justify-content:center;text-align:center;transition: width 0.5s;width:{{currentTab==item.id?tabWidth*1.8:tabWidth}}px;height:70%"
-      wx:for="{{pages}}" wx:key="id">
+    <view bindtap="onTabSelect"
+      class="{{currentTab==item.id?'tab-highlight':'tab'}} flex padding-top padding-bottom tab" data-tabid="{{item.id}}"
+      style="width:{{currentTab==item.id?tabWidth*1.8:tabWidth}}px;" wx:for="{{pages}}" wx:key="id">
       <image src="{{item.icon}}" style="width:36rpx;height:36rpx"></image>
-      <view class="text-bold margin-left-sm" hidden="{{currentTab != item.id}}"
-        style="white-space: nowrap;overflow:hidden; text-overflow:ellipsis; font-size: 10pt">{{item.title}}</view>
+      <view class="tab-text margin-left-sm" hidden="{{currentTab != item.id}}">{{item.title}}</view>
     </view>
   </view>
 </view>

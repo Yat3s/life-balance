@@ -106,7 +106,7 @@
 
   </view>
 
-  <view bindtap="onClickLocation" style="width: 100%" class="section">
+  <view catchtap="onClickLocation" style="width: 100%" class="section">
     <view class="indicator" />
 
     <view style="width: 100%" class="margin-left">
@@ -135,19 +135,31 @@
 <view class="foot cu-bar" style="background-color: white; padding: 24rpx">
 
   <view class="flex align-center">
+    
 
-    <button wx:if="{{activity.published}}" class="text-blue" style="width:120rpx; font-size: 9pt; padding: 16rpx;"
-      open-type="share"><text class="cuIcon-share"></text>
-      分享</button>
+    <view wx:if="{{activity.published}}" class="flex align-center">
+      <button class="text-secondary" style="width:100rpx; font-size: 9pt; padding: 12rpx; font-weight: normal;"
+        open-type="share"><text class="cuIcon-share"></text>
+        分享</button>
 
-    <view style="width: 4rpx; background: #f1f1f1; height: 40rpx;"></view>
+      <view style="width: 2rpx; background: #f1f1f1; height: 40rpx;"></view>
+    </view>
 
-    <view wx:if="{{userInfo}}" bindtap="onClickLike" class="text-blue" style="font-size: 9pt; padding: 12rpx 24rpx;">
-      <text class="{{liked ? 'cuIcon-favorfill' : 'cuIcon-favor'}}"></text> {{liked ? '已收藏' : '收藏'}}</view>
+    <view wx:if="{{userInfo}}" class="flex align-center">
+      <view wx:if="{{userInfo}}" bindtap="onClickLike" class="text-secondary"
+        style="font-size: 9pt; padding: 12rpx 24rpx;">
+        <text class="{{liked ? 'cuIcon-favorfill' : 'cuIcon-favor'}}"></text> {{liked ? '已收藏' : '收藏'}}
+      </view>
 
-    <view style="width: 4rpx; background: #f1f1f1; height: 40rpx;"></view>
+      <view style="width: 2rpx; background: #f1f1f1; height: 40rpx;"></view>
+    </view>
 
-    <view bindtap="showQrcodeModal" class="text-blue" style="font-size: 9pt; padding: 12rpx 24rpx;"><text
+    <button class="text-secondary" style="width:100rpx; font-size: 9pt; padding: 12rpx; font-weight: normal;"
+      open-type="contact"><text class="cuIcon-servicefill"></text>
+      客服</button>
+    <view style="width: 2rpx; background: #f1f1f1; height: 40rpx;"></view>
+
+    <view bindtap="showQrcodeModal" class="text-secondary" style="font-size: 9pt; padding: 12rpx 24rpx;"><text
         class="cuIcon-qr_code"></text> 群二维码</view>
 
     <!-- <button open-type="contact" style="font-weight: normal;   font-size: 11pt; width: auto" bindcontact="handleContact">
@@ -162,8 +174,7 @@
   </view>
 
   <view class="flex">
-
-    <view wx:if="{{userInfo}}" bindtap="onSignupActivity"
+    <view bindtap="onSignupActivity"
       class="shadow cu-btn {{ended ? 'bg-grey' : canEdit ? 'bg-red' : joined ? 'bg-grey' : 'bg-blue'}} round">
       {{ended ? '活动已结束' : canEdit ? '编辑活动' : joined ? '取消报名' : '报名参加'}}
     </view>

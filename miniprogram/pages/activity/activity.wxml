@@ -15,8 +15,7 @@
 <view class="flex align-center justify-between padding-right margin-top">
   <view class="section-title">活动</view>
 
-  <view style="background: #8F97FD; border-radius: 16rpx; padding: 0rpx 16rpx; font-size: 9pt; height: 60rpx;"
-    bindtap="onClickDraftActivity" class="cu-btn text-bold text-white flex align-center">
+  <view bindtap="onClickDraftActivity" class="draft-activity-btn text-bold text-white flex align-center">
     <text style="font-size: 12pt" class="cuIcon-roundaddfill"></text>
     <view class="margin-left-xs">发布活动</view>
   </view>
@@ -25,12 +24,13 @@
 <scroll-view class="" scroll-x="true">
   <view class="flex plr padding-top-sm padding-bottom margin-top-sm">
 
-    <view wx:if="{{!categories}}" wx:key="nonthing" wx:for="{{3}}" style="border-radius: 16rpx;" class="margin-right bg-white padding-sm">
+    <view wx:if="{{!categories}}" wx:key="nonthing" wx:for="{{3}}" style="border-radius: 16rpx;"
+      class="margin-right bg-white padding-sm">
       <view class="shine" style="width: 180rpx; height: 130rpx; border-radius: 12rpx;"></view>
     </view>
 
     <view bindtap="onCategorySelected" data-category="{{item}}"
-      class="category-item {{selectedCategory._id == item._id? 'category-item-selected shadow-blur' : ''}} "
+      class="category-item {{selectedCategory._id == item._id? 'category-item-selected' : ''}} "
       style="background: {{item.accessory.bgColor}}; " wx:for="{{categories}}" wx:key="name">
       <image class="category-accessory" src="../../images/{{item.accessory.iconRes}}" style="{{item.accessory.css}}"
         mode="{{item.accessory.imgMode}}"></image>
@@ -39,27 +39,27 @@
         <view class="flex justify-end ">
         </view>
         <view class="text-bold margin-top-xs" style="font-size: 12pt">{{item.name}}</view>
-        <view class="" style="color: #f1f1f1; font-size: 8pt">{{item.count || 0}} 个活动</view>
+        <view class="" style="color: #f1f1f1; font-size: 7pt">{{item.count || 0}} 个进行中活动</view>
       </view>
     </view>
   </view>
 </scroll-view>
 
 
-<!-- Activities -->
+<!-- Filter -->
 <view class="flex align-center justify-between padding-right margin-top plr">
-
   <view bindtap="onSelectFilter" data-id="{{item.id}}" wx:for="{{activityFilters}}" wx:key="name"
     class="{{selectedActivityFilterId == item.id ? 'activity-filter-highlight' : 'activity-filter'}}">{{item.name}}
   </view>
-
 </view>
 
+
+<!-- Activities -->
 <view class="margin-top">
 
   <!-- Shimmer layout -->
-  <view wx:if="{{!activities}}" wx:key="nonthing" wx:for="{{3}}" style="margin: 0 var(--inset) 30rpx var(--inset); border-radius: 16rpx;"
-    class="bg-white padding">
+  <view wx:if="{{!activities}}" wx:key="nonthing" wx:for="{{3}}"
+    style="margin: 0 var(--inset) 30rpx var(--inset); border-radius: 16rpx;" class="bg-white padding">
 
     <view class="flex">
       <view class="shine" style="flex-grow: 0; flex-shrink: 0; width: 180rpx; height: 240rpx; border-radius: 12rpx;" />
@@ -73,5 +73,15 @@
     </view>
   </view>
 
-  <activityItem activity="{{item}}" wx:for="{{activities}}" wx:if="{{(selectedCategory._id == 'all' || selectedCategory._id == item.category) && ((selectedActivityFilterId == 'end' && item.ended) || (selectedActivityFilterId != 'end' && !item.ended))}}" wx:key="_id"></activityItem>
+  <view id="activityContainer">
+    <activityItem activity="{{item}}" wx:for="{{activities}}"
+      wx:if="{{(selectedCategory._id == 'all' || selectedCategory._id == item.category) && ((selectedActivityFilterId == 'end' && item.ended) || (selectedActivityFilterId != 'end' && !item.ended))}}"
+      wx:key="_id"></activityItem>
+  </view>
+
+  <view wx:if="{{showEmptyMessage}}" style="width: 100%; height: 500rpx;" class="center">
+    <image style="width: 300rpx" mode="widthFix" src="../../images/ic_empty_state.png"></image>
+    <text class="text-grey margin-top">这里什么都没有...</text>
+  </view>
+
 </view>

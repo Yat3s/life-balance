@@ -24,8 +24,8 @@
   color: #1C2D48;
   font-size: 10pt;
   font-weight: bold;
-  background: #e3ebfc;
-  border-radius: 24rpx;
+  background: var(--lightBlue);
+  border-radius: 30rpx;
   padding: 8rpx 24rpx;
 }
 
@@ -73,4 +73,12 @@
 
 .category-accessory {
   position: absolute;
+}
+
+.draft-activity-btn {
+  background: var(--secondary);
+  border-radius: 16rpx;
+  padding: 0rpx 16rpx;
+  font-size: 9pt;
+  height: 60rpx;
 }

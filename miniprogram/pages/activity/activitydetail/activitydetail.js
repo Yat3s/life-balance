@@ -1,7 +1,7 @@
 // miniprogram/pages/activity/activitydetail/activitydetail.js
 const activityRepo = require('../../../repository/activityRepo');
 const userRepo = require('../../../repository/userRepo');
-
+const pref = require('../../../common/preference');
 const util = require('../../../common/util');
 const router = require('../../router');
 
@@ -21,27 +21,27 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.fetchActivity(options.id);
-  },
-
-  retrieveLocation() {
-    wx.getLocation({
-      type: 'wgs84'
-    }).then(res => {
-      this.setData({
-        latitude: res.latitude,
-        longitude: res.longitude
-      });
-
-      this.calcDistance();
+    this.fetchActivity(options.id).then(activity => {
+      this.fetchUserInfo();
+      this.retrieveLocation();
     });
   },
 
-  calcDistance() {
+  retrieveLocation() {
+    if (pref.getLatitude) {
+      this.calcDistance(pref.getLatitude(), pref.getLongitude());
+    } else {
+      wx.getLocation({
+        type: 'wgs84'
+      }).then(res => {
+        this.calcDistance(res.latitude, res.longitude);
+      });
+    }
+  },
+
+  calcDistance(latitude, longitude) {
     const {
       activity,
-      latitude,
-      longitude
     } = this.data;
 
     if (!activity || !latitude) {
@@ -61,83 +61,93 @@ Page({
 
   fetchUserInfo() {
     userRepo.fetchUserInfo().then(userInfo => {
-      if (!userInfo) {
-        return;
+      this.handleUserState(userInfo);
+    })
+  },
+
+  handleUserState(userInfo) {
+    if (!userInfo) {
+      return;
+    }
+
+    const {
+      activity
+    } = this.data;
+
+    // Join state
+    let joined = false;
+
+    for (const participant of activity.participants) {
+      if (participant._openid == userInfo._openid) {
+        joined = true;
+        break;
       }
+    }
 
-      const {
-        activity
-      } = this.data;
-
-      // Join state
-      let joined = false;
-
-      for (const participant of activity.participants) {
-        if (participant._openid == userInfo._openid) {
-          joined = true;
+    // Like state
+    let liked = false;
+    if (userInfo.likes) {
+      for (const activityId of userInfo.likes) {
+        if (activityId == activity._id) {
+          liked = true;
           break;
         }
       }
+    }
 
-      // Like state
-      let liked = false;
-      if (userInfo.likes) {
-        for (const activityId of userInfo.likes) {
-          if (activityId == activity._id) {
-            liked = true;
-            break;
-          }
-        }
-      }
+    const ended = Date.now() > activity.endDate;
+    const canEdit = userInfo._openid == activity.organizer._openid && !ended;
 
-      const ended = Date.now() > activity.endDate;
-      const canEdit = userInfo._openid == activity.organizer._openid && !ended;
-
-      this.setData({
-        userInfo,
-        joined,
-        liked,
-        canEdit,
-        ended,
-      });
-    })
+    this.setData({
+      userInfo,
+      joined,
+      liked,
+      canEdit,
+      ended,
+    });
   },
 
   fetchActivity(id) {
     wx.showLoading();
-    activityRepo.fetchActivityItem(id).then(activity => {
-      wx.hideLoading();
-      let participantMale = 0;
-      let participantFemale = 0;
 
-      for (const participant of activity.participants) {
-        if (participant.gender == 1) {
-          participantMale++;
+    return new Promise((resolve, reject) => {
+      activityRepo.fetchActivityItem(id).then(activity => {
+        wx.hideLoading();
+        let participantMale = 0;
+        let participantFemale = 0;
+
+        for (const participant of activity.participants) {
+          if (participant.gender == 1) {
+            participantMale++;
+          }
         }
-      }
-      participantFemale = activity.participants.length - participantMale;
+        participantFemale = activity.participants.length - participantMale;
 
-      const participantMaleProgress = participantMale == 0 ? 0 : Math.max(20, parseInt(participantMale / activity.maxParticipantMale * 100));
-      const participantFemaleProgress = participantFemale == 0 ? 0 : Math.max(20, parseInt(participantFemale / activity.maxParticipantFemale * 100));
-      const maxParticipantMalePercent = parseInt(activity.maxParticipantMale / activity.maxParticipant * 100);
-      const maxParticipantFemalePercent = parseInt(activity.maxParticipantFemale / activity.maxParticipant * 100);
+        const participantMaleProgress = participantMale == 0 ? 0 : Math.max(20, parseInt(participantMale / activity.maxParticipantMale * 100));
+        const participantFemaleProgress = participantFemale == 0 ? 0 : Math.max(20, parseInt(participantFemale / activity.maxParticipantFemale * 100));
+        const maxParticipantMalePercent = parseInt(activity.maxParticipantMale / activity.maxParticipant * 100);
+        const maxParticipantFemalePercent = parseInt(activity.maxParticipantFemale / activity.maxParticipant * 100);
 
-      this.setData({
-        activity,
-        participantMale,
-        participantMaleProgress,
-        participantFemale,
-        participantFemaleProgress,
-        maxParticipantMalePercent,
-        maxParticipantFemalePercent
+        this.setData({
+          activity,
+          participantMale,
+          participantMaleProgress,
+          participantFemale,
+          participantFemaleProgress,
+          maxParticipantMalePercent,
+          maxParticipantFemalePercent
+        });
+
+        this.handleUserState(this.data.userInfo);
+
+        resolve(activity);
+      }).catch(err => {
+
+        reject(err);
+        wx.hideLoading();
       });
+    })
 
-
-      this.fetchUserInfo();
-      this.retrieveLocation();
-    }).catch(err => {
-      wx.hideLoading();
-    });
   },
 
   back() {
@@ -155,7 +165,9 @@ Page({
   },
 
   onClickLocation() {
-    const { activity } = this.data;
+    const {
+      activity
+    } = this.data;
 
     const location = activity.location;
     if (!location || !location.latitude) {
@@ -222,74 +234,72 @@ Page({
     })
   },
 
-  signupActivity(activity, userInfo) {
-    const {
-      participantMale,
-      participantMaleProgress,
-      participantFemale,
-      participantFemaleProgress,
-      ended,
-    } = this.data;
+  signupActivity(activitySnapshot, userInfo) {
 
-    if (ended) {
-      return;
-    }
+    // Fetch the latest activity
+    this.fetchActivity(activitySnapshot._id).then(activity => {
+      const {
+        participantMale,
+        participantMaleProgress,
+        participantFemale,
+        participantFemaleProgress,
+        ended,
+      } = this.data;
 
-    let message = null;
-    if (participantMale + participantFemale >= activity.maxParticipant) {
-      message = '可报名总人数已到上限哦';
-    } else if (userInfo.gender == 1 && participantMaleProgress == 100) {
-      message = '可报名男生人数已到上限哦';
-    } else if (userInfo.gender == 2 && participantFemaleProgress == 100) {
-      message = '可报名女生人数已到上限哦';
-    }
-
-    if (message) {
-      wx.showToast({
-        icon: 'none',
-        title: message,
-      });
-
-      return;
-    }
-
-    if (!userInfo.phoneNumber) {
-      router.navigateToAuth(router.AUTH_ORIGIN_ACTIVITY_DETAIL);
-      return;
-    }
-
-    activityRepo.signupActivity(activity._id, userInfo).then(data => {
-      this.fetchActivity(activity._id);
-
-      if (activity.qrcode) {
-        this.setData({
-          showQrcode: true
-        });
+      if (ended) {
+        return;
       }
 
-      wx.showToast({
-        title: '报名成功',
+      let message = null;
+      if (participantMale + participantFemale >= activity.maxParticipant) {
+        message = '可报名总人数已到上限哦';
+      } else if (userInfo.gender == 1 && participantMaleProgress == 100) {
+        message = '可报名男生人数已到上限哦';
+      } else if (userInfo.gender == 2 && participantFemaleProgress == 100) {
+        message = '可报名女生人数已到上限哦';
+      }
+
+      if (message) {
+        wx.showToast({
+          icon: 'none',
+          title: message,
+        });
+
+        return;
+      }
+
+      if (!userInfo.phoneNumber) {
+        router.navigateToAuth(router.AUTH_ORIGIN_ACTIVITY_DETAIL);
+        return;
+      }
+
+      activityRepo.signupActivity(activity._id, userInfo).then(data => {
+        this.fetchActivity(activity._id);
+
+        if (activity.qrcode) {
+          this.setData({
+            showQrcode: true
+          });
+        }
+
+        wx.showToast({
+          title: '报名成功',
+        });
+        wx.hideLoading();
       });
-      wx.hideLoading();
-    });
+
+    })
+
   },
 
   quitActivity(activity, userInfo) {
-    const { isOrganizer } = this.data;
-    if (isOrganizer) {
-      wx.showToast({
-        icon: 'none',
-        title: '主持人不允许跳车哦！',
-      });
-      return;
-    }
-
     wx.showLoading();
     activityRepo.quitActivity(activity._id).then(res => {
       this.fetchActivity(activity._id);
 
       wx.showToast({
         icon: 'none',
+        duration: 2000,
         title: '取消报名成功，请退出相应活动微信群。',
       });
     }).catch(err => {
@@ -309,7 +319,7 @@ Page({
     const {
       activity,
       joined,
-      isOrganizer,
+      canEdit,
       userInfo,
     } = this.data;
 
@@ -323,7 +333,7 @@ Page({
         });
       })
     } else {
-      if (isOrganizer) {
+      if (canEdit) {
         this.editActivity(activity);
       } else if (joined) {
         this.quitActivity(activity, userInfo);
@@ -370,11 +380,22 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    const { activity } = this.data;
-    
+    const {
+      activity
+    } = this.data;
+
     // Just refresh activity when re-visit this page
     if (activity) {
       this.fetchActivity(activity._id);
+    }
+
+    if (app.globalData.pendingMessage) {
+      wx.showToast({
+        icon: 'none',
+        duration: 2000,
+        title: app.globalData.pendingMessage,
+      })
+      app.globalData.pendingMessage = null;
     }
   },
 
@@ -410,6 +431,8 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: this.data.activity.title
+    }
   }
 })

@@ -18,5 +18,5 @@ exports.main = async (data, context) => {
     filter[key] = openid;
   }
 
-  return (await db.collection('activities').where(filter).get()).data;
+  return (await db.collection('activities').where(filter).orderBy('_createTime', 'desc').get()).data;
 }

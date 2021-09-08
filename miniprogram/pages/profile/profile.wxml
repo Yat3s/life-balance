@@ -6,6 +6,8 @@
     </view>
 
     <view bindtap="onUserInfoClick" style="font-size: 18pt;" class="cuIcon-form text-grey"></view>
+
+
   </view>
 
 

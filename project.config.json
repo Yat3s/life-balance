@@ -38,7 +38,7 @@
   },
   "appid": "wxc8745aa8f8c9a64e",
   "projectname": "activitiespi-weapp",
-  "libVersion": "2.19.1",
+  "libVersion": "2.19.3",
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
   "condition": {
     "search": {

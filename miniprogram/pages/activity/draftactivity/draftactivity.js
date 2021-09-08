@@ -1,6 +1,7 @@
 // miniprogram/pages/activity/draftactivity/draftactivity.js
 const activityRepo = require('../../../repository/activityRepo');
 const userRepo = require('../../../repository/userRepo');
+const pref = require('../../../common/preference');
 
 const app = getApp();
 const TMP_ID_EVENT_CREATED = '9UbBuyHoTS8vX0UaIGqf2rAwcQS3kM1giOV9EPJp1O8'
@@ -141,26 +142,35 @@ Page({
     })
   },
 
-  // onButtonSumit() {
-  //   // Workaround to subscribe notification
-  //   wx.getSetting({
-  //     withSubscriptions: true,
-  //   }).then(res => {
-  //     console.log(res);
-  //     const subscriptions = res.subscriptionsSetting.itemSettings;
-  //     if (!subscriptions || subscriptions[TMP_ID_EVENT_CREATED] != 'accept') {
-  //       wx.requestSubscribeMessage({
-  //         tmplIds: ['9UbBuyHoTS8vX0UaIGqf2rAwcQS3kM1giOV9EPJp1O8'],
-  //         success(res) {
-  //           console.log(res);
-  //         },
-  //         fail(err) {
-  //           console.log(err);
-  //         }
-  //       })
-  //     }
-  //   })
-  // },
+  subscribeActivityNotification() {
+    wx.showModal({
+      title: '活动已提交审核',
+      content: '订阅活动通知方便收到活动审核结果',
+      success(res) {
+        if (res.confirm) {
+          wx.requestSubscribeMessage({
+            tmplIds: ['9UbBuyHoTS8vX0UaIGqf2rAwcQS3kM1giOV9EPJp1O8'],
+            success(res) {
+              console.log(res);
+              wx.navigateBack({
+                delta: 1,
+              })
+            },
+            fail(err) {
+              console.log(err);
+              wx.navigateBack({
+                delta: 1,
+              })
+            }
+          })
+        } else if (res.cancel) {
+          wx.navigateBack({
+            delta: 1,
+          })
+        }
+      }
+    })
+  },
 
   onClickDeleteActivity() {
     const {
@@ -179,7 +189,7 @@ Page({
     wx.showModal({
       title: '删除活动',
       content: '活动删除后将无法还原',
-      success (res) {
+      success(res) {
         if (res.confirm) {
           activityRepo.deleteActivity(activityId).then(res => {
             wx.showToast({
@@ -229,9 +239,9 @@ Page({
     }
     location.name = locationName
 
-    // Tagss
+    // Tags
     let tags = [];
-    if (!value.tags) {
+    if (!value.tags && category) {
       tags.push(category.name);
     } else {
       tags = value.tags.split(" ");
@@ -258,6 +268,10 @@ Page({
 
     if (maxParticipant > MAX_PARTICIPANT) {
       sanityMessage = `最大参与人数不能多于${MAX_PARTICIPANT}人`;
+    }
+
+    if (maxParticipant <= 1) {
+      sanityMessage = `最大参与人数不能少于2人`;
     }
 
     let tagLengthInvalid = false;
@@ -288,7 +302,6 @@ Page({
       return;
     }
 
-
     const activityBody = {
       // Basic
       title,
@@ -314,52 +327,47 @@ Page({
       // Tags
       tags,
 
-      published: false
+      published: false,
     }
 
     console.log("ActivityBody: ", activityBody);
-    wx.showLoading();
     if (type == 'new') {
       const participants = [];
       participants.push(userInfo);
-      activityBody.organizer = userInfo,
-        activityBody.participants = participants,
-        activityBody._createTime = Date.now(),
+      activityBody.organizer = userInfo;
+      activityBody.participants = participants;
+      activityBody._createTime = Date.now();
 
-        activityRepo.draftActivity(activityBody).then(res => {
-          wx.hideLoading();
-          wx.showToast({
-            icon: 'none',
-            title: '活动已提交审核，请在【我的】-【全部活动/发起的活动】中查看。',
-          })
+      const organizerLocation = {
+        city: pref.getCity(),
+        latitude: pref.getLatitude(),
+        longitude: pref.getLongitude()
+      }
+      activityBody.organizerLocation = organizerLocation;
 
-          wx.navigateBack({
-            delta: 1,
-          })
-        });
+      wx.showLoading();
+      activityRepo.draftActivity(activityBody).then(res => {
+        wx.hideLoading();
+        app.globalData.pendingMessage = '活动已提交审核，请在个人信息页中查看。'
+        this.subscribeActivityNotification();
+      });
     } else if (type == 'edit') {
+      const {
+        activityId
+      } = this.data;
       wx.showModal({
         title: '更新活动',
         content: '修改提交后，活动内容将重新审核',
-        success (res) {
+        success(res) {
           if (res.confirm) {
-            const {
-              activityId
-            } = this.data;
-            activityBody._updateTime = Date.now(),
-              activityRepo.updateActivity(activityId, activityBody).then(res => {
-                wx.hideLoading();
-                wx.showToast({
-                  icon: 'none',
-                  title: '活动已更新并重新提交审核，请在【我的】-【全部活动/发起的活动】中查看。',
-                }).then(res => {
-                  wx.navigateBack({
-                    delta: 1,
-                  })
-                })
-              });
-          } else if (res.cancel) {
-          }
+            activityBody._updateTime = Date.now();
+            wx.showLoading();
+            activityRepo.updateActivity(activityId, activityBody).then(res => {
+              wx.hideLoading();
+              app.globalData.pendingMessage = '活动已更新并重新提交审核，请在个人信息页中查看。'
+              this.subscribeActivityNotification();
+            });
+          } else if (res.cancel) {}
         }
       })
     }
