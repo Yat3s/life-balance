@@ -10,7 +10,7 @@ assignees: Yat3s
 - [ ] This group only serves Microsoft
 - [ ] Invite **i-coconut** to group
 
-**Group name displayed on Life Balance**
+### Group name(displayed on Life Balance)
 Group name
 
-**Group icon(File or link, only `.png` supported)**
+### Group icon(File or link, only `.png` supported)**
