@@ -13,4 +13,4 @@ assignees: Yat3s
 ### Group name(displayed on Life Balance)
 Group name
 
-### Group icon(File or link, only `.png` supported)**
+### Group icon(File or link, only `.png/.jpg/.jpeg` supported)**
