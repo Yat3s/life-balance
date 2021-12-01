@@ -11,8 +11,12 @@ assignees: Yat3s
 - [ ] Invite **i-coconut** to group
 
 ### Group name(displayed on Life Balance)
-Group name
+[Group name]
 
 ### Group icon(File or link, only `.png/.jpg/.jpeg` supported)
+[Group icon]
 
-### Picture for promotion
+### City
+[苏州/北京/上海]
+
+### Picture for promotion(Optional)
