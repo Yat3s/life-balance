@@ -8,7 +8,7 @@ assignees: Yat3s
 ---
 
 - [ ] This group only serves Microsoft
-- [ ] Invite **i-coconut** to group
+- [ ] Invited **4645643** to Wechat group
 
 ### Group name(displayed on Life Balance)
 [Group name]
