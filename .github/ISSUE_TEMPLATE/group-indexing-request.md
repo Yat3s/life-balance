@@ -7,8 +7,9 @@ assignees: Yat3s
 
 ---
 
+Please ensure the following requirements before raising your request
 - [ ] This group only serves Microsoft
-- [ ] Invited **4645643** to Wechat group
+- [ ] Invited admin(Wechat ID: **4645643**) to Wechat group
 
 ### Group name(displayed on Life Balance)
 [Group name]
