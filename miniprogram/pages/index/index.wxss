@@ -1,5 +1,12 @@
 /* miniprogram/pages/index/index.wxss */
 
+.tab-container {
+  display: flex;
+  padding-top: 20rpx;
+  padding-left: 24rpx;
+  padding-right: 24rpx;
+}
+
 .tab {
   color: #240846;
   align-items: center;
@@ -8,6 +15,7 @@
   transition: width 0.5s;
   height: 70%;
   background: white;
+  padding: 16rpx 0rpx;
 }
 
 .tab-highlight {
@@ -28,3 +36,28 @@
   font-size: 10pt;
   font-weight: bold;
 }
+
+.tab-icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+
+.modal-main {
+  padding: 48rpx;
+  border-radius: 32rpx;
+  text-align: start;
+  background: white;
+}
+
+.modal-title {
+  font-weight: bold;
+  font-size: 18pt;
+  color: black;
+}
+
+.modal-content {
+  font-size: 10pt;
+  color: var(--textGrey);
+}
+

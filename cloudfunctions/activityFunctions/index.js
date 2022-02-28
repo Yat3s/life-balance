@@ -3,6 +3,7 @@ const fetchActivitiesByIds = require('./actions/fetchActivitiesByIds')
 const signupActivity = require('./actions/signupActivity')
 const quitActivity = require('./actions/quitActivity')
 const updateActivity = require('./actions/updateActivity')
+const fetchUserActivities = require('./actions/fetchUserActivities')
 
 
 exports.main = async (event, context) => {
@@ -18,6 +19,8 @@ exports.main = async (event, context) => {
       return await updateActivity.main(data, context);
     case 'quitActivity':
       return await quitActivity.main(data, context);
-
+      case 'fetchUserActivities':
+        return await fetchUserActivities.main(data, context);
+      
   }
 }

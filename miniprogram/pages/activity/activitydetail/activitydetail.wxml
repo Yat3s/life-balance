@@ -10,7 +10,12 @@
 
   <view class="flex">
     <view class="indicator" />
-    <view class="title margin-left">{{activity.title}}</view>
+    <view class="margin-left">
+      <view class="title">{{activity.title}}</view>
+      <view class="flex align-center margin-top-xs">
+        <view class="tag margin-right-xs" wx:for="{{activity.tags}}" wx:key="item">{{item}}</view>
+      </view>
+    </view>
   </view>
 
 
@@ -24,8 +29,8 @@
 
       <view class="margin-top-xs">
         <text class="cuIcon-rechargefill desc-icon"></text>
-        <text class="margin-left-xs desc-content">{{activity.fee == 0 ? '免费' : '¥ ' + activity.fee +
-          '元/人（仅供参考）'}}</text>
+        <text class="margin-left-xs desc-content">{{activity.fee == 0 ? 'Free' : '¥ ' + activity.fee +
+          ' CNY/person'}}</text>
       </view>
 
       <view bindtap="onClickLocation" class="flex  margin-top-xs">
@@ -42,25 +47,30 @@
   <view class="section">
     <view class="indicator" />
 
+
     <view class="participant-container margin-left">
-      <view class="flex text-grey text-sm align-center">
-        <image style="width: 36rpx; height: 36rpx; border-radius: 50%;" src="{{activity.organizer.avatarUrl}}"></image>
-        <text class="text-bold margin-left-xs">{{activity.organizer.name}}</text>
-        <text class="margin-left-xs">在 {{activity.createDateStr}} 发起了该活动</text>
+      <view class="section-title">Participants</view>
+
+      <view class="flex text-grey text-sm align-center margin-top-sm">
+        <image bindtap="onAvatarClick" data-id="{{activity.organizer._id}}" style="width: 36rpx; height: 36rpx; border-radius: 50%;" src="{{activity.organizer.avatarUrl}}"></image>
+        <text class="text-bold margin-left-xs">{{activity.organizer.nickName}}</text>
+        <text class="margin-left-xs">Posted at {{activity.createDateStr}} </text>
       </view>
 
-      <view class="flex align-center margin-top-sm">
+      <view class="flex align-center margin-top-xs">
         <view style="font-size: 20pt;" class="text-bold">{{activity.participants && activity.participants.length ?
           activity.participants.length : 0}}</view>
 
-        <view class="margin-left-xs text-grey text-sm margin-top-xs"> / {{activity.maxParticipant}} 人参与</view>
+        <view class="margin-left-xs text-grey text-sm margin-top-xs"> / {{activity.maxParticipant}}</view>
 
         <view class="flex margin-left">
-          <image wx:if="{{index < 6}}"
-            style="width: 60rpx; height: 60rpx; border-radius: 50%; border: 4rpx solid #EDEDED;"
-            src="{{item.avatarUrl}}" wx:for="{{activity.participants}}" wx:key="item">
+          <image bindtap="onAvatarClick" data-id="{{item._id}}" wx:if="{{index < 6}}" class="participant-avatar" src="{{item.avatarUrl}}"
+            wx:for="{{activity.participants}}" wx:key="item">
           </image>
         </view>
+
+        <view bindtap="onClickViewParticipantDetail" class="view-all-participant  margin-left">Detail<text
+            class="cuIcon-right"></text></view>
 
       </view>
 
@@ -73,7 +83,7 @@
               style="background: #dddbf7; width: {{participantMaleProgress}}%; "></view>
           </view>
           <view class="text-grey margin-top-xs" style="font-size: 8pt;">
-            男生 {{participantMale}}/{{activity.maxParticipantMale}}
+            Male {{participantMale}}/{{activity.maxParticipantMale}}
           </view>
         </view>
 
@@ -83,7 +93,7 @@
               style="background: #d67777; width: {{participantFemaleProgress}}%; "></view>
           </view>
           <view class="text-grey margin-top-xs" style="font-size: 8pt;">
-            女生 {{participantFemale}}/{{activity.maxParticipantFemale}}
+            Female {{participantFemale}}/{{activity.maxParticipantFemale}}
           </view>
         </view>
 
@@ -96,7 +106,7 @@
   <view class="section">
     <view class="indicator" />
     <view class="margin-left">
-      <view style="font-size: 10pt; font-weight: bold;">活动说明</view>
+      <view class="section-title">Detail</view>
 
       <view class="margin-top-xs text-sm text-grey">
         <rich-text nodes="{{activity.detail}}"></rich-text>
@@ -110,7 +120,7 @@
     <view class="indicator" />
 
     <view style="width: 100%" class="margin-left">
-      <view style="font-size: 10pt; font-weight: bold;">活动地址</view>
+      <view class="section-title">Venue</view>
 
       <view class="align-center margin-top-xs">
 
@@ -120,7 +130,7 @@
       </view>
 
       <view wx:if="{{activity.location.latitude}}" class="map">
-        <map style="width: 100%; height: 100%;" latitude="{{activity.location.latitude}}"
+        <map bindtap="onClickLocation" style="width: 100%; height: 100%;" latitude="{{activity.location.latitude}}"
           longitude="{{activity.location.longitude}}"></map>
       </view>
 
@@ -135,32 +145,29 @@
 <view class="foot cu-bar" style="background-color: white; padding: 24rpx">
 
   <view class="flex align-center">
-    
 
     <view wx:if="{{activity.published}}" class="flex align-center">
-      <button class="text-secondary" style="width:100rpx; font-size: 9pt; padding: 12rpx; font-weight: normal;"
-        open-type="share"><text class="cuIcon-share"></text>
-        分享</button>
+      <button class="text-secondary" style="width:100rpx; font-size: 12pt; padding: 12rpx; font-weight: normal;"
+        open-type="share"><text class="cuIcon-share"></text></button>
 
       <view style="width: 2rpx; background: #f1f1f1; height: 40rpx;"></view>
     </view>
 
     <view wx:if="{{userInfo}}" class="flex align-center">
       <view wx:if="{{userInfo}}" bindtap="onClickLike" class="text-secondary"
-        style="font-size: 9pt; padding: 12rpx 24rpx;">
-        <text class="{{liked ? 'cuIcon-favorfill' : 'cuIcon-favor'}}"></text> {{liked ? '已收藏' : '收藏'}}
+        style="font-size: 12pt; padding: 12rpx 24rpx;">
+        <text class="{{liked ? 'cuIcon-favorfill' : 'cuIcon-favor'}}"></text>
       </view>
 
       <view style="width: 2rpx; background: #f1f1f1; height: 40rpx;"></view>
     </view>
 
-    <button class="text-secondary" style="width:100rpx; font-size: 9pt; padding: 12rpx; font-weight: normal;"
-      open-type="contact"><text class="cuIcon-servicefill"></text>
-      客服</button>
-    <view style="width: 2rpx; background: #f1f1f1; height: 40rpx;"></view>
+    <!-- <button class="text-secondary" style="width:100rpx; font-size: 12pt; padding: 12rpx; font-weight: normal;"
+      open-type="contact"><text class="cuIcon-servicefill"></text></button>
+    <view style="width: 2rpx; background: #f1f1f1; height: 40rpx;"></view> -->
 
-    <view bindtap="showQrcodeModal" class="text-secondary" style="font-size: 9pt; padding: 12rpx 24rpx;"><text
-        class="cuIcon-qr_code"></text> 群二维码</view>
+    <view bindtap="showQrcodeModal" class="text-secondary" style="font-size: 12pt; padding: 12rpx 24rpx;"><text
+        class="cuIcon-qr_code"></text></view>
 
     <!-- <button open-type="contact" style="font-weight: normal;   font-size: 11pt; width: auto" bindcontact="handleContact">
       <view class="flex align-center">
@@ -174,27 +181,179 @@
   </view>
 
   <view class="flex">
-    <view bindtap="onSignupActivity"
-      class="shadow cu-btn {{ended ? 'bg-grey' : canEdit ? 'bg-red' : joined ? 'bg-grey' : 'bg-blue'}} round">
-      {{ended ? '活动已结束' : canEdit ? '编辑活动' : joined ? '取消报名' : '报名参加'}}
+
+    <view bindtap="onRepostClick" wx:if="{{isOrganizer && ended}}" class="shadow cu-btn bg-yellow round margin-right">
+      Repost
+    </view>
+
+    <view bindtap="onEditClick" wx:if="{{isOrganizer}}" class="shadow cu-btn bg-red round">
+      Edit
+    </view>
+
+    <view bindtap="onSignupActivity" wx:if="{{!isOrganizer && ended}}" class="cu-btn bg-grey round">
+      Ended
+    </view>
+
+    <view bindtap="onSignupActivity" wx:if="{{!isOrganizer && !ended}}"
+      class="cu-btn round {{joined ? 'bg-grey' : 'bg-blue'}} ">
+      {{joined ? 'Cancel' : 'Join'}}
     </view>
   </view>
 
 </view>
 
 <!-- Qrcode -->
-<view class="cu-modal {{showQrcode ? 'show' : ''}}">
+<view class="cu-modal {{showingModal === 'qrcode' ? 'show' : ''}}">
   <view class="cu-dialog">
     <view class="cu-bar bg-white justify-end">
-      <view class="content">扫码添加该活动微信群</view>
-      <view class="action" bindtap="hideQrcodeModal">
+      <view class="content">Scan the qrcode to join the Wechat group</view>
+      <view class="action" bindtap="onDismissModal">
         <text class="cuIcon-close text-red"></text>
       </view>
     </view>
     <view class="padding-xl">
-      <image style="width: 400rpx" mode="widthFix" src="{{activity.qrcode}}"></image>
+      <image show-menu-by-longpress="true" style="width: 400rpx" mode="widthFix" src="{{activity.qrcode}}"></image>
+      <view class="text-grey">Long press to scan or</view>
+      <view bindtap="saveQrcodeToAlbum" class="cu-btn round bg-blue margin-top">Save to gallery</view>
+    </view>
+  </view>
+</view>
 
-      <view bindtap="saveQrcodeToAlbum" class="cu-btn round bg-blue margin-top">保存到相册</view>
+<!-- Participant -->
+<view class="cu-modal {{showingModal === 'participant' ? 'show' : ''}}" catchtouchmove="preventTouchMove">
+  <view class="cu-dialog modal-main">
+
+    <view class="flex justify-between">
+      <view class="modal-title">Participants</view>
+      <view class="action" bindtap="onDismissModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+
+    <view class="flex align-center margin-top">
+      <view style="font-size: 20pt;" class="text-bold">{{activity.participants && activity.participants.length ?
+        activity.participants.length : 0}}</view>
+
+      <view class="margin-left-xs text-grey text-sm margin-top-xs"> / {{activity.maxParticipant}} Joins</view>
+    </view>
+
+    <view class="flex align-center">
+      <view class="modal-male-column" style="width: {{400 * participantMale / activity.participants.length}}rpx;">
+      </view>
+      <view class="modal-column-text margin-left-xs">{{participantMale}} Male</view>
+    </view>
+
+    <view class="flex align-center">
+      <view class="modal-female-column" style="width: {{400 * participantFemale / activity.participants.length}}rpx; ">
+      </view>
+      <view class="modal-column-text margin-left-xs">{{participantFemale}} Female</view>
+    </view>
+
+    <view class="flex align-center">
+      <view class="modal-other-column"
+        style="width: {{400 * (participantGenderUnknown + participantNonBinary) / activity.participants.length}}rpx; ">
+      </view>
+      <view class="modal-column-text margin-left-xs">{{participantGenderUnknown + participantNonBinary}} Other</view>
+    </view>
+
+    <view class="flex align-center justify-between margin-top-lg">
+      <view class="modal-content">
+        Organizer
+      </view>
+
+      <view wx:if="{{joined}}" class="modal-copy-contact-text">Tap to copy contact</view>
+      <view wx:if="{{!joined}}" class="modal-copy-contact-text">Join to see participant's contact</view>
+    </view>
+
+    <view class="flex justify-between align-center margin-top-sm">
+      <view class="flex align-center">
+        <image bindtap="onAvatarClick" data-id="{{activity.organizer._id}}"  src=" {{activity.organizer.avatarUrl}}"
+          class="modal-host-avatar-lg"></image>
+
+        <view class="margin-left-sm">
+          <view class="flex">
+            <view class="modal-host-name">{{activity.organizer.nickName}}</view>
+            <image wx:if="{{activity.organizer.gender == 1}}" class="modal-gender margin-left-xs"
+              src="../../../images/ic_male.png">
+            </image>
+            <image wx:if="{{activity.organizer.gender == 2}}" class="modal-gender margin-left-xs"
+              src="../../../images/ic_female.png">
+            </image>
+          </view>
+          <view class="modal-joined-at margin-top-xs">Posted at {{activity.createAtStr}}</view>
+        </view>
+      </view>
+
+      <view wx:if="{{joined}}" bindtap="onClickContact" data-index="{{0}}" class="modal-content margin-left-xs">
+        {{activity.organizer.contact}}</view>
+    </view>
+
+    <view class="flex align-center justify-between margin-top-sm">
+      <view class="modal-content">
+        Members
+      </view>
+    </view>
+
+    <scroll-view class="margin-top" scroll-y="true" style="max-height: 32vh;">
+      <view wx:if="{{index != 0}}" wx:for="{{activity.participants}}" wx:key="{{_id}}"
+        class="flex justify-between align-center margin-bottom-sm">
+
+        <view class="flex align-center">
+          <image bindtap="onAvatarClick" data-id="{{item._id}}" src="{{item.avatarUrl}}" class="modal-host-avatar-lg">
+          </image>
+
+          <view class="margin-left-sm">
+            <view class="flex">
+              <view class="modal-host-name">{{item.nickName}}</view>
+              <image wx:if="{{item.gender == 1}}" class="modal-gender margin-left-xs" src="../../../images/ic_male.png">
+              </image>
+              <image wx:if="{{item.gender == 2}}" class="modal-gender margin-left-xs"
+                src="../../../images/ic_female.png"></image>
+            </view>
+            <view wx:if="{{item.joinedAt}}" class="modal-joined-at margin-top-xs">Joined at {{item.joinedAtStr}}</view>
+          </view>
+        </view>
+
+        <view wx:if="{{joined}}" bindtap="onClickContact" data-index="{{index}}" class="modal-content margin-left-xs">
+          {{isOrganizer ?
+          item.contact : '*****'}}</view>
+
+      </view>
+    </scroll-view>
+
+    <view class="flex align-center justify-end margin-top-lg">
+      <view bindtap="onDismissModal" class="cu-btn modal-btn-ok">OK</view>
+    </view>
+  </view>
+</view>
+
+<!-- Gender Setting -->
+<view class="cu-modal {{showingModal === 'gender' ? 'show' : ''}}" catchtouchmove>
+  <view class="cu-dialog modal-main">
+
+    <view class="flex justify-between">
+      <view class="modal-title">Setting Gender</view>
+    </view>
+
+    <view bindtap="onSelectedGender" data-index="{{1}}"
+      class="margin-top {{selectedGenderIndex === 1 ? 'modal-gender-container-selected' : 'modal-gender-container'}}">
+      <image class="modal-gender-icon" src="../../../images/img_male.png"></image>
+      <view class="modal-gender-title">Male</view>
+    </view>
+
+    <view bindtap="onSelectedGender" data-index="{{2}}"
+      class="margin-top {{selectedGenderIndex === 2 ? 'modal-gender-container-selected' : 'modal-gender-container'}}">
+      <image class="modal-gender-icon" src="../../../images/img_female.png"></image>
+      <view class="modal-gender-title">Female</view>
+    </view>
+
+    <view bindtap="onSelectedGender" data-index="{{3}}"
+      class="margin-top {{selectedGenderIndex === 3 ? 'modal-gender-container-selected' : 'modal-gender-container'}}">
+      <image class="modal-gender-icon" src="../../../images/img_nonbinary.png"></image>
+      <view class="modal-gender-title">Non-Binary</view>
+    </view>
+    <view class="flex align-center justify-end margin-top-lg">
+      <view catchtap="onSubmitGender" class="cu-btn modal-btn-ok">Submit</view>
     </view>
   </view>
 </view>

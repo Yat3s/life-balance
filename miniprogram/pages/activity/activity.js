@@ -11,7 +11,7 @@ const NEARBY_RANGE = 200; // km
 
 const CATEGORY_ALL = {
   _id: 'all',
-  name: '全部'
+  name: 'All'
 };
 
 Component({
@@ -29,19 +29,11 @@ Component({
 
     activityFilters: [{
         id: 'popular',
-        name: '热门活动',
-      },
-      {
-        id: 'nearby',
-        name: '附近活动',
-      },
-      {
-        id: 'upcoming',
-        name: '即将开始',
+        name: 'Active',
       },
       {
         id: 'end',
-        name: '已结束',
+        name: 'Ended',
       },
     ],
 
@@ -79,15 +71,6 @@ Component({
       if (this.data.categories) {
         this.fetchActivityCategories();
         this.requestLocation();
-      }
-
-      if (app.globalData.pendingMessage) {
-        wx.showToast({
-          icon: 'none',
-          duration: 3000,
-          title: app.globalData.pendingMessage,
-        })
-        app.globalData.pendingMessage = null;
       }
     }
   },
@@ -298,33 +281,23 @@ Component({
 
     fetchAllActivities() {
       activityRepo.fetchAllPublishedActivities().then(activities => {
+        console.log(activities);
         const {
           categories
         } = this.data;
 
-        let validActivities = [];
-        // Remove all no participant activity
-        activities.forEach(activity => {
-          const ended = activity.endDate < Date.now();
-          if (!ended || activity.participants && activity.participants.length > 1) {
-            validActivities.push(activity);
-          }
-        })
-
-        console.log(validActivities);
-
         categories.forEach(category => {
           category.count = 0;
-          validActivities.forEach(activity => {
+          activities.forEach(activity => {
             const ended = activity.endDate < Date.now();
-            if (!ended && (activity.category == category._id || category._id == 'all')) {
+            if (activity.category == category._id || category._id == 'all') {
               category.count++;
             }
             activity.ended = ended
           });
         });
         this.setData({
-          activities: validActivities,
+          activities,
           categories
         }, this.checkContentEmpty);
 
@@ -346,14 +319,14 @@ Component({
 
       for (const activity of activities) {
         if (activity.location && activity.location.latitude) {
-          const distance = util.distance(activity.location.latitude, activity.location.longitude, latitude, longitude);
+          const distance = util.calcDistance(activity.location.latitude, activity.location.longitude, latitude, longitude);
           activity.distance = distance;
           activity.distanceStr = `(${distance}km)`;
         }
 
         const organizerLocation = activity.organizerLocation;
         if (organizerLocation && organizerLocation.latitude) {
-          activity.distanceFromOrganizer = util.distance(organizerLocation.latitude, organizerLocation.longitude, latitude, longitude);
+          activity.distanceFromOrganizer = util.calcDistance(organizerLocation.latitude, organizerLocation.longitude, latitude, longitude);
         }
       }
 
@@ -373,6 +346,9 @@ Component({
 
     checkContentEmpty() {
       wx.createSelectorQuery().in(this).select('#activityContainer').boundingClientRect(rect => {
+        if (!rect) {
+          return;
+        }
         const isEmpty = rect.height <= 0;
         const {
           showEmptyMessage
@@ -387,7 +363,7 @@ Component({
 
     onClickDraftActivity() {
       const userInfo = app.globalData.userInfo;
-      if (userInfo && userInfo.phoneNumber) {
+      if (userInfo && userInfo.company) {
         router.navigateToDraftActivity();
         return;
       }
@@ -395,16 +371,16 @@ Component({
       wx.showLoading();
       userRepo.fetchUserInfoOrSignup().then(user => {
         wx.hideLoading();
-        if (user.phoneNumber) {
+        if (user.company) {
           router.navigateToDraftActivity();
         } else {
           router.navigateToAuth(router.AUTH_ORIGIN_DRAFT_ACTIVITY);
         }
       }).catch(err => {
         wx.hideLoading();
-        wx.showToast({
+        wx.showToast({ 
           icon: 'none',
-          title: '暂不支持匿名创建活动',
+          title: "Can't post in anonymously",
         })
       });
     },

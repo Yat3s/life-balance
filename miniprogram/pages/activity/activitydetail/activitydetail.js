@@ -4,6 +4,7 @@ const userRepo = require('../../../repository/userRepo');
 const pref = require('../../../common/preference');
 const util = require('../../../common/util');
 const router = require('../../router');
+const { notifyActivityHost } = require('../../../repository/notificationHelper');
 
 const app = getApp();
 Page({
@@ -14,7 +15,7 @@ Page({
   data: {
     toolbarHeight: app.globalData.toolbarHeight,
     statusBarHeight: app.globalData.statusBarHeight,
-    canEdit: false,
+    isOrganizer: false,
   },
 
   /**
@@ -49,7 +50,7 @@ Page({
     }
 
     if (activity.location && activity.location.latitude) {
-      const distance = util.distance(activity.location.latitude, activity.location.longitude, latitude, longitude);
+      const distance = util.calcDistance(activity.location.latitude, activity.location.longitude, latitude, longitude);
       activity.distance = distance;
       activity.distanceStr = `(${distance}km)`;
     }
@@ -62,6 +63,10 @@ Page({
   fetchUserInfo() {
     userRepo.fetchUserInfo().then(userInfo => {
       this.handleUserState(userInfo);
+
+      this.setData({
+        showingModal: userInfo.gender === 0 ? 'gender' : ''
+      })
     })
   },
 
@@ -96,13 +101,13 @@ Page({
     }
 
     const ended = Date.now() > activity.endDate;
-    const canEdit = userInfo._openid == activity.organizer._openid && !ended;
+    const isOrganizer = userInfo._openid == activity.organizer._openid;
 
     this.setData({
       userInfo,
       joined,
       liked,
-      canEdit,
+      isOrganizer,
       ended,
     });
   },
@@ -112,22 +117,40 @@ Page({
 
     return new Promise((resolve, reject) => {
       activityRepo.fetchActivityItem(id).then(activity => {
+        console.log(activity);
         wx.hideLoading();
         let participantMale = 0;
         let participantFemale = 0;
+        let participantNonBinary = 0;
+        let participantGenderUnknown = 0;
 
         for (const participant of activity.participants) {
-          if (participant.gender == 1) {
+          if (participant.gender === 0) {
+            participantGenderUnknown++;
+          }
+          if (participant.gender === 1) {
             participantMale++;
           }
+
+          if (participant.gender === 2) {
+            participantFemale++;
+          }
+
+          if (participant.gender === 3) {
+            participantNonBinary++;
+          }
+
+          const joinedAtDate = new Date(participant.joinedAt);
+          participant.joinedAtStr = joinedAtDate.dateStr() + " " + joinedAtDate.hhmm();
         }
-        participantFemale = activity.participants.length - participantMale;
 
         const participantMaleProgress = participantMale == 0 ? 0 : Math.max(20, parseInt(participantMale / activity.maxParticipantMale * 100));
         const participantFemaleProgress = participantFemale == 0 ? 0 : Math.max(20, parseInt(participantFemale / activity.maxParticipantFemale * 100));
         const maxParticipantMalePercent = parseInt(activity.maxParticipantMale / activity.maxParticipant * 100);
         const maxParticipantFemalePercent = parseInt(activity.maxParticipantFemale / activity.maxParticipant * 100);
 
+        const createDate = new Date(activity._createTime);
+        activity.createAtStr = createDate.dateStr() + " " + createDate.hhmm();
         this.setData({
           activity,
           participantMale,
@@ -135,7 +158,10 @@ Page({
           participantFemale,
           participantFemaleProgress,
           maxParticipantMalePercent,
-          maxParticipantFemalePercent
+          maxParticipantFemalePercent,
+
+          participantNonBinary,
+          participantGenderUnknown
         });
 
         this.handleUserState(this.data.userInfo);
@@ -181,6 +207,12 @@ Page({
     })
   },
 
+  onClickViewParticipantDetail() {
+    this.setData({
+      showingModal: 'participant'
+    });
+  },
+
   showQrcodeModal() {
     const {
       joined,
@@ -190,7 +222,7 @@ Page({
     if (!joined) {
       wx.showToast({
         icon: 'none',
-        title: '请先报名参加活动',
+        title: 'Please join first',
       });
 
       return;
@@ -199,7 +231,7 @@ Page({
     if (!activity.qrcode) {
       wx.showToast({
         icon: 'none',
-        title: 'Oops, 管理员还未设置微信群二维码',
+        title: 'Oops, have not QR code yet',
       });
 
       return;
@@ -207,13 +239,18 @@ Page({
 
 
     this.setData({
-      showQrcode: true
+      showingModal: 'qrcode'
     });
   },
 
-  hideQrcodeModal() {
+  onAvatarClick(e) {
+    const userId = e.currentTarget.dataset.id;
+    router.navigateToProfile(userId);
+  },
+
+  onDismissModal() {
     this.setData({
-      showQrcode: false
+      showingModal: ''
     });
   },
 
@@ -228,13 +265,21 @@ Page({
         filePath: res.tempFilePath,
       }).then(data => {
         wx.showToast({
-          title: '保存成功',
+          title: 'Save success',
         })
       })
     })
   },
 
   signupActivity(activitySnapshot, userInfo) {
+
+    const { isSignup } = this.data;
+
+    if (isSignup) {
+      return;
+    }
+
+    this.setData({ isSignup : true });
 
     // Fetch the latest activity
     this.fetchActivity(activitySnapshot._id).then(activity => {
@@ -247,11 +292,18 @@ Page({
       } = this.data;
 
       if (ended) {
+        this.setData({ isSignup : false});
+        return;
+      }
+
+      if (!userInfo.company) {
+        router.navigateToAuth(router.AUTH_ORIGIN_ACTIVITY_DETAIL);
+        this.setData({ isSignup : false});
         return;
       }
 
       let message = null;
-      if (participantMale + participantFemale >= activity.maxParticipant) {
+      if (activity.participants.length >= activity.maxParticipant) {
         message = '可报名总人数已到上限哦';
       } else if (userInfo.gender == 1 && participantMaleProgress == 100) {
         message = '可报名男生人数已到上限哦';
@@ -265,31 +317,34 @@ Page({
           title: message,
         });
 
+        this.setData({ isSignup : false});
         return;
       }
 
-      if (!userInfo.phoneNumber) {
-        router.navigateToAuth(router.AUTH_ORIGIN_ACTIVITY_DETAIL);
-        return;
-      }
+      userInfo.joinedAt = Date.now();
 
       activityRepo.signupActivity(activity._id, userInfo).then(data => {
         this.fetchActivity(activity._id);
 
+        notifyActivityHost(activity);
+
         if (activity.qrcode) {
           this.setData({
-            showQrcode: true
+            showingModal: 'qrcode'
           });
         }
 
         wx.showToast({
-          title: '报名成功',
+          title: 'Join success!',
         });
         wx.hideLoading();
+        this.setData({ isSignup : false});
+      }).catch(err => {
+        this.setData({ isSignup : false});
       });
-
+    }).catch(err => {
+      this.setData({ isSignup : false});
     })
-
   },
 
   quitActivity(activity, userInfo) {
@@ -300,12 +355,12 @@ Page({
       wx.showToast({
         icon: 'none',
         duration: 2000,
-        title: '取消报名成功，请退出相应活动微信群。',
+        title: 'Cancel the registration successfully!',
       });
     }).catch(err => {
       wx.showToast({
         icon: 'none',
-        title: '取消报名失败' + err,
+        title: 'Failed to cancel' + err,
       });
       wx.hideLoading();
     });
@@ -319,9 +374,14 @@ Page({
     const {
       activity,
       joined,
-      canEdit,
+      isOrganizer,
       userInfo,
+      ended
     } = this.data;
+
+    if (ended) {
+      return;
+    }
 
     if (!userInfo) {
       userRepo.fetchUserInfoOrSignup().then(newUserInfo => {
@@ -329,11 +389,11 @@ Page({
       }).catch(err => {
         wx.showToast({
           icon: 'none',
-          title: '暂不支持匿名参加活动',
+          title: "Do not allow anonymous operation",
         });
       })
     } else {
-      if (canEdit) {
+      if (isOrganizer) {
         this.editActivity(activity);
       } else if (joined) {
         this.quitActivity(activity, userInfo);
@@ -341,6 +401,21 @@ Page({
         this.signupActivity(activity, userInfo);
       }
     }
+  },
+
+  onRepostClick() {
+    const {
+      activity,
+    } = this.data;
+    router.navigateToRepostActivity(activity._id)
+  },
+
+  onEditClick() {
+    const {
+      activity,
+    } = this.data;
+
+    this.editActivity(activity);
   },
 
   onClickLike(e) {
@@ -358,7 +433,7 @@ Page({
       userRepo.likeActivity(activity._id).then(res => {
         wx.showToast({
           icon: 'none',
-          title: '收藏成功',
+          title: 'Success!',
         });
 
         this.setData({
@@ -366,6 +441,57 @@ Page({
         })
       })
     }
+  },
+
+  onSelectedGender(e) {
+    const selectedGenderIndex = e.currentTarget.dataset.index;
+    this.setData({
+      selectedGenderIndex
+    })
+  },
+
+  onSubmitGender() {
+    const { selectedGenderIndex, userInfo } = this.data;
+    if (selectedGenderIndex <= 0) {
+      wx.showToast({
+        icon: 'none',
+        title: 'You must set gender.',
+      });
+
+      return;
+    }
+
+    userRepo.updateUserInfo(userInfo._id, {
+      gender: selectedGenderIndex
+    });
+    userInfo.gender = selectedGenderIndex;
+
+    this.setData({
+      showingModal: '',
+      userInfo
+    })
+  },
+
+  onClickContact(e) {
+    const { isOrganizer, activity } = this.data;
+    const index = e.currentTarget.dataset.index;
+
+    if (!isOrganizer && index != 0) {
+      wx.showToast({
+        icon: 'none',
+        title: "Only organizer can view members' contact",
+      });
+
+      return;
+    }
+    wx.setClipboardData({
+      data: activity.participants[index].contact,
+    })
+
+    wx.showToast({
+      icon: 'none',
+      title: 'Copied to clipboard',
+    })
   },
 
 
@@ -431,8 +557,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    const { activity } = this.data;
     return {
-      title: this.data.activity.title
+      title: activity.startDateStr + " " + activity.title
     }
   }
 })

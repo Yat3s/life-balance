@@ -1,5 +1,4 @@
 .activity-item {
-  margin: 0 var(--inset) 30rpx var(--inset);
   background: white;
   padding: 32rpx;
   border-radius: 16rpx;

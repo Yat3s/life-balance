@@ -15,7 +15,7 @@
         {
           "name": "Activity Detail",
           "pathName": "pages/activity/activitydetail/activitydetail",
-          "query": "id=cd045e75612d866a08f15894252c79a0",
+          "query": "id=18ed0968617aa60a0254dacd347cdcec",
           "scene": null
         },
         {
@@ -39,6 +39,42 @@
         {
           "name": "Auth",
           "pathName": "pages/auth/auth",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "postcarpool",
+          "pathName": "pages/carpool/postcarpool/postcarpool",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "wechatgroup",
+          "pathName": "pages/home/wechatgroup/wechatgroup",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "Food",
+          "pathName": "pages/home/foodmenu/foodmenu",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "howto",
+          "pathName": "pages/home/howto/howto",
+          "query": "id=9e7190f161716abe012a5e02561ee088",
+          "scene": null
+        },
+        {
+          "name": "howtodetail",
+          "pathName": "pages/home/howto/howtodetail/howtodetail",
+          "query": "id=9e7190f161716abe012a5e02561ee088",
+          "scene": null
+        },
+        {
+          "name": "/weworkparking",
+          "pathName": "pages/home/weworkparking/weworkparking",
           "query": "",
           "scene": null
         }

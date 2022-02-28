@@ -9,6 +9,8 @@
   box-sizing: border-box;
 } 
 
+
+
 button {
   background: initial;
 }
@@ -60,6 +62,31 @@ button::after{
   -webkit-box-orient: vertical;
 }
 
+.shine {
+  background: #f6f7f8;
+  background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+  background-repeat: no-repeat;
+  background-size: 800px 104px;
+  display: inline-block;
+  position: relative;
+
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeholderShimmer;
+  animation-timing-function: linear;
+}
+
+@keyframes placeholderShimmer {
+  0% {
+    background-position: -468px 0;
+  }
+
+  100% {
+    background-position: 468px 0;
+  }
+}
+
 page {
   background: #f9f9f9;
   display: flex;
@@ -67,8 +94,9 @@ page {
   justify-content: flex-start;
 
   /* Theme */
-  --primary: #4749A0;
+  --primary: #181853;
   --secondary: #8F97FD;
   --lightBlue: #ECF4FF;
   --inset: 40rpx;
+  --textGrey: #aaaaaa;
 }

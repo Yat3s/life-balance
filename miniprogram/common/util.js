@@ -1,4 +1,4 @@
-function formatDate(timestamp) {
+export function formatDate(timestamp) {
   var date = new Date(timestamp);
   var y = date.getFullYear();
   var m = date.getMonth() + 1;
@@ -11,10 +11,10 @@ function formatDate(timestamp) {
   var second = date.getSeconds();
   minute = minute < 10 ? ('0' + minute) : minute;
   second = second < 10 ? ('0' + second) : second;
-  return m + '月' + d + '日 ' + h + ':' + minute;
+  return m + '/' + d + ' ' + h + ':' + minute;
 }
 
-function distance(la1, lo1, la2, lo2) {
+export function calcDistance(la1, lo1, la2, lo2) {
   var La1 = la1 * Math.PI / 180.0;
   var La2 = la2 * Math.PI / 180.0;
   var La3 = La1 - La2;
@@ -25,7 +25,7 @@ function distance(la1, lo1, la2, lo2) {
   return s.toFixed(2);
 }
 
-module.exports = {
-  formatDate,
-  distance
+export function dateDiff(date1, date2) {
+  return Math.round((date1 - date2) / (1000 * 60 * 60 * 24));
 }
+

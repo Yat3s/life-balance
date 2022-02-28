@@ -1,3 +1,5 @@
+import { navigateToActivityDetail } from "../../pages/router";
+
 Component({
 
   options: {
@@ -15,11 +17,9 @@ Component({
   methods: {
     onActivityItemClick(e) {
       const id = e.currentTarget.dataset.id;
-      wx.navigateTo({
-        url: `/pages/activity/activitydetail/activitydetail?id=${id}`
-      });
+
+      navigateToActivityDetail(id);
     },
-    
   },
 
   pageLifetimes: {

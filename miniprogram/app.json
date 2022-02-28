@@ -3,11 +3,21 @@
     "pages/index/index",
     "pages/activity/activity",
     "pages/socialcircle/socialcircle",
-    "pages/profile/profile",
+    "pages/user/profile",
     "pages/activity/activitydetail/activitydetail",
     "pages/activity/draftactivity/draftactivity",
-    "pages/profile/userinfo/userinfo",
-    "pages/auth/auth"
+    "pages/user/userinfo/userinfo",
+    "pages/auth/auth",
+    "pages/carpool/postcarpool/postcarpool",
+    "pages/webview/webview",
+    "pages/home/wechatgroup/wechatgroup",
+    "pages/home/foodmenu/foodmenu",
+    "pages/home/howto/howto",
+    "pages/home/howto/howtodetail/howtodetail",
+    "pages/home/weworkparking/weworkparking",
+    "pages/user/user",
+    "pages/user/profile/profile",
+    "pages/user/useractivity/useractivity"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -22,7 +32,9 @@
   },
   "usingComponents": {
     "mp-navigation-bar": "weui-miniprogram/navigation-bar/navigation-bar",
-    "toolbar": "/colorui/components/toolbar"
+    "toolbar": "/colorui/components/toolbar",
+    "mp-uploader": "weui-miniprogram/uploader/uploader",
+    "mp-sticky": "/components/sticky"
   },
   "permission": {
     "scope.userLocation": {

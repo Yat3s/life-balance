@@ -27,7 +27,7 @@
     <view class="activity-item-desc">
       <text class="cuIcon-friendfill activity-item-desc-icon"></text>
       <text class="margin-left-xs single-line">{{activity.participants && activity.participants.length ?
-        activity.participants.length : 0}} / {{activity.maxParticipant}} 人</text>
+        activity.participants.length : 0}} / {{activity.maxParticipant}} Participants</text>
     </view>
 
   </view>

@@ -1,14 +1,17 @@
 <view style="padding-bottom: 100rpx;">
+  <home wx:if="{{currentTab=='home'}}" />
   <activity wx:if="{{currentTab=='activity'}}" />
-  <profile wx:if="{{currentTab=='profile'}}" />
+  <carpool wx:if="{{currentTab=='carpool'}}" />
+  <user wx:if="{{currentTab=='user'}}" />
 
   <!-- Bottom tab -->
-  <view class="padding-left padding-right cu-bar bg-white shadow foot" style="display:flex; height: 100rpx;">
+  <view class="cu-bar bg-white shadow foot tab-container" style="padding-bottom: {{navigationBarHeight > 0 ? (navigationBarHeight + 8) : 20}}rpx;">
     <view bindtap="onTabSelect"
-      class="{{currentTab==item.id?'tab-highlight':'tab'}} flex padding-top padding-bottom tab" data-tabid="{{item.id}}"
+      class="{{currentTab==item.id ? 'tab-highlight' : 'tab'}} flex tab" data-tabid="{{item.id}}"
       style="width:{{currentTab==item.id?tabWidth*1.8:tabWidth}}px;" wx:for="{{pages}}" wx:key="id">
-      <image src="{{item.icon}}" style="width:36rpx;height:36rpx"></image>
+      <image class="tab-icon" src="{{item.icon}}" ></image>
       <view class="tab-text margin-left-sm" hidden="{{currentTab != item.id}}">{{item.title}}</view>
     </view>
   </view>
 </view>
+

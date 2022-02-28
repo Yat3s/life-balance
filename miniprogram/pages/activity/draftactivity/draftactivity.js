@@ -2,33 +2,15 @@
 const activityRepo = require('../../../repository/activityRepo');
 const userRepo = require('../../../repository/userRepo');
 const pref = require('../../../common/preference');
+const {
+  subscribeActivityNotification
+} = require('../../../repository/notificationHelper');
 
 const app = getApp();
-const TMP_ID_EVENT_CREATED = '9UbBuyHoTS8vX0UaIGqf2rAwcQS3kM1giOV9EPJp1O8'
-const MAX_TAG_LENGTH = 8;
+const MAX_TAG_LENGTH = 12;
 const MAX_TAGS_SIZE = 4;
 const MAX_TITLE_LENGTH = 30;
 const MAX_PARTICIPANT = 100;
-
-Date.prototype.yyyymmdd = function () {
-  var mm = this.getMonth() + 1; // getMonth() is zero-based
-  var dd = this.getDate();
-
-  return [this.getFullYear(),
-    (mm > 9 ? '' : '0') + mm,
-    (dd > 9 ? '' : '0') + dd
-  ].join('-');
-};
-
-Date.prototype.hhmm = function () {
-  var hh = this.getHours();
-  var mm = this.getMinutes();
-
-  return [
-    (hh > 9 ? '' : '0') + hh,
-    (mm > 9 ? '' : '0') + mm
-  ].join(':');
-};
 
 Page({
 
@@ -61,20 +43,29 @@ Page({
       })
     });
 
-    if (type == 'edit') {
+    if (type === 'edit' || type === 'repost') {
       const id = options.id;
       wx.showLoading();
       activityRepo.fetchActivityItem(id).then(activity => {
-        const startDate = new Date(activity.startDate);
-        const startDateStr = startDate.yyyymmdd();
-        const startTimeStr = startDate.hhmm();
+        let startDate = new Date(activity.startDate);
+        let startDateStr = startDate.yyyymmdd();
+        let startTimeStr = startDate.hhmm();
 
-        const endDate = new Date(activity.endDate);
-        const endDateStr = endDate.yyyymmdd();
-        const endTimeStr = endDate.hhmm();
+        let endDate = new Date(activity.endDate);
+        let endDateStr = endDate.yyyymmdd();
+        let endTimeStr = endDate.hhmm();
         const genderRequired = activity.maxParticipantFemale &&
           activity.maxParticipantMale &&
           (activity.maxParticipantFemale + activity.maxParticipantMale > 0)
+
+        if (type === 'repost') {
+          // Initial date picker
+          const now = new Date();
+          startDateStr = now.yyyymmdd();
+          startTimeStr = `${now.getHours()}:00`;
+          endDateStr = now.yyyymmdd();
+          endTimeStr = `${now.getHours()}:30`;
+        }
 
         this.setData({
           activityId: activity._id,
@@ -103,7 +94,7 @@ Page({
         })
       })
 
-    } else if (type == 'new') {
+    } else if (type === 'new') {
       // Initial date picker
       const now = new Date();
       const startDateStr = now.yyyymmdd();
@@ -116,7 +107,7 @@ Page({
         startTimeStr,
         endDateStr,
         endTimeStr,
-        detail: "【活动介绍】\n【活动要求】\n【注意事项】\n"
+        detail: "[Note]"
       });
     }
   },
@@ -142,36 +133,6 @@ Page({
     })
   },
 
-  subscribeActivityNotification() {
-    wx.showModal({
-      title: '活动已提交审核',
-      content: '订阅活动通知方便收到活动审核结果',
-      success(res) {
-        if (res.confirm) {
-          wx.requestSubscribeMessage({
-            tmplIds: ['9UbBuyHoTS8vX0UaIGqf2rAwcQS3kM1giOV9EPJp1O8'],
-            success(res) {
-              console.log(res);
-              wx.navigateBack({
-                delta: 1,
-              })
-            },
-            fail(err) {
-              console.log(err);
-              wx.navigateBack({
-                delta: 1,
-              })
-            }
-          })
-        } else if (res.cancel) {
-          wx.navigateBack({
-            delta: 1,
-          })
-        }
-      }
-    })
-  },
-
   onClickDeleteActivity() {
     const {
       activityId
@@ -180,21 +141,21 @@ Page({
     if (!activityId) {
       wx.showToast({
         icon: 'error',
-        title: '删除失败',
+        title: 'Failed to delete',
       })
 
       return;
     }
 
     wx.showModal({
-      title: '删除活动',
-      content: '活动删除后将无法还原',
+      title: 'Delete activity',
+      content: "It can't be restored if deleted",
       success(res) {
         if (res.confirm) {
           activityRepo.deleteActivity(activityId).then(res => {
             wx.showToast({
               icon: 'success',
-              title: '删除成功',
+              title: 'Success',
             });
 
             wx.navigateBack({
@@ -218,6 +179,7 @@ Page({
       endTimeStr,
       userInfo,
       coverFileId,
+      qrcodeFileId,
       genderRequired,
       type,
     } = this.data;
@@ -259,19 +221,19 @@ Page({
     // Input check
     let sanityMessage = null;
     if (!title || !category || !locationName || !coverFileId) {
-      sanityMessage = '请完整填写活动信息';
+      sanityMessage = 'Please complete the form information';
     }
 
     if (tags.length > MAX_TAGS_SIZE) {
-      sanityMessage = `标签的数量不能多于${MAX_TAGS_SIZE}个`;
+      sanityMessage = `The tag size should be less than ${MAX_TAGS_SIZE}`;
     }
 
     if (maxParticipant > MAX_PARTICIPANT) {
-      sanityMessage = `最大参与人数不能多于${MAX_PARTICIPANT}人`;
+      sanityMessage = `The participants should be less than ${MAX_PARTICIPANT}`;
     }
 
     if (maxParticipant <= 1) {
-      sanityMessage = `最大参与人数不能少于2人`;
+      sanityMessage = `The participants should be more than 2`;
     }
 
     let tagLengthInvalid = false;
@@ -282,15 +244,15 @@ Page({
     }
 
     if (tagLengthInvalid) {
-      sanityMessage = `单个标签的长度不能长于${MAX_TAG_LENGTH}`;
+      sanityMessage = `The tag length should be shorter than ${MAX_TAG_LENGTH}`;
     }
 
     if (startDate > endDate) {
-      sanityMessage = '活动结束时间应晚于开始时间';
+      sanityMessage = 'The start date should early than end date';
     }
 
     if (title.length > MAX_TITLE_LENGTH) {
-      sanityMessage = `活动标题不能长于${MAX_TITLE_LENGTH}`;
+      sanityMessage = `The title length should less than ${MAX_TITLE_LENGTH}`;
     }
 
     if (sanityMessage) {
@@ -308,6 +270,7 @@ Page({
       detail,
       fee: parseInt(fee) || 0,
       picture: coverFileId,
+      qrcode: qrcodeFileId,
 
       // Participant
       maxParticipant: maxParticipant || 0,
@@ -327,11 +290,11 @@ Page({
       // Tags
       tags,
 
-      published: false,
+      published: true,
     }
 
     console.log("ActivityBody: ", activityBody);
-    if (type == 'new') {
+    if (type === 'new' || type === 'repost') {
       const participants = [];
       participants.push(userInfo);
       activityBody.organizer = userInfo;
@@ -348,24 +311,24 @@ Page({
       wx.showLoading();
       activityRepo.draftActivity(activityBody).then(res => {
         wx.hideLoading();
-        app.globalData.pendingMessage = '活动已提交审核，请在个人信息页中查看。'
-        this.subscribeActivityNotification();
+        app.globalData.pendingMessage = 'Created success!'
+        subscribeActivityNotification();
       });
-    } else if (type == 'edit') {
+    } else if (type === 'edit') {
       const {
         activityId
       } = this.data;
       wx.showModal({
-        title: '更新活动',
-        content: '修改提交后，活动内容将重新审核',
+        title: 'Update Activity',
+        content: 'You are updating the activity',
         success(res) {
           if (res.confirm) {
             activityBody._updateTime = Date.now();
             wx.showLoading();
             activityRepo.updateActivity(activityId, activityBody).then(res => {
               wx.hideLoading();
-              app.globalData.pendingMessage = '活动已更新并重新提交审核，请在个人信息页中查看。'
-              this.subscribeActivityNotification();
+              app.globalData.pendingMessage = 'Update success!'
+              subscribeActivityNotification();
             });
           } else if (res.cancel) {}
         }

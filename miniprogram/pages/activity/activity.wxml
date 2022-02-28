@@ -4,20 +4,23 @@
 
 </view>
 
-<view class="plr header-text text-bold margin-bottom-lg">
+<!-- <view class="plr header-text text-bold margin-bottom-lg">
   <text class="cuIcon-locationfill"> {{city}}
   </text>
-</view>
+</view> -->
 
-<view class="plr" style="border-radius: 50%; border: 4rpx"></view>
+<view style="margin-top: 100rpx"></view>
+
+<!-- Logo -->
+<image class="logo" src="../../images/ic_activity_2.png"></image>
 
 <!-- Categories -->
-<view class="flex align-center justify-between padding-right margin-top">
-  <view class="section-title">活动</view>
+<view class="flex align-center justify-between">
+  <view class="title">Activity</view>
 
   <view bindtap="onClickDraftActivity" class="draft-activity-btn text-bold text-white flex align-center">
     <text style="font-size: 12pt" class="cuIcon-roundaddfill"></text>
-    <view class="margin-left-xs">发布活动</view>
+    <view class="margin-left-xs">Create Activity</view>
   </view>
 </view>
 
@@ -38,8 +41,9 @@
       <view style="position: relative; z-index: 1">
         <view class="flex justify-end ">
         </view>
-        <view class="text-bold margin-top-xs" style="font-size: 12pt">{{item.name}}</view>
-        <view class="" style="color: #f1f1f1; font-size: 7pt">{{item.count || 0}} 个进行中活动</view>
+        <view class="text-bold margin-top-xs" style="font-size: 11pt">{{item.name}}</view>
+        <view wx:if="{{!item.count || item.count < 2}}" style="color: #ebebeb; font-size: 8pt">{{item.count || 0}} activity</view>
+        <view wx:if="{{item.count && item.count > 1}}" class="" style="color: #ebebeb; font-size: 8pt">{{item.count || 0}} activities</view>
       </view>
     </view>
   </view>
@@ -47,7 +51,7 @@
 
 
 <!-- Filter -->
-<view class="flex align-center justify-between padding-right margin-top plr">
+<view class="flex align-center padding-right margin-top plr">
   <view bindtap="onSelectFilter" data-id="{{item.id}}" wx:for="{{activityFilters}}" wx:key="name"
     class="{{selectedActivityFilterId == item.id ? 'activity-filter-highlight' : 'activity-filter'}}">{{item.name}}
   </view>
@@ -58,13 +62,13 @@
 <view class="margin-top">
 
   <!-- Shimmer layout -->
-  <view wx:if="{{!activities}}" wx:key="nonthing" wx:for="{{3}}"
+  <view wx:if="{{!activities}}" wx:key="nonthing" wx:for="{{2}}"
     style="margin: 0 var(--inset) 30rpx var(--inset); border-radius: 16rpx;" class="bg-white padding">
 
     <view class="flex">
       <view class="shine" style="flex-grow: 0; flex-shrink: 0; width: 180rpx; height: 240rpx; border-radius: 12rpx;" />
 
-      <view style="" class="margin-left">
+      <view class="margin-left">
         <view class="shine" style="width: 400rpx; height: 40rpx" />
         <view class="shine margin-top-lg" style="width: 300rpx; height: 30rpx" />
         <view class="shine margin-top-xs" style="width: 300rpx; height: 30rpx" />
@@ -74,14 +78,17 @@
   </view>
 
   <view id="activityContainer">
-    <activityItem activity="{{item}}" wx:for="{{activities}}"
-      wx:if="{{(selectedCategory._id == 'all' || selectedCategory._id == item.category) && ((selectedActivityFilterId == 'end' && item.ended) || (selectedActivityFilterId != 'end' && !item.ended))}}"
-      wx:key="_id"></activityItem>
+    <view wx:for="{{activities}}"
+        wx:if="{{(selectedCategory._id == 'all' || selectedCategory._id == item.category) && ((selectedActivityFilterId == 'end' && item.ended) || (selectedActivityFilterId != 'end' && !item.ended))}}"
+        wx:key="_id" class="activity-item">
+        <activityItem activity="{{item}}"></activityItem>
+      </view>
+   
   </view>
 
   <view wx:if="{{showEmptyMessage}}" style="width: 100%; height: 500rpx;" class="center">
     <image style="width: 300rpx" mode="widthFix" src="../../images/ic_empty_state.png"></image>
-    <text class="text-grey margin-top">这里什么都没有...</text>
+    <text class="text-grey margin-top">Nothing here...</text>
   </view>
 
 </view>

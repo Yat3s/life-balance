@@ -10,10 +10,7 @@ page {
   font-weight: bold;
 }
 
-.input-placeholder {
-  color: rgb(161, 166, 172);
-  font-size: 10pt;
-}
+
 
 .textarea-placeholder {
   color: rgb(161, 166, 172);
@@ -27,6 +24,11 @@ page {
   font-size: 9pt;
   color: var(--secondary);
   font-weight: bold;
+}
+
+.input-placeholder {
+  color: rgb(161, 166, 172);
+  font-size: 10pt;
 }
 
 .inp {

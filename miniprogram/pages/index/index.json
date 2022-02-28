@@ -1,7 +1,9 @@
 {
   "navigationStyle": "custom",
   "usingComponents": {
+    "home": "/pages/home/home",
     "activity": "/pages/activity/activity",
-    "profile": "/pages/profile/profile"
+    "carpool": "/pages/carpool/carpool",
+    "user": "/pages/user/user"
   }
 }

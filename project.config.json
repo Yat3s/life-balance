@@ -3,12 +3,12 @@
   "cloudfunctionRoot": "cloudfunctions/",
   "setting": {
     "urlCheck": true,
-    "es6": true,
+    "es6": false,
     "enhance": true,
     "postcss": true,
     "preloadBackgroundData": false,
     "minified": true,
-    "newFeature": true,
+    "newFeature": false,
     "coverView": true,
     "nodeModules": false,
     "autoAudits": false,
@@ -28,7 +28,6 @@
       "disablePlugins": [],
       "outputPath": ""
     },
-    "enableEngineNative": false,
     "useIsolateContext": true,
     "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
@@ -36,8 +35,8 @@
     "minifyWXSS": true,
     "showES6CompileOption": false
   },
-  "appid": "wxc8745aa8f8c9a64e",
-  "projectname": "activitiespi-weapp",
+  "appid": "wxb6958279836e16fc",
+  "projectname": "Life",
   "libVersion": "2.19.3",
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
   "condition": {

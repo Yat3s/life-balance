@@ -9,6 +9,7 @@ const ACTIVITIES_DATA_TYPE_PUBLISHED = 'published';
 const ACTIVITIES_DATA_TYPE_PERSONAL = 'personal';
 
 const util = require('../common/util');
+const { cloudCall, cloudFunctionCall } = require('./baseRepo');
 
 const preProcessStartDate = (data) => {
   for (const activity of data) {
@@ -16,49 +17,12 @@ const preProcessStartDate = (data) => {
   }
 }
 
-// Collections call
-function baseCollectionRequestWrapper(promiseCall, tag = "Database call", preProcess = null) {
-  return new Promise((resolve, reject) => {
-    promiseCall.then(res => {
-      const result = res.data;
-      if (preProcess) {
-        preProcess(result);
-      }
-      resolve(result);
-    }).catch(err => {
-      reject(`${tag} failure: ${err}`);
-    })
-  });
-}
-
-// Cloud functions call
-function baseActivityCloudFuctionCall(action, data, preProcess = null) {
-  return new Promise((resolve, reject) => {
-    wx.cloud.callFunction({
-      name: ACTIVITY_FUNCTION_NAME,
-      data: {
-        action,
-        data
-      }
-    }).then(res => {
-      const result = res.result;
-      if (preProcess) {
-        preProcess(result);
-      }
-      resolve(result);
-    }).catch(err => {
-      console.error(action, err);
-      reject(`${action} failure: ${err}`);
-    })
-  });
-}
-
 function fetchAllActivityCategories() {
-  return baseCollectionRequestWrapper(db.collection(COLLECTION_ACTIVITY_CATEGORY).orderBy('priority', 'desc').get(), "fetchAllActivityCategories");
+  return cloudCall(db.collection(COLLECTION_ACTIVITY_CATEGORY).orderBy('priority', 'desc').get(), "fetchAllActivityCategories");
 }
 
 function fetchCategory(categoryId) {
-  return baseCollectionRequestWrapper(db.collection(COLLECTION_ACTIVITY_CATEGORY).doc(categoryId).get(), "fetchCategory")
+  return cloudCall(db.collection(COLLECTION_ACTIVITY_CATEGORY).doc(categoryId).get(), "fetchCategory")
 }
 
 // Activity
@@ -66,7 +30,7 @@ function fetchAllActivities(type) {
   const data = {
     type
   }
-  return baseActivityCloudFuctionCall('fetchAllActivities', data, preProcessStartDate);
+  return cloudFunctionCall(ACTIVITY_FUNCTION_NAME, 'fetchAllActivities', data, preProcessStartDate);
 }
 
 function fetchAllPublishedActivities() {
@@ -81,7 +45,7 @@ function fetchActivitiesByIds(ids) {
   const data = {
     ids
   }
-  return baseActivityCloudFuctionCall('fetchActivitiesByIds', data, preProcessStartDate);
+  return cloudFunctionCall(ACTIVITY_FUNCTION_NAME, 'fetchActivitiesByIds', data, preProcessStartDate);
 }
 
 function fetchActivityItem(id) {
@@ -90,11 +54,11 @@ function fetchActivityItem(id) {
     activity.startDateStr = util.formatDate(activity.startDate);
     activity.endDateStr = util.formatDate(activity.endDate);
   }
-  return baseCollectionRequestWrapper(db.collection(COLLECTION_ACTIVITY).doc(id).get(), "fetchActivityItem", preProcess);
+  return cloudCall(db.collection(COLLECTION_ACTIVITY).doc(id).get(), "fetchActivityItem", preProcess);
 }
 
 function draftActivity(activity) {
-  return baseCollectionRequestWrapper(db.collection(COLLECTION_ACTIVITY).add({
+  return cloudCall(db.collection(COLLECTION_ACTIVITY).add({
     data: activity
   }), "draftActivity")
 }
@@ -104,11 +68,12 @@ function updateActivity(activityId, activityBody) {
     id: activityId,
     activityBody
   }
-  return baseActivityCloudFuctionCall('updateActivity', data);
+  
+  return cloudFunctionCall(ACTIVITY_FUNCTION_NAME, 'updateActivity', data);
 }
 
 function deleteActivity(activityId) {
-  return baseCollectionRequestWrapper(db.collection(COLLECTION_ACTIVITY).doc(activityId).remove(), 'deleteActivity');
+  return cloudCall(db.collection(COLLECTION_ACTIVITY).doc(activityId).remove(), 'deleteActivity');
 }
 
 function signupActivity(activityId, user) {
@@ -116,7 +81,7 @@ function signupActivity(activityId, user) {
     id: activityId,
     user
   }
-  return baseActivityCloudFuctionCall('signupActivity', data);
+  return cloudFunctionCall(ACTIVITY_FUNCTION_NAME, 'signupActivity', data);
 }
 
 function quitActivity(activityId) {
@@ -124,8 +89,16 @@ function quitActivity(activityId) {
     id: activityId,
   }
 
-  return baseActivityCloudFuctionCall('quitActivity', data);
+  return cloudFunctionCall(ACTIVITY_FUNCTION_NAME, 'quitActivity', data);
 }
+
+function fetchUserActivities(id) {
+  const data = {
+    id
+  }
+  return cloudFunctionCall(ACTIVITY_FUNCTION_NAME, 'fetchUserActivities', data, preProcessStartDate);
+}
+
 
 module.exports = {
   fetchAllActivityCategories,
@@ -141,4 +114,5 @@ module.exports = {
   updateActivity,
   quitActivity,
   deleteActivity,
+  fetchUserActivities
 };

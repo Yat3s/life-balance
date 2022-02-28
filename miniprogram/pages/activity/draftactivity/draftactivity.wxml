@@ -7,19 +7,20 @@
 
   <view style="margin: 200rpx 40rpx; border-radius: 24rpx;" class="bg-white shadow-lg padding-lg">
     <image class="margin-top-lg" src="../../../images/img_bg_activity.png" style="width: 100%;" mode="widthFix"></image>
-    <view class="text-bold text-black margin-top">创建你的活动</view>
+    <view class="text-bold text-black margin-top">Post Activity</view>
 
     <view class="margin-top">
       <form bindsubmit="onSubmit">
         <!-- Title -->
-        <view class="section-title">活动标题*</view>
-        <input value="{{title}}" name="title" type="text" class="inp margin-top-xs" placeholder="限定 30 字"></input>
+        <view class="section-title">Title*</view>
+        <input value="{{title}}" name="title" type="text" class="inp margin-top-xs"
+          placeholder="Within 30 characters"></input>
 
         <!-- Time -->
-        <view class="section-title margin-top-lg">活动时间</view>
+        <view class="section-title margin-top-lg">Date</view>
         <view class="flex align-center justify-between margin-top-xs">
           <view>
-            <view style="font-size: 8pt;" class="text-grey text-bold">开始</view>
+            <view style="font-size: 8pt;" class="text-grey text-bold">Start</view>
             <view class="flex">
               <view class="picker margin-top-xs ">
                 <picker mode="date" bindchange="onStartDatePicked">
@@ -27,7 +28,7 @@
                 </picker>
               </view>
 
-              <view style="" class="picker margin-top-xs margin-left-xs">
+              <view class="picker margin-top-xs margin-left-xs">
                 <picker mode="time" value="{{startTimeStr}}" bindchange="onStartTimePicked">
                   <view>{{startTimeStr}}</view>
                 </picker>
@@ -36,7 +37,7 @@
           </view>
 
           <view>
-            <view style="font-size: 8pt;" class="text-grey text-bold">结束</view>
+            <view style="font-size: 8pt;" class="text-grey text-bold">End</view>
             <view class="flex">
               <view class="picker margin-top-xs ">
                 <picker mode="date" bindchange="onEndDatePicked">
@@ -44,7 +45,7 @@
                 </picker>
               </view>
 
-              <view style="" class="picker margin-top-xs margin-left-xs">
+              <view class="picker margin-top-xs margin-left-xs">
                 <picker mode="time" value="{{endTimeStr}}" bindchange="onEndTimePicked">
                   <view>{{endTimeStr}}</view>
                 </picker>
@@ -54,97 +55,97 @@
         </view>
 
         <!-- Category -->
-        <view class="section-title margin-top-lg">活动分类*</view>
+        <view class="section-title margin-top-lg">Category*</view>
         <picker range="{{categories}}" range-key="name" bindchange="onCategoryPicked">
-          <view class="text-sm text-grey">{{category ? category.name : '请选择活动类型'}}</view>
+          <view class="text-sm text-grey">{{category ? category.name : 'Please choose category'}}</view>
         </picker>
 
         <!-- Location -->
-        <view class="section-title margin-top-lg">活动地址*</view>
+        <view class="section-title margin-top-lg">Venue*</view>
 
         <view class="flex align-center margin-top-xs">
           <input style="flex: 1" name="locationName" type="text" class="inp" value="{{location.name}}"
-            placeholder="填写活动地址"></input>
+            placeholder="Please fill in the venue"></input>
           <view class="text-sm text-grey margin-left" bindtap="chooseLocation"><text
-              class="cuIcon-locationfill"></text>地图选点</view>
+              class="cuIcon-locationfill"></text>Choose on map</view>
 
         </view>
         <view class="text-sm text-grey">{{location.address}}</view>
 
 
         <!-- Fee -->
-        <view class="section-title margin-top-lg">预估费用</view>
+        <view class="section-title margin-top-lg">Fee</view>
         <view class="flex align-center  margin-top-xs">
-          <input value="{{fee}}" style="flex: 1;" name="fee" type="digit" class="inp" placeholder="默认为免费"></input>
-          <view class="text-sm text-grey margin-left-sm">元/人</view>
+          <input value="{{fee}}" style="flex: 1;" name="fee" type="digit" class="inp"
+            placeholder="Default free"></input>
+          <view class="text-sm text-grey margin-left-sm">CNY/person</view>
         </view>
 
         <!-- Max participants -->
         <view class="section-title margin-top-lg flex align-center justify-between">
-          <view>最大参与人数</view>
+          <view>Max participant</view>
           <view class="flex align-center">
             <switch checked="{{genderRequired}}" type="switch" style="zoom: 0.7" class="margin-left"
               bindchange="onGenderSwitch"></switch>
-            <view style="font-size: 8pt;" class="margin-left-xs text-grey">限制性别</view>
+            <view style="font-size: 8pt;" class="margin-left-xs text-grey">Gender require</view>
           </view>
         </view>
 
         <input value="{{maxParticipant}}" wx:if="{{!genderRequired}}" name="maxParticipant" type="number"
-          class="inp margin-top-xs" placeholder="默认为无限制(最大100)"></input>
+          class="inp margin-top-xs" placeholder="Default 0(within 100)"></input>
         <view wx:if="{{genderRequired}}" class="flex margin-top-xs align-center">
           <view class="flex">
-            <view class="text-grey text-sm margin-top-xs">男生：</view>
-            <input style="width: 120rpx;" value="{{maxParticipantMale}}" name="maxParticipantMale" type="number"
-              class="inp " placeholder="最大100"></input>
+            <view class="text-grey text-sm margin-top-xs">Male：</view>
+            <input style="width: 200rpx;" value="{{maxParticipantMale}}" name="maxParticipantMale" type="number"
+              class="inp " placeholder="< 100"></input>
           </view>
 
           <view class="flex margin-left align-center">
-            <view style="" class="text-grey text-sm margin-top-xs">女生：</view>
-            <input style="width: 120rpx;" value="{{maxParticipantFemale}}" name="maxParticipantFemale" type="number"
-              class="inp" placeholder="最大100"></input>
+            <view style="" class="text-grey text-sm margin-top-xs">Female：</view>
+            <input style="width: 200rpx;" value="{{maxParticipantFemale}}" name="maxParticipantFemale" type="number"
+              class="inp" placeholder="< 100"></input>
           </view>
 
         </view>
 
         <!-- Description -->
-        <view class="section-title margin-top-lg">活动封面*</view>
+        <view class="section-title margin-top-lg">Cover picture*</view>
         <view bindtap="uploadCover" class="text-grey center margin-top-xs"
           style="background: #f1f1f1; height: 240rpx; width: 100%; border-radius: 12rpx;">
-          {{coverFileId ? '' : '点击上传封面'}}
+          {{coverFileId ? '' : 'Click to upload cover picture'}}
           <image wx:if="{{coverFileId}}" style="width: 100%" src="{{coverFileId}}">
           </image>
         </view>
 
 
         <!-- Description -->
-        <view class="section-title margin-top-lg">活动说明</view>
+        <view class="section-title margin-top-lg">Detail(Optional)</view>
         <textarea maxlength="500" value="{{detail}}" name="detail" class="margin-top-xs"
-          placeholder="最多 500 字，推荐填写活动相关的“活动介绍”，“活动要求”，“注意事项”等等。"
+          placeholder="Within 500 characters"
           style="font-size: 11pt; background: #f1f1f1; width: 100%; min-height: 200rpx; border-radius: 12rpx; padding: 16rpx;"></textarea>
 
+        <!-- QR code -->
+        <view class="section-title margin-top-lg">QR Code(Optional)</view>
+        <view bindtap="uploadQrcode" class="text-grey center margin-top-xs"
+          style="background: #f1f1f1; height: 300rpx; width: 200rpx; border-radius: 12rpx; font-size: 9pt;">
+          {{qrcodeFileId ? '' : 'Upload'}}
+          <image wx:if="{{qrcodeFileId}}" style="width: 100%" src="{{qrcodeFileId}}">
+          </image>
+        </view>
 
         <!-- Tags -->
-        <view class="section-title margin-top-lg">活动标签</view>
+        <view class="section-title margin-top-lg">Tag(Optional)</view>
         <input name="tags" value="{{tags}}" type="text" class="inp margin-top-xs"
-          placeholder="多个标签用空格分割，例如：羽毛球 户外运动"></input>
-
-        <!-- QR code -->
-        <!-- <view class="section-title margin-top-lg">微信群二维码</view>
-      <view bindtap="uploadQrcode" class="text-grey center margin-top-xs"
-        style="background: #f1f1f1; height: 300rpx; width: 200rpx; border-radius: 12rpx; font-size: 9pt;">
-        {{qrcodeFileId ? '' : '点击上传'}}
-        <image wx:if="{{qrcodeFileId}}" style="width: 100%" src="{{qrcodeFileId}}">
-        </image>
-      </view> -->
+          placeholder="Spilt with (space)"></input>
 
         <!-- Submit -->
         <view style="margin-top: 100rpx;" class="flex align-center">
           <button wx:if="{{activityId}}" bindtap="onClickDeleteActivity" style="width: 200rpx; border-radius: 16rpx;"
-            class="cu-btn bg-red">删除活动
+            class="cu-btn bg-red">Delete
           </button>
 
-          <button form-type="submit" style="width: 200rpx; border-radius: 16rpx;" class="cu-btn bg-primary">{{type ==
-            'new' ? '创建活动' : '更新活动'}}</button>
+          <button form-type="submit" style="width: 200rpx; border-radius: 16rpx;" class="cu-btn bg-primary">{{type ===
+            'new' || type === 'repost' ? 'Submit' : 'Update'}}</button>
         </view>
 
       </form>

@@ -4,10 +4,17 @@
   font-size: 14pt;
 }
 
-.section-title {
-  font-size: 14pt;
+.logo {
+  width: 100rpx;
+  height: 100rpx;
+  margin-left: var(--inset);
+  margin-right: var(--inset);
+}
+
+.title {
+  font-size: 18pt;
   font-weight: bold;
-  color: #1C2D48;
+  color: var(--primary);
   padding-left: var(--inset);
   padding-right: var(--inset);
 }
@@ -21,7 +28,7 @@
 }
 
 .activity-filter-highlight {
-  color: #1C2D48;
+  color: var(--primary);
   font-size: 10pt;
   font-weight: bold;
   background: var(--lightBlue);
@@ -37,38 +44,13 @@
 
 .category-item {
   border-radius: 24rpx;
-  width: 180rpx;
+  width: 200rpx;
   flex-grow: 0;
   flex-shrink: 0;
   position: relative;
-  padding: 20rpx;
+  padding: 16rpx 20rpx;
   margin-right: 24rpx;
   color: white;
-}
-
-.shine {
-  background: #f6f7f8;
-  background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
-  background-repeat: no-repeat;
-  background-size: 800px 104px;
-  display: inline-block;
-  position: relative;
-
-  animation-duration: 1s;
-  animation-fill-mode: forwards;
-  animation-iteration-count: infinite;
-  animation-name: placeholderShimmer;
-  animation-timing-function: linear;
-}
-
-@keyframes placeholderShimmer {
-  0% {
-    background-position: -468px 0;
-  }
-
-  100% {
-    background-position: 468px 0;
-  }
 }
 
 .category-accessory {
@@ -78,7 +60,11 @@
 .draft-activity-btn {
   background: var(--secondary);
   border-radius: 16rpx;
-  padding: 0rpx 16rpx;
+  padding: 8rpx 16rpx;
   font-size: 9pt;
-  height: 60rpx;
+  margin-right: var(--inset);
+}
+
+.activity-item {
+  padding: 0 var(--inset) 30rpx var(--inset);
 }
