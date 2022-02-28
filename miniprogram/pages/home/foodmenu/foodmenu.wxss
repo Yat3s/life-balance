@@ -1,0 +1,125 @@
+/* pages/home/foodmenu/foodmenu.wxss */
+
+page {
+  background: white;
+  --typeWidth: 80rpx;
+  --menuRadius: 12rpx;
+  --stallSpace: 160rpx;
+  padding-bottom: 40rpx;
+}
+
+.date-container {
+  margin-left: var(--typeWidth);
+  margin-top: 60rpx;
+  width: 100%;
+  white-space: nowrap;
+  padding-right: var(--typeWidth);
+}
+
+.title {
+  font-weight: bold;
+  font-size: 16pt;
+  line-height: 20pt;
+  color: black;
+  margin-left: var(--typeWidth);
+}
+
+.company {
+  font-size: 9pt;
+  line-height: 119ptpt;
+  color: var(--textGrey);
+  margin-right: var(--inset);
+}
+
+.date-selected {
+  border-radius: 100rpx;
+  background: var(--primary);
+  color: white;
+  font-weight: bold;
+  padding: 6rpx 32rpx;
+  font-size: 10pt;
+  margin-right: 16rpx;
+}
+
+.date {
+  border: 2rpx solid #f1f1f1;
+  border-radius: 100rpx;
+  color: var(--textGrey);
+  padding: 4rpx 32rpx;
+  font-size: 10pt;
+  margin-right: 16rpx;
+}
+
+.type-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: var(--typeWidth);
+  padding-left: 24rpx;
+  margin-top: 60rpx;
+}
+
+.type-title {
+  font-weight: bold;
+  font-size: 10pt;
+  color: var(--primary);
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+}
+
+.type-icon {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.stall-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-container-amoung {
+  background: #f8f8f8;
+  padding: 24rpx;
+  font-size: 9pt;
+  flex: 1;
+}
+
+.menu-container-start {
+  border-top-left-radius: var(--menuRadius);
+  border-bottom-left-radius: var(--menuRadius);
+  background: #f8f8f8;
+  padding: 24rpx;
+  font-size: 9pt;
+  color: black;
+  flex: 1;
+}
+
+.menu-container-end {
+  border-top-right-radius: var(--menuRadius);
+  border-bottom-right-radius: var(--menuRadius);
+  background: #f8f8f8;
+  padding: 24rpx;
+  font-size: 9pt;
+  color: black;
+  flex: 1;
+}
+
+.menu-scroll-view {
+  width: 100%;
+  white-space: nowrap;
+  padding-right: var(--typeWidth);
+}
+
+.stall-icon {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.stall-name {
+  font-weight: bold;
+  color: var(--primary);
+  text-decoration: underline;
+  font-size: 11pt;
+  margin-right: var(--stallSpace);
+}

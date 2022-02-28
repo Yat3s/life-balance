@@ -1,0 +1,157 @@
+<toolbar isBack="true"></toolbar>
+
+<view class="main">
+  <!-- <image src="../../../images/img_parking.png" mode="heightFix" class="header-img"></image> -->
+  <view class="title margin-top-lg">WeWork 车位预定</view>
+  <view class="desc margin-top-sm">WeWork 车位预定仅适用于在 WeWork(苏州中心）的微软员工，最终解释权归 RE&F 所有。</view>
+
+  <view bindtap="onRuleClicked" class="rule-text margin-top-xs">查看停车位预定规则</view>
+
+  <view class="section-title section-margin">我的注册信息</view>
+  <view class="warn-info" wx:if="{{userAllowed === false}}">请联系
+    RE&F进行注册登记。</view>
+  <view class="margin-top-sm flex">
+    <view wx:if="{{userInfo.org}}" class="vehicle-id margin-right-xs center">{{userInfo.org}}</view>
+    <view wx:if="{{userInfo.vehicleId}}" class="vehicle-id margin-right center">{{userInfo.vehicleId}}</view>
+  </view>
+
+  <view class="flex align-center justify-between section-margin">
+    <view class="section-title">停车位预定</view>
+    <view bindtap="onRefreshClicked" class="refresh-text">刷新</view>
+  </view>
+
+  <!-- Date selection -->
+  <view class="margin-top-sm">
+    <view class="{{bookingToday ? 'date-container-disabled' : 'date-container-selected'}}">
+      <view class="{{bookingToday ? 'date-title-disabled' : 'date-title-selected'}}">预定{{bookingTomorrowDateStr}} 车位
+      </view>
+      <view class="margin-top-xs date-available ">可预订时间: <text
+          class="date-available text-bold">{{bookingTomorrowAvailableDateStr}}</text></view>
+    </view>
+
+    <view class="{{bookingToday ? 'date-container-selected' : 'date-container-disabled'}} margin-top-sm">
+      <view class="{{bookingToday ? 'date-title-selected' : 'date-title-disabled'}}">预定{{bookingTodayDateStr}} 剩余车位
+      </view>
+      <view class="margin-top-xs date-available ">可预订时间: <text
+          class="date-available text-bold">{{bookingTodayAvailableDateStr}}</text></view>
+    </view>
+  </view>
+
+  <!-- Today booking pool -->
+  <view wx:if="{{bookingToday}}" class="margin-top-lg">
+    <view class="flex align-center">
+      <view class="org-indicator"></view>
+      <view class="org-title margin-left-xs">公共剩余车位</view>
+      <view class="org-count margin-left-sm">({{commonPool.participants.length}}/{{commonPool.maxParticipant}})</view>
+    </view>
+    <view class="flex align-center margin-top-sm">
+      <text class="org-pending-text">已
+        预
+        定</text>
+
+      <view class="org-pending-divider margin-left-sm"></view>
+
+      <scroll-view scroll-x="true">
+        <view class="flex align-center">
+          <view wx:for="{{commonPool.participants}}" class="center margin-right-sm user-item">
+            <image class="booking-user-avatar margin-left-sm" src="{{item.avatarUrl}}"></image>
+            <view class="booking-user-vehicle-id margin-left-sm">{{item.vehicleId}}</view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <view class="today-booking-note margin-top">{{bookingTodayNote}}</view>
+
+    <view class="flex align-center margin-top">
+      <view class="today-booking-divider"></view>
+      <view class="today-booking-divider-title margin-left margin-right">以下为历史组内预定信息</view>
+      <view class="today-booking-divider"></view>
+    </view>
+  </view>
+
+  <!-- Booking org info -->
+  <view class="margin-top-lg" wx:for="{{allowedOrgs}}" wx:key="item">
+    <view class="flex align-center">
+      <view class="org-indicator"></view>
+      <view class="org-title margin-left-xs">{{item.name}}</view>
+      <view class="org-count margin-left-sm">({{item.participants.length}}/{{item.maxParticipant}})</view>
+    </view>
+
+    <!-- Booked -->
+    <view class="flex align-center margin-top-sm">
+      <text class="org-pending-text">已
+        预
+        定</text>
+
+      <view class="org-pending-divider margin-left-sm"></view>
+
+      <scroll-view scroll-x="true">
+        <view class="flex align-center">
+          <view wx:if="{{participantIndex < item.maxParticipant}}" wx:for-index="participantIndex"
+            wx:for-item="participant" wx:for="{{item.participants}}" class="center margin-right-sm user-item">
+            <image class="booking-user-avatar margin-left-sm" src="{{participant.avatarUrl}}"></image>
+            <view class="booking-user-vehicle-id margin-left-sm">{{participant.vehicleId}}</view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- Pending -->
+    <view wx:if="{{item.participants.length > item.maxParticipant}}" class="flex align-center margin-top-sm">
+      <text class="org-pending-text">排
+        队
+        中</text>
+
+      <view class="org-pending-divider margin-left-sm"></view>
+
+      <scroll-view scroll-x="true">
+        <view class="flex align-center">
+          <view wx:if="{{participantIndex >= item.maxParticipant}}" wx:for-index="participantIndex"
+            wx:for-item="participant" wx:for="{{item.participants}}" class="center margin-right-sm user-item">
+            <image class="booking-user-avatar margin-left-sm" src="{{participant.avatarUrl}}"></image>
+            <view class="booking-user-vehicle-id margin-left-sm">{{participant.vehicleId}}</view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+  </view>
+</view>
+
+<view class="cu-bar foot padding bg-white">
+  <view>
+    <view class="text-bold">
+      预定<text class="booking-date"> {{bookingToday ? bookingTodayDateStr : bookingTomorrowDateStr}} WeWork</text> 车位
+    </view>
+    <view class="booking-countdown"> <text class="text-bold text-black">{{countdownStr}}</text> 后结束预定</view>
+  </view>
+
+  <view wx:if="{{!joined}}" bindtap="onBookingClick" class="booking-container margin-top-sm">
+    预定车位
+  </view>
+
+  <view wx:if="{{joined}}" bindtap="onCancelBookingClick" class="booking-container-cancel margin-top-sm">
+    取消预定
+  </view>
+</view>
+
+<view class="cu-modal {{showingModal === 'rule' ? 'show' : ''}}" catchtouchmove>
+  <view class="cu-dialog modal-main">
+
+    <view class="flex justify-between">
+      <view class="modal-title">WeWork 停车位预定规则</view>
+      <view class="action" bindtap="onDismissModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+
+    <view class="margin-top">
+      <text class="rule-content">{{parkingRule}}</text>
+    </view>
+
+    <view class="flex align-center justify-end margin-top-lg">
+      <view catchtap="onDismissModal" class="cu-btn modal-btn-ok">关闭</view>
+    </view>
+  </view>
+</view>

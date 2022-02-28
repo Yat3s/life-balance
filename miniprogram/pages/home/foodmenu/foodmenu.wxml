@@ -1,0 +1,95 @@
+<toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
+
+
+<view class="flex align-end justify-between">
+
+  <view class="title margin-top-lg">食堂本周菜单</view>
+
+  <view class="company">微软(中国)有限公司 - 苏州</view>
+
+</view>
+
+<!-- Date -->
+<scroll-view scroll-x="true" class="date-container">
+  <view class="flex align-center">
+    <view wx:key="date" wx:for="{{menus}}" bindtap="onDateSelected" data-index="{{index}}"
+      class="{{selectedDateIndex == index ? 'date-selected' : 'date'}}">
+      {{item.dateStr}}
+    </view>
+  </view>
+</scroll-view>
+
+<!-- Breakfast -->
+<view class="flex margin-top align-start">
+
+  <view class="type-container">
+    <image class="type-icon" src="../../../images/ic_breakfast.png"></image>
+    <view class="type-title">BREAKFAST</view>
+  </view>
+
+  <scroll-view class="menu-scroll-view" scroll-x="true">
+    <view class="flex margin-left-sm">
+      <view class="stall-container" wx:for="{{menus[selectedDateIndex].breakfast}}">
+        <view class="flex align-center">
+          <view class="stall-name margin-left-sm">{{item.stallName}}</view>
+        </view>
+        <view
+          class="{{index == 0 ? 'menu-container-start' : index == menus[selectedDateIndex].breakfast.length -1 ? 'menu-container-end' : 'menu-container-amoung'}} margin-top-sm">
+          <view wx:for="{{item.foods}}" wx:for-item="food">
+            {{food}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+
+<!-- Lunch -->
+<view class="flex margin-top-lg align-start">
+
+  <view class="type-container">
+    <image class="type-icon" src="../../../images/ic_lunch.png"></image>
+    <view class="type-title">LUNCH</view>
+  </view>
+
+
+  <scroll-view class="menu-scroll-view" scroll-x="true">
+    <view class="flex margin-left-sm">
+      <view class="stall-container" wx:for="{{menus[selectedDateIndex].lunch}}">
+        <view class="flex align-center">
+          <view class="stall-name margin-left-sm">{{item.stallName}}</view>
+        </view>
+        <view
+          class="{{index == 0 ? 'menu-container-start' : index == menus[selectedDateIndex].breakfast.length -1 ? 'menu-container-end' : 'menu-container-amoung'}} margin-top-sm">
+          <view wx:for="{{item.foods}}" wx:for-item="food">
+            {{food}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+
+<!-- Dinner -->
+<view class="flex margin-top-lg align-start">
+  <view class="type-container">
+    <image class="type-icon" src="../../../images/ic_dinner.png"></image>
+    <view class="type-title">DINNER</view>
+  </view>
+
+  <scroll-view class="menu-scroll-view" scroll-x="true">
+    <view class="flex margin-left-sm">
+      <view class="stall-container" wx:for="{{menus[selectedDateIndex].dinner}}">
+        <view class="flex align-center">
+          <view class="stall-name margin-left-sm">{{item.stallName}}</view>
+        </view>
+        <view
+          class="{{index == 0 ? 'menu-container-start' : index == menus[selectedDateIndex].breakfast.length -1 ? 'menu-container-end' : 'menu-container-amoung'}} margin-top-sm">
+          <view wx:for="{{item.foods}}" wx:for-item="food">
+            {{food}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

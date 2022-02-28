@@ -1,0 +1,40 @@
+<toolbar isBack="{{true}}"></toolbar>
+
+<view class="main">
+  <view class="flex  margin-top">
+    <image class="header-img" src="../../../images/img_how_to.png" mode="heightFix"></image>
+  </view>
+
+  <view class="kindly-title margin-top-lg margin-left-sm">Hi, how can I help you?</view>
+
+  <view class="margin-top search-container flex align-center">
+    <view class="search-howto">How to</view>
+    <input bindinput="onSearchQas" class="search-keyword margin-left-sm" placeholder="申请优租房"></input>
+  </view>
+
+
+  <view class="margin-top-lg">
+    <view bindtap="onItemClick" data-id="{{item._id}}" wx:if="{{item.show}}" wx:for="{{qas}}" wx:key="{{title}}"
+      class="item-container">
+
+      <view class="flex align-start justify-between">
+        <view class="qa-title">
+          <text class="text-grey">#</text>{{item.title}}
+        </view>
+
+        <view class="qa-site">{{item.siteStr}}</view>
+      </view>
+
+      <view class="flex align-center justify-between">
+        <view class="flex margin-top-xs">
+          <view class="qa-tag margin-right-xs" wx:for="{{item.tags}}" wx:for-item="tag">{{tag}}</view>
+
+        </view>
+
+        <view class="qa-pv">{{item.pv}} views</view>
+      </view>
+
+    </view>
+  </view>
+
+</view>

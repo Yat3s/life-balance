@@ -1,0 +1,93 @@
+<view class="base-info-container">
+
+  <view class="flex justify-between align-center">
+    <view class="flex align-center">
+      <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+      <view class="margin-left">
+        <view class="name">{{userInfo.nickName}}</view>
+
+        <view bindtap="onCopyId" class="flex align-center margin-top-xs">
+          <view class="id-text">ID: {{userInfo.id}}</view>
+          <view class="id-copy margin-left-sm">copy</view>
+        </view>
+      </view>
+    </view>
+    <image src="../../images/ic_edit.png" bindtap="onEditUserInfoClick" class="edit-info margin-top-xs"></image>
+  </view>
+
+  <view wx:if="{{userInfo.company}}" class="profile-company margin-top">{{company.name}}</view>
+  <view bindtap="onSettingCompanyClick" wx:if="{{!userInfo.company}}" class="profile-company-unset margin-top">
+    Verify your
+    company
+  </view>
+
+  <view style="margin-top: 60rpx" class="flex">
+
+    <view bindtap="onActivityClick" class="activity-container">
+      <image class="collection-icon" src="../../images/ic_activity_2.png"></image>
+      <view class="collection-title margin-left">Activities</view>
+    </view>
+
+    <view bindtap="onProfileClick" class="profile-container">
+      <image class="collection-icon" src="../../images/ic_user.png"></image>
+      <view class="collection-title margin-left">Profile</view>
+    </view>
+
+  </view>
+</view>
+
+<view bindtap="onFeedbackClick" class="menu-item-container margin-top">
+  <image class="menu-item-icon" src="../../images/ic_feedback.png"></image>
+  <view class="margin-left menu-item-text">Feedback & Help</view>
+</view>
+<view class="divider"></view>
+
+<view bindtap="onSponsorClick" class="menu-item-container">
+  <image class="menu-item-icon" src="../../images/ic_coffee.png"></image>
+  <view class="margin-left menu-item-text">Sponsor a coffee</view>
+</view>
+<view class="divider"></view>
+
+
+
+<!-- Feedback -->
+<view class="cu-modal {{showingModal === 'feedback' ? 'show' : ''}}" catchtouchmove>
+  <view class="cu-dialog modal-main">
+
+    <view class="flex justify-between">
+      <view class="modal-title">Feedback & Help</view>
+    </view>
+
+    <view class="feedback-text margin-top">Join MS Life group to send your feedback:</view>
+    <view class="text-black">Adding Coconut and send <text class="text-bold text-black">msglife</text> to her</view>
+
+    <image show-menu-by-longpress="true" class="coconut-contact margin-top-sm" src="../../images/img_coconut.png" />
+    <view class="text-grey"> Long press to scan </view>
+
+    <view class="flex align-center justify-end margin-top-lg">
+      <view catchtap="onDismissModal" class="cu-btn modal-btn-ok">Done</view>
+    </view>
+  </view>
+</view>
+
+<!-- Sponsor -->
+<view class="cu-modal {{showingModal === 'sponsor' ? 'show' : ''}}" catchtouchmove>
+  <view class="cu-dialog modal-main">
+
+    <view class="flex justify-between">
+      <view class="modal-title">Sponsor coffee</view>
+    </view>
+
+    <view class="text-black margin-top">Sponsor a cup of coffee if you like this app!</view>
+
+    <image mode="heightFix" show-menu-by-longpress="true" class="pay margin-top-sm" src="../../images/img_praise.png" />
+    <view class="text-grey">Long press to save QR code</view>
+
+
+    <view class="text-red text-bold">THANK YOU!</view>
+
+    <view class="flex align-center justify-end margin-top-lg">
+      <view catchtap="onDismissModal" class="cu-btn modal-btn-ok">Done</view>
+    </view>
+  </view>
+</view>

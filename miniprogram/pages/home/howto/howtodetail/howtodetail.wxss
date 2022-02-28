@@ -1,0 +1,54 @@
+page {
+  background: white;
+}
+
+.main {
+  padding: 48rpx;
+}
+
+.header-icon {
+  width: 120rpx;
+  height: 120rpx;
+}
+
+.header-how-to {
+  font-size: 11pt;
+  font-weight: bold;
+  color: #c4c4c4;
+}
+
+.header-site {
+  font-size: 9pt;
+  color: #cecece;
+}
+
+.title {
+  font-size: 12pt;
+  font-weight: bold;
+  line-height: 13pt;
+  color: black;
+}
+
+.underline {
+  height: 2rpx;
+  background: black;
+  margin-top: 8rpx;
+}
+
+.pv {
+  font-size: 10pt;
+  font-weight: bold;
+  color: var(--textGrey);
+}
+
+.author {
+  font-size: 10pt;
+  color: var(--textGrey);
+}
+
+.content-container {
+  background: #f1f1f1;
+  padding: 32rpx;
+  color: black;
+  border-radius: 20rpx;
+}

@@ -1,0 +1,70 @@
+
+page {
+  padding-bottom: 100rpx;
+}
+.main {
+  padding: 24rpx;
+}
+
+.form-section {
+  padding: 32rpx 0rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+}
+
+.form-section input {
+  text-align: right;
+}
+
+.form-section-title {
+  font-size: 11pt;
+}
+
+.input-placeholder {
+  color: rgb(161, 166, 172);
+  font-size: 10pt;
+}
+
+.unset {
+  color: rgb(161, 166, 172);
+  font-size: 10pt;
+}
+
+.section-container {
+  background: white;
+  border-radius: 32rpx;
+  padding: 40rpx;
+}
+
+.name-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
+
+.section-title {
+  color: black;
+  font-weight: bold;
+  font-size: 12pt;
+  line-height: 12pt;
+  z-index: 2;
+  margin-bottom: 4rpx;
+}
+
+.name-underline {
+  height: 12rpx;
+  background: #C5BCFF;
+  position: absolute;
+  bottom: 0rpx;
+  left: 0;
+  width: 100%;
+}
+
+.photo {
+  border-radius: 24rpx;
+  width: 160rpx;
+  height: 160rpx;
+}

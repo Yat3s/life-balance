@@ -1,0 +1,125 @@
+/* pages/carpool/postcarpool/postcarpool.wxss */
+
+page {
+  background: white;
+  --text: #66A0CA;
+}
+
+.main {
+  padding: 100rpx 60rpx 160rpx 60rpx;
+}
+
+.inp {
+  border-bottom: 4rpx solid rgb(22, 22, 22);
+  color: var(--text);
+  font-weight: bold;
+}
+
+.input-placeholder {
+  color: rgb(194, 195, 197);
+  font-size: 10pt;
+}
+
+.title {
+  font-size: 11pt;
+  font-weight: bold;
+  color: rgb(208, 205, 243);
+  margin-top: 32rpx;
+  border-radius: 4rpx;
+  background: var(--primary);
+}
+
+.carpool-section-title {
+  font-weight: bold;
+  color: var(--primary);
+  font-size: 12pt;
+}
+
+.section-icon {
+  width: 36rpx;
+  height: 36rpx;
+  margin-top: 6rpx;
+}
+
+.seat-action-btn {
+  border-radius: 8rpx;
+  width: 60rpx;
+  height: 48rpx;
+  background: #f1f1f1;
+  font-weight: bold;
+  font-size: 14pt;
+}
+
+.type-icon {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.type-point {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+  background-color: #e9e9e9;
+  margin-top: 4rpx;
+}
+
+.type-point-selected {
+  width: 32rpx;
+  height: 32rpx;
+  margin-top: 4rpx;
+  background-color: var(--primary);
+  border-radius: 50%;
+  border: 8rpx solid #e9e9e9;
+}
+
+.type-text {
+  color: grey;
+  font-size: 10pt;
+  margin-top: -12rpx;
+}
+
+.payment-point {
+  width: 24rpx;
+  height: 24rpx;
+  margin-top: 4rpx;
+  background-color: #e9e9e9;
+  border-radius: 50%;
+}
+
+.payment-point-selected {
+  width: 24rpx;
+  height: 24rpx;
+  margin-top: 4rpx;
+  background-color: var(--primary);
+  border-radius: 50%;
+  border: 6rpx solid #e9e9e9;
+}
+
+.time-block {
+  border-radius: 8rpx;
+  background: #f7f6f6;
+  padding: 4rpx 12rpx;
+  color: var(--text);
+  font-weight: bold;
+  font-size: 10pt;
+}
+
+.content-primary {
+  color: var(--text);
+  font-weight: bold;
+  font-size: 11pt;
+}
+
+.content-secondary {
+  color: rgb(173, 173, 173);
+  font-size: 11pt;
+}
+
+.submit-btn {
+  padding: 8rpx 32rpx;
+  color: white;
+  background-color: var(--primary);
+  font-weight: bold;
+  font-size: 11pt;
+  border-radius: 8rpx;
+}

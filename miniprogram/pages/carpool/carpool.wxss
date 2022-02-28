@@ -1,0 +1,33 @@
+/* pages/carpool/carpool.wxss */
+
+.map {
+  height: 600rpx;
+  overflow: hidden;
+  border-radius: 12rpx;
+}
+
+.car-container {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 72%, rgba(255, 255, 255, 0) 100%);
+}
+
+.post-carpool-btn {
+  font-size: 9pt;
+  font-weight: bold;
+  background: var(--secondary);
+  padding: 8rpx 16rpx;
+  border-radius: 16rpx;
+  color: white;
+  text-align: center;
+}
+
+.logo {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.title {
+  font-size: 18pt;
+  font-weight: bold;
+  color: var(--primary);
+}

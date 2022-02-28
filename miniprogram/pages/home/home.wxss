@@ -1,0 +1,438 @@
+/* pages/home/home.wxss */
+
+
+.main {
+  padding: 300rpx 48rpx 100rpx 48rpx;
+}
+
+.margin-left {
+  margin-left: 20rpx;
+}
+
+.margin-top {
+  margin-top: 20rpx;
+}
+
+.logo {
+  width: 140rpx;
+  height: 140rpx;
+}
+
+.title {
+  font-size: 20pt;
+  font-weight: bold;
+}
+
+.dashboard-title {
+  font-weight: bold;
+  font-size: 9pt;
+  color: black;
+}
+
+.dashboard-company {
+  color: var(--textGrey);
+  font-weight: normal;
+}
+
+.dashboard-switch-company {
+  color: var(--textGrey);
+  font-weight: normal;
+  font-weight: bold;
+  font-size: 9pt;
+}
+
+.dashboard-row-container {
+  display: flex;
+}
+
+.dashboard-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Parking */
+.dashboard-parking-container {
+  background: rgb(244, 244, 244);
+  background: linear-gradient(0deg, rgba(244, 244, 244, 1) 0%, rgba(225, 237, 241, 1) 100%);
+  border-radius: 32rpx;
+  padding: 28rpx;
+  margin-right: 20rpx;
+}
+
+.dashboard-parking-logo {
+  width: 56rpx;
+  height: 56rpx;
+}
+
+.dashboard-parking-refresh {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.dashboard-parking-title {
+  color: black;
+  font-weight: bold;
+  font-size: 11pt;
+  line-height: 11pt;
+}
+
+.dashboard-parking-place-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dashboard-parking-place-icon {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.dashboard-parking-place-title {
+  color: var(--textGrey);
+  font-size: 8pt;
+  font-weight: bold;
+  line-height: 8pt;
+}
+
+.dashboard-parking-place-number {
+  color: black;
+  font-weight: bold;
+  font-size: 14pt;
+  line-height: 14pt;
+}
+
+.dashboard-parking-place-number-shimmer {
+  width: 60rpx;
+  height: 32rpx;
+  background: #dbdbdb;
+  border-radius: 4rpx;
+}
+.dashboard-parking-total {
+  font-size: 9pt;
+  font-weight: normal;
+  color: var(--textGrey);
+}
+
+/* Group */
+.dashboard-group-container {
+  background: rgb(167, 74, 246);
+  background: linear-gradient(135deg, rgba(167, 74, 246, 1) 0%, rgba(251, 130, 75, 1) 100%);
+  border-radius: 24rpx;
+  padding: 28rpx;
+  color: white;
+  margin-right: 20rpx;
+}
+
+.dashboard-group-logo {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.dashboard-group-title {
+  color: white;
+  font-weight: bold;
+  font-size: 10pt;
+  line-height: 10pt;
+}
+
+.dashboard-group-size {
+  border-radius: 8rpx;
+  padding: 4rpx 12rpx;
+  color: #3567B2;
+  background: white;
+  font-size: 8pt;
+  width: fit-content;
+  font-weight: bold;
+}
+
+.dashboard-group-new-container {
+  border-radius: 8rpx;
+  padding: 8rpx;
+  border: 2rpx dashed #b1b1b1;
+}
+
+.dashboard-group-new-icon {
+  height: 20rpx;
+  width: 40rpx;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.dashboard-group-new-content{
+  font-size: 8pt;
+  line-height: 8pt;
+  color: rgb(218, 218, 218);
+}
+
+/* MSFT */
+.dashboard-msft-container {
+  background: #261A41;
+  border-radius: 28rpx;
+  padding: 28rpx;
+  color: #f3f2fa;
+}
+
+.dashboard-msft-logo {
+  width: 28rpx;
+  height: 28rpx;
+}
+
+.dashboard-msft-title {
+  font-weight: bold;
+  font-size: 10pt;
+  line-height: 10pt;
+}
+
+.dashboard-msft-price-dollar {
+  color: #dadada;
+}
+
+.dashboard-msft-price {
+  font-size: 20pt;
+  font-weight: bold;
+  line-height: 20pt;
+}
+
+.dashboard-msft-price-change {
+  color: #B0B0EA;
+  font-size: 8pt;
+}
+
+.dashboard-msft-mktcap {
+  color: #B0B0EA;
+  font-size: 7pt;
+  font-weight: bold;
+}
+
+.dashboard-msft-no1 {
+  font-size: 8pt;
+}
+
+/* Activity */
+.dashboard-activity-container {
+  background: white;
+  border-radius: 28rpx;
+  padding: 28rpx;
+  flex: 1;
+  border: 2rpx solid #e2e2e2;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-activity-icon {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.dashboard-activity-title {
+  font-weight: bold;
+  font-size: 10pt;
+  line-height: 10pt;
+}
+
+.dashboard-activity-content-title {
+  font-weight: bold;
+  font-size: 9pt;
+  line-height: 12pt;
+}
+
+.dashboard-activity-content-avatar {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+  border: 2rpx solid #e0e0e0;
+  margin-right: 4rpx;
+}
+
+.dashboard-activity-content-participant {
+  font-size: 8pt;
+  line-height: 8pt;
+  color: var(--textGrey);
+}
+
+/* Food menu */
+.dashboard-foodmenu-container {
+  background: #f2f5f8;
+  border-radius: 28rpx;
+  padding: 28rpx;
+  flex: 1;
+  border: 2rpx solid #e4e6fc;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-foodmenu-icon {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.dashboard-foodmenu-title {
+  font-weight: bold;
+  font-size: 10pt;
+  line-height: 10pt;
+}
+
+.dashboard-foodmenu-date {
+  font-size: 9pt;
+  line-height: 9pt;
+  color: rgb(175, 175, 175);
+}
+
+.dashboard-foodmenu-special {
+  font-weight: bold;
+  font-size: 9pt;
+  line-height: 9pt;
+  color: grey;
+}
+
+.dashboard-foodmenu-content {
+  font-size: 8pt;
+  color: #bebebe;
+  margin-top: 4rpx;
+}
+
+.dashboard-foodmenu-more {
+  font-size: 9pt;
+  line-height: 9pt;
+  font-weight: bold;
+  color: var(--textGrey);
+}
+
+.dashboard-foodmenu-progress-container {
+  border-radius: 32rpx;
+  height: 12rpx;
+  background: #dfe5f1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.dashboard-foodmenu-progress-indicator {
+  border-radius: 32rpx;
+  height: 100%;
+  width: 100rpx;
+  background: rgb(167, 74, 246);
+  background: linear-gradient(135deg, rgba(167, 74, 246, 1) 0%, rgba(251, 130, 75, 1) 100%);
+}
+
+.dashboard-foodmenu-progress-number {
+  color: var(--textGrey);
+  font-size: 8pt;
+}
+
+/* How To */
+.dashboard-howto-container {
+  background: #F1F4FA;
+  border-radius: 28rpx;
+  padding: 28rpx 32rpx;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  border: 2rpx solid #C4DAFB;
+  justify-content: space-between;
+}
+
+.dashboard-howto-title {
+  font-weight: bold;
+  color: #224882;
+  font-size: 11pt;
+  line-height: 11pt;
+}
+
+.dashboard-howto-content {
+  color: #909FD3;
+  font-size: 9pt;
+  line-height: 9pt;
+}
+
+.dashboard-howto-icon {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.dashboard-howto-quantity-icon {
+  width: 28rpx;
+  height: 28rpx;
+}
+
+.dashboard-howto-count-text {
+  color: #224882;
+  font-size: 9pt;
+  line-height: 9pt;
+  font-weight: bold;
+}
+
+
+/* Building2 */
+.dashboard-building2-container {
+  background: white;
+  border-radius: 28rpx;
+  padding: 32rpx;
+}
+
+.dashboard-building2-title {
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.dashboard-building2-progress-container {
+  border-radius: 32rpx;
+  height: 24rpx;
+  background: #f1f1f1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.dashboard-building2-progress-indicator {
+  border-radius: 32rpx;
+  height: 100%;
+  width: 100rpx;
+  background: rgb(167, 74, 246);
+  background: linear-gradient(135deg, rgba(167, 74, 246, 1) 0%, rgba(251, 130, 75, 1) 100%);
+}
+
+.dashboard-building2-progress-date {
+  color: var(--textGrey);
+  font-size: 8pt;
+}
+
+.dashboard-building2-progress-number {
+  color: var(--textGrey);
+  font-size: 8pt;
+}
+
+.dashboard-building2-picture {
+  width: 100%;
+  border-radius: 12rpx;
+}
+
+.dashboard-building2-update-date {
+  color: var(--textGrey);
+  font-size: 8pt;
+  width: 100%;
+  text-align: right;
+}
+
+.msft-top1 {
+  font-weight: bold;
+  font-size: 12pt;
+}
+
+/* Wework Parking */
+.dashboard-wework-parking-container {
+  background: #393C83;
+  border-radius: 28rpx;
+  padding: 24rpx;
+  min-width: 33%;
+}
+
+.dashboard-wework-parking-icon {
+  width: 44rpx;
+  height: 44rpx;
+}
+.dashboard-wework-parking-title {
+  color: #DEDDF9;
+  font-size: 11pt;
+  font-weight: bold;
+}

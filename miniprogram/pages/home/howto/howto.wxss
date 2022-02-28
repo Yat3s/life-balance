@@ -1,0 +1,74 @@
+page {
+  background: white;
+}
+
+.main {
+  padding: 48rpx;
+}
+
+.kindly-title {
+  color: black;
+  font-size: 12pt;
+}
+
+.header-img {
+  height: 200rpx;
+}
+
+.search-container {
+  background: #f6f6f6;
+  border-radius: 60rpx;
+  padding: 24rpx 48rpx;
+}
+
+.search-howto {
+  font-weight: bold;
+  color: var(--textGrey);
+  font-size: 14pt;
+}
+
+.search-keyword {
+  font-size: 14pt;
+}
+
+.input-placeholder {
+  color: rgb(161, 166, 172);
+  font-size: 14pt;
+}
+
+.item-container {
+  border-radius: 24rpx;
+  border: 2rpx solid #f0f0f0;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+}
+
+.qa-title {
+  font-weight: bold;
+  color: black;
+  font-size: 12pt;
+}
+
+.qa-site {
+  color: var(--textGrey);
+  font-size: 9pt;
+}
+
+.qa-tag {
+  color: white;
+  background: #6C93F5;
+  padding: 4rpx 16rpx;
+  font-size: 8pt;
+  border-radius: 24rpx;
+  text-align: center;
+}
+
+.qa-preview {
+  color: var(--textGrey);
+  font-size: 10pt;
+}
+
+.qa-pv {
+  color: var(--textGrey);
+  font-size: 9pt;
+}

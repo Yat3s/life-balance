@@ -1,0 +1,135 @@
+<toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
+
+<view class="main">
+  <image src="../../../images/img_carpool.png" style="width: 100%;" mode="widthFix">
+  </image>
+
+  <view class="title padding">Request/share seats</view>
+
+  <!-- type -->
+  <view class="margin-top-lg">
+    <view bindtap="onHostTypeSelected" data-type="driver" class="flex">
+      <view class="{{hostType == 'driver' ? 'type-point-selected': 'type-point'}}"></view>
+
+      <view class="margin-left-sm">
+        <image class="type-icon" src="../../../images/ic_car.png"></image>
+        <view class="{{hostType == 'driver' ? 'content-primary': 'content-secondary'}} ">I’m driver, I want to share my
+          seats </view>
+      </view>
+    </view>
+
+    <view bindtap="onHostTypeSelected" data-type="passenger" class="flex margin-top-sm">
+      <view class="{{hostType == 'passenger' ? 'type-point-selected': 'type-point'}}"></view>
+
+      <view class="margin-left-sm">
+        <image class="type-icon" src="../../../images/ic_passenger.png"></image>
+        <view class="{{hostType == 'passenger' ? 'content-primary': 'content-secondary'}} ">I’m passenger, I need
+          seats(or share taxi)
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Seats -->
+  <view class="flex margin-top-xl">
+    <image class="section-icon" src="../../../images/ic_passenger.png"></image>
+    <view class="margin-left-sm">
+      <view class="carpool-section-title ">{{seatCountTitle}}</view>
+
+      <view class="flex align-center margin-top-sm">
+        <view bindtap="onSeatDecrease" class="center seat-action-btn">-</view>
+        <view class="content-primary margin-left-sm">{{seatCount}}</view>
+        <view bindtap="onSeatIncrease" class="center seat-action-btn margin-left-sm">+</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Route -->
+  <view class="flex margin-top-xl">
+    <image class="section-icon" src="../../../images/ic_route.png"></image>
+    <view class="margin-left-sm">
+      <view class="carpool-section-title ">Route<text class="content-secondary">{{distance ? '(' + distance + 'km)':
+          ''}}</text></view>
+      <!-- From -->
+      <view bindtap="onChooseLocation" data-type="from" style="min-width: 480rpx;">
+        <view style="font-size: 9pt; color: #b8b8b8;" class="margin-top-xs">From</view>
+
+        <view style="font-size: 10pt;" class="content-primary text-bold">{{locationFrom ? locationFrom.name : 'Click to choose location'}}</view>
+        <view style="font-size: 8pt;" class="text-grey">{{locationFrom ? locationFrom.address : ''}}</view>
+        <view style="height: 2rpx; background: #050505;"></view>
+      </view>
+
+      <!-- To -->
+      <view bindtap="onChooseLocation" data-type="to" class="margin-top-sm">
+        <view style="font-size: 8pt; color: #b8b8b8;" class="">To</view>
+
+        <view style="font-size: 10pt;" class="content-primary text-bold">{{locationTo ? locationTo.name : 'Click to choose location'}}</view>
+        <view style="font-size: 8pt;" class="text-grey">{{locationTo ? locationTo.address : ''}}</view>
+        <view style="height: 2rpx; background: #050505;"></view>
+
+      </view>
+    </view>
+  </view>
+
+  <!-- Time -->
+  <view class="flex margin-top-xl">
+    <image class="section-icon" src="../../../images/ic_time.png"></image>
+    <view class="margin-left-sm">
+      <view class="carpool-section-title ">Time</view>
+      <view class="flex margin-top-xs ">
+        <view class="picker">
+          <picker mode="date" bindchange="onStartDatePicked">
+            <view class="time-block">{{startDateStr}}</view>
+          </picker>
+        </view>
+
+        <view class="picker margin-left-xs">
+          <picker mode="time" value="{{startTimeStr}}" bindchange="onStartTimePicked">
+            <view class="time-block">{{startTimeStr}}</view>
+          </picker>
+        </view>
+      </view>
+    </view>
+  </view>
+
+
+  <!-- Price -->
+  <view class="flex margin-top-xl">
+    <image class="section-icon" src="../../../images/ic_price.png"></image>
+    <view class="margin-left-sm">
+      <view class="carpool-section-title ">Cost</view>
+
+      <view bindtap="onChoosePaymentMethod" data-method="shareGas" class="flex margin-top-sm">
+        <view class="{{paymentMethod == 'shareGas' ? 'payment-point-selected': 'payment-point'}}"></view>
+        <view class="margin-left-sm">
+          <view class="{{paymentMethod == 'shareGas' ? 'content-primary': 'content-secondary'}}">
+            Sharing gas fee </view>
+          <view style="font-size: 9pt;" class="content-secondary">{{shareGasEstimatePriceStr}}</view>
+        </view>
+      </view>
+
+      <view bindtap="onChoosePaymentMethod" data-method="exactly" class="flex margin-top-sm">
+        <view class="{{paymentMethod == 'exactly' ? 'payment-point-selected': 'payment-point'}}"></view>
+
+        <input bindinput="onExactlyPriceInput" style="width: 100rpx;" name="locationName" type="digit"
+          class="inp margin-left-sm" value="{{location.name}}" placeholder="0"></input>
+
+        <view class="{{paymentMethod == 'exactly' ? 'content-primary': 'content-secondary'}} "> CNY/Seat</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Comment -->
+  <view class="flex margin-top-xl">
+    <image class="section-icon" src="../../../images/ic_comment.png"></image>
+    <view class="margin-left-sm">
+      <view class="carpool-section-title ">{{commentTitle}}</view>
+      <input style="min-width: 480rpx;" maxlength="50" type="text" class="inp margin-top-xs" bindinput="onComment"
+        placeholder="Max characters 50"></input>
+    </view>
+  </view>
+
+  <view class="flex justify-end margin-top-xl">
+    <view bindtap="onSubmit" class="submit-btn">Submit</view>
+  </view>
+</view>

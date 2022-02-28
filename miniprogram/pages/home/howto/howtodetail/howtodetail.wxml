@@ -1,0 +1,27 @@
+<toolbar isBack="{{true}}"></toolbar>
+
+<view class="main">
+
+  <view class="flex align-center">
+    <image src="../../../../images/ic_comma.png" class="header-icon"></image>
+    <view class="margin-left-xs">
+      <view class="flex align-center">
+        <view class="header-how-to">How to</view>
+        <view class="header-site margin-left-xs">{{qa.siteStr}}</view>
+      </view>
+
+      <view class="title">{{qa.title}}</view>
+      <view class="underline"></view>
+    </view>
+  </view>
+
+  <view class="flex justify-between" style="margin-top: 60rpx">
+    <view class="author">Author: {{qa.authorStr}}</view>
+    <view class="pv">{{qa.pv}} views</view>
+  </view>
+
+  <view class="content-container margin-top-sm">
+    <rich-text type="text" text="123" nodes="{{qa.content}}"></rich-text>
+  </view>
+
+</view>

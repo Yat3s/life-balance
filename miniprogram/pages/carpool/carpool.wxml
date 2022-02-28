@@ -1,0 +1,89 @@
+<view style="height: {{toolbarHeight}}px;  width: 100%; z-index: 1;  margin-top: 100rpx;"
+  class="plr flex align-center justify-end">
+</view>
+
+<view style="margin-top: 100rpx"></view>
+
+
+
+<view class="plr">
+  <!-- Header -->
+  <!-- Logo -->
+  <image class="logo" src="../../images/ic_commute1.png"></image>
+
+  <view class="flex align-center justify-between">
+    <view class="title">Commuter</view>
+
+    <view bindtap="toPostCarpool" class="post-carpool-btn flex align-center ">
+      <text style="font-size: 12pt" class="cuIcon-roundaddfill"></text>
+      <view class="margin-left-xs">Post Request</view>
+    </view>
+  </view>
+
+  <!-- Route card -->
+  <!-- <view style=" border-radius: 24rpx;padding: 24rpx 32rpx 40rpx 32rpx;" class="bg-white margin-top-lg shadow-lg">
+    <view class="flex align-end margin-top-sm justify-between">
+      <view>
+        <view class="flex align-start">
+          <view
+            style="margin-top: 4rpx; border-radius: 50%; width: 24rpx; height: 24rpx; background: rgb(163, 163, 163); border: 6rpx solid #e0dfdf;">
+          </view>
+          <view class="margin-left-sm">
+            <view style="font-size: 8pt; color: #b8b8b8" class="">From</view>
+
+            <view style="font-size: 10pt;" class="text-black text-bold margin-top-xs">微软中国有限公司</view>
+            <view style="font-size: 8pt;" class="text-grey">江苏省苏州市苏州工业园区普惠路689号</view>
+            <view style="height: 2rpx; background: #191946;"></view>
+          </view>
+        </view>
+
+        <view class="flex align-start margin-top-sm">
+          <view
+            style="margin-top: 4rpx;border-radius: 50%; width: 24rpx; height: 24rpx; background: rgb(163, 185, 243); border: 6rpx solid #e0dfdf;">
+          </view>
+          <view class="margin-left-sm">
+            <view style="font-size: 8pt; color: #b8b8b8;" class="">To</view>
+
+            <view style="font-size: 10pt;" class="text-black text-bold margin-top-xs">微软中国有限公司</view>
+            <view style="font-size: 8pt;" class="text-grey">江苏省苏州市苏州工业园区普12惠路689号</view>
+            <view style="height: 2rpx; background: #191946;"></view>
+
+          </view>
+        </view>
+      </view>
+
+
+      <view class="shadow-blur margin-left-sm"
+        style="width: 160rpx; background: var(--primary); border-radius: 16rpx; padding: 24rpx;">
+        <view class="text text-white text-bold margin-top">Find</view>
+        <view class="text-sm text-white text-bold">Nearby</view>
+      </view>
+    </view>
+  </view> -->
+
+  <view class="margin-top">
+    <view id="carpoolContainer">
+      <carpoolitem wx:if="{{!item.isExpired}}" wx:for="{{carpools}}" wx:key="_id" carpool="{{item}}"></carpoolitem>
+    </view>
+
+    <!-- Shimmer -->
+    <view wx:if="{{!carpools}}" wx:key="nonthing" wx:for="{{2}}" style="margin: 0 0 30rpx 0; border-radius: 16rpx;"
+      class="bg-white padding">
+
+      <view class="shine" style="flex-grow: 0; flex-shrink: 0; width: 100%; height: 100rpx; border-radius: 12rpx;" />
+      <view class="shine margin-top-sm"
+        style="flex-grow: 0; flex-shrink: 0; width: 100%; height: 260rpx; border-radius: 12rpx;" />
+    </view>
+
+    <!-- Empty message -->
+    <view wx:if="{{showEmptyMessage}}" style="width: 100%; height: 500rpx;" class="center">
+      <image style="width: 300rpx" mode="widthFix" src="../../images/ic_empty_state.png"></image>
+      <text class="text-grey margin-top">Nothing here...</text>
+    </view>
+  </view>
+</view>
+
+
+
+
+<!-- <view class="section-title margin-top">Rides nearby</view> -->

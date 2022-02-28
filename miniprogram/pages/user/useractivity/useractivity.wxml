@@ -1,0 +1,32 @@
+<toolbar isBack="true" bgColor="bg-white"></toolbar>
+
+<view class="flex margin-top">
+  <view wx:for="{{tabs}}" style="flex-grow: 1;" class="center" bindtap="onTabSelected" data-id="{{item.id}}">
+    <view style="font-size: 18pt" class="text-bold text-black">{{item.count}}</view>
+
+    <view style="position: relative;" class="center">
+      <view class="text-grey text-sm {{selectedTabId == item.id ? 'text-bold' : ''}}">{{item.name}}</view>
+      <view wx:if="{{selectedTabId == item.id}}" class="indicator" />
+    </view>
+  </view>
+</view>
+
+<view wx:if="{{selectedTabId != 'like'}}" class="margin-top">
+  <view class="activity-item" bindtap="onActivityItemClick" data-id="{{item._id}}" wx:for="{{activities}}"
+    wx:if="{{selectedTabId == 'all' || item.type == selectedTabId}}" wx:key="item">
+    <activityItem activity="{{item}}"></activityItem>
+  </view>
+
+</view>
+
+<view wx:if="{{selectedTabId == 'like'}}" class="margin-top">
+  <view class="activity-item" bindtap="onActivityItemClick" data-id="{{item._id}}" wx:for="{{likedActivities}}"
+    wx:key="item">
+    <activityItem activity="{{item}}"></activityItem>
+  </view>
+</view>
+
+<view wx:if="{{showEmpty}}" style="width: 100%; height: 500rpx;" class="center">
+  <image style="width: 300rpx" mode="widthFix" src="../../../images/ic_empty_state.png"></image>
+  <text class="text-grey margin-top">Nothing here...</text>
+</view>

@@ -1,0 +1,284 @@
+/* components/carpoolitem/carpoolitem.wxss */
+
+page {
+  --driver: black;
+  --passenger: #23ABF8;
+}
+
+.main {
+  border-radius: 24rpx;
+  background: white;
+  padding: 40rpx;
+  margin-bottom: 32rpx;
+}
+
+.hostContainer {
+  display: flex;
+  align-items: center;
+}
+
+.hostAvatar {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+}
+
+.hostInfoContainer {
+  margin-left: 24rpx;
+}
+
+.hostInfoName {
+  font-size: 11pt;
+  line-height: 11pt;
+  font-weight: bold;
+  color: black;
+}
+
+.hostInfoDesc {
+  font-size: 8pt;
+  color: rgb(175, 175, 175);
+}
+
+.routeTime {
+  font-size: 9pt;
+  color: var(--textGrey);
+  line-height: 9pt;
+}
+
+.routeDistance {
+  font-size: 8pt;
+  color: grey;
+}
+
+.routeStartPoint {
+  width: 20rpx;
+  height: 20rpx;
+  border: 4rpx solid #ececec;
+  border-radius: 50%;
+  margin-top: 8rpx;
+  background-color: rgb(211, 211, 211);
+}
+
+.routeEndPoint {
+  width: 20rpx;
+  height: 20rpx;
+  margin-top: 8rpx;
+  border: 4rpx solid #f1f1f1;
+  border-radius: 50%;
+  background-color: rgb(162, 172, 206);
+}
+
+.routeAddress {
+  font-size: 10pt;
+  font-weight: bold;
+  color: rgb(13, 28, 59);
+}
+
+.routeAddressDesc {
+  font-size: 8pt;
+  color: #bbbbbb;
+}
+
+.action-btn-driver {
+  font-size: 9pt;
+  font-weight: bold;
+  border-radius: 8rpx;
+  padding: 8rpx 32rpx;
+  background: var(--driver);
+  color: white;
+}
+
+.action-btn-passenger {
+  font-size: 9pt;
+  font-weight: bold;
+  border-radius: 8rpx;
+  padding: 8rpx 32rpx;
+  background: var(--passenger);
+  color: white;
+}
+
+.action-btn-disabled {
+  font-size: 9pt;
+  font-weight: bold;
+  border-radius: 8rpx;
+  padding: 8rpx 32rpx;
+  background: #f1f1f1;
+  color: var(--textGrey);
+}
+
+.expired {
+  font-size: 9pt;
+  color: var(--textGrey);
+}
+
+.seat-circle-driver {
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 50%;
+  margin-left: 6rpx;
+  background: var(--driver);
+}
+
+.seat-circle-passenger {
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 50%;
+  margin-left: 6rpx;
+  background: var(--passenger);
+}
+
+.seat-circle-available {
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 50%;
+  margin-left: 6rpx;
+  background: #f1f1f1;
+}
+
+.seat-text {
+  font-size: 9pt;
+  line-height: 9pt;
+  color: #BDBBBB;
+  margin-top: 12rpx;
+}
+
+.fee-text {
+  font-size: 9pt;
+  line-height: 9pt;
+  color: #BDBBBB;
+}
+
+.route-line {
+  width: 2rpx;
+  background: #f1f1f1;
+  flex: 1;
+}
+
+.route-point-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.host-type-driver {
+  border-radius: 8rpx;
+  background: var(--driver);
+  padding: 2rpx 16rpx;
+  color: white;
+  font-size: 8pt;
+  font-weight: bold;
+}
+
+.host-type-passenger {
+  border-radius: 8rpx;
+  background: var(--passenger);
+
+  padding: 2rpx 16rpx;
+  color: white;
+  font-size: 8pt;
+  font-weight: bold;
+}
+
+.modal-main {
+  padding: 48rpx;
+  border-radius: 32rpx;
+  text-align: start;
+}
+
+.modal-title {
+  font-weight: bold;
+  font-size: 18pt;
+  color: black;
+}
+
+.modal-content {
+  font-size: 10pt;
+  color: var(--textGrey);
+}
+
+.modal-seat-circle {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  margin-right: 12rpx;
+  background: var(--driver);
+  font-weight: bold;
+  color: white;
+}
+
+.modal-seat-circle-available {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  margin-right: 12rpx;
+  background: #f1f1f1;
+  font-weight: bold;
+  color: var(--textGrey);
+}
+
+.modal-host-avatar {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+}
+
+.modal-host-avatar-lg {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  border: 2rpx solid #c4c4c4;
+}
+
+.modal-host-name {
+  font-weight: bold;
+  color: black;
+  font-size: 10pt;
+}
+
+.modal-host-comment-title {
+  color: grey;
+  font-size: 10pt;
+}
+
+.modal-host-comment-content {
+  font-size: 10pt;
+  color: var(--textGrey);
+}
+
+.modal-policy-text {
+  font-size: 9pt;
+  color: #aaaaaa;
+}
+
+.modal-btn-ok {
+  border-radius: 16rpx;
+  flex: 1;
+  font-weight: bold;
+  background: #0165FE !important;
+  color: white !important;
+}
+
+.modal-btn-contact-ok {
+  border-radius: 16rpx;
+  width: 200rpx;
+  font-weight: bold;
+  background: #0165FE !important;
+  color: white !important;
+}
+
+
+.modal-btn-cancel {
+  border-radius: 16rpx;
+  flex: 1;
+  font-weight: bold;
+  background: #f1f1f1 !important;
+  color: #858585 !important;
+}
+
+.modal-contact-container {
+  padding: 24rpx;
+  font-weight: bold;
+  font-size: 14pt;
+  background: #f1f1f1;
+  border-radius: 16rpx;
+}

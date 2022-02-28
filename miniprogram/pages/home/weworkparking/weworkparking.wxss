@@ -1,0 +1,240 @@
+/* pages/home/weworkparking/weworkparking.wxss */
+
+page {
+  background: white;
+}
+
+.main {
+  padding: 40rpx 40rpx 200rpx 40rpx;
+}
+
+.header-img {
+  height: 240rpx;
+}
+
+.title {
+  color: #333333;
+  font-size: 16pt;
+  font-weight: bold;
+  line-height: 14pt;
+}
+
+.desc {
+  color: var(--textGrey);
+  font-size: 10pt;
+}
+
+.section-margin {
+  margin-top: 60rpx;
+}
+
+.section-title {
+  color: #758BD9;
+  font-weight: bold;
+  font-size: 10pt;
+}
+
+.refresh-text {
+  color: #758BD9;
+  font-size: 10pt;
+  text-decoration: underline;
+}
+
+.rule-text {
+  color: #758BD9;
+  font-size: 10pt;
+  text-decoration: underline;
+}
+
+.rule-content {
+  color: #a5a5a5;
+  font-size: 10pt;
+}
+
+.date-container-selected {
+  padding: 16rpx 24rpx;
+  border: #9ED1FF solid 2rpx;
+  border-radius: 12rpx;
+  background: #f7fcff;
+  flex: 1;
+}
+
+.date-container-disabled {
+  padding: 16rpx 24rpx;
+  border: #e4e4e4 solid 2rpx;
+  border-radius: 12rpx;
+  background: #f8f8f8;
+  flex: 1;
+}
+
+.date-title-selected {
+  font-size: 14pt;
+  font-weight: bold;
+  color: #15294F;
+}
+
+.date-title-disabled {
+  font-size: 14pt;
+  font-weight: bold;
+  color: #dfdfdf;
+}
+
+.date-available {
+  font-size: 9pt;
+  color: var(--textGrey);
+}
+
+/* Org */
+.org-indicator {
+  background: #B3CCFC;
+  width: 8rpx;
+  height: 24rpx;
+}
+
+.org-title {
+  font-weight: bold;
+  color: black;
+}
+
+.org-count {
+  color: rgb(189, 189, 189);
+}
+
+.org-pending-text {
+  color: #c2c2c2;
+  font-size: 8pt;
+}
+
+.org-pending-divider {
+  background: #f1f1f1;
+  width: 2rpx;
+  height: 100rpx;
+  flex-shrink: 0;
+}
+
+.user-item {
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.today-booking-note {
+  font-size: 9pt;
+  color: #c2c2c2;
+}
+
+.today-booking-divider {
+  height: 2rpx;
+  background: #f1f1f1;
+  flex: 1;
+}
+
+.today-booking-divider-title {
+  font-size: 10pt;
+  color: #c2c2c2;
+}
+
+.warn-info {
+  color: #f17c7c;
+  font-size: 9pt;
+}
+
+.vehicle-id {
+  padding: 8rpx 20rpx;
+  color: white;
+  font-weight: bold;
+  font-size: 10pt;
+  border-radius: 12rpx;
+  background: #98ABEC;
+}
+
+.booking-container {
+  border-radius: 100rpx;
+  background: black;
+  padding: 28rpx 48rpx;
+  color: white;
+  font-weight: bold;
+  font-size: 14pt;
+  line-height: 14pt;
+}
+
+.booking-container-cancel {
+  border-radius: 100rpx;
+  background: rgb(168, 168, 168);
+  padding: 28rpx 48rpx;
+  color: white;
+  font-weight: bold;
+  font-size: 14pt;
+  line-height: 14pt;
+}
+
+.booking-countdown {
+  color: #9b9b9b;
+  font-size: 9pt;
+}
+
+.booking-date {
+  color: #B7A8E2;
+}
+
+.booking-user-number {
+  border-radius: 50%;
+  width: 40rpx;
+  height: 40rpx;
+  color: white;
+  font-weight: bold;
+  font-size: 9pt;
+  background: #BDCDF9;
+}
+
+.booking-user-avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  border: #DFDFDF solid 2rpx;
+}
+
+.booking-user-vehicle-id {
+  color: #8B8B8B;
+  margin-top: 4rpx;
+  font-size: 8pt;
+}
+
+.booking-user-date {
+  color: var(--textGrey);
+  font-size: 10pt;
+}
+
+.modal-main {
+  padding: 48rpx;
+  border-radius: 32rpx;
+  text-align: start;
+  background: white;
+}
+
+.modal-title {
+  font-weight: bold;
+  font-size: 16pt;
+  color: black;
+}
+
+.modal-btn-ok {
+  border-radius: 16rpx;
+  font-weight: bold;
+  background: #5598fc !important;
+  color: white !important;
+}
+
+.input-placeholder {
+  color: rgb(161, 166, 172);
+  font-size: 10pt;
+}
+
+.inp {
+  border-bottom: 4rpx solid rgb(140, 196, 253);
+}
+
+
+
+
+
+

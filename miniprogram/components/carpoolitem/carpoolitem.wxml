@@ -1,0 +1,204 @@
+<!--components/carpoolitem/carpoolitem.wxml-->
+<view bindtap="onActionBtnClick" class="main">
+
+  <view class="flex justify-between align-center">
+    <view class="hostContainer align-center">
+      <image src="{{carpool.host.avatarUrl}}" class="hostAvatar"></image>
+      <view class="hostInfoContainer">
+        <view class="flex align-center">
+          <view class="hostInfoName">{{carpool.host.nickName}}</view>
+          <view class="margin-left-xs {{carpool.hostType === 'driver' ? 'host-type-driver' : 'host-type-passenger'}}">
+            {{carpool.hostType === 'driver' ? 'Driver' : 'I need seat'}}</view>
+        </view>
+        <view class="hostInfoDesc">{{carpool.host.company ? '微软(中国)有限公司员工' : '未认证用户'}}</view>
+      </view>
+    </view>
+
+    <view style="display: flex; flex-direction: column; align-items: flex-end;">
+      <view class="flex justify-end">
+        <view wx:for="{{carpool.seatCount}}"
+          class="{{carpool.hostType === 'passenger' ? 'seat-circle-passenger' : index < carpool.participants.length ? 'seat-circle-driver' : 'seat-circle-available'}}">
+        </view>
+      </view>
+
+      <view wx:if="{{carpool.isFull}}" class="seat-text">Full</view>
+      <view wx:if="{{carpool.hostType === 'driver' && !carpool.isFull}}" class="seat-text">{{carpool.seatCount -
+        carpool.participants.length}} seats available</view>
+      <view wx:if="{{carpool.hostType === 'passenger' && !carpool.isFull}}" class="seat-text">{{carpool.seatCount}}
+        seats need</view>
+    </view>
+
+  </view>
+
+  <!-- Route -->
+  <view class="margin-top-lg">
+
+    <view class="routeTime">{{carpool.startDateStr}} {{carpool.startTimeStr}} ({{carpool.distance}} km)
+    </view>
+
+    <!-- Address -->
+    <view class="margin-top-sm">
+      <view class="flex">
+        <view class="route-point-container">
+          <view class="routeStartPoint "></view>
+          <view class="route-line"></view>
+        </view>
+
+        <view class="margin-left-sm">
+          <view class="routeAddress single-line">{{carpool.locationFrom.name}}</view>
+          <view class="routeAddressDesc single-line">{{carpool.locationFrom.address}}</view>
+        </view>
+      </view>
+
+      <view class="flex">
+        <view class="routeEndPoint"></view>
+
+        <view class="margin-left-sm">
+          <view class="routeAddress single-line">{{carpool.locationTo.name}}</view>
+          <view class="routeAddressDesc single-line">{{carpool.locationTo.address}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+
+  <view class="margin-top" style="width: 100%; height: 2rpx; background-color: #f1f1f1;"></view>
+
+  <view class="flex align-center margin-top justify-between">
+
+
+    <view class="flex align-center">
+      <image src="../../images/ic_money.png" style="width:28rpx; height: 28rpx;"></image>
+      <view class="fee-text margin-left-xs">{{carpool.paymentMethod == 'exactly' ? (carpool.fee || 0) + ' CNY/seat' :
+        'Share gas fee(~' + (carpool.fee || 0) + 'CNY/seat)'}}</view>
+    </view>
+
+    <view wx:if="{{!carpool.isExpired && !carpool.isFull}}"
+      class="{{carpool.hostType === 'driver' ? 'action-btn-driver' : 'action-btn-passenger'}}">{{carpool.hostType
+      === 'driver' ? 'Join': 'Pick up their'}}
+    </view>
+
+    <view wx:if="{{carpool.isFull || carpool.isExpired}}" class="action-btn-disabled">{{carpool.isFull ? 'Full' :
+      'Expired'}}
+    </view>
+
+  </view>
+</view>
+
+<!-- Confirm modal -->
+<view class="cu-modal {{showingModal === 'action' ? 'show' : ''}}">
+  <view class="cu-dialog bg-white modal-main">
+    <view class="flex justify-between">
+      <view class="modal-title">{{carpool.hostType === 'driver' ? 'Join' : 'Pick their'}}</view>
+      <view class="action" bindtap="onDimissModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view>
+      <view class="modal-content margin-top">
+        {{carpool.hostType === 'driver' ? 'How many seats do you want?' : 'Are you sure to pick their?'}}
+      </view>
+
+      <view wx:if="{{carpool.hostType === 'driver'}}" class="flex margin-top-sm">
+        <view bindtap="onSelectCount" data-count="{{index + 1}}"
+          wx:for="{{carpool.seatCount - carpool.participants.length}}"
+          class="center {{index < selectedCount ? 'modal-seat-circle' : 'modal-seat-circle-available'}}">{{index + 1}}
+        </view>
+      </view>
+
+      <view class="flex align-center margin-top">
+        <image src="{{carpool.host.avatarUrl}}" class="modal-host-avatar"></image>
+        <view class="modal-host-name margin-left-xs">{{carpool.host.nickName}}</view>
+        <view class="modal-host-comment-title margin-left-xs">Left the message</view>
+      </view>
+
+      <view class="margin-top-xs modal-host-comment-content margin-left-lg">{{carpool.comment}}</view>
+
+      <view class="flex align-center margin-top-lg">
+        <checkbox-group bindchange="onPolicyCheckChanged">
+          <checkbox value="policy" style="transform: scale(0.5); margin-left: -10rpx;" checked="true">
+          </checkbox>
+        </checkbox-group>
+        <view class="modal-policy-text">Agree the <text class="text-blue">policy</text></view>
+      </view>
+      <view style="gap: 40rpx;" class="flex align-center margin-top-xs">
+        <view bindtap="onDimissModal" class="cu-btn modal-btn-cancel">Cancel</view>
+        <view bindtap="onConfirmBtnClick" class="cu-btn modal-btn-ok">Confirm</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+<!-- Contact modal for participant -->
+<view class="cu-modal {{showingModal === 'contactForParticipant' ? 'show' : ''}}">
+  <view class="cu-dialog bg-white modal-main">
+    <view class="flex justify-between">
+      <view class="modal-title">Success!</view>
+      <view class="action" bindtap="onDimissModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+
+    <view>
+      <view class="flex align-center  margin-top-lg">
+        <view class="modal-content">
+          The contact information left by
+        </view>
+        <image src="{{carpool.host.avatarUrl}}" class="modal-host-avatar margin-left-xs"></image>
+        <view class="modal-host-name margin-left-xs">{{carpool.host.nickName}}</view>
+      </view>
+
+      <view class="margin-top-xs modal-contact-container">{{carpool.host.contact}}</view>
+
+      <view class="flex margin-top-xs justify-end">
+        <view bindtap="onCopy" data-content="{{carpool.contact}}" class="text-blue text-sm">Copy</view>
+      </view>
+
+      <view style="gap: 40rpx;" class="flex align-center justify-end margin-top-lg">
+        <view bindtap="onDimissModal" class="cu-btn modal-btn-contact-ok">OK</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+<!-- Contact modal for host -->
+<view class="cu-modal {{showingModal === 'contactForHost' ? 'show' : ''}}">
+  <view class="cu-dialog bg-white modal-main">
+    <view class="flex justify-between">
+      <view class="modal-title">Participants</view>
+      <view class="action" bindtap="onDimissModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+
+    <view>
+      <view class="margin-top-lg">
+        <view class="modal-content">
+          Who applying your request
+        </view>
+
+        <view class="margin-top">
+          <view wx:for="{{carpool.participants}}" wx:key="{{_id}}" class="flex align-center margin-bottom-xs">
+            <image src="{{item.avatarUrl}}" class="modal-host-avatar-lg"></image>
+
+            <view class="margin-left-sm">
+              <view class="modal-host-name ">{{item.nickName}}</view>
+              <view class="flex align-center">
+                <view class="modal-content">{{item.contact}}</view>
+                <view bindtap="onCopy" data-content="{{item.contact}}" class="text-blue text-xs margin-left-xs">copy contact</view>
+              </view>
+            </view>
+
+          </view>
+        </view>
+      </view>
+
+
+      <view class="flex align-center justify-end margin-top-lg">
+        <view bindtap="onDimissModal" class="cu-btn modal-btn-contact-ok">OK</view>
+      </view>
+    </view>
+  </view>
+</view>

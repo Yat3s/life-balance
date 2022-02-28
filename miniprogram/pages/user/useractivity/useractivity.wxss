@@ -1,0 +1,16 @@
+page {
+  height: 100%;
+}
+
+.indicator {
+  position: absolute;
+  height: 16rpx;
+  background: var(--lightBlue);
+  width: 80rpx;
+  top: 20rpx;
+  z-index: -1;
+}
+
+.activity-item {
+  padding: 0 var(--inset) 30rpx var(--inset);
+}

@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "activityItem": "/components/activityitem/activityitem"
+  }
+}
