@@ -108,7 +108,7 @@
   border-radius: 4rpx;
 }
 .dashboard-parking-total {
-  font-size: 9pt;
+  font-size: 8pt;
   font-weight: normal;
   color: var(--textGrey);
 }

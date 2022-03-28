@@ -33,7 +33,7 @@
             <view class="dashboard-parking-place-title">地上</view>
             <view wx:if="{{!parkingSpace}}" class="dashboard-parking-place-number-shimmer margin-top-sm"></view>
             <view wx:if="{{parkingSpace}}" class="dashboard-parking-place-number margin-top-sm">
-              {{parkingSpace.ground}}<text class="dashboard-parking-total"> /64</text>
+              {{parkingSpace.ground}}<text class="dashboard-parking-total"> /66</text>
             </view>
           </view>
           <view>
