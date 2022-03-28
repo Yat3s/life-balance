@@ -2,7 +2,7 @@
 
 page {
   background: white;
-  --typeWidth: 80rpx;
+  --typeWidth: 60rpx;
   --menuRadius: 12rpx;
   --stallSpace: 160rpx;
   padding-bottom: 40rpx;
@@ -10,7 +10,7 @@ page {
 
 .date-container {
   margin-left: var(--typeWidth);
-  margin-top: 60rpx;
+  margin-top: 40rpx;
   width: 100%;
   white-space: nowrap;
   padding-right: var(--typeWidth);
@@ -22,6 +22,14 @@ page {
   line-height: 20pt;
   color: black;
   margin-left: var(--typeWidth);
+}
+
+.menu {
+  padding: 0 var(--typeWidth);
+}
+
+.menu-imgh {
+  width: 100%;
 }
 
 .company {
@@ -44,10 +52,15 @@ page {
 .date {
   border: 2rpx solid #f1f1f1;
   border-radius: 100rpx;
-  color: var(--textGrey);
+  color: #7f7caf;
   padding: 4rpx 32rpx;
   font-size: 10pt;
-  margin-right: 16rpx;
+  width: fit-content;
+}
+
+.special {
+  font-size: 10pt;
+  color: var(--textGrey);
 }
 
 .type-container {

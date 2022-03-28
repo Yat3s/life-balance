@@ -120,7 +120,9 @@
   border-radius: 24rpx;
   padding: 28rpx;
   color: white;
-  margin-right: 20rpx;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .dashboard-group-logo {
@@ -133,6 +135,8 @@
   font-weight: bold;
   font-size: 10pt;
   line-height: 10pt;
+  margin-top: 12rpx;
+  flex: 1;
 }
 
 .dashboard-group-size {
@@ -160,8 +164,15 @@
 
 .dashboard-group-new-content{
   font-size: 8pt;
-  line-height: 8pt;
+  line-height: 12pt;
   color: rgb(218, 218, 218);
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  align-content: center;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 /* MSFT */
@@ -252,13 +263,12 @@
 
 /* Food menu */
 .dashboard-foodmenu-container {
-  background: #f2f5f8;
+  background: #edebf3;
   border-radius: 28rpx;
   padding: 28rpx;
+  border: 2rpx solid #e9f0e9;
+  margin-right: 20rpx;
   flex: 1;
-  border: 2rpx solid #e4e6fc;
-  display: flex;
-  flex-direction: column;
 }
 
 .dashboard-foodmenu-icon {
@@ -275,14 +285,14 @@
 .dashboard-foodmenu-date {
   font-size: 9pt;
   line-height: 9pt;
-  color: rgb(175, 175, 175);
+  color: rgb(146, 146, 146);
 }
 
 .dashboard-foodmenu-special {
   font-weight: bold;
   font-size: 9pt;
   line-height: 9pt;
-  color: grey;
+  color: rgb(78, 78, 78);
 }
 
 .dashboard-foodmenu-content {
@@ -421,7 +431,7 @@
 
 /* Wework Parking */
 .dashboard-wework-parking-container {
-  background: #393C83;
+  background: #826F66;
   border-radius: 28rpx;
   padding: 24rpx;
   min-width: 33%;
@@ -432,7 +442,7 @@
   height: 44rpx;
 }
 .dashboard-wework-parking-title {
-  color: #DEDDF9;
+  color: white;
   font-size: 11pt;
   font-weight: bold;
 }

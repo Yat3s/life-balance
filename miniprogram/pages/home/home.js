@@ -134,7 +134,11 @@ Component({
           return b._createTime - a._createTime;
         })
 
-        const newGroupsStr = [groups[0].name, groups[1].name, groups[2].name].join('、');
+        let newGroupsStr = '';
+        for (const group of groups) {
+          newGroupsStr += group.name + "、"
+        }
+        
         this.setData({
           newGroupsStr
         })

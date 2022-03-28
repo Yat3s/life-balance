@@ -47,15 +47,18 @@
         </view>
       </view>
 
-      <!-- Group -->
-      <view bindtap="onWechatGroupCardClick" class="dashboard-group-container margin-top">
-        <image class="dashboard-group-logo" src="../../images/ic_groups.png"></image>
-        <view class="dashboard-group-title">MS Wechat Groups</view>
-        <view class="dashboard-group-size margin-top-sm">{{wechatGroupCount}} groups</view>
-        <view class="dashboard-group-new-container flex margin-top-sm">
-          <image class="dashboard-group-new-icon" src="../../images/ic_new.png"></image>
-          <view class="dashboard-group-new-content single-line margin-left-xs">{{newGroupsStr}}</view>
+      <!-- Food menu -->
+      <view bindtap="onFoodMenuClick" class="dashboard-foodmenu-container margin-top">
+        <view class="flex align-center justify-between">
+          <view class="flex align-center">
+            <image class="dashboard-foodmenu-icon" src="../../images/ic_food.png"></image>
+            <view class="dashboard-foodmenu-title margin-left-xs">食堂本周菜单</view>
+          </view>
         </view>
+
+        <view class="dashboard-foodmenu-date margin-top-lg">本周特供：</view>
+        <view class="dashboard-foodmenu-special single-line margin-top-sm">{{todayMenu.special}}</view>
+
       </view>
 
     </view>
@@ -83,33 +86,18 @@
 
       </view>
 
-
-      <!-- Food menu -->
-      <view bindtap="onFoodMenuClick" class="dashboard-foodmenu-container margin-top">
-        <view class="flex align-center justify-between">
-          <view class="flex align-center">
-            <image class="dashboard-foodmenu-icon" src="../../images/ic_food.png"></image>
-            <view class="dashboard-foodmenu-title margin-left-xs">食堂菜单</view>
-          </view>
-          <!-- <view class="dashboard-foodmenu-progress-number">{{canteenUpdateProgress}}%</view> -->
+      <!-- Group -->
+      <view bindtap="onWechatGroupCardClick" class="dashboard-group-container margin-top">
+        <image class="dashboard-group-logo" src="../../images/ic_groups.png"></image>
+        <view class="dashboard-group-title">MS Wechat Groups</view>
+        <view class="dashboard-group-size margin-top-sm">{{wechatGroupCount}} groups</view>
+        <view class="dashboard-group-new-container flex margin-top-sm">
+          <image class="dashboard-group-new-icon" src="../../images/ic_new.png"></image>
+          <view class="dashboard-group-new-content single-line margin-left-xs">{{newGroupsStr}}</view>
         </view>
-
-        <!-- <view class="dashboard-foodmenu-progress-container margin-top">
-          <view style="width: {{canteenUpdateProgress}}%;" class="dashboard-foodmenu-progress-indicator"></view>
-        </view> -->
-
-
-        <view class="dashboard-foodmenu-date margin-top-lg">{{todayMenu.dateStr}} 菜单：</view>
-
-        <view class="dashboard-foodmenu-special margin-top-sm">{{todayMenu.special}}</view>
-
-        <view class="dashboard-foodmenu-content single-line">{{todayMenu.lunch[0].foods}}</view>
-        <view style="flex: 1"></view>
-
-        <view class="flex justify-end dashboard-foodmenu-more margin-top-sm">
-          查看本周菜单</view>
-
       </view>
+
+      
     </view>
   </view>
 

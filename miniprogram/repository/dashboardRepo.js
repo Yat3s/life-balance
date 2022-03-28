@@ -32,18 +32,17 @@ function processQa(qa) {
 }
 
 const preProcessMenuData = (menus) => {
-  for (const menu of menus) {
-    menu.dateStr = (new Date(menu.date)).dateStr();
+  if (!menus || menus.length == 0) {
+    return;
+  }
 
-    for (const breakfastStall of menu.breakfast) {
-      breakfastStall.foods = breakfastStall.foods.split("\n");
-    }
-    for (const lunchStall of menu.lunch) {
-      lunchStall.foods = lunchStall.foods.split("\n");
-    }
-    for (const dinnerStall of menu.dinner) {
-      dinnerStall.foods = dinnerStall.foods.split("\n");
-    }
+  for (const menu of menus) {
+    menu.startDateStr = (new Date(menu.startDate)).mmdd();
+    menu.endDateStr = (new Date(menu.endDate)).mmdd();
+
+    // if (menu.menuContent) {
+    //   menu.menuContent = menu.menuContent.replace(/\<img/gi, '<img style="max-width:100% !important; width: 100% !important; height:auto !important" ')
+    // }
   }
 
   menus.sort((a, b) => {
@@ -92,7 +91,7 @@ export function fetchFoodMenus() {
   today.setHours(0, 0, 0, 0);
 
   return cloudCall(db.collection(COLLECTION_NAME_FOOD_MENU).where({
-    date: _.gte(today.getTime())
+    endDate: _.gte(today.getTime())
   }).get(), "fetchFoodMenus", preProcessMenuData);
 }
 

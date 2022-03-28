@@ -1,4 +1,6 @@
-import { fetchFoodMenus } from "../../../repository/dashboardRepo"
+import {
+  fetchFoodMenus
+} from "../../../repository/dashboardRepo"
 
 // pages/home/foodmenu/foodmenu.js
 Page({
@@ -10,23 +12,46 @@ Page({
     selectedDateIndex: 0
   },
 
-  onDateSelected(e) {
-    const selectedDateIndex = e.currentTarget.dataset.index;
-    this.setData({
-      selectedDateIndex
-    });
-  },
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     fetchFoodMenus().then(menus => {
       console.log(menus);
-      this.setData({
-        menus
-      })
+      if (menus && menus.length > 0) {
+        const menu = menus[0];
+        var nodes = menu.menuContent;
+        var that = this;
+
+        // Move all images in to imgs
+        if (nodes.indexOf("src") >= 0) {
+          var imgs = [];
+          nodes = nodes.replace(/<img [^>]*src=['"]([^'"]+)[^>]*>/gi, function (match, capture) {
+            imgs.push(capture);
+            that.setData({
+              imgs: imgs
+            });
+            return '';
+          });
+
+          console.log("img", imgs);
+          nodes = nodes.replace(/<p(([\s\S])*&#63;)<\/p>/g, function (match, capture) {
+            return '';
+          });
+
+          menu.menuContent = nodes;
+        }
+        this.setData({
+          menu
+        })
+      }
     });
+  },
+
+  previewImage(e) {
+    wx.previewImage({
+      urls: [e.currentTarget.dataset.src],
+    })
   },
 
   /**
