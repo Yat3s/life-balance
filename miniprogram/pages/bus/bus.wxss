@@ -1,0 +1,270 @@
+/* pages/bus/bus.wxss */
+
+page {
+  background-color: white;
+  padding-bottom: 100rpx;
+}
+
+.title {
+  font-size: 16pt;
+  color: black;
+  font-weight: bold;
+  margin: 20rpx var(--inset) 0;
+}
+
+.route-item,
+.route-item-selected {
+  border-radius: 20rpx;
+  padding: 24rpx 28rpx;
+  margin-left: var(--inset);
+  flex-grow: 0;
+  flex-shrink: 0;
+  background: #F8F8F8;
+  height: fit-content;
+}
+
+.route-item-selected {
+  border: #b6e4f8 solid 6rpx;
+}
+
+.route-title-ch {
+  font-size: 11pt;
+  font-weight: bold;
+  line-height: 11pt;
+  color: black;
+  width: 260rpx;
+}
+
+.route-title-en {
+  font-size: 10pt;
+  color: black;
+}
+
+.route-travel-time {
+  font-size: 9pt;
+  line-height: 9pt;
+  color: var(--textGrey);
+}
+
+.route-desc {
+  font-size: 9pt;
+  line-height: 9pt;
+  color: var(--textGrey);
+}
+
+.route-switch-icon {
+  width: 24rpx;
+  height: 24rpx;
+  margin: 0 8rpx;
+}
+
+.route-go {
+  background-color: #a9dcfa;
+  color: white;
+  padding: 6rpx 8rpx;
+  font-size: 8pt;
+  border-radius: 8rpx;
+}
+
+.route-back {
+  background-color: #fdc6c3;
+  color: white;
+  padding: 6rpx 8rpx;
+  font-size: 8pt;
+  border-radius: 8rpx;
+}
+
+.gps-running {
+  color: #5598fc;
+  font-size: 9pt;
+  font-weight: bold;
+}
+
+.gps-unavailable {
+  color: #919191;
+  font-size: 9pt;
+}
+
+.section-title {
+  padding: 0 var(--inset);
+  font-weight: bold;
+  color: black;
+  font-size: 10pt;
+}
+
+.station-container {
+  padding-left: var(--inset);
+}
+
+.station-item {
+  flex-grow: 0;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  width: 160rpx;
+}
+
+.station-name-container {
+  display: flex;
+  justify-content: center;
+}
+
+.station-name-ch,
+.station-name-ch-selected {
+  writing-mode: vertical-rl;
+  color: black;
+  font-size: 11pt;
+  line-height: 11pt;
+}
+
+.station-name-ch-selected {
+  font-weight: bold;
+}
+
+.station-name-en,
+.station-name-en-selected {
+  writing-mode: vertical-rl;
+  color: var(--textGrey);
+  font-size: 10pt;
+  line-height: 10pt;
+  margin-left: 8rpx;
+}
+
+.station-name-en-selected {
+  font-weight: bold;
+}
+
+.station-point-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.station-line {
+  background: #E1EAF9;
+  height: 6rpx;
+  width: 160rpx;
+  position: absolute;
+}
+
+.station-point,
+.station-point-selected {
+  position: absolute;
+  border-radius: 50%;
+  width: 20rpx;
+  height: 20rpx;
+  background-color: #b4dafd;
+}
+
+.station-point-selected {
+  background-color: #4989c4;
+}
+
+.station-time-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.station-time {
+  font-size: 10pt;
+  line-height: 10pt;
+  color: #858585;
+}
+
+.station-go,
+.station-back {
+  background-color: #F5F5F5;
+  color: #7696E7;
+  padding: 4rpx 6rpx;
+  border-radius: 6rpx;
+  font-size: 9pt;
+  line-height: 12pt;
+  margin-bottom: 4rpx;
+}
+
+.map-container {
+  border-radius: 12rpx;
+  overflow: hidden;
+  margin: 20rpx var(--inset);
+}
+
+.map-view {
+  width: 100%;
+  height: 660rpx;
+}
+
+.map-maker-switch {
+  transform: scale(0.7);
+}
+
+.map-maker-switch-text {
+  font-size: 9pt;
+  color: var(--textGrey);
+  margin-right: var(--inset);
+}
+
+.tip-text {
+  font-size: 11pt;
+  line-height: 12pt;
+  color: var(--textGrey);
+  padding: 0 var(--inset);
+  white-space:pre-wrap 
+}
+
+.search-button {
+  border: #f1f1f1 solid 2rpx;
+  border-radius: 32rpx;
+  padding: 8rpx 24rpx;
+  /* background-color: #f1f1f1; */
+  font-size: 11pt;
+  color: var(--textGrey);
+}
+
+.modal-main {
+  padding: 48rpx;
+  border-radius: 24rpx;
+  text-align: start;
+  background: white;
+}
+
+.modal-title {
+  font-weight: bold;
+  font-size: 12pt;
+  color: black;
+}
+
+.modal-content {
+  font-size: 10pt;
+  color: var(--textGrey);
+}
+
+.modal-btn-ok {
+  border-radius: 16rpx;
+  font-weight: bold;
+  background: #5598fc !important;
+  color: white !important;
+}
+
+.search-input {
+  border: #f1f1f1 solid 2rpx;
+  border-radius: 32rpx;
+  padding: 12rpx 24rpx;
+  /* background-color: #f1f1f1; */
+  font-size: 11pt;
+  color: var(--textGrey);
+}
+
+.search-result-route-name {
+  font-size: 11pt;
+  color: black;
+  font-weight: bold;
+}
+
+.search-result-hint{
+  font-size: 10pt;
+  color: var(--textGrey);
+}
+

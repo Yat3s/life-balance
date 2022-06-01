@@ -28,4 +28,3 @@ export function calcDistance(la1, lo1, la2, lo2) {
 export function dateDiff(date1, date2) {
   return Math.round((date1 - date2) / (1000 * 60 * 60 * 24));
 }
-

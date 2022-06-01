@@ -77,11 +77,9 @@
           <view class="dashboard-msft-price-change margin-left-sm">{{stockData.msft.change}}%</view>
         </view>
 
-        <view class="dashboard-msft-no1 margin-top-sm">微软市值第一了吗？<text wx:if="{{stockData}}"
-            class="{{stockData.msftTop1 ? 'msft-top1' : ''}}">{{stockData.msftTop1 ? '是！' : '没有'}}</text></view>
+        <view class="dashboard-msft-no1 margin-top-sm">微软市值第一了吗？<text wx:if="{{stockData}}" class="{{stockData.msftTop1 ? 'msft-top1' : ''}}">{{stockData.msftTop1 ? '是！' : '没有'}}</text></view>
         <view class="dashboard-msft-mktcap">{{stockData.top1.symbol}}({{stockData.top1.mktcap}}T) -
-          <text wx:if="{{stockData.msftTop1}}">{{stockData.top2.symbol}}({{stockData.top2.mktcap}}T)</text><text
-            wx:if="{{!stockData.msftTop1}}">{{stockData.msft.symbol}}({{stockData.msft.mktcap}}T)</text>
+          <text wx:if="{{stockData.msftTop1}}">{{stockData.top2.symbol}}({{stockData.top2.mktcap}}T)</text><text wx:if="{{!stockData.msftTop1}}">{{stockData.msft.symbol}}({{stockData.msft.mktcap}}T)</text>
         </view>
 
       </view>
@@ -97,7 +95,7 @@
         </view>
       </view>
 
-      
+
     </view>
   </view>
 
@@ -125,7 +123,7 @@
 
 
     <!-- How To -->
-    <view bindtap="onHowToClick" class="dashboard-howto-container">
+    <!-- <view bindtap="onHowToClick" class="dashboard-howto-container">
       <view class="flex align-center">
         <image class="dashboard-howto-icon" src="../../images/ic_faq.png"></image>
         <view class="dashboard-howto-title margin-left-xs">HOW TO</view>
@@ -136,6 +134,17 @@
       <view class="flex align-center">
         <image src="../../images/ic_comma.png" class="dashboard-howto-quantity-icon"></image>
         <view class="dashboard-howto-count-text margin-left-xs">{{faqCount}} Q/A</view>
+      </view>
+    </view> -->
+
+    <!-- Shuttle bus -->
+    <view bindtap="onBusClick" class="dashboard-bus-container">
+      <image class="dashboard-bus-bg" mode="scaleToFill" src="../../images/img_bg_bus.png"></image>
+
+      <view class="dashboard-bus-content">
+        <image class="dashboard-bus-icon" mode="heightFix" src="../../images/ic_bus_real.png"></image>
+
+        <view class="dashboard-bus-title">Shuttle Bus Service</view>
       </view>
     </view>
 
@@ -164,8 +173,7 @@
       <view class="dashboard-building2-progress-date">{{building2EndDateStr}}</view>
     </view>
 
-    <image bindtap="onBuild2Click" class="margin-top dashboard-building2-picture" mode="widthFix"
-      src="{{building2LatestProgress.picture}}" />
+    <image bindtap="onBuild2Click" class="margin-top dashboard-building2-picture" mode="widthFix" src="{{building2LatestProgress.picture}}" />
     <view class="dashboard-building2-update-date">更新于 {{building2LatestProgress.createDateStr}}</view>
   </view>
 

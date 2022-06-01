@@ -107,6 +107,7 @@
   background: #dbdbdb;
   border-radius: 4rpx;
 }
+
 .dashboard-parking-total {
   font-size: 8pt;
   font-weight: normal;
@@ -162,7 +163,7 @@
   flex-grow: 0;
 }
 
-.dashboard-group-new-content{
+.dashboard-group-new-content {
   font-size: 8pt;
   line-height: 12pt;
   color: rgb(218, 218, 218);
@@ -441,8 +442,40 @@
   width: 44rpx;
   height: 44rpx;
 }
+
 .dashboard-wework-parking-title {
   color: white;
   font-size: 11pt;
+  font-weight: bold;
+}
+
+/* Shuttle bus */
+
+.dashboard-bus-container {
+  border-radius: 28rpx;
+  border: #e6e6e6 solid 2rpx;
+  position: relative;
+  width: 60%;
+  flex: 1;
+  overflow: hidden;
+}
+
+.dashboard-bus-bg {
+  height: 100%;
+  position: absolute;
+}
+
+.dashboard-bus-icon {
+  height: 36rpx;
+}
+
+.dashboard-bus-content {
+  position: absolute;
+  padding: 24rpx;
+}
+
+.dashboard-bus-title {
+  color: black;
+  font-size: 12pt;
   font-weight: bold;
 }

@@ -17,7 +17,8 @@
     "pages/home/weworkparking/weworkparking",
     "pages/user/user",
     "pages/user/profile/profile",
-    "pages/user/useractivity/useractivity"
+    "pages/user/useractivity/useractivity",
+    "pages/bus/bus"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

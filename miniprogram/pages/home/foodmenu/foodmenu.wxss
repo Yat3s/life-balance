@@ -56,6 +56,7 @@ page {
   padding: 4rpx 32rpx;
   font-size: 10pt;
   width: fit-content;
+  font-weight: bold;
 }
 
 .special {

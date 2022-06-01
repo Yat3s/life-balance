@@ -193,9 +193,6 @@ Component({
     },
 
     requestLocation() {
-      wx.onLocationChange((result) => {
-
-      })
       wx.getLocation({
         type: 'wgs84'
       }).then(res => {

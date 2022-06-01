@@ -13,7 +13,7 @@ Page({
 
     pages: [{
         id: "home",
-        title: "Dashboard",
+        title: "Board",
         icon: "../../images/ic_dashboard.png"
       }, {
         id: "activity",

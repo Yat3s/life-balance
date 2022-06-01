@@ -74,6 +74,15 @@ export const Pages = {
     authRequired: true,
     url: '/pages/user/useractivity/useractivity'
   },
+    
+  BusInfo: {
+    authRequired: true,
+    url: '/pages/bus/bus'
+  },
+}
+
+export function navigateToBusInfo() {
+  navigate(Pages.BusInfo)
 }
 
 export function navigateToActivityDetail(activityId) {

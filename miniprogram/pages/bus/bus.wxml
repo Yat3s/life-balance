@@ -1,0 +1,121 @@
+<!--pages/bus/bus.wxml-->
+<toolbar isBack="{{true}}" bgColor="bg-white">
+  <view bindtap="onSearchButtonClicked" slot="content" class="cuIcon-search search-button">
+    Search Station...
+  </view>
+</toolbar>
+
+<view class="title">
+  Suzhou Shuttle Service
+</view>
+
+<scroll-view scroll-x="true" class="margin-top" scroll-into-view="id-{{scrollToRouteId}}">
+  <view class="flex">
+    <view id="id-{{item.id}}" bindtap="onRouteSelected" data-index="{{index}}" class="{{selectedRouteIndex == index ? 'route-item-selected' : 'route-item'}}" wx:key="id" wx:for="{{routes}}">
+
+      <view class="flex justify-between align-center">
+        <view class="route-title-ch">
+          {{item.nameCh}}
+        </view>
+
+        <view wx:if="{{item.gps.data}}" class="flex align-center">
+          <image src="../../images/ic_bus.png" style="width: 40rpx;" mode="widthFix"></image>
+          <view class="gps-running margin-left-xs">运行中</view>
+        </view>
+        <view wx:if="{{item.gps.error}}" class="gps-unavailable">未运行</view>
+      </view>
+
+      <view class="route-title-en">
+        {{item.nameEn}}
+      </view>
+
+      <view class="flex align-center route-desc margin-top-sm">
+        <view>{{item.firstStation.nameCh}}</view>
+        <image class="route-switch-icon" src="../../images/ic_switch.png" />
+        <view>{{item.lastStation.nameCh}}</view>
+      </view>
+
+      <!-- <view class="flex align-center route-desc margin-top-xs">
+        <view class="route-go">去</view>
+        <view class="margin-left-xs">{{item.firstStation.headingTime}}</view>
+
+        <view class="route-back margin-left">返</view>
+        <view class="margin-left-xs">{{item.firstStation.backTime}}</view>
+      </view> -->
+    </view>
+  </view>
+</scroll-view>
+
+<!-- Map -->
+<view class="flex justify-between align-center margin-top">
+  <view class="section-title">站点地图/Station Map</view>
+  <view class="flex align-center">
+    <switch bindchange="onShowAllMarkerTitleChanged" class="map-maker-switch" color="#7696E7"></switch>
+    <view class="map-maker-switch-text">All station names</view>
+  </view>
+
+</view>
+
+<view class="map-container">
+  <map latitude="{{selectedStationLatitude}}" longitude="{{selectedStationLongitude}}" bindmarkertap="onMapMarkerClicked" polyline="{{polyLines}}" markers="{{markers}}" include-points="{{includePoints}}" show-location show-compass class="map-view"></map>
+</view>
+
+<!-- Stations -->
+<view class="section-title margin-top">线路时刻表/Route Schedule</view>
+<view class="flex margin-top station-container">
+  <view>
+    <view class="station-go">去</view>
+    <view class="station-go">返</view>
+  </view>
+
+  <scroll-view scroll-x="true" scroll-into-view="id-{{scrollToStationId}}">
+    <view class="flex">
+      <view id="id-{{item.id}}" bindtap="onStationClicked" data-index="{{index}}" class="station-item" wx:for="{{selectedRoute.stations}}" wx:key="id" style="{{index == 0 ? 'margin-left: -40rpx' : ''}}">
+        <view class="station-time-container">
+          <view class="station-time" style="margin-top: 8rpx;">{{item.headingTime}}</view>
+          <view class="station-time" style="margin-top: 16rpx;">{{item.backTime}}</view>
+        </view>
+
+        <view class="station-point-container margin-top">
+          <view style="{{index == 0 ? 'width: 90rpx; margin-left: 80rpx' : index == selectedRoute.stations.length - 1 ? 'width: 90rpx; margin-right: 80rpx' : '160rpx'}}" class="station-line"></view>
+          <view class="{{selectedStationIndex == index ? 'station-point-selected' : 'station-point'}}"></view>
+        </view>
+
+        <view class="station-name-container margin-top">
+          <view class="{{selectedStationIndex == index ? 'station-name-ch-selected' : 'station-name-ch'}}">{{item.nameCh}}</view>
+          <view class="{{selectedStationIndex == index ? 'station-name-en-selected' : 'station-name-en'}}">{{item.nameEn}}</view>
+        </view>
+      </view>
+    </view>
+
+  </scroll-view>
+
+</view>
+
+<view class="section-title margin-top">班车乘坐小贴士/Reminder</view>
+<view class="tip-text margin-top-xs">
+  {{tipText}}
+</view>
+
+<!-- Search modal -->
+<view class="cu-modal {{showingModal === 'search' ? 'show' : ''}}" catchtouchmove>
+  <view class="cu-dialog modal-main">
+
+    <view class="flex justify-between">
+      <view class="modal-title">Search Station</view>
+      <view class="action" bindtap="onDismissModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+
+    <view class="search-input margin-top-sm">
+      <input value="{{searchText}}" bindinput="onSearchTextChanged" placeholder="Station/Route name"></input>
+    </view>
+
+    <view class="margin-top-sm" bindtap="onSearchItemClicked" data-result="{{item}}" wx:for="{{searchResults}}" wx:key="id">
+      <view class="search-result-route-name">{{item.route.nameCh}} / {{item.route.nameEn}}</view>
+      <view class="search-result-hint">{{item.hint}}</view>
+      <view class="margin-top-sm" style="width: 100%; height: 2rpx; background-color: #f1f1f1;"></view>
+    </view>
+  </view>
+</view>

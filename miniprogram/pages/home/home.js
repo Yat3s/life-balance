@@ -16,6 +16,7 @@ const {
   navigateToActivityDetail,
   navigateToFoodMenu,
   navigateToHowTo,
+  navigateToBusInfo,
   navigateToWeworkParking,
 } = require("../router");
 
@@ -69,6 +70,10 @@ Component({
 
     onHowToClick() {
       navigateToHowTo();
+    },
+
+    onBusClick() {
+      navigateToBusInfo()
     },
 
     onWeworkParkingClick() {
