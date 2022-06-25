@@ -1,8 +1,8 @@
 ---
 name: Add Circle Request
 about: Adding your Circle to mini-program
-title: "[Group Indexing Request] Your group name"
-labels: Group Indexing
+title: "[Add Circle Request] Circle name"
+labels: Circle
 assignees: Yat3s
 
 ---
