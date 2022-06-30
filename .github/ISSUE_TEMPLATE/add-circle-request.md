@@ -24,6 +24,6 @@ Please ensure the following requirements before raising your request
 [苏州/北京/上海]
 
 ### Description(Optional, rich-text supported)
-(e.g. 这个是一个神奇的街舞小圈子)
+(e.g. 这个是一个神奇的小圈子)
 
 ### Picture for promotion(Optional)
