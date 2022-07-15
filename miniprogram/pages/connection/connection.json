@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "circleitem": "../../components/circleitem/circleitem"
+  }
+}

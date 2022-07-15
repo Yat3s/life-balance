@@ -17,6 +17,17 @@ const preProcessStartDate = (data) => {
   }
 }
 
+const preProcessActivities = (data) => {
+  for (const activity of data) {
+    activity.startDateStr = util.formatDate(activity.startDate);
+    activity.isActive = activity.endDate > Date.now();
+  }
+}
+
+function fetchRecentActivities() {
+  return cloudCall(db.collection(COLLECTION_ACTIVITY).orderBy("endDate", "desc").get(), "fetchRecentActivities", preProcessActivities);
+}
+
 function fetchAllActivityCategories() {
   return cloudCall(db.collection(COLLECTION_ACTIVITY_CATEGORY).orderBy('priority', 'desc').get(), "fetchAllActivityCategories");
 }
@@ -114,5 +125,6 @@ module.exports = {
   updateActivity,
   quitActivity,
   deleteActivity,
-  fetchUserActivities
+  fetchUserActivities,
+  fetchRecentActivities,
 };

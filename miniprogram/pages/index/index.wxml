@@ -1,17 +1,14 @@
 <view style="padding-bottom: 100rpx;">
-  <home wx:if="{{currentTab=='home'}}" />
-  <activity wx:if="{{currentTab=='activity'}}" />
-  <carpool wx:if="{{currentTab=='carpool'}}" />
-  <user wx:if="{{currentTab=='user'}}" />
-
-  <!-- Bottom tab -->
-  <view class="cu-bar bg-white shadow foot tab-container" style="padding-bottom: {{navigationBarHeight > 0 ? (navigationBarHeight + 8) : 20}}rpx;">
-    <view bindtap="onTabSelect"
-      class="{{currentTab==item.id ? 'tab-highlight' : 'tab'}} flex tab" data-tabid="{{item.id}}"
-      style="width:{{currentTab==item.id?tabWidth*1.8:tabWidth}}px;" wx:for="{{pages}}" wx:key="id">
-      <image class="tab-icon" src="{{item.icon}}" ></image>
-      <view class="tab-text margin-left-sm" hidden="{{currentTab != item.id}}">{{item.title}}</view>
-    </view>
-  </view>
+  <home wx:if="{{currentTab == 'board'}}" />
+  <connection wx:if="{{currentTab == 'connection'}}" />
+  <carpool wx:if="{{currentTab == 'carpool'}}" />
+  <user wx:if="{{currentTab == 'user'}}" />
 </view>
 
+<!-- Bottom tab -->
+<view class="cu-bar bg-white shadow foot tab-container" style="padding-bottom: {{navigationBarHeight > 0 ? (navigationBarHeight + 8) : 20}}rpx;">
+  <view bindtap="onTabSelect" class="{{currentTab === item.id ? 'tab-highlight' : 'tab'}} flex" data-tabid="{{item.id}}" style="width:{{currentTab === item.id ? tabWidth * 1.5 : tabWidth}}px;" wx:for="{{pages}}" wx:key="id">
+    <image class="tab-icon" src="{{currentTab === item.id ? item.iconActive : item.icon}}"></image>
+    <view wx:if="{{currentTab === item.id}}" class="tab-text margin-left-sm">{{item.title}}</view>
+  </view>
+</view>

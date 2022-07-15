@@ -41,6 +41,9 @@ Component({
     onActivityManageClick() {
       router.navigateToAdmin();
     },
+    onSettingCompanyClick() {
+      router.navigateToAuth();
+    }, 
     
     onSponsorClick() {
       this.setData({

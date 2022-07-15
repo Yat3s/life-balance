@@ -1,4 +1,7 @@
 import {
+  getAppConfig
+} from "../../repository/baseRepo";
+import {
   fetchAllRoutes,
   fetchGpsLocation
 } from "../../repository/busRepo"
@@ -34,49 +37,76 @@ For your convenience, we will set Microsoft logo at shuttle bus front glass.`
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    fetchAllRoutes(SITE_ID).then(routes => {
-      console.log(routes);
+    getAppConfig().then(appConfig => {
+      const nowDate = new Date().toISOString().substring(0, 10).replaceAll("-", "/");
 
-      // Sort by sequence
-      routes.sort((a, b) => {
-        return a.sequence - b.sequence
-      })
+      const startTimeStr1 = appConfig.features.shuttleBus.startTime1;
+      const startTimeStr2 = appConfig.features.shuttleBus.startTime2;
+      const endTimeStr1 = appConfig.features.shuttleBus.endTime1;
+      const endTimeStr2 = appConfig.features.shuttleBus.endTime2;
 
-      for (const route of routes) {
-        if (!route.stations || route.stations.length == 0) {
-          continue;
-        }
+      const startTime1 = new Date(`${nowDate} ${startTimeStr1}`);
+      const startTime2 = new Date(`${nowDate} ${startTimeStr2}`);
+      const endTime1 = new Date(`${nowDate} ${endTimeStr1}`);
+      const endTime2 = new Date(`${nowDate} ${endTimeStr2}`);
 
-        for (const station of route.stations) {
-          station.headingTime = "N/A";
-          station.backTime = "N/A";
-          for (const schedule of station.schedules) {
-            if (schedule.heading) {
-              station.headingTime = schedule.time;
-            } else {
-              station.backTime = schedule.time;
-            }
-          }
-        }
-        route.firstStation = route.stations[0];
-        route.lastStation = route.stations[route.stations.length - 1];
-      }
+      const now = Date.now();
 
-      const selectedRouteIndex = 0;
-      const selectedStationIndex = 0;
-      const selectedRoute = routes[selectedRouteIndex];
+      const gpsAvailable = (now > startTime1.getTime() && now < endTime1.getTime()) ||
+        (now > startTime2.getTime() && now < endTime2.getTime());
 
       this.setData({
-        routes,
-        selectedRouteIndex,
-        selectedRoute,
-        selectedStationIndex,
-      });
+        gpsAvailable,
+        shuttleBusTip: appConfig.shuttleBusTip
+      })
 
-      this.getGpsLocationFirstLoad()
-      this.updateStationMarkers(true);
-      this.startGetGpsLocationWorker(selectedRoute.id);
-    })
+
+      fetchAllRoutes(SITE_ID).then(routes => {
+        console.log(routes);
+  
+        // Sort by sequence
+        routes.sort((a, b) => {
+          return a.sequence - b.sequence
+        })
+  
+        for (const route of routes) {
+          if (!route.stations || route.stations.length == 0) {
+            continue;
+          }
+  
+          for (const station of route.stations) {
+            station.headingTime = "N/A";
+            station.backTime = "N/A";
+            for (const schedule of station.schedules) {
+              if (schedule.heading) {
+                station.headingTime = schedule.time;
+              } else {
+                station.backTime = schedule.time;
+              }
+            }
+          }
+          route.firstStation = route.stations[0];
+          route.lastStation = route.stations[route.stations.length - 1];
+        }
+  
+        const selectedRouteIndex = 0;
+        const selectedStationIndex = 0;
+        const selectedRoute = routes[selectedRouteIndex];
+  
+        this.setData({
+          routes,
+          selectedRouteIndex,
+          selectedRoute,
+          selectedStationIndex,
+        });
+  
+        if (gpsAvailable) {
+          this.getGpsLocationFirstLoad()
+        }
+        this.updateStationMarkers(true);
+        this.startGetGpsLocationWorker(selectedRoute.id);
+      })
+    });
   },
 
   updateStationMarkers(updateIncludePoints) {
@@ -269,7 +299,15 @@ For your convenience, we will set Microsoft logo at shuttle bus front glass.`
   },
 
   startGetGpsLocationWorker(routeId) {
-    const { lastIntervalId } = this.data;
+    const {
+      lastIntervalId,
+      gpsAvailable
+    } = this.data;
+
+    if (!gpsAvailable) {
+      return;
+    }
+
     if (lastIntervalId) {
       clearInterval(lastIntervalId);
     }
@@ -370,7 +408,9 @@ For your convenience, we will set Microsoft logo at shuttle bus front glass.`
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-    const { lastIntervalId } = this.data;
+    const {
+      lastIntervalId
+    } = this.data;
     if (lastIntervalId) {
       clearInterval(lastIntervalId);
     }

@@ -22,7 +22,7 @@
           <image src="../../images/ic_bus.png" style="width: 40rpx;" mode="widthFix"></image>
           <view class="gps-running margin-left-xs">运行中</view>
         </view>
-        <view wx:if="{{item.gps.error}}" class="gps-unavailable">未运行</view>
+        <view wx:if="{{item.gps.error || gpsAvailable == false}}" class="gps-unavailable">未运行</view>
       </view>
 
       <view class="route-title-en">
@@ -94,7 +94,7 @@
 
 <view class="section-title margin-top">班车乘坐小贴士/Reminder</view>
 <view class="tip-text margin-top-xs">
-  {{tipText}}
+  <rich-text nodes="{{shuttleBusTip}}"/>
 </view>
 
 <!-- Search modal -->

@@ -36,18 +36,23 @@
   </view>
 </view>
 
-<view bindtap="onFeedbackClick" class="menu-item-container margin-top">
-  <image class="menu-item-icon" src="../../images/ic_feedback.png"></image>
-  <view class="margin-left menu-item-text">Feedback & Help</view>
-</view>
-<view class="divider"></view>
-
-<view bindtap="onSponsorClick" class="menu-item-container">
+<view class="divider margin-top"></view>
+<view bindtap="onSponsorClick" class="menu-item-container ">
   <image class="menu-item-icon" src="../../images/ic_coffee.png"></image>
-  <view class="margin-left menu-item-text">Sponsor a coffee</view>
+  <view class="menu-item-text">
+    <button style="width: fit-content;" >Buy developer a coffee</button>
+  </view>
 </view>
 <view class="divider"></view>
 
+<view class="menu-item-container ">
+  <image class="menu-item-icon" src="../../images/ic_feedback.png"></image>
+  <view class="menu-item-text">
+    <button style="width: fit-content;" open-type="feedback">Feedback & Help</button>
+  </view>
+
+</view>
+<view class="divider"></view>
 
 
 <!-- Feedback -->
@@ -62,7 +67,7 @@
     <view class="text-black">Adding Coconut and send <text class="text-bold text-black">msglife</text> to her</view>
 
     <image show-menu-by-longpress="true" class="coconut-contact margin-top-sm" src="../../images/img_coconut.png" />
-    <view class="text-grey"> Long press to scan </view>
+    <view class="text-grey">Long press to scan </view>
 
     <view class="flex align-center justify-end margin-top-lg">
       <view catchtap="onDismissModal" class="cu-btn modal-btn-ok">Done</view>
@@ -75,10 +80,10 @@
   <view class="cu-dialog modal-main">
 
     <view class="flex justify-between">
-      <view class="modal-title">Sponsor coffee</view>
+      <view class="modal-title">Sponsor</view>
     </view>
 
-    <view class="text-black margin-top">Sponsor a cup of coffee if you like this app!</view>
+    <view class="text-black margin-top">Buy developer a cup of coffee if you like this app!</view>
 
     <image mode="heightFix" show-menu-by-longpress="true" class="pay margin-top-sm" src="../../images/img_praise.png" />
     <view class="text-grey">Long press to save QR code</view>

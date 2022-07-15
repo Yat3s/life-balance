@@ -7,23 +7,27 @@ const userRepo = require('../../repository/userRepo');
 Page({
   data: {
     showingModal: "",
-    currentTab: "home",
+    currentTab: "board",
     navigationBarHeight: app.globalData.navigationBarHeight, // Safe area
     selectedGenderIndex: 0,
 
     pages: [{
-        id: "home",
+        id: "board",
         title: "Board",
-        icon: "../../images/ic_dashboard.png"
-      }, {
-        id: "activity",
-        title: "Activity",
-        icon: "../../images/ic_activity.png"
+        icon: "../../images/ic_board.png",
+        iconActive: "../../images/ic_board_active.png",
+      },
+      {
+        id: "connection",
+        title: "Connection",
+        icon: "../../images/ic_connect.png",
+        iconActive: "../../images/ic_connect_active.png",
       },
       {
         id: "user",
         title: "User",
-        icon: "../../images/ic_user.png"
+        icon: "../../images/ic_user.png",
+        iconActive: "../../images/ic_user_active.png",
       }
     ]
   },
@@ -36,7 +40,7 @@ Page({
 
     const { isSignup } = this.data;
 
-    if (currentTab == 'profile' && !app.globalData.userInfo && !isSignup) {
+    if ((currentTab === 'user' || currentTab === 'connection') && !app.globalData.userInfo && !isSignup) {
       this.setData({
         isSignup: true
       });
@@ -79,7 +83,8 @@ Page({
       const carpoolTabItem = {
         id: "carpool",
         title: "Carpool",
-        icon: "../../images/ic_carpool.png"
+        icon: "../../images/ic_carpool.png",
+        iconActive: "../../images/ic_carpool_active.png",
       }
 
       if (featureFlags.carpoolEnabled) {

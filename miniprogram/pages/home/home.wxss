@@ -1,8 +1,32 @@
 /* pages/home/home.wxss */
 
+page {
+  background: white;
+  --widgetBorderRadius: 40rpx;
+  --widgetPadding: 36rpx;
+  --widgetGap: 12rpx;
+}
+
+.toolbar {
+  width: 100%; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: auto;
+}
+
+.appbar {
+  position: fixed; 
+  width: 100%; 
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  background: white;
+}
 
 .main {
-  padding: 300rpx 48rpx 100rpx 48rpx;
+  padding: 0 40rpx 0 40rpx;
+  height: calc(100vh);
 }
 
 .margin-left {
@@ -13,380 +37,249 @@
   margin-top: 20rpx;
 }
 
-.logo {
-  width: 140rpx;
-  height: 140rpx;
+.user-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  border: #f1f1f1 solid 4rpx;
 }
 
-.title {
-  font-size: 20pt;
-  font-weight: bold;
+.widget-row {
+  margin-top: var(--widgetGap);
 }
 
-.dashboard-title {
+.user-name {
+  font-size: 14pt;
+  line-height: 14pt;
   font-weight: bold;
-  font-size: 9pt;
   color: black;
 }
 
-.dashboard-company {
+.user-welcome-message {
+  font-size: 11pt;
+  line-height: 11pt;
   color: var(--textGrey);
-  font-weight: normal;
 }
 
-.dashboard-switch-company {
+.widget-section-title {
+  font-size: 10pt;
+  line-height: 10pt;
   color: var(--textGrey);
-  font-weight: normal;
-  font-weight: bold;
-  font-size: 9pt;
 }
 
-.dashboard-row-container {
-  display: flex;
+.widget-icon {
+  width: 66rpx;
+  height: 66rpx;
 }
 
-.dashboard-column {
+.common-widget {
+  margin-top: 60rpx;
+}
+
+.widget-container {
+  border-radius: var(--widgetBorderRadius);
+  padding: var(--widgetPadding);
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-/* Parking */
-.dashboard-parking-container {
-  background: rgb(244, 244, 244);
-  background: linear-gradient(0deg, rgba(244, 244, 244, 1) 0%, rgba(225, 237, 241, 1) 100%);
-  border-radius: 32rpx;
-  padding: 28rpx;
-  margin-right: 20rpx;
-}
-
-.dashboard-parking-logo {
-  width: 56rpx;
-  height: 56rpx;
-}
-
-.dashboard-parking-refresh {
-  width: 40rpx;
-  height: 40rpx;
-}
-
-.dashboard-parking-title {
+.widget-title {
+  font-size: 12pt;
+  line-height: 12pt;
   color: black;
   font-weight: bold;
-  font-size: 11pt;
-  line-height: 11pt;
+  margin-top: 20rpx;
 }
 
-.dashboard-parking-place-container {
+.widget-go-detail-text {
+  font-size: 10pt;
+  color: #8a8a8a;
+}
+
+.widget-go-detail-icon {
+  width: 30rpx;
+  height: 30rpx;
+  margin-left: 4rpx;
+}
+
+/* MSFT */
+.widget-msft-container {
+  border-radius: 28rpx;
+  padding: 40rpx;
+  background: linear-gradient(93.65deg, #925838 4.19%, #561B7A 97.45%);
+}
+
+.widget-msft-title {
+  font-weight: bold;
+  font-size: 12pt;
+  line-height: 12pt;
+  color: white;
+}
+
+.widget-msft-price-dollar {
+  color: #dadada;
+}
+
+.widget-msft-icon {
+  width: 66rpx;
+  height: 66rpx;
+}
+
+.widget-msft-price {
+  font-size: 20pt;
+  font-weight: bold;
+  line-height: 20pt;
+  color: white;
+}
+
+.widget-msft-price-change {
+  color: #B0B0EA;
+  font-size: 8pt;
+}
+
+.widget-msft-mktcap {
+  color: #DFDFDF;
+  font-size: 8pt;
+  font-weight: bold;
+}
+
+.widget-msft-top1 {
+  font-size: 14pt;
+  font-weight: bold;
+  color: white;
+}
+
+.widget-msft-no-top1 {
+  font-size: 8pt;
+  color: white;
+}
+
+.widget-msft-boost {
+  color: white;
+  font-size: 8pt;
+  font-weight: bold;
+}
+
+/* Parking */
+.widget-parking-container {
+  background: linear-gradient(180deg, #E1EDF1 0%, #FBFCFC 100%);
+  margin-right: var(--widgetGap);
+}
+
+.widget-parking-place-container {
   display: flex;
   justify-content: space-between;
 }
 
-.dashboard-parking-place-icon {
+.widget-parking-place-icon {
   width: 24rpx;
   height: 24rpx;
 }
 
-.dashboard-parking-place-title {
+.widget-parking-place-title {
   color: var(--textGrey);
   font-size: 8pt;
   font-weight: bold;
   line-height: 8pt;
 }
 
-.dashboard-parking-place-number {
+.widget-parking-place-number {
   color: black;
   font-weight: bold;
   font-size: 14pt;
   line-height: 14pt;
 }
 
-.dashboard-parking-place-number-shimmer {
+.widget-parking-place-number-shimmer {
   width: 60rpx;
   height: 32rpx;
   background: #dbdbdb;
   border-radius: 4rpx;
 }
 
-.dashboard-parking-total {
+.widget-parking-total {
   font-size: 8pt;
   font-weight: normal;
   color: var(--textGrey);
 }
 
-/* Group */
-.dashboard-group-container {
-  background: rgb(167, 74, 246);
-  background: linear-gradient(135deg, rgba(167, 74, 246, 1) 0%, rgba(251, 130, 75, 1) 100%);
-  border-radius: 24rpx;
-  padding: 28rpx;
-  color: white;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.dashboard-group-logo {
-  width: 40rpx;
-  height: 40rpx;
-}
-
-.dashboard-group-title {
-  color: white;
-  font-weight: bold;
-  font-size: 10pt;
-  line-height: 10pt;
-  margin-top: 12rpx;
-  flex: 1;
-}
-
-.dashboard-group-size {
-  border-radius: 8rpx;
-  padding: 4rpx 12rpx;
-  color: #3567B2;
-  background: white;
-  font-size: 8pt;
-  width: fit-content;
-  font-weight: bold;
-}
-
-.dashboard-group-new-container {
-  border-radius: 8rpx;
-  padding: 8rpx;
-  border: 2rpx dashed #b1b1b1;
-}
-
-.dashboard-group-new-icon {
-  height: 20rpx;
-  width: 40rpx;
-  flex-shrink: 0;
-  flex-grow: 0;
-}
-
-.dashboard-group-new-content {
-  font-size: 8pt;
-  line-height: 12pt;
-  color: rgb(218, 218, 218);
-  text-overflow: -o-ellipsis-lastline;
-  overflow: hidden;
-  align-content: center;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
-
-/* MSFT */
-.dashboard-msft-container {
-  background: #261A41;
-  border-radius: 28rpx;
-  padding: 28rpx;
-  color: #f3f2fa;
-}
-
-.dashboard-msft-logo {
-  width: 28rpx;
-  height: 28rpx;
-}
-
-.dashboard-msft-title {
-  font-weight: bold;
-  font-size: 10pt;
-  line-height: 10pt;
-}
-
-.dashboard-msft-price-dollar {
-  color: #dadada;
-}
-
-.dashboard-msft-price {
-  font-size: 20pt;
-  font-weight: bold;
-  line-height: 20pt;
-}
-
-.dashboard-msft-price-change {
-  color: #B0B0EA;
-  font-size: 8pt;
-}
-
-.dashboard-msft-mktcap {
-  color: #B0B0EA;
-  font-size: 7pt;
-  font-weight: bold;
-}
-
-.dashboard-msft-no1 {
-  font-size: 8pt;
-}
-
-/* Activity */
-.dashboard-activity-container {
-  background: white;
-  border-radius: 28rpx;
-  padding: 28rpx;
-  flex: 1;
-  border: 2rpx solid #e2e2e2;
-  display: flex;
-  flex-direction: column;
-}
-
-.dashboard-activity-icon {
-  width: 32rpx;
-  height: 32rpx;
-}
-
-.dashboard-activity-title {
-  font-weight: bold;
-  font-size: 10pt;
-  line-height: 10pt;
-}
-
-.dashboard-activity-content-title {
-  font-weight: bold;
-  font-size: 9pt;
-  line-height: 12pt;
-}
-
-.dashboard-activity-content-avatar {
-  width: 32rpx;
-  height: 32rpx;
-  border-radius: 50%;
-  border: 2rpx solid #e0e0e0;
-  margin-right: 4rpx;
-}
-
-.dashboard-activity-content-participant {
-  font-size: 8pt;
-  line-height: 8pt;
-  color: var(--textGrey);
-}
-
 /* Food menu */
-.dashboard-foodmenu-container {
-  background: #edebf3;
-  border-radius: 28rpx;
-  padding: 28rpx;
-  border: 2rpx solid #e9f0e9;
-  margin-right: 20rpx;
-  flex: 1;
+.widget-foodmenu-container {
+  background: #E8F9F5;
 }
 
-.dashboard-foodmenu-icon {
-  width: 36rpx;
-  height: 36rpx;
-}
-
-.dashboard-foodmenu-title {
-  font-weight: bold;
+.widget-foodmenu-special {
   font-size: 10pt;
   line-height: 10pt;
-}
-
-.dashboard-foodmenu-date {
-  font-size: 9pt;
-  line-height: 9pt;
-  color: rgb(146, 146, 146);
-}
-
-.dashboard-foodmenu-special {
-  font-weight: bold;
-  font-size: 9pt;
-  line-height: 9pt;
-  color: rgb(78, 78, 78);
-}
-
-.dashboard-foodmenu-content {
-  font-size: 8pt;
-  color: #bebebe;
-  margin-top: 4rpx;
-}
-
-.dashboard-foodmenu-more {
-  font-size: 9pt;
-  line-height: 9pt;
-  font-weight: bold;
-  color: var(--textGrey);
-}
-
-.dashboard-foodmenu-progress-container {
-  border-radius: 32rpx;
-  height: 12rpx;
-  background: #dfe5f1;
-  width: 100%;
-  display: flex;
-  align-items: center;
-}
-
-.dashboard-foodmenu-progress-indicator {
-  border-radius: 32rpx;
-  height: 100%;
-  width: 100rpx;
-  background: rgb(167, 74, 246);
-  background: linear-gradient(135deg, rgba(167, 74, 246, 1) 0%, rgba(251, 130, 75, 1) 100%);
-}
-
-.dashboard-foodmenu-progress-number {
-  color: var(--textGrey);
-  font-size: 8pt;
-}
-
-/* How To */
-.dashboard-howto-container {
-  background: #F1F4FA;
-  border-radius: 28rpx;
-  padding: 28rpx 32rpx;
-  display: flex;
   flex: 1;
+  color: rgb(145, 145, 145);
+  display: flex;
   flex-direction: column;
-  border: 2rpx solid #C4DAFB;
-  justify-content: space-between;
+  justify-content: center;
 }
 
-.dashboard-howto-title {
-  font-weight: bold;
-  color: #224882;
-  font-size: 11pt;
-  line-height: 11pt;
+/* WeWork Parking */
+.widget-wework-parking-container {
+  background: #FFF2F5;
+  margin-right: var(--widgetGap);
 }
 
-.dashboard-howto-content {
-  color: #909FD3;
-  font-size: 9pt;
-  line-height: 9pt;
+.widget-wework-parking-info {
+  min-height: 100rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 10pt;
+  line-height: 10pt;
+  color: rgb(145, 145, 145);
 }
 
-.dashboard-howto-icon {
-  width: 36rpx;
-  height: 36rpx;
+/* Shuttle Bus */
+.widget-shuttle-bus-container {
+  background: #E6F8FB;
 }
 
-.dashboard-howto-quantity-icon {
-  width: 28rpx;
-  height: 28rpx;
+.widget-shuttle-bus-info {
+  min-height: 100rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 10pt;
+  flex: 1;
+  line-height: 10pt;
+  color: rgb(145, 145, 145);
 }
 
-.dashboard-howto-count-text {
-  color: #224882;
-  font-size: 9pt;
-  line-height: 9pt;
-  font-weight: bold;
+.widget-shuttle-bus-status-active,  .widget-shuttle-bus-status-pending {
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
 }
 
+.widget-shuttle-bus-status-active {
+  background: #B8A87F;
+}
+
+.widget-shuttle-bus-status-pending {
+  background: #cccccc;
+}
 
 /* Building2 */
-.dashboard-building2-container {
+.widget-building2-container {
   background: white;
-  border-radius: 28rpx;
+  border-radius: var(--widgetBorderRadius);
+  border: #f1f1f1 solid 2rpx;
   padding: 32rpx;
 }
 
-.dashboard-building2-title {
+.widget-building2-title {
   color: var(--primary);
   font-weight: bold;
 }
 
-.dashboard-building2-progress-container {
+.widget-building2-progress-container {
   border-radius: 32rpx;
   height: 24rpx;
   background: #f1f1f1;
@@ -395,7 +288,7 @@
   align-items: center;
 }
 
-.dashboard-building2-progress-indicator {
+.widget-building2-progress-indicator {
   border-radius: 32rpx;
   height: 100%;
   width: 100rpx;
@@ -403,79 +296,24 @@
   background: linear-gradient(135deg, rgba(167, 74, 246, 1) 0%, rgba(251, 130, 75, 1) 100%);
 }
 
-.dashboard-building2-progress-date {
+.widget-building2-progress-date {
   color: var(--textGrey);
   font-size: 8pt;
 }
 
-.dashboard-building2-progress-number {
+.widget-building2-progress-number {
   color: var(--textGrey);
   font-size: 8pt;
 }
 
-.dashboard-building2-picture {
+.widget-building2-picture {
   width: 100%;
   border-radius: 12rpx;
 }
 
-.dashboard-building2-update-date {
+.widget-building2-update-date {
   color: var(--textGrey);
   font-size: 8pt;
   width: 100%;
   text-align: right;
-}
-
-.msft-top1 {
-  font-weight: bold;
-  font-size: 12pt;
-}
-
-/* Wework Parking */
-.dashboard-wework-parking-container {
-  background: #826F66;
-  border-radius: 28rpx;
-  padding: 24rpx;
-  min-width: 33%;
-}
-
-.dashboard-wework-parking-icon {
-  width: 44rpx;
-  height: 44rpx;
-}
-
-.dashboard-wework-parking-title {
-  color: white;
-  font-size: 11pt;
-  font-weight: bold;
-}
-
-/* Shuttle bus */
-
-.dashboard-bus-container {
-  border-radius: 28rpx;
-  border: #e6e6e6 solid 2rpx;
-  position: relative;
-  width: 60%;
-  flex: 1;
-  overflow: hidden;
-}
-
-.dashboard-bus-bg {
-  height: 100%;
-  position: absolute;
-}
-
-.dashboard-bus-icon {
-  height: 36rpx;
-}
-
-.dashboard-bus-content {
-  position: absolute;
-  padding: 24rpx;
-}
-
-.dashboard-bus-title {
-  color: black;
-  font-size: 12pt;
-  font-weight: bold;
 }

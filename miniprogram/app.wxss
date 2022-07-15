@@ -1,6 +1,7 @@
 /**app.wxss**/
 @import 'colorui/main.wxss';
 @import 'colorui/icon.wxss';
+@import "colorui/animation.wxss";
 
 .container {
   display: flex;
@@ -69,6 +70,23 @@ button::after{
   background-size: 800px 104px;
   display: inline-block;
   position: relative;
+  border-radius: 12rpx;
+
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeholderShimmer;
+  animation-timing-function: linear;
+}
+
+.shine-grey {
+  background: #f1f1f1;
+  background-image: linear-gradient(to right, #eeeeee 0%, #edeef1 20%, #eeeeee 40%, #eef4fa 100%);
+  background-repeat: no-repeat;
+  background-size: 800px 104px;
+  display: inline-block;
+  position: relative;
+  border-radius: 12rpx;
 
   animation-duration: 1s;
   animation-fill-mode: forwards;

@@ -17,8 +17,34 @@ const _ = db.command
 
 const preProcessWechatGroups = (groups) => {
   groups.sort((a, b) => {
-    return (a.index || 10000) - (b.index || 10000);
-  })
+   
+    if (a.index && b.index) {
+      return a.index - b.index;
+    } else if (a.index) {
+      return -1;
+    } else if (b.index) {
+      return 1;
+    } else {
+      const participantCountA = a.participants ?  a.participants.length : 0
+      const participantCountB = b.participants ?  b.participants.length : 0
+      
+      return participantCountB - participantCountA;
+    }
+  });
+  for (const group of groups) {
+    let tagStr = "";
+    if (group.citys) {
+      tagStr += group.citys.join(" / ");
+    }
+    if (group.tags) {
+      if (tagStr) {
+        tagStr += " / ";
+      }
+      tagStr += group.tags.join(" / ")
+    }
+    group.tagStr = tagStr;
+    group.cityStr = group.citys ? group.citys.join('/') : '';
+  }
 }
 
 const preProcessFaq = (qas) => {

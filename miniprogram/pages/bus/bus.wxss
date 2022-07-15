@@ -208,7 +208,7 @@ page {
 
 .tip-text {
   font-size: 11pt;
-  line-height: 12pt;
+  line-height: 13pt;
   color: var(--textGrey);
   padding: 0 var(--inset);
   white-space:pre-wrap 

@@ -1,180 +1,147 @@
-<scroll-view scroll-y="true" class="main">
+<view class="appbar" style="height: {{appBarHeight}}px;">
+  <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="bg-white toolbar plr {{collapsed? 'shadow' : ''}}">
+    <view class="flex align-center">
+      <image style="width: {{avatarScale * 80}}rpx; height: {{avatarScale * 80}}rpx;" class="user-avatar" wx:if="{{userInfo}}" src="{{userInfo.avatarUrl}}"></image>
 
-  <image class="logo" mode="widthFix" src="../../images/logo3.png"></image>
+      <view class="user-avatar" wx:if="{{!userInfo}}">
+        <open-data type="userAvatarUrl"></open-data>
+      </view>
 
-  <view class="title">Life Balance</view>
-
-  <!-- Dashboard -->
-  <view class="flex align-end margin-top-lg justify-between">
-    <view class="dashboard-title ">Dashboard for <text class="dashboard-company">微软(中国)有限公司-苏州</text>
+      <view class="margin-left">
+        <view style="font-size: {{titleScale * 14}}pt; line-height: {{titleScale * 14}}pt;" class="user-name">Hi, {{userInfo ? userInfo.nickName : 'Friend!'}}</view>
+        <view style="font-size: {{titleScale * 11}}pt; line-height: {{titleScale * 11}}pt;" class="user-welcome-message margin-top-xs">{{welcomeMessage}}</view>
+      </view>
     </view>
   </view>
-  <view class="margin-top-sm dashboard-row-container">
-    <view class="dashboard-column">
-      <!-- Parking -->
-      <view class="dashboard-parking-container">
-        <view class="flex justify-between">
-          <image class="dashboard-parking-logo" src="../../images/ic_parking.png"></image>
-          <image bindtap="onRefreshParkingSpace" class="dashboard-parking-refresh" src="../../images/ic_refresh.png">
-          </image>
-        </view>
+</view>
 
-        <view class="dashboard-parking-title margin-top-xs">Parking</view>
+<scroll-view scroll-y="true" class="main" bindscroll="onPageScrolled">
+  <view style="height: 200px;"></view>
 
-        <view style="height: 40rpx;">
-          <view wx:if="{{loadingParkingSpace}}" class="cu-progress round xs striped active">
-            <view class="bg-blue" style="width:100%;"></view>
-          </view>
-        </view>
+  <view class="widget-section-title common-widget">Common Widgets</view>
 
-        <view class="dashboard-parking-place-container">
-          <view>
-            <image class="dashboard-parking-place-icon" src="../../images/ic_parking_ground.png"></image>
-            <view class="dashboard-parking-place-title">地上</view>
-            <view wx:if="{{!parkingSpace}}" class="dashboard-parking-place-number-shimmer margin-top-sm"></view>
-            <view wx:if="{{parkingSpace}}" class="dashboard-parking-place-number margin-top-sm">
-              {{parkingSpace.ground}}<text class="dashboard-parking-total"> /66</text>
-            </view>
-          </view>
-          <view>
-            <image class="dashboard-parking-place-icon" src="../../images/ic_parking_underground.png"></image>
-            <view class="dashboard-parking-place-title">地下</view>
-            <view wx:if="{{!parkingSpace}}" class="dashboard-parking-place-number-shimmer margin-top-sm"></view>
-            <view wx:if="{{parkingSpace}}" class="dashboard-parking-place-number margin-top-sm">
-              {{parkingSpace.underground}}<text class="dashboard-parking-total"> /308</text></view>
-          </view>
-
-        </view>
+  <!-- MSFT -->
+  <view class="widget-msft-container margin-top">
+    <view class="flex justify-between">
+      <view class="flex align-center">
+        <image class="widget-msft-icon" src="../../images/ic_widget_msft.png"></image>
+        <view class="widget-msft-title margin-left-sm">微软市值第一了吗？<text wx:if="{{stockData}}" class="{{stockData.msftTop1 ? 'widget-msft-top1' : 'widget-msft-no-top1'}}">{{stockData.msftTop1 ? '是！' : '没有'}}</text></view>
       </view>
-
-      <!-- Food menu -->
-      <view bindtap="onFoodMenuClick" class="dashboard-foodmenu-container margin-top">
-        <view class="flex align-center justify-between">
-          <view class="flex align-center">
-            <image class="dashboard-foodmenu-icon" src="../../images/ic_food.png"></image>
-            <view class="dashboard-foodmenu-title margin-left-xs">食堂本周菜单</view>
-          </view>
-        </view>
-
-        <view class="dashboard-foodmenu-date margin-top-lg">本周特供：</view>
-        <view class="dashboard-foodmenu-special single-line margin-top-sm">{{todayMenu.special}}</view>
-
-      </view>
-
+      <view class="widget-msft-boost" bindtap="onMsftBoostClicked"><text class="margin-right-xs {{boosted ? 'cuIcon-appreciatefill' : 'cuIcon-appreciate'}}"></text>{{boosted ? '已助力' : '助力'}}({{msftBoostCount}})</view>
     </view>
+    <view class="flex margin-top align-end">
+      <view class="widget-msft-price-dollar">$</view>
+      <view class="widget-msft-price">{{stockData.msft.price}}</view>
+      <view class="widget-msft-price-change margin-left-xs">{{stockData.msft.change}}%</view>
 
-
-    <view class="dashboard-column">
-      <!-- MSFT -->
-      <view class="dashboard-msft-container">
-        <view class="flex">
-          <image class="dashboard-msft-logo" src="../../images/ic_msft.png"></image>
-          <view class="dashboard-msft-title margin-left-xs">MSFT</view>
-        </view>
-        <view class="flex margin-top-xs align-end">
-          <text class="dashboard-msft-price-dollar">$</text>
-          <view class="dashboard-msft-price">{{stockData.msft.price}}</view>
-          <view class="dashboard-msft-price-change margin-left-sm">{{stockData.msft.change}}%</view>
-        </view>
-
-        <view class="dashboard-msft-no1 margin-top-sm">微软市值第一了吗？<text wx:if="{{stockData}}" class="{{stockData.msftTop1 ? 'msft-top1' : ''}}">{{stockData.msftTop1 ? '是！' : '没有'}}</text></view>
-        <view class="dashboard-msft-mktcap">{{stockData.top1.symbol}}({{stockData.top1.mktcap}}T) -
-          <text wx:if="{{stockData.msftTop1}}">{{stockData.top2.symbol}}({{stockData.top2.mktcap}}T)</text><text wx:if="{{!stockData.msftTop1}}">{{stockData.msft.symbol}}({{stockData.msft.mktcap}}T)</text>
-        </view>
-
+      <view class="widget-msft-mktcap margin-left">{{stockData.top1.symbol}}({{stockData.top1.mktcap}}T) -
+        <text wx:if="{{stockData.msftTop1}}">{{stockData.top2.symbol}}({{stockData.top2.mktcap}}T)</text><text wx:if="{{!stockData.msftTop1}}">{{stockData.msft.symbol}}({{stockData.msft.mktcap}}T)</text>
       </view>
-
-      <!-- Group -->
-      <view bindtap="onWechatGroupCardClick" class="dashboard-group-container margin-top">
-        <image class="dashboard-group-logo" src="../../images/ic_groups.png"></image>
-        <view class="dashboard-group-title">MS Wechat Groups</view>
-        <view class="dashboard-group-size margin-top-sm">{{wechatGroupCount}} groups</view>
-        <view class="dashboard-group-new-container flex margin-top-sm">
-          <image class="dashboard-group-new-icon" src="../../images/ic_new.png"></image>
-          <view class="dashboard-group-new-content single-line margin-left-xs">{{newGroupsStr}}</view>
-        </view>
-      </view>
-
-
     </view>
   </view>
 
-  <view class="flex margin-top">
-
-    <!-- Activity -->
-    <!-- <view bindtap="onActivityClick" class="dashboard-activity-container">
-      <view class="flex align-center">
-        <image class="dashboard-activity-icon" src="../../images/ic_activity_2.png"></image>
-        <view class="dashboard-activity-title margin-left-xs">Popular Activity</view>
+  <view class="widget-section-title common-widget">Widgets for 微软(中国)有限公司-苏州</view>
+  <view class="flex margin-top-sm">
+    <!-- B25 Parking -->
+    <view bindtap="onRefreshParkingSpace" class="widget-container widget-parking-container">
+      <image class="widget-icon" src="../../images/ic_widget_parking.png"></image>
+      <view class="widget-title">B25 Parking</view>
+      <view style="height: 40rpx;">
+        <view wx:if="{{loadingParkingSpace}}" class="cu-progress round xs striped active">
+          <view class="bg-blue" style="width:100%;"></view>
+        </view>
       </view>
-      <view style="flex: 1"></view>
-
-      <view class="dashboard-activity-content-title margin-top">{{popularActivity.title}}</view>
-
-      <view class="flex margin-top-sm align-center">
-        <image wx:if="{{index < 4}}" class="dashboard-activity-content-avatar" src="{{item.avatarUrl}}"
-          wx:for="{{popularActivity.participants}}" wx:key="item">
-        </image>
-
-        <view class="dashboard-activity-content-participant margin-left-xs">{{popularActivity.participants.length}} +
-          Join</view>
-      </view>
-    </view> -->
-
-
-    <!-- How To -->
-    <!-- <view bindtap="onHowToClick" class="dashboard-howto-container">
-      <view class="flex align-center">
-        <image class="dashboard-howto-icon" src="../../images/ic_faq.png"></image>
-        <view class="dashboard-howto-title margin-left-xs">HOW TO</view>
-      </view>
-
-      <view class="dashboard-howto-content single-line">#如何申请优租房? #如何申请停车位?</view>
-
-      <view class="flex align-center">
-        <image src="../../images/ic_comma.png" class="dashboard-howto-quantity-icon"></image>
-        <view class="dashboard-howto-count-text margin-left-xs">{{faqCount}} Q/A</view>
-      </view>
-    </view> -->
-
-    <!-- Shuttle bus -->
-    <view bindtap="onBusClick" class="dashboard-bus-container">
-      <image class="dashboard-bus-bg" mode="scaleToFill" src="../../images/img_bg_bus.png"></image>
-
-      <view class="dashboard-bus-content">
-        <image class="dashboard-bus-icon" mode="heightFix" src="../../images/ic_bus_real.png"></image>
-
-        <view class="dashboard-bus-title">Shuttle Bus Service</view>
+      <view class="widget-parking-place-container">
+        <view>
+          <image class="widget-parking-place-icon" src="../../images/ic_parking_ground.png"></image>
+          <view class="widget-parking-place-title">地上</view>
+          <view wx:if="{{!parkingSpace}}" class="widget-parking-place-number-shimmer margin-top-sm"></view>
+          <view wx:if="{{parkingSpace}}" class="widget-parking-place-number margin-top-sm">
+            {{parkingSpace.ground}}<text class="widget-parking-total"> /65</text>
+          </view>
+        </view>
+        <view>
+          <image class="widget-parking-place-icon" src="../../images/ic_parking_underground.png"></image>
+          <view class="widget-parking-place-title">地下</view>
+          <view wx:if="{{!parkingSpace}}" class="widget-parking-place-number-shimmer margin-top-sm"></view>
+          <view wx:if="{{parkingSpace}}" class="widget-parking-place-number margin-top-sm">
+            {{parkingSpace.underground}}<text class="widget-parking-total"> /308</text></view>
+        </view>
       </view>
     </view>
 
+    <!-- Food Menu -->
+    <view bindtap="onFoodMenuClick" class="widget-container widget-foodmenu-container">
+      <image class="widget-icon" src="../../images/ic_widget_food_menu.png"></image>
+      <view class="widget-title">Food Menu</view>
 
-    <!-- Wework -->
-    <view bindtap="onWeworkParkingClick" class="dashboard-wework-parking-container margin-left">
-      <image src="../../images/ic_wework_parking.png" class="dashboard-wework-parking-icon"></image>
+      <view class="widget-foodmenu-special">
+        <view class="single-line">{{todayMenu.special}}</view>
+      </view>
 
       <view class="flex justify-end">
-        <view class="dashboard-wework-parking-title"><text>WeWork
-            车位预定</text>
+        <view class="flex align-center">
+          <view class="widget-go-detail-text">菜单详情</view>
+          <image class="widget-go-detail-icon" src="../../images/ic_widget_go.png"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="flex widget-row">
+    <!-- WeWork Parking  -->
+    <view bindtap="onWeworkParkingClick" class="widget-container widget-wework-parking-container">
+      <image class="widget-icon" src="../../images/ic_widget_wework_parking.png"></image>
+      <view class="widget-title">WeWork Parking</view>
+
+      <view class="widget-wework-parking-info margin-top-sm margin-bottom-sm">
+        <view>已预定 <text class="text-bold text-black">{{weWorkBookedParticipantCount}}</text> 车位</view>
+        <view class="margin-top-xs">剩余 <text class="text-bold text-black">{{maxWeWorkPakingSpace - weWorkBookedParticipantCount}}</text> 车位</view>
+      </view>
+      <view class="flex justify-end">
+        <view class="flex align-center">
+          <view class="widget-go-detail-text">抢先预定</view>
+          <image class="widget-go-detail-icon" src="../../images/ic_widget_go.png"></image>
         </view>
       </view>
     </view>
 
+    <!-- Shuttle Bus  -->
+    <view bindtap="onBusClick" class="widget-container widget-shuttle-bus-container">
+      <image class="widget-icon" src="../../images/ic_widget_shuttle_bus.png"></image>
+      <view class="widget-title">Shuttle Bus</view>
+
+      <view class="widget-shuttle-bus-info">
+        <view class="flex align-center">
+          <view class="widget-shuttle-bus-status-{{activeBusCount > 0 ? 'active' : 'pending'}}"></view>
+          <view class="margin-left-xs"><text class="text-bold text-black">{{activeBusCount}}</text> 辆大巴正在运行</view>
+        </view>
+      </view>
+
+      <view class="flex justify-end">
+        <view class="flex align-center">
+          <view class="widget-go-detail-text">全部路线</view>
+          <image class="widget-go-detail-icon" src="../../images/ic_widget_go.png"></image>
+        </view>
+      </view>
+    </view>
   </view>
 
-  <view class="dashboard-building2-container margin-top">
-    <view class="dashboard-building2-title">微软苏州第二期大楼建筑进度</view>
-    <view class="dashboard-building2-progress-container margin-top-sm">
-      <view style="width: {{building2Progress}}%;" class="dashboard-building2-progress-indicator"></view>
-      <view class="dashboard-building2-progress-number margin-left-xs">{{building2Progress}}%</view>
+  <view class="widget-building2-container margin-top">
+    <view class="widget-building2-title">微软苏州第二期大楼建筑进度</view>
+    <view class="widget-building2-progress-container margin-top-sm">
+      <view style="width: {{building2Progress + '%'}};" class="widget-building2-progress-indicator"></view>
+      <view class="widget-building2-progress-number margin-left-xs">{{building2Progress}}%</view>
     </view>
     <view class="flex justify-between align-center margin-top-xs">
-      <view class="dashboard-building2-progress-date">{{building2StartDateStr}}</view>
-      <view class="dashboard-building2-progress-date">{{building2EndDateStr}}</view>
+      <view class="widget-building2-progress-date">{{building2StartDateStr}}</view>
+      <view class="widget-building2-progress-date">{{building2EndDateStr}}</view>
     </view>
 
-    <image bindtap="onBuild2Click" class="margin-top dashboard-building2-picture" mode="widthFix" src="{{building2LatestProgress.picture}}" />
-    <view class="dashboard-building2-update-date">更新于 {{building2LatestProgress.createDateStr}}</view>
+    <image bindtap="onBuild2Click" class="margin-top widget-building2-picture" mode="widthFix" src="{{building2LatestProgress.picture}}" />
+    <view class="widget-building2-update-date">更新于 {{building2LatestProgress.createDateStr}}</view>
   </view>
+
+  <view style="height: 100rpx;"></view>
 
 </scroll-view>

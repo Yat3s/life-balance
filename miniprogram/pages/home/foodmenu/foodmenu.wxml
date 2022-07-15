@@ -14,7 +14,6 @@
 </view>
 
 <view class="menu margin-top">
-
   <view class="special">本周特供: <text class="text-black text-bold">{{menu.special}}</text></view>
 
   <view style="height: 1rpx; background: #f1f1f1;" class="margin-top-sm"></view>

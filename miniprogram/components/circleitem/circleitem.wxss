@@ -1,0 +1,72 @@
+/* components/circleitem/circle.wxss */
+
+
+.circle-item {
+  background: white;
+  border-radius: 28rpx;
+  padding: 24rpx;
+  border: #ebebeb solid 2rpx;
+}
+
+.circle-logo-bg {
+  width: 180rpx;
+  height: 90rpx;
+  border-radius: 12rpx;
+  background: rgb(255, 235, 224);
+  background: linear-gradient(42deg, rgba(255, 235, 224, 1) 0%, rgba(220, 222, 244, 1) 100%);
+}
+
+.circle-cover-pic {
+  width: 180rpx;
+  height: 90rpx;
+  border-radius: 12rpx;
+}
+
+.circle-logo {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.circle-join-icon {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.circle-name {
+  font-size: 12pt;
+  line-height: 13pt;
+  color: black;
+  font-weight: bold;
+}
+
+.circle-dot {
+  height: 14rpx;
+  width: 48rpx;
+}
+
+.circle-tag {
+  font-size: 10pt;
+  line-height: 10pt;
+  color: var(--textGrey);
+  display: flex;
+}
+
+.circle-member {
+  font-size: 9pt;
+  line-height: 9pt;
+  color: var(--textGrey);
+}
+
+.circle-team-only {
+  font-size: 10pt;
+  line-height: 10pt;
+  font-weight: bold;
+  min-height: 10pt;
+  color: #627DDE;
+}
+
+.circle-joined-text {
+  font-size: 9pt;
+  line-height: 9pt;
+  color: var(--textGrey);
+}

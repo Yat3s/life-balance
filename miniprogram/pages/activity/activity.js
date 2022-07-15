@@ -1,5 +1,3 @@
-import QQMapWX from '../../common/qqmap-wx-jssdk.min.js';
-
 const activityRepo = require('../../repository/activityRepo');
 const userRepo = require('../../repository/userRepo');
 const router = require('../router');
@@ -70,7 +68,6 @@ Component({
 
       if (this.data.categories) {
         this.fetchActivityCategories();
-        this.requestLocation();
       }
     }
   },
@@ -190,69 +187,6 @@ Component({
       this.setData({
         activities
       }, this.checkContentEmpty);
-    },
-
-    requestLocation() {
-      wx.getLocation({
-        type: 'wgs84'
-      }).then(res => {
-        const latitude = res.latitude;
-        const longitude = res.longitude
-        this.setData({
-          latitude,
-          longitude
-        });
-
-        pref.setLocation(latitude, longitude);
-
-        this.calcDistance();
-        this.retrieveCityInfo(latitude, longitude);
-      });
-    },
-
-    retrieveCityInfo(latitude, longitude) {
-      let city = pref.getCity();
-      if (city) {
-        this.setData({
-          city
-        });
-
-        return;
-      }
-      let qqmapsdk = new QQMapWX({
-        key: 'EIOBZ-GTTRJ-JEIFC-FYUNA-2QZE5-IYBQ7'
-      });
-
-      let that = this;
-      qqmapsdk.reverseGeocoder({
-        sig: 'dTHcPBDwYFNFnMB0qiQaAVZdHhsmtJq',
-        location: {
-          latitude,
-          longitude
-        },
-        success(res) {
-          city = res.result.ad_info.city;
-
-          if (!city) {
-            wx.showToast({
-              icon: 'error',
-              title: '获取所在城市失败',
-            })
-            return;
-          }
-          that.setData({
-            city
-          });
-
-          pref.setCity(city);
-        },
-        fail(err) {
-          wx.showToast({
-            icon: 'error',
-            title: '获取所在城市失败',
-          })
-        }
-      })
     },
 
     fetchActivityCategories() {
@@ -386,7 +320,6 @@ Component({
   lifetimes: {
     attached() {
       this.fetchActivityCategories();
-      this.requestLocation();
     },
   }
 })

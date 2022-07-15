@@ -7,17 +7,7 @@
   padding-right: 24rpx;
 }
 
-.tab {
-  color: #240846;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  transition: width 0.5s;
-  height: 70%;
-  background: white;
-  padding: 16rpx 0rpx;
-}
-
+.tab,
 .tab-highlight {
   color: #240846;
   align-items: center;
@@ -25,7 +15,15 @@
   text-align: center;
   transition: width 0.5s;
   height: 70%;
-  background: var(--lightBlue);
+  padding: 16rpx 0rpx;
+}
+
+.tab {
+  background: white;
+}
+
+.tab-highlight {
+  background: #faf7fd;
   border-radius: 200rpx;
 }
 
@@ -38,10 +36,9 @@
 }
 
 .tab-icon {
-  width: 40rpx;
-  height: 40rpx;
+  width: 36rpx;
+  height: 36rpx;
 }
-
 
 .modal-main {
   padding: 48rpx;
@@ -60,4 +57,3 @@
   font-size: 10pt;
   color: var(--textGrey);
 }
-

@@ -24,20 +24,7 @@ Page({
   onLoad: function (options) {
     this.fetchActivity(options.id).then(activity => {
       this.fetchUserInfo();
-      this.retrieveLocation();
     });
-  },
-
-  retrieveLocation() {
-    if (pref.getLatitude) {
-      this.calcDistance(pref.getLatitude(), pref.getLongitude());
-    } else {
-      wx.getLocation({
-        type: 'wgs84'
-      }).then(res => {
-        this.calcDistance(res.latitude, res.longitude);
-      });
-    }
   },
 
   calcDistance(latitude, longitude) {

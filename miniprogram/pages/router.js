@@ -20,6 +20,11 @@ export const Pages = {
     url: '/pages/activity/activitydetail/activitydetail?id='
   },
 
+  ActivityListPage: {
+    authRequired: false,
+    url: '/pages/activity/activitypage'
+  },
+
   DraftNewActivity: {
     authRequired: true,
     url: '/pages/activity/draftactivity/draftactivity?type=new'
@@ -79,6 +84,10 @@ export const Pages = {
     authRequired: true,
     url: '/pages/bus/bus'
   },
+}
+
+export function navigateToActivityPage() {
+  navigate(Pages.ActivityListPage)
 }
 
 export function navigateToBusInfo() {

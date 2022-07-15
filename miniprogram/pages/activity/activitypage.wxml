@@ -1,0 +1,2 @@
+<toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
+<activitycomponent></activitycomponent>

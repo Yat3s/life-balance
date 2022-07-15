@@ -1,18 +1,8 @@
 <!-- Header -->
-<view style="height: {{toolbarHeight}}px;  width: 100%; z-index: 1;  margin-top: 100rpx;"
+<view style="height: {{toolbarHeight}}px;  width: 100%; z-index: 1;  "
   class="plr flex align-center justify-end">
 
 </view>
-
-<!-- <view class="plr header-text text-bold margin-bottom-lg">
-  <text class="cuIcon-locationfill"> {{city}}
-  </text>
-</view> -->
-
-<view style="margin-top: 100rpx"></view>
-
-<!-- Logo -->
-<image class="logo" src="../../images/ic_activity_2.png"></image>
 
 <!-- Categories -->
 <view class="flex align-center justify-between">
