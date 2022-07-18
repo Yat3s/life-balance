@@ -1,12 +1,12 @@
-# 云开发 quickstart
+# Life Balance
+This is a mini-program for the LIFE of MS employees.
 
-这是云开发的快速启动指引，其中演示了如何上手使用云开发的三大基础能力：
+## Construction
+- Cloudfunctions: run on server, the place defined all API requests which is used for mini-program.
+- Miniprogram: run on Wechat, including pages, components, and some UI resources.
+![image](https://user-images.githubusercontent.com/14801837/179476591-d556e1b4-5d62-41c3-9660-68f31af524bb.png)
 
-- 数据库：一个既可在小程序前端操作，也能在云函数中读写的 JSON 文档型数据库
-- 文件存储：在小程序前端直接上传/下载云端文件，在云开发控制台可视化管理
-- 云函数：在云端运行的代码，微信私有协议天然鉴权，开发者只需编写业务逻辑代码
+## References
+- [Wechat Mini-program Doc](https://developers.weixin.qq.com/miniprogram/dev/api/)
 
-## 参考文档
-
-- [云开发文档](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/basis/getting-started.html)
 
