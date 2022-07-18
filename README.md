@@ -1,5 +1,5 @@
 # Life Balance
-This is a mini-program for the LIFE of MS employees.
+This is a mini-program for the LIFE of employees.
 
 ## Struction
 - Cloudfunctions: run on server, the place defined all API requests which is used for mini-program.
