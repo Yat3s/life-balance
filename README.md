@@ -1,7 +1,7 @@
 # Life Balance
 This is a mini-program for the LIFE of employees.
 
-## Struction
+## Structure
 - Cloudfunctions: run on server, the place defined all API requests which is used for mini-program.
 - Miniprogram: run on Wechat, including pages, components, and some UI resources.
 ![image](https://user-images.githubusercontent.com/14801837/179477557-c10b9e8e-0ca3-4392-9bd9-c1ac237ee37a.png)
