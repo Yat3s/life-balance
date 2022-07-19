@@ -82,6 +82,13 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/glossary/glossary",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

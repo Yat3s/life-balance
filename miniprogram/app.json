@@ -19,7 +19,8 @@
     "pages/user/useractivity/useractivity",
     "pages/bus/bus",
     "pages/connection/connection",
-    "pages/activity/activitypage"
+    "pages/activity/activitypage",
+    "pages/glossary/glossary"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
