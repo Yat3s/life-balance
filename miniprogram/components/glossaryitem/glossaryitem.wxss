@@ -1,0 +1,43 @@
+/* components/glossaryitem.wxss */
+.glossary-list-item{
+  padding:22rpx 33rpx;
+  background: #F9F9F9;
+  border-radius: 21rpx;
+  margin-bottom: 21rpx;
+}
+
+.glossary-fullname{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14pt;
+  line-height: 18pt;
+  color: #000000;
+}
+
+.glossary-definition{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 9pt;
+  line-height: 12pt;
+  color: #AAAAAA;
+}
+
+.glossary-acronym-list{
+  display: inline-flex;
+}
+
+.glossary-acronym-item{
+  padding: 5rpx 10rpx;
+  background: #F0F0F0;
+  border-radius: 15rpx;
+  margin-right: 10rpx;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 8pt;
+  line-height: 11pt;
+  color: #ACACAC;
+}
+

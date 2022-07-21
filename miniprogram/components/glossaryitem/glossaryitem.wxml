@@ -1,0 +1,14 @@
+<!--components/glossaryitem.wxml-->
+<view class="glossary-list-item">
+  <view class="glossary-fullname">{{glossary.fullname}}</view>
+  <view class="glossary-definition">{{glossary.definition}}</view>
+  <view class="glossary-acronym-list">
+    <view class="glossary-acronym-item"  wx:for="{{glossary.acronymItem}}" wx:key="id">
+      {{item}}
+    </view>
+  </view>
+</view>
+
+
+
+

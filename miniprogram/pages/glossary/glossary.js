@@ -1,11 +1,62 @@
 // pages/glossary/glossary.js
-Page({
 
+const app = getApp();
+
+Page({
+  options: {
+    addGlobalClass: true
+  },
   /**
    * 页面的初始数据
    */
   data: {
+    searchAcronymInput:'',
+    glossary:[
+      {
+        fullname:'Microsoft 365 admin center',
+        definition:'A Microsoft 365 portal that is used to set up organizations and to manage subscriptions and users.',
+        acronymItem:['OM', 'MAC']
+      },
+      {
+        fullname:'Microsoft 365 admin center',
+        definition:'A Microsoft 365 portal that is used to set up organizations and to manage subscriptions and users.',
+        acronymItem:['OM', 'MAC']
+      },
+      {
+        fullname:'Microsoft 365 admin center',
+        definition:'A Microsoft 365 portal that is used to set up organizations and to manage subscriptions and users.',
+        acronymItem:['OM', 'MAC']
+      },
+      {
+        fullname:'Microsoft 365 admin center',
+        definition:'A Microsoft 365 portal that is used to set up organizations and to manage subscriptions and users.',
+        acronymItem:['OM', 'MAC']
+      },
+      {
+        fullname:'Microsoft 365 admin center',
+        definition:'A Microsoft 365 portal that is used to set up organizations and to manage subscriptions and users.',
+        acronymItem:['OM', 'MAC']
+      },
+      {
+        fullname:'Microsoft 365 admin center',
+        definition:'A Microsoft 365 portal that is used to set up organizations and to manage subscriptions and users.',
+        acronymItem:['OM', 'MAC']
+      },
+      {
+        fullname:'Microsoft 365 admin center',
+        definition:'A Microsoft 365 portal that is used to set up organizations and to manage subscriptions and users.',
+        acronymItem:['OM', 'MAC']
+      },
+      {
+        fullname:'Microsoft 365 admin center',
+        definition:'A Microsoft 365 portal that is used to set up organizations and to manage subscriptions and users.',
+        acronymItem:['OM', 'MAC']
+      }
+    ]
+  },
 
+  onSearchGlossaryChanged(e){
+    
   },
 
   /**
