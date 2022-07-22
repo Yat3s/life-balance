@@ -17,6 +17,7 @@
         <view wx:for="{{glossary}}" wx:key="id">
           <glossaryitem glossary="{{item}}"/>
         </view>
+        <view style="height: 20vh;"></view>
       </scroll-view>
   </view>
 </view>

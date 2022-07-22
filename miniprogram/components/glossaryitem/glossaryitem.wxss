@@ -21,6 +21,7 @@
   font-weight: 400;
   font-size: 9pt;
   line-height: 12pt;
+  margin-top: 10rpx;
   color: #AAAAAA;
 }
 

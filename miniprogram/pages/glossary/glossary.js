@@ -1,8 +1,8 @@
 // pages/glossary/glossary.js
-
+import { queryAcronym } from "../../repository/exploreRepo";
 const app = getApp();
 
-Page({
+Component({
   options: {
     addGlobalClass: true
   },
@@ -14,56 +14,42 @@ Page({
     glossary:[
       {
         fullname:'Microsoft 365 admin center',
-        definition:'A Microsoft 365 portal that is used to set up organizations and to manage subscriptions and users.',
-        acronymItem:['OM', 'MAC']
+        description:'A Microsoft 365 portal that is used to set up organizations and to manage subscriptions and users.',
+        synonyms:['OM', 'MAC']
       },
       {
         fullname:'Microsoft 365 admin center',
-        definition:'A Microsoft 365 portal that is used to set up organizations and to manage subscriptions and users.',
-        acronymItem:['OM', 'MAC']
+        description:'A Microsoft 365 portal that is used to set up organizations and to manage subscriptions and users.',
+        synonyms:['OM', 'MAC']
       },
       {
         fullname:'Microsoft 365 admin center',
-        definition:'A Microsoft 365 portal that is used to set up organizations and to manage subscriptions and users.',
-        acronymItem:['OM', 'MAC']
+        description:'A Microsoft 365 portal that is used to set up organizations and to manage subscriptions and users.',
+        synonyms:['OM', 'MAC']
       },
       {
         fullname:'Microsoft 365 admin center',
-        definition:'A Microsoft 365 portal that is used to set up organizations and to manage subscriptions and users.',
-        acronymItem:['OM', 'MAC']
+        description:'A Microsoft 365 portal that is used to set up organizations and to manage subscriptions and users.',
+        synonyms:['OM', 'MAC']
       },
       {
         fullname:'Microsoft 365 admin center',
-        definition:'A Microsoft 365 portal that is used to set up organizations and to manage subscriptions and users.',
-        acronymItem:['OM', 'MAC']
+        description:'A Microsoft 365 portal that is used to set up organizations and to manage subscriptions and users.',
+        synonyms:['OM', 'MAC']
       },
       {
         fullname:'Microsoft 365 admin center',
-        definition:'A Microsoft 365 portal that is used to set up organizations and to manage subscriptions and users.',
-        acronymItem:['OM', 'MAC']
-      },
-      {
-        fullname:'Microsoft 365 admin center',
-        definition:'A Microsoft 365 portal that is used to set up organizations and to manage subscriptions and users.',
-        acronymItem:['OM', 'MAC']
-      },
-      {
-        fullname:'Microsoft 365 admin center',
-        definition:'A Microsoft 365 portal that is used to set up organizations and to manage subscriptions and users.',
-        acronymItem:['OM', 'MAC']
+        description:'A Microsoft 365 portal that is used to set up organizations and to manage subscriptions and users.',
+        synonyms:['OM', 'MAC']
       }
     ]
-  },
-
-  onSearchGlossaryChanged(e){
-    
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+   
   },
 
   /**
@@ -113,5 +99,17 @@ Page({
    */
   onShareAppMessage() {
 
+  },
+  /**
+   * 组件的方法列表
+   */
+  methods: {
+    onSearchGlossaryChanged(e){
+      const keyword = e.detail.value;
+      queryAcronym(keyword).then(res => {
+        console.log(res);
+        // this.data.glossary = res;
+      });
+    },
   }
 })

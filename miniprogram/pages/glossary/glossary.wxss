@@ -1,6 +1,7 @@
 /* pages/glossary/glossary.wxss */
 
 .glossary-container{
+  flex-direction: column;
   box-sizing: border-box;
   height: 100vh;
   padding: 120rpx 40rpx 0 40rpx;
@@ -9,6 +10,7 @@
 }
 
 .header{
+  box-sizing: border-box;
   margin-top: 35rpx;
 }
 
@@ -31,6 +33,10 @@
 }
 
 .main{
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: calc(100vh - 150pt);
   padding-top: 80rpx;
 }
 
@@ -58,7 +64,10 @@
 }
 
 .glossary-list{
+  flex: 1;
+  box-sizing: border-box;
   padding-top: 40rpx;
-  height: 68vh;
+  overflow: auto;
 }
+
 
