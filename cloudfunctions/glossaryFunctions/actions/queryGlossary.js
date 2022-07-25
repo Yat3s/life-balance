@@ -21,7 +21,7 @@ exports.main = async (query, context) => {
   if (query === "" || query === null) {
     for (let i = 0; i < batchTimes; i++) {
       const result = await db.collection('glossaries').skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
-      tasks.push(result.data)
+      tasks.push(result)
     }
   }
   else {
@@ -44,7 +44,7 @@ exports.main = async (query, context) => {
           fullname: true,
           description: true
         }).get()
-      tasks.push(result.data)
+      tasks.push(result)
     }
   }
 
@@ -53,5 +53,5 @@ exports.main = async (query, context) => {
     return {
       data: acc.data.concat(cur.data)
     }
-  })
+  }).data
 }
