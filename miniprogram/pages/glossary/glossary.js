@@ -1,18 +1,28 @@
 // pages/glossary/glossary.js
+import { queryGlossary } from  "../../repository/glossaryRepo";
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    acronym: ""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    console.log(this.data.acronym);
+    
+    queryGlossary(this.data.acronym).then(glossaries => {
+      console.log(glossaries);
 
+    }).catch(err => {
+
+    });
+    
   },
 
   /**

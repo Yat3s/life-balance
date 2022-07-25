@@ -17,12 +17,15 @@ exports.main = async (query, context) => {
   const batchTimes = Math.ceil(total / MAX_LIMIT)
   // 承载所有读操作的 promise 的数组
   const tasks = []
-  for (let i = 0; i < batchTimes; i++) {
-    if (query === "" || query === null) {
+
+  if (query === "" || query === null) {
+    for (let i = 0; i < batchTimes; i++) {
       const result = await db.collection('glossaries').skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
       tasks.push(result.data)
     }
-    else {
+  }
+  else {
+    for (let i = 0; i < batchTimes; i++) {
       const result = await db.collection('glossaries').skip(i * MAX_LIMIT).limit(MAX_LIMIT).where(_.or([
         {
           synonyms: {
@@ -41,10 +44,10 @@ exports.main = async (query, context) => {
           fullname: true,
           description: true
         }).get()
-        tasks.push(result.data)
+      tasks.push(result.data)
     }
-
   }
+
   // 等待所有
   return (await Promise.all(tasks)).reduce((acc, cur) => {
     return {
