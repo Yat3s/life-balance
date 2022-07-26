@@ -11,7 +11,7 @@
     </view>
     <!-- glossary Items -->
     <scroll-view class="glossary-list" scroll-y="true">
-      <view wx:for="{{glossary}}" wx:key="id">
+      <view wx:for="{{glossary}}" wx:key="_id">
         <glossaryitem glossary="{{item}}" />
       </view>
       <view wx:if="{{emptyGlossary}}" style="font-style: italic;margin-left: 29.83rpx;">No results found.</view>
