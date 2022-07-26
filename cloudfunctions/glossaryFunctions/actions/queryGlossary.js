@@ -15,6 +15,7 @@ exports.main = async (query, context) => {
   const total = countResult.total
   // 计算需分几次取
   const batchTimes = Math.ceil(total / MAX_LIMIT)
+  // const batchTimes = 1
   // 承载所有读操作的 promise 的数组
   const tasks = []
 
