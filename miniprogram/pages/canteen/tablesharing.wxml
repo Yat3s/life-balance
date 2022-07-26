@@ -8,10 +8,12 @@
 <view class="menu margin-top">
   <view bindtap='bindShowMsg'>
     <text class="text-black text-bold">{{table}}</text>
+    <text class="text-black text-bold" wx:if="{{selected}}">  点击右上角分享</text>
   </view>
-  <view class="select_box" wx:if="{{select}}">
+  
+  <view wx:if="{{selecting}}">
       <view wx:for="{{tables}}" wx:key="unique">
-        <view bindtap="onTableSelect" data-name="{{item}}">{{item}}</view>
+        <view bindtap="onTableSelected" data-name="{{item}}">{{item}}</view>
       </view>
   </view>
   <!-- canteen seat img-->

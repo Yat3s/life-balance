@@ -1,27 +1,35 @@
 // pages/canteen/tablesharing.js
+
+const {
+  navigateToCanteenTableDetail,
+} = require("../router");
+
 Page({
 
   /**
    * Page initial data
    */
   data: {
-    select: false,
+    selected:false,
+    selecting: false,
     table:"请选择",
     tables:[
       "A11",
       "A12",
       "B12",
       "B13"
-    ],
+    ]
   },
 
   bindShowMsg() {
     this.setData({
-      select: !this.data.select,
+      selecting: !this.data.selecting,
     })
-    if (this.data.table != "请选择"){
+    // re-select
+    if (this.data.selected){
       this.setData({
-        table: "请选择"
+        table: "请选择",
+        selected: false
       })
     }
   },
@@ -80,14 +88,19 @@ Page({
    */
   onShareAppMessage() {
 
+    return {
+      title: 'Canteen Table:' + this.data.table,
+      path: '/pages/canteen/tabledetail/tabledetail?table='+this.data.table
+    }
   },
 
-  onTableSelect(e) {
+  onTableSelected(e) {
     console.log(e)
     var name = e.currentTarget.dataset.name
     this.setData({
       table: name,
-      select: false
+      selected: true,
+      selecting: false
     })
   }
 })

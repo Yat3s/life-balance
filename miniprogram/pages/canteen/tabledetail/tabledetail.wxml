@@ -1,0 +1,13 @@
+<!--pages/canteen/tabledetail/tabledetail.wxml-->
+<toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
+
+<view class="flex align-end justify-between">
+  <view class="title margin-top-lg">B25 食堂</view>
+  <view class="company">微软(中国)有限公司 - 苏州</view>
+</view>
+
+<view class="menu margin-top">
+  <text>Table: {{table}}</text>
+  <!-- canteen seat img-->
+  <image src='https://canteenseat.blob.core.windows.net/canteenseat/{{table}}.png'></image>
+</view>

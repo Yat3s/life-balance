@@ -85,10 +85,10 @@ export const Pages = {
     url: '/pages/bus/bus'
   },
 
-  Canteen:{
+  CanteenTableSharing:{
     authRequired: false,
     url: '/pages/canteen/tablesharing'
-  }
+  },
 }
 
 export function navigateToActivityPage() {
@@ -132,7 +132,7 @@ export function navigateToFoodMenu() {
 }
 
 export function navigateToCanteenTable() {
-  navigate(Pages.Canteen)
+  navigate(Pages.CanteenTableSharing)
 }
 
 export function navigateToHowTo() {
