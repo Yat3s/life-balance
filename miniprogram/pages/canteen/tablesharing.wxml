@@ -1,0 +1,19 @@
+<!--pages/canteen/tablesharing.wxml-->
+<toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
+
+<view class="flex align-end justify-between">
+  <view class="title margin-top-lg">B25 食堂找位置</view>
+  <view class="company">微软(中国)有限公司 - 苏州</view>
+</view>
+<view class="menu margin-top">
+  <view bindtap='bindShowMsg'>
+    <text class="text-black text-bold">{{table}}</text>
+  </view>
+  <view class="select_box" wx:if="{{select}}">
+      <view wx:for="{{tables}}" wx:key="unique">
+        <view bindtap="onTableSelect" data-name="{{item}}">{{item}}</view>
+      </view>
+  </view>
+  <!-- canteen seat img-->
+  <image src='https://canteenseat.blob.core.windows.net/canteenseat/{{table}}.png'></image>
+</view>

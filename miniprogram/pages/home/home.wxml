@@ -86,6 +86,9 @@
         </view>
       </view>
     </view>
+    <!-- Canteen table -->
+    <view bindtap="onCanteenTableClick" class="widget-container widget-wework-parking-container">
+    </view>
   </view>
 
   <view class="flex widget-row">

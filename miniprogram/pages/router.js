@@ -84,6 +84,11 @@ export const Pages = {
     authRequired: true,
     url: '/pages/bus/bus'
   },
+
+  Canteen:{
+    authRequired: false,
+    url: '/pages/canteen/tablesharing'
+  }
 }
 
 export function navigateToActivityPage() {
@@ -124,6 +129,10 @@ export function navigateToPostCarpool() {
 
 export function navigateToFoodMenu() {
   navigate(Pages.FoodMenu)
+}
+
+export function navigateToCanteenTable() {
+  navigate(Pages.Canteen)
 }
 
 export function navigateToHowTo() {

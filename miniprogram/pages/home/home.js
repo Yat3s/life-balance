@@ -23,6 +23,7 @@ const {
   navigateToWechatGroup,
   navigateToActivityDetail,
   navigateToFoodMenu,
+  navigateToCanteenTable,
   navigateToHowTo,
   navigateToBusInfo,
   navigateToWeworkParking,
@@ -115,6 +116,10 @@ Component({
 
     onFoodMenuClick() {
       navigateToFoodMenu();
+    },
+
+    onCanteenTableClick() {
+      navigateToCanteenTable();
     },
 
     onHowToClick() {
