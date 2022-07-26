@@ -5,19 +5,17 @@
     <view class="subtitle">Confused by a word, phrase, or acronym? Find the definition here.</view>
   </view>
   <view class="main">
-      <view class="glossary-search-container">
-        <image src="../../images/ic_search_grey.png" class="glossary-search-icon" />
-        <input class="glossary-search-input" 
-        value="{{searchAcronymInput}}" 
-        placeholder="Term/acronym/glossary"
-        bindinput="onSearchGlossaryChanged"></input>
+    <view class="glossary-search-container">
+      <image src="../../images/ic_search_grey.png" class="glossary-search-icon" />
+      <input class="glossary-search-input" id="glossary-input" value="{{searchSynonymsInput}}" placeholder="Term/acronym/glossary" bindinput="onSearchGlossaryChanged"></input>
+    </view>
+    <!-- glossary Items -->
+    <scroll-view class="glossary-list" scroll-y="true">
+      <view wx:for="{{glossary}}" wx:key="id">
+        <glossaryitem glossary="{{item}}" />
       </view>
-      <!-- glossary Items -->
-      <scroll-view class="glossary-list" scroll-y="true">
-        <view wx:for="{{glossary}}" wx:key="id">
-          <glossaryitem glossary="{{item}}"/>
-        </view>
-        <view style="height: 20vh;"></view>
-      </scroll-view>
+      <view wx:if="{{emptyGlossary}}" style="font-style: italic;margin-left: 29.83rpx;">No results found.</view>
+      <view style="height: 30vh;"></view>
+    </scroll-view>
   </view>
 </view>

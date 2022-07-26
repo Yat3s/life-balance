@@ -23,12 +23,3 @@ export function fetchAllTeams() {
 export function msftBoost() {
   return cloudFunctionCall(CLOUD_FUNCTION_NAME, 'msftBoost')
 }
-
-export function queryAcronym(acronym) {
-  console.log(acronym);
-  const data = {
-    acronym: acronym,
-  }
-
-  return cloudFunctionCall(CLOUD_FUNCTION_NAME, 'queryAcronym', data);
-}
