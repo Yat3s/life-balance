@@ -1,1 +1,63 @@
 /* pages/glossary/glossary.wxss */
+.glossary-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 120rpx var(--inset) 0 var(--inset);
+  background-color: white;
+  overflow: hidden;
+}
+
+.header {
+  margin-top: 35rpx;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 23pt;
+  line-height: 30pt;
+  color: #000000;
+}
+
+.subtitle {
+  font-weight: 400;
+  font-size: 12pt;
+  line-height: 16pt;
+  color: #A29F9F;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 80rpx;
+  overflow: auto;
+}
+
+.glossary-search-input {
+  width: 100%;
+}
+
+.glossary-search-container {
+  display: flex;
+  align-items: center;
+  height: 90rpx;
+  background: #F9F9F9;
+  border-radius: 45rpx;
+  padding: 0 16px;
+}
+
+.glossary-search-icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.glossary-search-input {
+  margin-left: 8rpx;
+}
+
+.glossary-list {
+  flex: 1;
+  padding-top: 40rpx;
+  overflow: auto;
+}
