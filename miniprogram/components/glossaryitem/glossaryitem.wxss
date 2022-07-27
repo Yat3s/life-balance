@@ -1,0 +1,37 @@
+/* components/glossaryitem.wxss */
+.glossary-list-item {
+  padding: 22rpx 33rpx;
+  background: #F9F9F9;
+  border-radius: 21rpx;
+  margin-bottom: 21rpx;
+}
+
+.glossary-fullname {
+  font-weight: bold;
+  font-size: 14pt;
+  line-height: 18pt;
+  color: #000000;
+}
+
+.glossary-description {
+  font-weight: 400;
+  font-size: 10pt;
+  line-height: 12pt;
+  margin-top: 10rpx;
+  color: #AAAAAA;
+}
+
+.glossary-synonyms-list {
+  display: inline-flex;
+}
+
+.glossary-synonyms-item {
+  padding: 5rpx 10rpx;
+  background: #F0F0F0;
+  border-radius: 15rpx;
+  margin-right: 10rpx;
+  font-weight: bold;
+  font-size: 9pt;
+  line-height: 11pt;
+  color: #ACACAC;
+}

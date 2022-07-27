@@ -21,7 +21,7 @@ exports.main = async (query, context) => {
 
   if (!query) {
     const result = await db.collection('glossaries').get()
-    return result
+    return result.data
     // tasks.push(result)
     // for (let i = 0; i < batchTimes; i++) {
     //   const result = await db.collection('glossaries').skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
@@ -48,7 +48,9 @@ exports.main = async (query, context) => {
       fullname: true,
       description: true
     }).get()
-    return result
+    return result.data
+  }
+}
     // tasks.push(result)
 
     // for (let i = 0; i < batchTimes; i++) {
@@ -73,7 +75,6 @@ exports.main = async (query, context) => {
     //   }).get()
     //   tasks.push(result)
     // }
-  }
 
   // 等待所有
   // return (await Promise.all(tasks)).reduce((acc, cur) => {
@@ -81,5 +82,3 @@ exports.main = async (query, context) => {
   //     data: acc.data.concat(cur.data)
   //   }
   // }).data
-
-

@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "component": true,
+  "usingComponents": {
+    "glossaryitem": "../../components/glossaryitem/glossaryitem"
+  }
 }
