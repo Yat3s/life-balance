@@ -2,9 +2,9 @@ import { cloudFunctionCall } from "./baseRepo";
 
 const CLOUD_FUNCTION_NAME = "glossaryFunctions"
 
-export function queryGlossary(acronym) {
+export function queryGlossary(query) {
   const data = {
-    query: acronym
+    query: query
   }
   return cloudFunctionCall(CLOUD_FUNCTION_NAME, 'queryGlossary', data);
 }
