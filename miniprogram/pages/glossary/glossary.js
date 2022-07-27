@@ -9,9 +9,8 @@ Component({
    * 页面的初始数据
    */
   data: {
-    searchSynonymsInput: '',
-    glossary: [],
-    emptyGlossary: false
+    searchGlossaryInput: '',
+    glossaries: null,
   },
 
   pageLifetimes: {
@@ -26,13 +25,13 @@ Component({
   methods: {
     onSearchGlossaryChanged(e) {
       const keyword = e.detail.value;
+      this.data.searchGlossaryInput = keyword;
       this.searchInput(keyword);
     },
     searchInput(keyword = "") {
       queryGlossary(keyword).then(res => {
         this.setData({
-          glossary: res.length > 0 ? res : [],
-          emptyGlossary: res.length > 0 ? false : true
+          glossaries: res && res.length > 0 ? res : [],
         })
       });
     }

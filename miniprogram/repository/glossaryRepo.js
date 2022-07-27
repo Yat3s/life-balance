@@ -1,6 +1,4 @@
-import { cloudCall, cloudFunctionCall } from "./baseRepo";
-
-const db = wx.cloud.database();
+import { cloudFunctionCall } from "./baseRepo";
 
 const CLOUD_FUNCTION_NAME = "glossaryFunctions"
 
