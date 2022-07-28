@@ -1,9 +1,20 @@
 /* pages/glossary/glossary.wxss */
-.glossary-container {
+.container {
   display: flex;
   flex-direction: column;
+  width: 100vw;
   height: 100vh;
-  padding: 120rpx var(--inset) 0 var(--inset);
+}
+
+.toolbar {
+  width: 100vw;
+}
+
+.glossary-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20rpx var(--inset) 0 var(--inset);
   background-color: white;
   overflow: hidden;
 }
@@ -13,8 +24,8 @@
 }
 
 .title {
-  font-weight: bold;
-  font-size: 23pt;
+  font-weight: 600;
+  font-size: 22pt;
   line-height: 30pt;
   color: #000000;
 }
@@ -22,20 +33,16 @@
 .subtitle {
   font-weight: 400;
   font-size: 12pt;
-  line-height: 16pt;
-  color: #A29F9F;
+  line-height: 15pt;
+  color: #c7c4c4;
 }
 
 .main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding-top: 80rpx;
+  padding-top: 85rpx;
   overflow: auto;
-}
-
-.glossary-search-input {
-  width: 100%;
 }
 
 .glossary-search-container {
@@ -48,16 +55,30 @@
 }
 
 .glossary-search-icon {
-  width: 40rpx;
-  height: 40rpx;
+  width: 50rpx;
+  height: 50rpx;
 }
 
 .glossary-search-input {
-  margin-left: 8rpx;
+  flex: 1;
+  margin-left: 15rpx;
+}
+
+.input-placeholder {
+  color: #b7b2b2;
+  font-size: 11pt;
+}
+
+.cuIcon-roundclosefill {
+  margin: 10rpx;
 }
 
 .glossary-list {
   flex: 1;
-  padding-top: 40rpx;
+  padding-top: 45rpx;
   overflow: auto;
+}
+
+.reserved-space {
+  height: 100rpx;
 }
