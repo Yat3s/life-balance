@@ -24,7 +24,7 @@
 }
 
 .title {
-  font-weight: 600;
+  font-weight: bold;
   font-size: 22pt;
   line-height: 30pt;
   color: #000000;
