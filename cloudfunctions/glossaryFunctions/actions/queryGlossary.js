@@ -4,16 +4,17 @@ cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
 });
 const db = cloud.database();
+const databaseName = 'glossary_English'
 
 exports.main = async (query, context) => {
   const _ = db.command
 
   if (!query) {
-    const result = await db.collection('glossaries').get()
+    const result = await db.collection(databaseName).get()
     return result.data
   }
   else {
-    const result = await db.collection('glossaries').where(_.or([
+    const result = await db.collection(databaseName).where(_.or([
       {
         synonyms: {
           $regex: '.*' + query,
