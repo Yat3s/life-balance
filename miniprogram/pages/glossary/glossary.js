@@ -25,7 +25,9 @@ Component({
   methods: {
     onSearchGlossaryChanged(e) {
       const keyword = e.detail.value;
-      this.data.searchGlossaryInput = keyword;
+      this.setData({
+        searchGlossaryInput: keyword
+      })
       this.searchInput(keyword);
     },
     searchInput(keyword = "") {
@@ -34,6 +36,12 @@ Component({
           glossaries: res && res.length > 0 ? res : [],
         })
       });
+    },
+    onClearInputClicked() {
+      this.setData({
+        searchGlossaryInput: ''
+      })
+      this.searchInput();
     }
   }
 })
