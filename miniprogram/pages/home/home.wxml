@@ -86,10 +86,10 @@
         </view>
       </view>
     </view>
-    <!-- Canteen tables -->
-    <view bindtap="onCanteenTableClick" class="widget-container widget-wework-parking-container">
+    <!-- Meal Circle -->
+    <view bindtap="onMealClick" class="widget-container widget-wework-parking-container">
       <image class="widget-icon" src="../../images/ic_widget_food_menu.png"></image>
-      <view class="widget-title">Canteen Tables</view>
+      <view class="widget-title">Meal Circle</view>
     </view>
   </view>
 

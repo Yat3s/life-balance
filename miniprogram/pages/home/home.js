@@ -24,6 +24,7 @@ const {
   navigateToActivityDetail,
   navigateToFoodMenu,
   navigateToCanteenTable,
+  navigateToMeal,
   navigateToHowTo,
   navigateToBusInfo,
   navigateToWeworkParking,
@@ -120,6 +121,10 @@ Component({
 
     onCanteenTableClick() {
       navigateToCanteenTable();
+    },
+
+    onMealClick() {
+      navigateToMeal();
     },
 
     onHowToClick() {

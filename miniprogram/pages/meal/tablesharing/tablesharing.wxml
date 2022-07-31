@@ -1,4 +1,4 @@
-<!--pages/canteen/tablesharing.wxml-->
+<!--pages/meal/tablesharing/tablesharing.wxml-->
 <toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
 
 <view class="flex align-end justify-between">

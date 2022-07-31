@@ -1,0 +1,8 @@
+<!--pages/meal/meal.wxml-->
+<toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
+<view class="widget-msft-container margin-top">
+  <view bindtap="onShareCanteenSeat">
+    <text>Share Canteen Seat</text>
+  </view>
+</view>
+

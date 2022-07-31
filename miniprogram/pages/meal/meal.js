@@ -1,21 +1,22 @@
-// pages/canteen/tabledetail/tabledetail.js
+const {
+  navigateToCanteenTableSharing,
+} = require("../router");
+
+// pages/meal/meal.js
 Page({
 
   /**
    * Page initial data
    */
   data: {
-    table:''
+
   },
 
   /**
    * Lifecycle function--Called when page load
    */
   onLoad(options) {
-    console.log(options.table)
-    this.setData({
-      table:options.table
-    })
+
   },
 
   /**
@@ -65,5 +66,9 @@ Page({
    */
   onShareAppMessage() {
 
+  },
+
+  onShareCanteenSeat(){
+    navigateToCanteenTableSharing()
   }
 })

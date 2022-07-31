@@ -1,8 +1,4 @@
-// pages/canteen/tablesharing.js
-
-const {
-  navigateToCanteenTableDetail,
-} = require("../router");
+// pages/meal/tablesharing/tablesharing.js
 
 Page({
 
@@ -87,7 +83,7 @@ Page({
 
     return {
       title: 'Canteen Table:' + this.data.table,
-      path: '/pages/canteen/tabledetail/tabledetail?table='+this.data.table
+      path: '/pages/meal/tabledetail/tabledetail?table='+this.data.table
     }
   },
 
