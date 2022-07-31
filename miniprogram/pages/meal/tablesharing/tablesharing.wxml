@@ -1,21 +1,48 @@
 <!--pages/meal/tablesharing/tablesharing.wxml-->
 <toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
 
-<view class="flex align-end justify-between">
-  <view class="title margin-top-lg">B25 食堂找位置</view>
-  <view class="company">微软(中国)有限公司 - 苏州</view>
+<view class="title">
+  <text>Share Your Seat</text>
 </view>
-<view class="menu margin-top">
-  <view bindtap='bindShowMsg'>
-    <text class="text-black text-bold">{{table}}</text>
-    <text class="text-black text-bold" wx:if="{{selected}}">  点击右上角分享</text>
+<view>
+  <view class="selection-msg-container">
+    <view class="selection-text-container" bindtap='bindShowMsg'>
+      <text class="selection-text" wx:if="{{!tableConfirmed}}">请选择你的座位</text>
+      <text class="selection-text" wx:if="{{tableConfirmed}}"> {{user}}正在这里疯狂啃饭，快去找他把！</text>
+    </view>
   </view>
-  
-  <view wx:if="{{selecting}}">
-      <view wx:for="{{tables}}" wx:key="unique">
-        <view bindtap="onTableSelected" data-name="{{item}}">{{item}}</view>
-      </view>
+
+  <view>
+    <view class="table-box table-box-area">
+      <view class="table-number-text">{{area}}</view>
+    </view>
+    <view class="table-box table-box-index">
+      <view class="table-number-text">{{index}}</view>
+    </view>
   </view>
-  <!-- canteen seat img-->
-  <image src='https://canteenseat.blob.core.windows.net/canteenseat/{{table}}.png'></image>
+
+  <view wx:if="{{selecting}}" class="selection-table-container">
+
+    <view class="selection-table-area">
+      <view wx:for="{{tableMap}}" wx:for-index="key" class="selection-text" bindtap="onAreaSelected" data-name="{{key}}">{{key}}</view>
+    </view>
+
+    <view wx:if="{{areaSelected}}" class="selection-table-index">
+      <view wx:for="{{tableMap[area]}}" wx:key="unique" class="selection-text" bindtap="onTableSelected" data-name="{{item}}">{{item}}</view>
+    </view>
+
+    <view class="selection-confirm">
+      <text class="selection-text" wx:if="{{tableSelected}}" bindtap="onTableConfirmed">confirm</text>
+    </view>
+
+  </view>
+
+  <view class="table-overview-container">
+    <!-- canteen seat img-->
+    <image wx:if="{{tableConfirmed}}" src='https://canteenseat.blob.core.windows.net/canteenseat/{{area}}{{index}}.png'></image>
+  </view>
+
+  <view class="share-button">
+    <text class="share-text" bindtap="onShareAppMessage">Share</text>
+  </view>
 </view>

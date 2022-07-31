@@ -1,1 +1,136 @@
 /* pages/canteen/tablesharing/tablesharing.wxss */
+
+.title
+{
+    /* Share Your Seat */
+    position: absolute;
+    width: 252px;
+    height: 39px;
+    left: 21px;
+    top: 130px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 31px;
+    line-height: 39px;
+    /* identical to box height */
+    color: #341248;
+}
+
+.selection-table-container {
+  position: absolute;
+  width: 428px;
+  height: 399px;
+  left: 0px;
+  top: 529px;
+
+  background: #F5F5F5;
+  border-radius: 20px 20px 0px 0px;
+  z-index: 100;
+}
+
+.selection-table-area{
+  width: 100px;
+  height: 100px;
+  margin-left: 80px;
+  margin-top: 35px;
+  float: left;
+}
+
+.selection-table-index{
+  width: 100px;
+  height: 150px;
+  overflow-y: scroll;
+  margin-left: 100px;
+  margin-top: 10px;
+}
+
+.selection-confirm{
+  margin-top: 20px;
+  margin-left: 100px;
+}
+
+.selection-text-container{
+  position: absolute;
+  width: 380;
+  height: 24px;
+  left: 21px;
+  top: 162px;
+  z-index: 100;
+}
+
+.selection-text
+{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+
+    color: #B8B8B8;
+}
+
+.table-box{
+  background: #B193F0;
+  border-radius: 10px;
+}
+
+.table-box-area{
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: 239px;
+  left: 150px;
+}
+
+.table-box-index{
+  position: absolute;
+  width: 70px;
+  height: 50px;
+  top: 239px;
+  left: 208px;
+  }
+
+.table-number-text
+{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 34px;
+  /* identical to box height */
+  color: #FFFFFF;
+}
+
+.table-overview-container{
+  box-sizing: border-box;
+  position: absolute;
+  width: 401px;
+  height: 440px;
+  left: 13px;
+  top: 380px;
+
+  border: 3px solid #B193F0;
+  border-radius: 20px;
+}
+
+.share-button{
+  position: absolute;
+  width: 308px;
+  height: 45px;
+  left: 56px;
+  top: 848px;
+  
+  background: #B193F0;
+  border-radius: 10px;
+}
+
+.share-text{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  color: #FFFFFF;
+}
