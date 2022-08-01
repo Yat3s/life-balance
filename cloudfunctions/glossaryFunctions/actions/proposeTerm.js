@@ -4,7 +4,7 @@ cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
 });
 const db = cloud.database();
-const databaseName = 'glossary_English'
+const databaseName = 'glossaries'
 
 exports.main = async (term, context) => {
 
