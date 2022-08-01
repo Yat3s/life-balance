@@ -100,8 +100,9 @@ Component({
               title: '提交成功',
             });
             this.setData({
-              showingModal: false
+              showingModal: false,
             })
+            this.searchInput(this.data.searchGlossaryInput);
           } else {
             wx.showToast({
               icon: 'none',
