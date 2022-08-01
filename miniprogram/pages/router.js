@@ -84,6 +84,15 @@ export const Pages = {
     authRequired: true,
     url: '/pages/bus/bus'
   },
+
+  Glossary: {
+    authRequired: true,
+    url: '/pages/glossary/glossary'
+  },
+}
+
+export function navigateToGlossary() {
+  navigate(Pages.Glossary)
 }
 
 export function navigateToActivityPage() {
