@@ -223,7 +223,6 @@ page {
 /* WeWork Parking */
 .widget-wework-parking-container {
   background: #FFF2F5;
-  margin-right: var(--widgetGap);
 }
 
 .widget-wework-parking-info {
@@ -239,6 +238,7 @@ page {
 /* Shuttle Bus */
 .widget-shuttle-bus-container {
   background: #E6F8FB;
+  margin-right: var(--widgetGap);
 }
 
 .widget-shuttle-bus-info {

@@ -28,6 +28,9 @@
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom"
   },
+  "requiredPrivateInfos": [
+    "chooseLocation"
+  ],
   "sitemapLocation": "sitemap.json",
   "style": "v2",
   "useExtendedLib": {
