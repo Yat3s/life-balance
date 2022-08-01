@@ -38,22 +38,24 @@ For your convenience, we will set Microsoft logo at shuttle bus front glass.`
    */
   onLoad(options) {
     getAppConfig().then(appConfig => {
-      const nowDate = new Date().toISOString().substring(0, 10).replaceAll("-", "/");
+      // const nowDate = new Date().toISOString().substring(0, 10).replaceAll("-", "/");
 
-      const startTimeStr1 = appConfig.features.shuttleBus.startTime1;
-      const startTimeStr2 = appConfig.features.shuttleBus.startTime2;
-      const endTimeStr1 = appConfig.features.shuttleBus.endTime1;
-      const endTimeStr2 = appConfig.features.shuttleBus.endTime2;
+      // const startTimeStr1 = appConfig.features.shuttleBus.startTime1;
+      // const startTimeStr2 = appConfig.features.shuttleBus.startTime2;
+      // const endTimeStr1 = appConfig.features.shuttleBus.endTime1;
+      // const endTimeStr2 = appConfig.features.shuttleBus.endTime2;
 
-      const startTime1 = new Date(`${nowDate} ${startTimeStr1}`);
-      const startTime2 = new Date(`${nowDate} ${startTimeStr2}`);
-      const endTime1 = new Date(`${nowDate} ${endTimeStr1}`);
-      const endTime2 = new Date(`${nowDate} ${endTimeStr2}`);
+      // const startTime1 = new Date(`${nowDate} ${startTimeStr1}`);
+      // const startTime2 = new Date(`${nowDate} ${startTimeStr2}`);
+      // const endTime1 = new Date(`${nowDate} ${endTimeStr1}`);
+      // const endTime2 = new Date(`${nowDate} ${endTimeStr2}`);
 
-      const now = Date.now();
+      // const now = Date.now();
 
-      const gpsAvailable = (now > startTime1.getTime() && now < endTime1.getTime()) ||
-        (now > startTime2.getTime() && now < endTime2.getTime());
+      // const gpsAvailable = (now > startTime1.getTime() && now < endTime1.getTime()) ||
+      //   (now > startTime2.getTime() && now < endTime2.getTime());
+
+      const gpsAvailable = false;
 
       this.setData({
         gpsAvailable,
@@ -63,17 +65,17 @@ For your convenience, we will set Microsoft logo at shuttle bus front glass.`
 
       fetchAllRoutes(SITE_ID).then(routes => {
         console.log(routes);
-  
+
         // Sort by sequence
         routes.sort((a, b) => {
           return a.sequence - b.sequence
         })
-  
+
         for (const route of routes) {
           if (!route.stations || route.stations.length == 0) {
             continue;
           }
-  
+
           for (const station of route.stations) {
             station.headingTime = "N/A";
             station.backTime = "N/A";
@@ -88,18 +90,18 @@ For your convenience, we will set Microsoft logo at shuttle bus front glass.`
           route.firstStation = route.stations[0];
           route.lastStation = route.stations[route.stations.length - 1];
         }
-  
+
         const selectedRouteIndex = 0;
         const selectedStationIndex = 0;
         const selectedRoute = routes[selectedRouteIndex];
-  
+
         this.setData({
           routes,
           selectedRouteIndex,
           selectedRoute,
           selectedStationIndex,
         });
-  
+
         if (gpsAvailable) {
           this.getGpsLocationFirstLoad()
         }

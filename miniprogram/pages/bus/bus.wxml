@@ -17,12 +17,12 @@
         <view class="route-title-ch">
           {{item.nameCh}}
         </view>
-
+<!-- 
         <view wx:if="{{item.gps.data}}" class="flex align-center">
           <image src="../../images/ic_bus.png" style="width: 40rpx;" mode="widthFix"></image>
           <view class="gps-running margin-left-xs">运行中</view>
         </view>
-        <view wx:if="{{item.gps.error || gpsAvailable == false}}" class="gps-unavailable">未运行</view>
+        <view wx:if="{{item.gps.error || gpsAvailable == false}}" class="gps-unavailable">未运行</view> -->
       </view>
 
       <view class="route-title-en">

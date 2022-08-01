@@ -90,7 +90,7 @@
 
   <view class="flex widget-row">
     <!-- WeWork Parking  -->
-    <view bindtap="onWeworkParkingClick" class="widget-container widget-wework-parking-container">
+    <!-- <view bindtap="onWeworkParkingClick" class="widget-container widget-wework-parking-container">
       <image class="widget-icon" src="../../images/ic_widget_wework_parking.png"></image>
       <view class="widget-title">WeWork Parking</view>
 
@@ -104,7 +104,7 @@
           <image class="widget-go-detail-icon" src="../../images/ic_widget_go.png"></image>
         </view>
       </view>
-    </view>
+    </view> -->
 
     <!-- Shuttle Bus  -->
     <view bindtap="onBusClick" class="widget-container widget-shuttle-bus-container">
@@ -114,29 +114,33 @@
       <view class="widget-shuttle-bus-info">
         <view class="flex align-center">
           <view class="widget-shuttle-bus-status-{{activeBusCount > 0 ? 'active' : 'pending'}}"></view>
-          <view class="margin-left-xs"><text class="text-bold text-black">{{activeBusCount}}</text> 辆大巴正在运行</view>
+          <view class="margin-left-xs">共 <text class="text-bold text-black">5</text> 条线路</view>
         </view>
       </view>
 
       <view class="flex justify-end">
         <view class="flex align-center">
-          <view class="widget-go-detail-text">全部路线</view>
+          <view class="widget-go-detail-text">路线详情</view>
           <image class="widget-go-detail-icon" src="../../images/ic_widget_go.png"></image>
         </view>
       </view>
     </view>
+
+    <view bindtap="onGlossaryClicked" class="widget-container widget-wework-parking-container center">
+      <view class="text-bold">Glossary</view>
+    </view>
   </view>
 
   <view class="widget-building2-container margin-top">
-    <view class="widget-building2-title">微软苏州第二期大楼建筑进度</view>
-    <view class="widget-building2-progress-container margin-top-sm">
+    <view class="widget-building2-title">微软苏州 #B26 大楼建筑预览</view>
+    <!-- <view class="widget-building2-progress-container margin-top-sm">
       <view style="width: {{building2Progress + '%'}};" class="widget-building2-progress-indicator"></view>
       <view class="widget-building2-progress-number margin-left-xs">{{building2Progress}}%</view>
     </view>
     <view class="flex justify-between align-center margin-top-xs">
       <view class="widget-building2-progress-date">{{building2StartDateStr}}</view>
       <view class="widget-building2-progress-date">{{building2EndDateStr}}</view>
-    </view>
+    </view> -->
 
     <image bindtap="onBuild2Click" class="margin-top widget-building2-picture" mode="widthFix" src="{{building2LatestProgress.picture}}" />
     <view class="widget-building2-update-date">更新于 {{building2LatestProgress.createDateStr}}</view>
