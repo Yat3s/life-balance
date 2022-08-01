@@ -1,14 +1,10 @@
 <!--components/glossaryitem.wxml-->
 <view class="glossary-list-item">
-  <view class="glossary-fullname">{{glossary.fullname}}</view>
-  <view class="glossary-description">{{glossary.description}}</view>
+  <view class="glossary-fullname">{{glossary.name}}</view>
+  <view class="glossary-description">{{glossary.definition}}</view>
   <view class="glossary-synonyms-list">
-    <view class="glossary-synonyms-item"  wx:for="{{glossary.synonyms}}" wx:key="_id">
+    <view class="glossary-synonyms-item" wx:for="{{glossary.synonyms}}" wx:key="_id">
       {{item}}
     </view>
   </view>
 </view>
-
-
-
-

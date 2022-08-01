@@ -1,6 +1,6 @@
 <!--pages/glossary/glossary.wxml-->
 <view class="container">
-  <toolbar class="toolbar" isBack="{{true}}" bgColor="bg-white">
+  <toolbar class="toolbar {{showingModal ? 'reset-z-index' : ''}}" isBack="{{true}}" bgColor="bg-white">
   </toolbar>
   <view class="glossary-container">
     <view class="header">
@@ -18,9 +18,40 @@
         <view wx:for="{{glossaries}}" wx:key="_id">
           <glossaryitem glossary="{{item}}" />
         </view>
-        <view wx:if="{{glossaries && glossaries.length === 0}}" style="font-style: italic;margin-left: 29.83rpx;">No results found.</view>
+        <view class="glossary-suggestion" style="margin-top: {{glossaries.length > 0 ? '60rpx':'0rpx'}};">
+          <text class="suggest-text">No results found?</text>
+          <text class="propose-suggest" bindtap="onShowModal">Suggest a new term</text>
+        </view>
         <view class='reserved-space'></view>
       </scroll-view>
+    </view>
+  </view>
+</view>
+
+<!-- Suggest detail modal -->
+<view class="cu-modal {{showingModal ? 'show' : ''}}" bindtap="onDismissModal" catchtouchmove>
+  <view class="cu-dialog modal-main" catchtap>
+    <view class="action" bindtap="onDismissModal">
+      <text class="modal-dismiss-icon cuIcon-close text-black"></text>
+    </view>
+    <view class="suggest-container">
+      <view class="suggest-title">Suggest a New Term</view>
+      <view class="suggest-subTitle">Are you confused by a word, phrase, or acronym? Request that our researchers include the definition here:</view>
+      <view class="suggest-form">
+        <view class="form-item">
+          <view class="form-title">Name</view>
+          <input class="form-input" placeholder="Suggest a term name" placeholder-class='form-input-placeholder' bindinput="onFormNameChanged" />
+        </view>
+        <view class="form-item">
+          <view class="form-title">Definition</view>
+          <input class="form-input" placeholder="Suggest a term definition" placeholder-class='form-input-placeholder' bindinput="onFormDefinitionChanged" />
+        </view>
+        <view class="form-item">
+          <view class="form-title">Synonyms</view>
+          <input class="form-input" placeholder='Suggest some synonyms, split with ","' placeholder-class='form-input-placeholder' bindinput="onSynonymsChanged" />
+        </view>
+      </view>
+      <view catchtap="onSubmitClicked" class="cu-btn bg-blue modal-btn">Submit</view>
     </view>
   </view>
 </view>
