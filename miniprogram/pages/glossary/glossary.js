@@ -1,5 +1,5 @@
 // pages/glossary/glossary.js
-import { proposeTerm, queryGlossary } from "../../repository/glossaryRepo";
+import { queryGlossary } from "../../repository/glossaryRepo";
 
 Component({
   options: {
