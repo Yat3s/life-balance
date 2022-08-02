@@ -22,7 +22,7 @@ exports.main = async (query, context) => {
         }
       },
       {
-        fullname: {
+        name: {
           $regex: '.*' + query,
           $options: 'i'
         }
@@ -30,8 +30,8 @@ exports.main = async (query, context) => {
     ])).field({
       _id: true,
       synonyms: true,
-      fullname: true,
-      description: true
+      name: true,
+      definition: true
     }).get()
     return result.data
   }
