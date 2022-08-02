@@ -31,18 +31,6 @@ Component({
       this.searchInput(keyword);
     },
     searchInput(keyword = "") {
-       const event = {
-        data: {
-          term: {
-            synonyms: ["Chris", "A Ice"],
-            definition: "The most handsome man in OM",
-            name: "sssssseee",
-            authors: [{ id: "0", name: "adminn" }],
-          }
-        },
-      }
-      proposeTerm(event.data.term).then(e => console.log(e))
-
       queryGlossary(keyword).then(res => {
         this.setData({
           glossaries: res && res.length > 0 ? res : [],
