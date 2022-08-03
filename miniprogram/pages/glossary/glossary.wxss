@@ -97,7 +97,7 @@
   height: 100rpx;
 }
 
-/* Circle detail */
+/* Suggest detail */
 .modal-main {
   padding: 48rpx;
   border-radius: 32rpx;

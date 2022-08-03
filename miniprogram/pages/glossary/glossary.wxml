@@ -29,29 +29,29 @@
 </view>
 
 <!-- Suggest detail modal -->
-<view class="cu-modal {{showingModal ? 'show' : ''}}" bindtap="onDismissModal" catchtouchmove>
+<view wx:if="{{showingModal === 'new'}}" class="cu-modal {{showingModal === 'new' ? 'show' : ''}}" bindtap="onDismissModal" catchtouchmove>
   <view class="cu-dialog modal-main" catchtap>
     <view class="action" bindtap="onDismissModal">
       <text class="modal-dismiss-icon cuIcon-close text-black"></text>
     </view>
-    <view class="suggest-container">
+    <form class="suggest-container" bindsubmit="formSubmit" bindreset="formReset">
       <view class="suggest-title">Suggest a New Term</view>
       <view class="suggest-subTitle">Are you confused by a word, phrase, or acronym? Request that our researchers include the definition here:</view>
       <view class="suggest-form">
         <view class="form-item">
           <view class="form-title">Name</view>
-          <input class="form-input" placeholder="Suggest a term name" placeholder-class='form-input-placeholder' bindinput="onFormNameChanged" />
+          <input class="form-input" placeholder="Suggest a term name" placeholder-class='form-input-placeholder' name='proposeName' />
         </view>
         <view class="form-item">
           <view class="form-title">Definition</view>
-          <input class="form-input" placeholder="Suggest a term definition" placeholder-class='form-input-placeholder' bindinput="onFormDefinitionChanged" />
+          <input class="form-input" placeholder="Suggest a term definition" placeholder-class='form-input-placeholder' name='proposeDefinition' />
         </view>
         <view class="form-item">
           <view class="form-title">Synonyms</view>
-          <input class="form-input" placeholder='Suggest some synonyms, split with ","' placeholder-class='form-input-placeholder' bindinput="onSynonymsChanged" />
+          <input class="form-input" placeholder='Suggest some synonyms, split with ","' placeholder-class='form-input-placeholder' name='proposeSynonyms' />
         </view>
       </view>
-      <view catchtap="onSubmitClicked" class="cu-btn bg-blue modal-btn">Submit</view>
-    </view>
+      <button form-type="submit" class="cu-btn bg-blue modal-btn" style="width: 100%;">Submit</button>
+    </form>
   </view>
 </view>

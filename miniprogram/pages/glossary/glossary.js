@@ -12,10 +12,7 @@ Component({
   data: {
     searchGlossaryInput: '',
     glossaries: null,
-    showingModal: false,
-    proposeName: '',
-    proposeDefinition: '',
-    proposeSynonyms: ''
+    showingModal: ""
   },
 
   pageLifetimes: {
@@ -50,32 +47,28 @@ Component({
     },
     onShowModal() {
       this.setData({
-        showingModal: true
+        showingModal: "new"
       })
     },
     onDismissModal() {
       this.setData({
-        showingModal: false
+        showingModal: ""
       })
     },
-    onFormNameChanged(e) {
-      this.data.proposeName = e.detail.value;
-    },
-    onFormDefinitionChanged(e) {
-      this.data.proposeDefinition = e.detail.value;
-    },
-    onSynonymsChanged(e) {
-      this.data.proposeSynonyms = e.detail.value;
-    },
-    onSubmitClicked() {
-      if (this.data.proposeName === '') {
+    formSubmit(e) {
+      const {
+        proposeName,
+        proposeDefinition,
+        proposeSynonyms
+      } = e.detail.value;
+      if (proposeName === '') {
         wx.showToast({
           icon: 'none',
           title: 'name不能为空',
         });
         return;
       }
-      if (this.data.proposeDefinition === '') {
+      if (proposeDefinition === '') {
         wx.showToast({
           icon: 'none',
           title: 'Definition不能为空',
@@ -86,11 +79,11 @@ Component({
       fetchUserInfo().then(userMessage => {
         author = userMessage;
       }).then(e => {
-        let synonyms = this.data.proposeSynonyms.split(',').filter(item => item.length > 0);
+        let synonyms = proposeSynonyms.split(',').filter(item => item.length > 0);
         let data = {
           synonyms: synonyms,
-          definition: this.data.proposeDefinition,
-          name: this.data.proposeName,
+          definition: proposeDefinition,
+          name: proposeName,
           author: [author]
         }
         proposeTerm(data).then(res => {
@@ -100,7 +93,7 @@ Component({
               title: '提交成功',
             });
             this.setData({
-              showingModal: false,
+              showingModal: "",
             })
             this.searchInput(this.data.searchGlossaryInput);
           } else {
@@ -109,6 +102,11 @@ Component({
               title: 'name已存在！',
             });
           }
+        });
+      }).catch(err => {
+        wx.showToast({
+          icon: 'none',
+          title: '网络错误，请重试！',
         });
       })
     }
