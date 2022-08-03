@@ -1,4 +1,5 @@
 // pages/meal/tablesharing/tablesharing.js
+import { fetchUserInfo } from "../../../repository/userRepo";
 
 Page({
 
@@ -6,8 +7,7 @@ Page({
    * Page initial data
    */
   data: {
-    areaSelected: true,
-    tableSelected: true,
+    userInfo:undefined,
     tableConfirmed: false,
     selecting: true,
     area:"A",
@@ -38,20 +38,21 @@ Page({
       this.setData({
         area: "",
         index: "",
-        areaSelected: false,
-        tableSelected: false,
         tableConfirmed: false,
       })
     }
     console.log(this.data.tableMap);
-    console.log(this.data.tableSelected);
   },
 
   /**
    * Lifecycle function--Called when page load
    */
   onLoad(options) {
-
+    fetchUserInfo().then(userInfo => {
+      this.setData({
+        userInfo
+      })
+    })
   },
 
   /**
@@ -100,34 +101,19 @@ Page({
    * Called when user click on the top right corner to share
    */
   onShareAppMessage(e) {
-    console.log("onShareAppMessage" + e)
+    var table = this.data.area+this.data.index;
+    console.log("onShareAppMessage" + table)
     return {
-      title: 'Canteen Table:' + this.data.table,
-      path: '/pages/meal/tabledetail/tabledetail?table='+this.data.area+this.data.index
+      title: 'Canteen Table:' + table,
+      path: '/pages/meal/tabledetail/tabledetail?area='+this.data.area+'&index='+this.data.index+'&user='+this.data.userInfo.nickName
     }
-  },
-
-  onTableSelected(e) {
-    console.log("onTableSelected")
-    var name = e.currentTarget.dataset.name
-  
-    this.setData({
-      index:name,
-      selecting: true,
-      areaSelected: true,
-      tableSelected: true,
-      tableConfirmed: false,
-    })
   },
 
   onTableConfirmed(e) {
     console.log("onTableConfirmed")
     this.setData({
       tableConfirmed:true,
-      selecting: false,
-      areaSelected: false,
-      tableSelected: false,
-      tableConfirmed: true
+      selecting: false
     })
   },
 
@@ -141,20 +127,6 @@ Page({
       area: area,
       index: index,
       selecting: true,
-      areaSelected: true,
-      tableSelected: true,
     })
   },
-
-  onAreaSelected(e) {
-    console.log("onAreaSelected")
-    this.setData({
-      area:e.currentTarget.dataset.name,
-      index:"",
-      selecting: true,
-      areaSelected: true,
-      tableSelected: false,
-      tableConfirmed:false,
-    })
-  }
 })

@@ -1,1 +1,6 @@
 /* pages/canteen/tabledetail/tabledetail.wxss */
+@import '../tablesharing/tablesharing.wxss';
+
+.pagecontainer {
+  margin-top: 30px;
+}

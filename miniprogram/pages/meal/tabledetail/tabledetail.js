@@ -5,17 +5,24 @@ Page({
    * Page initial data
    */
   data: {
-    table:''
+    area:'',
+    index:'',
+    user:'',
+    date:undefined,
   },
 
   /**
    * Lifecycle function--Called when page load
    */
   onLoad(options) {
-    console.log(options.table)
+    var now = new Date(Date.now());
+    console.log(options);
     this.setData({
-      table:options.table
-    })
+      user:options.user,
+      area:options.area,
+      index:options.index,
+      date:now.toLocaleDateString()+" "+ now.toLocaleTimeString(),
+    });
   },
 
   /**

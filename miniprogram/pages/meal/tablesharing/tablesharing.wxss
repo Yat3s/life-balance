@@ -6,7 +6,7 @@
     width: 252px;
     height: 39px;
     margin-left: 21px;
-    margin-top: 100px;
+    margin-top: 60px;
 
     font-family: 'Inter';
     font-style: normal;
@@ -64,7 +64,7 @@
 }
 
 .confirm-buttion-container{
-  margin-top: 20px;
+  margin-top: 31px;
   text-align: center;
 }
 
@@ -106,7 +106,7 @@
 
 .share-button{
   margin-left: 60px;
-  margin-top: 28px;
+  margin-top: 20px;
 }
 
 .button-common {
@@ -131,14 +131,15 @@
   width: 600px;
 }
 
-.table-overview-container{
+.table-img-container {
+  position: relative;
   box-sizing: border-box;
 
-  height: 440px;
+  height: 400px;
   margin-left: 13px;
   margin-right: 13px;
   width:auto;
-  margin-top: 41px;
+  margin-top: 20px;
 
   border: 3px solid #B193F0;
   border-radius: 20px;
