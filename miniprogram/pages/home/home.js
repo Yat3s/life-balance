@@ -28,6 +28,7 @@ const {
   navigateToHowTo,
   navigateToBusInfo,
   navigateToWeworkParking,
+  navigateToGlossary,
 } = require("../router");
 
 const app = getApp();
@@ -137,6 +138,10 @@ Component({
 
     onWeworkParkingClick() {
       navigateToWeworkParking();
+    },
+
+    onGlossaryClicked() {
+      navigateToGlossary();
     },
 
     onMsftBoostClicked() {

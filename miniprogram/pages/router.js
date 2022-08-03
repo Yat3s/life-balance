@@ -93,6 +93,15 @@ export const Pages = {
     authRequired: false,
     url: '/pages/meal/tablesharing/tablesharing'
   },
+  
+  Glossary: {
+    authRequired: true,
+    url: '/pages/glossary/glossary'
+  },
+}
+
+export function navigateToGlossary() {
+  navigate(Pages.Glossary)
 }
 
 export function navigateToActivityPage() {
