@@ -36,35 +36,19 @@
 }
 
 .selection-table-container {
-  position: absolute;
+  position: fixed;
   width: 100%;
-  height: 360px;
+  height: 280px;
   left: 0px;
-  top: 590px;
+  bottom:0px;
 
   background: #FFFFFF;
   border-radius: 20px 20px 0px 0px;
   z-index: 100;
 }
 
-.selection-table-area{
-  width: 100px;
-  height: 100px;
-  margin-left: 80px;
-  margin-top: 35px;
-  float: left;
-}
-
-.selection-table-index{
-  width: 100px;
-  height: 150px;
-  overflow-y: scroll;
-  margin-left: 100px;
-  margin-top: 10px;
-}
-
 .confirm-buttion-container{
-  margin-top: 31px;
+  margin-top: 18px;
   text-align: center;
 }
 
