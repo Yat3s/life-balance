@@ -31,6 +31,7 @@ Page({
 
     this.setData({
       selecting: !this.data.selecting,
+      tableConfirmed:this.data.selecting
     })
     
     // re-select

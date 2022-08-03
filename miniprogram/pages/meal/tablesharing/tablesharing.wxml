@@ -44,7 +44,7 @@
     </picker-view>
     <view class="confirm-buttion-container">
       <button class="button-common">      
-        <text class="share-text" bindtap="onTableConfirmed">confirm</text>
+        <text class="share-text" bindtap="onTableConfirmed">Confirm</text>
       </button>
     </view>
   </view>
