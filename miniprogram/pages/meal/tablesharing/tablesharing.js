@@ -121,12 +121,15 @@ Page({
   onTablePickerChange(e)
   {
     var val = e.detail.value;
-    var area = this.data.areas[val[0]];
-    var index = this.data.tableMap[area][val[1]];
-    console.log(area+index)
+
+    let { areas, tableMap } = this.data;
+    var area = areas[val[0]];
+    var index = tableMap[area][val[1]];
+    console.log(area + index)
+
     this.setData({
-      area: area,
-      index: index,
+      area,
+      index,
       selecting: true,
     })
   },

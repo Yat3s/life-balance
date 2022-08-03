@@ -5,7 +5,7 @@
 
 <view class="selection-msg-container">
   <view class="selection-text-container" bindtap='bindShowMsg'>
-    <text class="selection-text"> {{user}}正在这里疯狂啃饭，快去找他把！</text>
+    <text class="selection-text"> {{user}} 正在这里疯狂啃饭，快去找他把！</text>
   </view>
 </view>
 
@@ -24,7 +24,7 @@
 </view>
 
 <view class="selection-text-container">
-    <text class="selection-text">{{date}}</text>
-  </view>
+    <text class="selection-text">Shared at {{date}}</text>
+</view>
 
 </view>

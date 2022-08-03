@@ -1,27 +1,25 @@
 // pages/meal/tabledetail/tabledetail.js
+const { formatDate } = require("../../../common/util");
+
 Page({
 
   /**
    * Page initial data
    */
-  data: {
-    area:'',
-    index:'',
-    user:'',
-    date:undefined,
-  },
 
   /**
    * Lifecycle function--Called when page load
    */
   onLoad(options) {
-    var now = new Date(Date.now());
     console.log(options);
+
+    var now = new Date(Date.now());
+    const { user, area, index } = options;
     this.setData({
-      user:options.user,
-      area:options.area,
-      index:options.index,
-      date:now.toLocaleDateString()+" "+ now.toLocaleTimeString(),
+      user:user,
+      area:area,
+      index:index,
+      date:formatDate(now),
     });
   },
 
