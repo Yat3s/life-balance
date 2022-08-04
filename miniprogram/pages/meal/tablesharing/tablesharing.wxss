@@ -118,9 +118,18 @@
   color: #FFFFFF;
 }
 
+.scroll-view_H {
+    white-space: nowrap;
+}
+
+.scroll-view-item_H{
+    display: inline-block;
+    width: 150%;
+}
+
 .table-image {
-  height: 500px;
-  width: 600px;
+  height: 390px;
+  width: 100%;
 }
 
 .table-img-container {
@@ -134,6 +143,6 @@
 
   border: 3px solid #B193F0;
   border-radius: 20px;
-
   overflow: scroll;
+  vertical-align: middle;
 }
