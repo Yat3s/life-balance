@@ -47,8 +47,16 @@
   z-index: 100;
 }
 
+.table-picker {
+  width: 100%; height: 200px; text-align: center;
+}
+
+.table-picker-column {
+  line-height: 50px;
+}
+
 .confirm-buttion-container{
-  margin-top: 18px;
+  margin-top: 11px;
   text-align: center;
 }
 
@@ -116,7 +124,6 @@
 }
 
 .table-img-container {
-  position: relative;
   box-sizing: border-box;
 
   height: 400px;

@@ -9,8 +9,8 @@
 
   <view class="selection-msg-container">
     <view class="selection-text-container" bindtap='bindShowMsg'>
-      <text class="selection-text" wx:if="{{!tableConfirmed}}">请选择你的座位</text>
-      <text class="selection-text" wx:if="{{tableConfirmed}}"> {{userInfo.nickName}} 正在这里疯狂啃饭，快去找他把！</text>
+      <text class="selection-text" wx:if="{{!tableConfirmed}}">请选择你的座位:</text>
+      <text class="selection-text" wx:if="{{tableConfirmed}}"> {{userInfo.nickName}} 正在这里疯狂啃饭, 快去找他把！</text>
     </view>
   </view>
 
@@ -34,12 +34,12 @@
 
 <view>
   <view wx:if="{{selecting}}" class="selection-table-container">
-    <picker-view mask-class="table-picker" wx:if="{{selecting}}" indicator-style="height: 50px;" style="width: 100%; height: 200px; text-align: center;" value="{{value}}" bindchange="onTablePickerChange">
-      <picker-view-column>
-        <view wx:for="{{areas}}" style="line-height: 50px;">{{item}}</view>
+    <picker-view class="table-picker" wx:if="{{selecting}}" indicator-style="height: 50px;" value="{{value}}" bindchange="onTablePickerChange">
+      <picker-view-column class="table-picker-column">
+        <view wx:for="{{areas}}">{{item}} 区</view>
       </picker-view-column>
-      <picker-view-column>
-        <view wx:for="{{tableMap[area]}}" style="line-height: 50px;">{{item}}</view>
+      <picker-view-column class="table-picker-column">
+        <view wx:for="{{tableMap[area]}}">{{item}}</view>
       </picker-view-column>
     </picker-view>
     <view class="confirm-buttion-container">

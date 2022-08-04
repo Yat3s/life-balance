@@ -23,7 +23,7 @@
   <image class="table-image" mode="scaleToFill" src='https://canteenseat.blob.core.windows.net/canteenseat/{{area}}{{index}}.png'/>
 </view>
 
-<view class="selection-text-container">
+<view class="date-text-container">
     <text class="selection-text">Shared at {{date}}</text>
 </view>
 
