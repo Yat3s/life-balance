@@ -87,7 +87,6 @@
       </view>
     </view>
   </view>
-
   <view class="flex widget-row">
     <!-- WeWork Parking  -->
     <!-- <view bindtap="onWeworkParkingClick" class="widget-container widget-wework-parking-container">
@@ -105,7 +104,6 @@
         </view>
       </view>
     </view> -->
-
     <!-- Shuttle Bus  -->
     <view bindtap="onBusClick" class="widget-container widget-shuttle-bus-container">
       <image class="widget-icon" src="../../images/ic_widget_shuttle_bus.png"></image>
@@ -130,6 +128,14 @@
       <view class="text-bold">Glossary</view>
     </view>
   </view>
+
+  <view class="flex widget-row">
+    <!-- Canteen -->
+    <view bindtap="onCanteenTableClick" class="widget-container widget-wework-parking-container">
+      <image class="widget-icon" src="../../images/ic_widget_food_menu.png"></image>
+      <view class="widget-title">Canteen tables</view>
+    </view>
+    </view>
 
   <view class="widget-building2-container margin-top">
     <view class="widget-building2-title">微软苏州 #B26 大楼建筑预览</view>

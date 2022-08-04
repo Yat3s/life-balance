@@ -3,7 +3,6 @@ const userRepo = require('../repository/userRepo');
 export const AUTH_ORIGIN_DRAFT_ACTIVITY = 'origin_draft_activity';
 export const AUTH_ORIGIN_ACTIVITY_DETAIL = 'origin_activity_detail';
 
-
 export const Pages = {
   Auth: {
     authRequired: false,
@@ -85,6 +84,16 @@ export const Pages = {
     url: '/pages/bus/bus'
   },
 
+  Meal:{
+    authRequired: false,
+    url: '/pages/meal/meal'
+  },
+
+  CanteenTableSharing:{
+    authRequired: false,
+    url: '/pages/meal/tablesharing/tablesharing'
+  },
+  
   Glossary: {
     authRequired: true,
     url: '/pages/glossary/glossary'
@@ -133,6 +142,14 @@ export function navigateToPostCarpool() {
 
 export function navigateToFoodMenu() {
   navigate(Pages.FoodMenu)
+}
+
+export function navigateToMeal() {
+  navigate(Pages.Meal)
+}
+
+export function navigateToCanteenTableSharing() {
+  navigate(Pages.CanteenTableSharing)
 }
 
 export function navigateToHowTo() {

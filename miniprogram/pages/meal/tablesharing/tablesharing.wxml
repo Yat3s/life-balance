@@ -1,0 +1,55 @@
+<!--pages/meal/tablesharing/tablesharing.wxml-->
+<toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
+
+<view class="title">
+  <text>Share Your Seat</text>
+</view>
+
+<view>
+
+  <view class="selection-msg-container">
+    <view class="selection-text-container" bindtap='bindShowMsg'>
+      <text class="selection-text" wx:if="{{!tableConfirmed}}">请选择你的座位:</text>
+      <text class="selection-text" wx:if="{{tableConfirmed}}"> {{userInfo.nickName}} 正在这里疯狂啃饭, 快去找他把！</text>
+    </view>
+  </view>
+
+  <view class="table-box-container">
+    <view class="table-box table-box-area">
+      <text class="table-number-text">{{area}}</text>
+    </view>
+    <view class="table-box table-box-index">
+      <text class="table-number-text">{{index}}</text>
+    </view>
+  </view>
+
+  <view class="table-img-container">
+    <!-- todo add the img without table indicator-->
+    <image wx:if="{{selecting}}" class="table-image" mode="scaleToFill" src='https://canteenseat.blob.core.windows.net/canteenseat/A11.png'/>
+    <!-- canteen seat img-->
+    <image class="table-image" mode="scaleToFill" wx:if="{{tableConfirmed}}" src='https://canteenseat.blob.core.windows.net/canteenseat/{{area}}{{index}}.png'/>
+  </view>
+
+</view>
+
+<view>
+  <view wx:if="{{selecting}}" class="selection-table-container">
+    <picker-view class="table-picker" wx:if="{{selecting}}" indicator-style="height: 50px;" value="{{value}}" bindchange="onTablePickerChange">
+      <picker-view-column class="table-picker-column">
+        <view wx:for="{{areas}}">{{item}} 区</view>
+      </picker-view-column>
+      <picker-view-column class="table-picker-column">
+        <view wx:for="{{tableMap[area]}}">{{item}}</view>
+      </picker-view-column>
+    </picker-view>
+    <view class="confirm-buttion-container">
+      <button class="button-common">      
+        <text class="share-text" bindtap="onTableConfirmed">Confirm</text>
+      </button>
+    </view>
+  </view>
+
+  <view class="share-buttion-container">
+    <button class="share-button button-common" open-type="share"><text class="share-text">Share</text></button>
+  </view>
+</view>

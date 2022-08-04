@@ -1,0 +1,30 @@
+<!--pages/canteen/tabledetail/tabledetail.wxml-->
+<toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
+
+<view class="pagecontainer">
+
+<view class="selection-msg-container">
+  <view class="selection-text-container" bindtap='bindShowMsg'>
+    <text class="selection-text"> {{user}} 正在这里疯狂啃饭，快去找他把！</text>
+  </view>
+</view>
+
+<view class="table-box-container">
+  <view class="table-box table-box-area">
+    <text class="table-number-text">{{area}}</text>
+  </view>
+  <view class="table-box table-box-index">
+    <text class="table-number-text">{{index}}</text>
+  </view>
+</view>
+
+<view class="table-img-container">
+  <!-- canteen seat img-->
+  <image class="table-image" mode="scaleToFill" src='https://canteenseat.blob.core.windows.net/canteenseat/{{area}}{{index}}.png'/>
+</view>
+
+<view class="date-text-container">
+    <text class="selection-text">Shared at {{date}}</text>
+</view>
+
+</view>

@@ -20,7 +20,10 @@
     "pages/bus/bus",
     "pages/connection/connection",
     "pages/activity/activitypage",
-    "pages/glossary/glossary"
+    "pages/glossary/glossary",
+    "pages/meal/tablesharing/tablesharing",
+    "pages/meal/tabledetail/tabledetail",
+    "pages/meal/meal"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

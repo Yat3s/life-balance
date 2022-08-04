@@ -1,0 +1,139 @@
+/* pages/canteen/tablesharing/tablesharing.wxss */
+
+.title
+{
+    /* Share Your Seat */
+    width: 252px;
+    height: 39px;
+    margin-left: 21px;
+    margin-top: 60px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 31px;
+    line-height: 39px;
+    /* identical to box height */
+    color: #341248;
+}
+
+.selection-text-container{
+  width: 380;
+  height: 24px;
+  margin-left: 21px;
+  margin-top: 23px;
+}
+
+.selection-text
+{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+
+    color: #B8B8B8;
+}
+
+.selection-table-container {
+  position: fixed;
+  width: 100%;
+  height: 280px;
+  left: 0px;
+  bottom:0px;
+
+  background: #FFFFFF;
+  border-radius: 20px 20px 0px 0px;
+  z-index: 100;
+}
+
+.table-picker {
+  width: 100%; height: 200px; text-align: center;
+}
+
+.table-picker-column {
+  line-height: 50px;
+}
+
+.confirm-buttion-container{
+  margin-top: 11px;
+  text-align: center;
+}
+
+.table-box{
+  background: #B193F0;
+  border-radius: 10px;
+}
+
+.table-box-container {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.table-box-area{
+  width: 50px;
+  height: 50px;
+  margin-top: 23px;
+}
+
+.table-box-index{
+  width: 70px;
+  height: 50px;
+  margin-top: 23px;
+  margin-left: 8px;
+}
+
+.table-number-text
+{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 50px;
+  /* identical to box height */
+  color: #FFFFFF;
+}
+
+.share-button{
+  margin-left: 60px;
+  margin-top: 20px;
+}
+
+.button-common {
+  width: 308px;
+  height: 45px;
+
+  background: #B193F0;
+  border-radius: 10px;
+}
+
+.share-text{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  color: #FFFFFF;
+}
+
+.table-image {
+  height: 500px;
+  width: 600px;
+}
+
+.table-img-container {
+  box-sizing: border-box;
+
+  height: 400px;
+  margin-left: 13px;
+  margin-right: 13px;
+  width:auto;
+  margin-top: 20px;
+
+  border: 3px solid #B193F0;
+  border-radius: 20px;
+
+  overflow: scroll;
+}
