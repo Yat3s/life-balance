@@ -9,3 +9,9 @@ export function queryGlossary(query) {
   return cloudFunctionCall(CLOUD_FUNCTION_NAME, 'queryGlossary', data);
 }
 
+export function proposeTerm(term) {
+  const data = {
+    term: term
+  }
+  return cloudFunctionCall(CLOUD_FUNCTION_NAME, 'proposeTerm', data);
+}
