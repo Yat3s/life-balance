@@ -1,5 +1,6 @@
 // pages/glossary/glossary.js
-import { queryGlossary } from "../../repository/glossaryRepo";
+import { proposeTerm, queryGlossary } from "../../repository/glossaryRepo";
+import { fetchUserInfo } from "../../repository/userRepo";
 
 Component({
   options: {
@@ -11,6 +12,7 @@ Component({
   data: {
     searchGlossaryInput: '',
     glossaries: null,
+    showingModal: ""
   },
 
   pageLifetimes: {
@@ -42,6 +44,71 @@ Component({
         searchGlossaryInput: ''
       })
       this.searchInput();
+    },
+    onShowModal() {
+      this.setData({
+        showingModal: "new"
+      })
+    },
+    onDismissModal() {
+      this.setData({
+        showingModal: ""
+      })
+    },
+    formSubmit(e) {
+      const {
+        proposeName,
+        proposeDefinition,
+        proposeSynonyms
+      } = e.detail.value;
+      if (proposeName === '') {
+        wx.showToast({
+          icon: 'none',
+          title: 'name不能为空',
+        });
+        return;
+      }
+      if (proposeDefinition === '') {
+        wx.showToast({
+          icon: 'none',
+          title: 'Definition不能为空',
+        });
+        return;
+      }
+      let author;
+      fetchUserInfo().then(userMessage => {
+        author = userMessage;
+      }).then(e => {
+        let synonyms = proposeSynonyms.split(',').filter(item => item.length > 0);
+        let data = {
+          synonyms: synonyms,
+          definition: proposeDefinition,
+          name: proposeName,
+          author: [author]
+        }
+        proposeTerm(data).then(res => {
+          if (res === 'Propose successfully!') {
+            wx.showToast({
+              icon: 'none',
+              title: '提交成功',
+            });
+            this.setData({
+              showingModal: "",
+            })
+            this.searchInput(this.data.searchGlossaryInput);
+          } else {
+            wx.showToast({
+              icon: 'none',
+              title: 'name已存在！',
+            });
+          }
+        });
+      }).catch(err => {
+        wx.showToast({
+          icon: 'none',
+          title: '网络错误，请重试！',
+        });
+      })
     }
   }
 })

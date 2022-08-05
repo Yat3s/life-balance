@@ -1,0 +1,12 @@
+/* pages/canteen/tabledetail/tabledetail.wxss */
+@import '../tablesharing/tablesharing.wxss';
+
+.pagecontainer {
+  margin-top: 30px;
+}
+
+.date-text-container {
+  text-align: right;
+  margin-right: 21px;
+  margin-top: 11px;
+}
