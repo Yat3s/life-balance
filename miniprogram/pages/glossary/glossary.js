@@ -87,6 +87,7 @@ Component({
           author: [author]
         }
         proposeTerm(data).then(res => {
+          console.log(res)
           if (res === 'Propose successfully!') {
             wx.showToast({
               icon: 'none',
