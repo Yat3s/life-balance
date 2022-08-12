@@ -9,8 +9,8 @@ const PROPOSE_DATABASE = 'propose-glossaries'
 const _ = db.command
 
 exports.main = async (term, context) => {
-  // If term.id is null or undefined, it is to add a new term. Otherwise, edit a term.
-  const isAdding = term.id === null || term.id === undefined
+  // If term.id is null or undefined or '', it is to add a new term. Otherwise, edit a term.
+  const isAdding = !term.id
   if (isAdding) {
     await db.collection(DATABASE).add({
       data: {
