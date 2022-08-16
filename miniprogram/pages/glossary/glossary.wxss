@@ -172,14 +172,14 @@
   font-size: 27rpx;
 }
 
-.glossary-item-frame{
+.glossary-item-frame {
   padding: 22rpx 33rpx;
   background: #F9F9F9;
   border-radius: 21rpx;
   margin-bottom: 24rpx;
 }
 
-.glossary-item-shimmer{
+.glossary-item-shimmer {
   display: flex;
   flex-direction: column;
 }

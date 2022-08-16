@@ -16,15 +16,15 @@
       <!-- glossary Items -->
       <scroll-view class="glossary-list" scroll-y="true">
         <!-- Shimmer layout -->
-        <view wx:if="{{!glossaries}}" wx:for="{{8}}" wx:key="*this" class="glossary-item-frame">
-            <view class="glossary-item-shimmer">
-              <view class="shine-grey" style="width: 50%; height: 40rpx" />
-              <view class="shine-grey margin-top-sm" style="width: 100%; height: 30rpx" />
-              <view>
-                <view class="shine-grey margin-top-xs" style="width: 10%; height: 30rpx;margin-right: 5px;" wx:for="{{2}}" wx:key="*this"/>
-              </view>
+        <view wx:if="{{!glossaries}}" wx:for="{{8}}" class="glossary-item-frame">
+          <view class="glossary-item-shimmer">
+            <view class="shine-grey" style="width: 50%; height: 40rpx" />
+            <view class="shine-grey margin-top-sm" style="width: 100%; height: 30rpx" />
+            <view>
+              <view class="shine-grey margin-top-xs" style="width: 10%; height: 30rpx;margin-right: 5px;" wx:for="{{2}}" wx:key="*this" />
             </view>
           </view>
+        </view>
         <!-- glossary-list -->
         <view wx:for="{{glossaries}}" wx:key="_id">
           <glossaryitem glossary="{{item}}" />
