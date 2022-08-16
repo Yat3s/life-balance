@@ -9,29 +9,36 @@ const DATABASE = 'glossaries'
 exports.main = async (query, context) => {
   const _ = db.command
 
-  if (!query) {
-    const result = await db.collection(DATABASE).get()
+  if (!query.keyword) {
+    const result = await db.collection(DATABASE)
+      .skip(query.pageSize * (query.pageNumber - 1))
+      .limit(query.pageSize)
+      .get()
     return result.data
   }
 
-  const result = await db.collection(DATABASE).where(_.or([
-    {
-      synonyms: {
-        $regex: query,
-        $options: 'i'
+  const result = await db.collection(DATABASE)
+    .where(_.or([
+      {
+        synonyms: {
+          $regex: query.keyword,
+          $options: 'i'
+        }
+      },
+      {
+        name: {
+          $regex: query.keyword,
+          $options: 'i'
+        }
       }
-    },
-    {
-      name: {
-        $regex: query,
-        $options: 'i'
-      }
-    }
-  ])).field({
-    _id: true,
-    synonyms: true,
-    name: true,
-    definition: true
-  }).get()
+    ]))
+    .skip(query.pageSize * (query.pageNumber - 1))
+    .limit(query.pageSize)
+    .field({
+      _id: true,
+      synonyms: true,
+      name: true,
+      definition: true
+    }).get()
   return result.data
 }

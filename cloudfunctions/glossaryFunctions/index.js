@@ -4,7 +4,7 @@ const proposeTerm = require('./actions/proposeTerm');
 exports.main = async (event, context) => {
   switch (event.action) {
     case 'queryGlossary':
-      const query = event.data.query;
+      const query = event.data;
       return await queryGlossary.main(query, context);
     case 'proposeTerm':
       const term = event.data.term;
