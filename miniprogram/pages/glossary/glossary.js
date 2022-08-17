@@ -12,12 +12,32 @@ Component({
   data: {
     searchGlossaryInput: '',
     glossaries: null,
-    showingModal: ""
+    glossariesLength: 0,
+    showingModal: "",
+    pageNumber: 1,
+    pageSize: 20,
+    proposeFrom: {
+      termID: '',
+      name: '',
+      definition: '',
+      synonyms: ''
+    },
+    editTerm: false,
+    scrollTop: 0
   },
 
   pageLifetimes: {
     show() {
-      this.searchInput();
+      let query = {
+        keyword: '',
+        pageNumber: this.data.pageNumber++,
+        pageSize: 20
+      }
+      this.searchInput(query);
+      this.onListScrolled();
+    },
+    hide() {
+      if (this._observer) this._observer.disconnect();
     }
   },
 
@@ -27,23 +47,31 @@ Component({
   methods: {
     onSearchGlossaryChanged(e) {
       const keyword = e.detail.value;
-      this.setData({
-        searchGlossaryInput: keyword
-      })
-      this.searchInput(keyword);
+      this.resetListData(keyword);
+      let query = {
+        keyword: keyword ? keyword : '',
+        pageNumber: this.data.pageNumber++,
+        pageSize: 20
+      }
+      this.searchInput(query);
     },
-    searchInput(keyword = "") {
+    searchInput(keyword) {
       queryGlossary(keyword).then(res => {
+        let list = this.data.glossaries ? this.data.glossaries : [];
+        list = list.concat(res && res.length > 0 ? res : []);
         this.setData({
-          glossaries: res && res.length > 0 ? res : [],
+          glossaries: list,
         })
       });
     },
     onClearInputClicked() {
-      this.setData({
-        searchGlossaryInput: ''
-      })
-      this.searchInput();
+      this.resetListData();
+      let query = {
+        keyword: '',
+        pageNumber: this.data.pageNumber++,
+        pageSize: 20
+      }
+      this.searchInput(query);
     },
     onShowModal() {
       this.setData({
@@ -109,6 +137,37 @@ Component({
           title: '网络错误，请重试！',
         });
       })
+    },
+    resetListData(keyword = '') {
+      this.setData({
+        searchGlossaryInput: keyword,
+        pageNumber: 1,
+        glossaries: [],
+        glossariesLength: 0,
+        scrollTop: 0
+      })
+    },
+    onListScrolled() {
+      let that = this;
+      this._observer = wx.createIntersectionObserver(this);
+      this._observer
+        .relativeToViewport({ bottom: 500 })
+        .observe('.glossary-suggestion', (res) => {
+          // record glossary.length
+          // if front glossary.length = cur，represent has send a request
+          if (that.data.glossaries) {
+            let length = that.data.glossaries.length;
+            if (length > that.data.glossariesLength) {
+              that.data.glossariesLength = length;
+              let query = {
+                keyword: that.data.searchSynonymsInput ? that.data.searchSynonymsInput : '',
+                pageNumber: this.data.pageNumber++,
+                pageSize: 20
+              }
+              that.searchInput(query);
+            }
+          }
+        })
     }
   }
 })
