@@ -30,14 +30,15 @@ Component({
     show() {
       let query = {
         keyword: '',
-        pageNumber: this.data.pageNumber++,
-        pageSize: 20
+        pageNumber: this.data.pageNumber
       }
-      this.searchInput(query);
       this.onListScrolled();
+      this.searchInput(query.keyword, query.pageNumber);
     },
     hide() {
-      if (this._observer) this._observer.disconnect();
+      if (this._observer) {
+        this._observer.disconnect();
+      }
     }
   },
 
@@ -45,33 +46,68 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    resetListData(keyword = '') {
+      this.setData({
+        searchGlossaryInput: keyword,
+        pageNumber: 1,
+        glossaries: null,
+        glossariesLength: 0,
+        scrollTop: 0
+      }, function () {
+        let query = {
+          keyword: keyword ? keyword : '',
+          pageNumber: this.data.pageNumber
+        }
+        this.searchInput(query.keyword, query.pageNumber);
+      })
+    },
     onSearchGlossaryChanged(e) {
       const keyword = e.detail.value;
       this.resetListData(keyword);
+    },
+    searchInput(keyword, pageNumber) {
       let query = {
         keyword: keyword ? keyword : '',
-        pageNumber: this.data.pageNumber++,
-        pageSize: 20
+        pageNumber: pageNumber,
+        pageSize: this.data.pageSize
       }
-      this.searchInput(query);
-    },
-    searchInput(keyword) {
-      queryGlossary(keyword).then(res => {
+      queryGlossary(query).then(res => {
         let list = this.data.glossaries ? this.data.glossaries : [];
+        if (list.includes(res[0])) {
+          return;
+        }
         list = list.concat(res && res.length > 0 ? res : []);
         this.setData({
           glossaries: list,
+          pageNumber: query.pageNumber + 1
         })
+      }).catch(error => {
+        console.log(error);
       });
     },
     onClearInputClicked() {
       this.resetListData();
-      let query = {
-        keyword: '',
-        pageNumber: this.data.pageNumber++,
-        pageSize: 20
-      }
-      this.searchInput(query);
+    },
+    onListScrolled() {
+      this._observer = wx.createIntersectionObserver(this);
+      this._observer
+        .relativeToViewport({ bottom: 300 })
+        .observe('.glossary-suggestion', (res) => {
+          // record glossary.length
+          // if front glossary.length = cur，represent has send a request
+          if (!this.data.glossaries) {
+            return;
+          }
+          let length = this.data.glossaries.length;
+          if (length > this.data.glossariesLength) {
+            this.data.glossariesLength = length;
+            let query = {
+              keyword: this.data.searchGlossaryInput ? this.data.searchGlossaryInput : '',
+              pageNumber: this.data.pageNumber
+            }
+            this.searchInput(query.keyword, query.pageNumber);
+          }
+        })
     },
     onShowModal() {
       this.setData({
@@ -123,7 +159,7 @@ Component({
             this.setData({
               showingModal: "",
             })
-            this.searchInput(this.data.searchGlossaryInput);
+            this.searchInput(this.data.searchGlossaryInput, this.data.pageNumber);
           } else {
             wx.showToast({
               icon: 'none',
@@ -138,36 +174,5 @@ Component({
         });
       })
     },
-    resetListData(keyword = '') {
-      this.setData({
-        searchGlossaryInput: keyword,
-        pageNumber: 1,
-        glossaries: [],
-        glossariesLength: 0,
-        scrollTop: 0
-      })
-    },
-    onListScrolled() {
-      let that = this;
-      this._observer = wx.createIntersectionObserver(this);
-      this._observer
-        .relativeToViewport({ bottom: 500 })
-        .observe('.glossary-suggestion', (res) => {
-          // record glossary.length
-          // if front glossary.length = cur，represent has send a request
-          if (that.data.glossaries) {
-            let length = that.data.glossaries.length;
-            if (length > that.data.glossariesLength) {
-              that.data.glossariesLength = length;
-              let query = {
-                keyword: that.data.searchSynonymsInput ? that.data.searchSynonymsInput : '',
-                pageNumber: this.data.pageNumber++,
-                pageSize: 20
-              }
-              that.searchInput(query);
-            }
-          }
-        })
-    }
   }
 })
