@@ -8,7 +8,7 @@ const _ = db.command;
 const DATABASE = 'glossaries';
 
 exports.main = async (query, context) => {
-  if (!query.pageSize || !query.pageNumber || query.pageSize <= 0 || query.pageNumber < 1) {
+  if (!Number.isInteger(query.pageSize) || !Number.isInteger(query.pageNumber) || query.pageSize <= 0 || query.pageNumber < 1) {
     const result = [];
     return result;
   }
