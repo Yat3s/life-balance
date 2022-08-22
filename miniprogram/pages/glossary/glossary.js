@@ -11,7 +11,7 @@ Page({
     glossaries: null,
     showingModal: "",
     pageNumber: 1,
-    pageSize: 20,
+    pageSize: 100,
     proposeFrom: {
       termID: '',
       name: '',
