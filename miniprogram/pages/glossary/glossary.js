@@ -9,10 +9,9 @@ Page({
   data: {
     searchGlossaryInput: '',
     glossaries: null,
-    glossariesLength: 0,
     showingModal: "",
     pageNumber: 1,
-    pageSize: 100,
+    pageSize: 20,
     proposeFrom: {
       termID: '',
       name: '',
@@ -21,7 +20,9 @@ Page({
     },
     editTerm: false,
     scrollTop: 0,
-    onReachBottomDistance: 300
+    onReachBottomDistance: 300,
+    isRequesting: false,
+    isFinished: false,
   },
 
   resetListData(keyword = '') {
@@ -38,7 +39,8 @@ Page({
     this.searchInput(query.keyword, query.pageNumber);
 
     this.setData({
-      scrollTop: 0
+      scrollTop: 0,
+      isFinished: false
     })
   },
   onSearchGlossaryChanged(e) {
@@ -46,6 +48,7 @@ Page({
     this.resetListData(keyword);
   },
   searchInput(keyword, pageNumber) {
+    this.data.isRequesting = true;
     let query = {
       keyword: keyword ? keyword : '',
       pageNumber: pageNumber,
@@ -56,8 +59,15 @@ Page({
       if (list.includes(res[0])) {
         return;
       }
-      list = list.concat(res && res.length > 0 ? res : []);
       this.data.pageNumber = pageNumber + 1;
+      this.data.isRequesting = false;
+      if(res.length === 0){
+        this.setData({
+          isFinished: true
+        })
+        return;
+      }
+      list = list.concat(res && res.length > 0 ? res : []);
       this.setData({
         glossaries: list
       })
@@ -73,20 +83,14 @@ Page({
     this._observer
       .relativeToViewport({ bottom: this.data.onReachBottomDistance })
       .observe('.glossary-suggestion', (res) => {
-        // record glossary.length
-        // if front glossary.length = cur，represent has send a request
-        if (!this.data.glossaries) {
+        if (!this.data.glossaries || this.data.isRequesting|| this.data.isFinished) {
           return;
         }
-        let length = this.data.glossaries.length;
-        if (length > this.data.glossariesLength) {
-          this.data.glossariesLength = length;
-          let query = {
-            keyword: this.data.searchGlossaryInput ? this.data.searchGlossaryInput : '',
-            pageNumber: this.data.pageNumber
-          }
-          this.searchInput(query.keyword, query.pageNumber);
+        let query = {
+          keyword: this.data.searchGlossaryInput ? this.data.searchGlossaryInput : '',
+          pageNumber: this.data.pageNumber
         }
+        this.searchInput(query.keyword, query.pageNumber);
       })
   },
   onShowModal() {
