@@ -61,7 +61,7 @@ Page({
       }
       this.data.pageNumber = pageNumber + 1;
       this.data.isRequesting = false;
-      if(res.length === 0){
+      if (res.length === 0) {
         this.setData({
           isFinished: true
         })
@@ -83,7 +83,7 @@ Page({
     this._observer
       .relativeToViewport({ bottom: this.data.onReachBottomDistance })
       .observe('.glossary-suggestion', (res) => {
-        if (!this.data.glossaries || this.data.isRequesting|| this.data.isFinished) {
+        if (!this.data.glossaries || this.data.isRequesting || this.data.isFinished) {
           return;
         }
         let query = {
