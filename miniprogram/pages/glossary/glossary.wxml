@@ -14,7 +14,7 @@
         <text wx:if="{{searchGlossaryInput.length}}" class="cuIcon-roundclosefill" bindtap="onClearInputClicked"></text>
       </view>
       <!-- glossary Items -->
-      <scroll-view class="glossary-list" scroll-y="true">
+      <scroll-view class="glossary-list" scroll-top="{{scrollTop}}" scroll-y="true">
         <!-- Shimmer layout -->
         <view wx:if="{{!glossaries}}" wx:for="{{8}}" class="glossary-item-frame">
           <view class="glossary-item-shimmer">
