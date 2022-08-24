@@ -34,7 +34,7 @@
             <text class="suggest-text">No results found?</text>
             <text class="propose-suggest" bindtap="onShowModal">Suggest a new term</text>
           </view>
-          <view wx:if="{{!isFinished}}" style="color: #A6A6A6;">加载中...</view>
+          <view wx:if="{{!isFinished}}" style="color: #A6A6A6;">Loading...</view>
         </view>
         <view class='reserved-space'></view>
       </scroll-view>

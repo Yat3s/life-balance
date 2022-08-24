@@ -11,7 +11,7 @@ Page({
     glossaries: null,
     showingModal: "",
     pageNumber: 1,
-    pageSize: 100,
+    pageSize: 20,
     proposeFrom: {
       termID: '',
       name: '',
@@ -55,12 +55,9 @@ Page({
       pageSize: this.data.pageSize
     }
     queryGlossary(query).then(res => {
-      let list = this.data.glossaries ? this.data.glossaries : [];
-      if (list.includes(res[0])) {
-        return;
-      }
-      this.data.pageNumber = pageNumber + 1;
       this.data.isRequesting = false;
+      let list = this.data.glossaries ? this.data.glossaries : [];
+      this.data.pageNumber = pageNumber + 1;
       if (res.length === 0) {
         this.setData({
           isFinished: true
