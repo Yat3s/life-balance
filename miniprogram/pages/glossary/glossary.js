@@ -58,7 +58,7 @@ Page({
       this.data.isRequesting = false;
       let list = this.data.glossaries ? this.data.glossaries : [];
       this.data.pageNumber = pageNumber + 1;
-      if (res.length === 0) {
+      if (res === null || res.length === 0) {
         this.setData({
           isFinished: true
         })
