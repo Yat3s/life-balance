@@ -27,10 +27,9 @@ Page({
 
   resetListData(keyword = '') {
     this.data.pageNumber = 1;
-    this.data.glossaries = null;
-    this.data.glossariesLength = 0;
     this.data.scrollTop = 0;
     this.data.searchGlossaryInput = keyword;
+    this.data.isFinished = false;
 
     let query = {
       keyword: keyword ? keyword : '',
@@ -40,7 +39,6 @@ Page({
 
     this.setData({
       scrollTop: 0,
-      isFinished: false
     })
   },
   onSearchGlossaryChanged(e) {
@@ -56,18 +54,23 @@ Page({
     }
     queryGlossary(query).then(res => {
       this.data.isRequesting = false;
-      let list = this.data.glossaries ? this.data.glossaries : [];
       this.data.pageNumber = pageNumber + 1;
-      if (res === null || res.length === 0) {
+      if(pageNumber === 1){
         this.setData({
-          isFinished: true
+          glossaries: res && res.length > 0 ? res : [],
         })
-        return;
+      } else {
+        if (res === null || res.length === 0) {
+          this.setData({
+            isFinished: true
+          })
+          return;
+        }
+        let list = this.data.glossaries.concat(res && res.length > 0 ? res : []);
+        this.setData({
+          glossaries: list
+        })
       }
-      list = list.concat(res && res.length > 0 ? res : []);
-      this.setData({
-        glossaries: list
-      })
     }).catch(error => {
       console.log(error);
     });
