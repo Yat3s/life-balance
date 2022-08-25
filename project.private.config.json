@@ -91,6 +91,13 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/termadmin/termadmin",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }
