@@ -27,7 +27,7 @@ Page({
 
   resetListData(keyword = '') {
     this.data.pageNumber = 1;
-    this.data.scrollTop = 0;
+    this.data.glossaries = null;
     this.data.searchGlossaryInput = keyword;
     this.data.isFinished = false;
 
@@ -55,7 +55,7 @@ Page({
     queryGlossary(query).then(res => {
       this.data.isRequesting = false;
       this.data.pageNumber = pageNumber + 1;
-      if(pageNumber === 1){
+      if (pageNumber === 1) {
         this.setData({
           glossaries: res && res.length > 0 ? res : [],
         })
