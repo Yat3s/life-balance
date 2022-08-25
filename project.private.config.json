@@ -94,7 +94,7 @@
         },
         {
           "name": "",
-          "pathName": "pages/termadmin/termadmin",
+          "pathName": "pages/gloassaryAdmin/gloassaryAdmin",
           "query": "",
           "launchMode": "default",
           "scene": null

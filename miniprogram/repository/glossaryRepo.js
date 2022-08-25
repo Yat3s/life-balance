@@ -14,12 +14,13 @@ export function proposeTerm(term) {
   return cloudFunctionCall(CLOUD_FUNCTION_NAME, 'proposeTerm', data);
 }
 
-export function admin(term_id) {
+export function adminQuery() {
+  return cloudFunctionCall(CLOUD_FUNCTION_NAME, 'adminQuery');
+}
+
+export function adminUpdate(term_id) {
   const data = {
     term_id: term_id
   }
-  if(!term_id && term_id !== 0)
-    return cloudFunctionCall(CLOUD_FUNCTION_NAME, 'adminQuery', data);
-  else
-    return cloudFunctionCall(CLOUD_FUNCTION_NAME, 'updateGlossary', data);
+  return cloudFunctionCall(CLOUD_FUNCTION_NAME, 'adminUpdate', data);
 }

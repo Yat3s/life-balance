@@ -8,15 +8,6 @@ const _ = db.command;
 const DATABASE = 'glossaries';
 const PROPOSE_DATABASE = 'propose-glossaries';
 
-// To query the proposed term need to approve
-exports.query = async (event) => {
-  const result = await db.collection(PROPOSE_DATABASE)
-    .where({
-      status: false
-    }).get();
-  return result.data;
-}
-
 // After approve, update the glossary database
 exports.main = async (term_id, context) => {
   // When term_id is undefine or null, return term

@@ -1,6 +1,6 @@
-import { admin } from "../../repository/glossaryRepo";
+import { adminQuery, adminUpdate } from "../../repository/glossaryRepo";
 
-// pages/termadmin/termadmin.js
+// pages/gloassaryAdmin/gloassaryAdmin.js
 Page({
 
   /**
@@ -29,7 +29,10 @@ Page({
    */
   onShow() {
     const term_id = "";
-    admin(term_id).then(res => {
+    adminQuery().then(res => {
+      console.log(res);
+    })
+    adminUpdate(term_id).then(res => {
       console.log(res);
     })
   },

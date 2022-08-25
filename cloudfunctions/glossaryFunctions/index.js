@@ -1,6 +1,7 @@
 const queryGlossary = require('./actions/queryGlossary');
 const proposeTerm = require('./actions/proposeTerm');
-const admin = require('./actions/admin');
+const adminQuery = require('./actions/adminQuery');
+const adminUpdate = require('./actions/adminUpdate');
 
 exports.main = async (event, context) => {
   switch (event.action) {
@@ -11,10 +12,10 @@ exports.main = async (event, context) => {
       const term = event.data.term;
       return await proposeTerm.main(term, context);
     case 'adminQuery':
-      return await admin.query(context);
-    case 'updateGlossary':
+      return await adminQuery.main(context);
+    case 'adminUpdate':
       const term_id = event.data.term_id;
-      return await admin.main(term_id, context);
+      return await adminUpdate.main(term_id, context);
   }
 }
 
