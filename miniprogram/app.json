@@ -23,7 +23,6 @@
     "pages/glossary/glossary",
     "pages/meal/tablesharing/tablesharing",
     "pages/meal/tabledetail/tabledetail",
-    "pages/meal/meal",
     "pages/termadmin/termadmin"
   ],
   "window": {
