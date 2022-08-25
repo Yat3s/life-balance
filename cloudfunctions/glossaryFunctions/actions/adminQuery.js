@@ -4,7 +4,6 @@ cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
 });
 const db = cloud.database();
-const _ = db.command;
 const PROPOSE_DATABASE = 'propose-glossaries';
 
 // To query the proposed term need to approve
