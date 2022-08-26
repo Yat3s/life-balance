@@ -12,25 +12,32 @@ Page({
     showingModal: "",
     pageNumber: 1,
     pageSize: 100,
-    proposeFrom: {
+    proposeForm: {
       termID: '',
       name: '',
       definition: '',
       synonyms: ''
     },
-    editTerm: false,
     scrollTop: 0,
     onReachBottomDistance: 300,
     isRequesting: false,
     isFinished: false,
+    onEdit: false,
+    newTerm: {
+      title: 'Suggest a New Term',
+      subTitle: 'Are you confused by a word, phrase, or acronym? Request that our researchers include the definition here:'
+    },
+    editTerm: {
+      title: 'Suggest a Edit',
+      subTitle: 'Have you noticed something is missing or inaccurate? Request that our researchers include the change here:'
+    },
   },
 
   resetListData(keyword = '') {
     this.data.pageNumber = 1;
     this.data.glossaries = null;
-    this.data.glossariesLength = 0;
-    this.data.scrollTop = 0;
     this.data.searchGlossaryInput = keyword;
+    this.data.isFinished = false;
 
     let query = {
       keyword: keyword ? keyword : '',
@@ -40,7 +47,6 @@ Page({
 
     this.setData({
       scrollTop: 0,
-      isFinished: false
     })
   },
   onSearchGlossaryChanged(e) {
@@ -55,22 +61,24 @@ Page({
       pageSize: this.data.pageSize
     }
     queryGlossary(query).then(res => {
-      let list = this.data.glossaries ? this.data.glossaries : [];
-      if (list.includes(res[0])) {
-        return;
-      }
-      this.data.pageNumber = pageNumber + 1;
       this.data.isRequesting = false;
-      if (res.length === 0) {
+      this.data.pageNumber = pageNumber + 1;
+      if (pageNumber === 1) {
         this.setData({
-          isFinished: true
+          glossaries: res && res.length > 0 ? res : [],
         })
-        return;
+      } else {
+        if (res === null || res.length === 0) {
+          this.setData({
+            isFinished: true
+          })
+          return;
+        }
+        let list = this.data.glossaries.concat(res && res.length > 0 ? res : []);
+        this.setData({
+          glossaries: list
+        })
       }
-      list = list.concat(res && res.length > 0 ? res : []);
-      this.setData({
-        glossaries: list
-      })
     }).catch(error => {
       console.log(error);
     });
@@ -99,12 +107,37 @@ Page({
     })
   },
   onDismissModal() {
+    this.resetForm();
+  },
+  editTerm(e) {
+    let newProposeForm = {
+      termID: e.detail._id,
+      name: e.detail.name,
+      definition: e.detail.definition,
+      synonyms: e.detail.synonyms.join(',')
+    };
+    this.onShowModal();
     this.setData({
+      proposeForm: newProposeForm,
+      onEdit: true
+    })
+  },
+  resetForm() {
+    let newProposeForm = {
+      termID: '',
+      name: '',
+      definition: '',
+      synonyms: ''
+    };
+    this.setData({
+      proposeForm: newProposeForm,
+      onEdit: false,
       showingModal: ""
     })
   },
   formSubmit(e) {
     const {
+      termID,
       proposeName,
       proposeDefinition,
       proposeSynonyms
@@ -132,22 +165,23 @@ Page({
         synonyms: synonyms,
         definition: proposeDefinition,
         name: proposeName,
-        author: [author]
+        author: [author._id]
+      }
+      if (this.data.onEdit) {
+        data.id = termID
       }
       proposeTerm(data).then(res => {
-        if (res === 'Propose successfully!') {
+        if (res.errMsg.includes('ok')) {
           wx.showToast({
             icon: 'none',
             title: '提交成功',
           });
-          this.setData({
-            showingModal: "",
-          })
-          this.searchInput(this.data.searchGlossaryInput, this.data.pageNumber);
+          this.resetForm();
+          this.resetListData(this.data.searchGlossaryInput);
         } else {
           wx.showToast({
             icon: 'none',
-            title: 'name已存在！',
+            title: '提交失败，请重试！',
           });
         }
       });

@@ -1,6 +1,9 @@
 <!--components/glossaryitem.wxml-->
 <view class="glossary-list-item">
-  <view class="glossary-fullname">{{glossary.name}}</view>
+  <view class="glossary-title">
+    <label class="glossary-fullname">{{glossary.name}}</label>
+    <image src="../../images/ic_edit_glossary.png" class="glossary_edit" bindtap="editTerm" data-item="{{glossary}}"/>
+  </view>
   <view class="glossary-description">{{glossary.definition}}</view>
   <view class="glossary-synonyms-list">
     <view class="glossary-synonyms-item" wx:for="{{glossary.synonyms}}" wx:key="_id">

@@ -21,6 +21,8 @@ Component({
    * 组件的方法列表
    */
   methods: {
-
+    editTerm(e) {
+      this.triggerEvent('editTerm', e.currentTarget.dataset.item)
+    }
   }
 })

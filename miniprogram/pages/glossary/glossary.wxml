@@ -27,14 +27,14 @@
         </view>
         <!-- glossary-list -->
         <view wx:for="{{glossaries}}" wx:key="_id">
-          <glossaryitem glossary="{{item}}" />
+          <glossaryitem glossary="{{item}}" bind:editTerm="editTerm" />
         </view>
         <view class="glossary-suggestion" style="margin-top: {{glossaries.length > 0 ? '60rpx':'0rpx'}};">
           <view wx:if="{{isFinished}}">
             <text class="suggest-text">No results found?</text>
             <text class="propose-suggest" bindtap="onShowModal">Suggest a new term</text>
           </view>
-          <view wx:if="{{!isFinished}}" style="color: #A6A6A6;">加载中...</view>
+          <view wx:if="{{!isFinished}}" style="color: #A6A6A6;">Loading...</view>
         </view>
         <view class='reserved-space'></view>
       </scroll-view>
@@ -49,20 +49,27 @@
       <text class="modal-dismiss-icon cuIcon-close text-black"></text>
     </view>
     <form class="suggest-container" bindsubmit="formSubmit" bindreset="formReset">
-      <view class="suggest-title">Suggest a New Term</view>
-      <view class="suggest-subTitle">Are you confused by a word, phrase, or acronym? Request that our researchers include the definition here:</view>
+      <view class="suggest-title">{{onEdit ? editTerm.title : newTerm.title}}</view>
+      <view class="suggest-subTitle">{{onEdit ? editTerm.subTitle : newTerm.subTitle}}</view>
       <view class="suggest-form">
+        <view class="form-item" style="display: none;">
+          <view class="form-title">id</view>
+          <input class="form-input" placeholder="term Id" placeholder-class='form-input-placeholder' value="{{proposeForm.termID}}" name='termID' />
+        </view>
         <view class="form-item">
           <view class="form-title">Name</view>
-          <input class="form-input" placeholder="Suggest a term name" placeholder-class='form-input-placeholder' name='proposeName' />
+          <textarea class="form-textarea {{onEdit ? 'hideLine' : ''}}" placeholder="Suggest a term name" placeholder-class='form-input-placeholder' disable-default-padding="false" name='proposeName' auto-height="true" maxlength="-1" disabled="{{onEdit ? 'disables' : ''}}" value="{{proposeForm.name}}" />
+          <view class="form-textarea-bottomLine {{onEdit ? 'hideLine' : ''}}"></view>
         </view>
         <view class="form-item">
           <view class="form-title">Definition</view>
-          <input class="form-input" placeholder="Suggest a term definition" placeholder-class='form-input-placeholder' name='proposeDefinition' />
+          <textarea class="form-textarea" auto-height="true" placeholder="Suggest a term definition" placeholder-class="form-input-placeholder" disable-default-padding="false" name="proposeDefinition" maxlength="-1" value="{{proposeForm.definition}}" />
+          <view class="form-textarea-bottomLine"></view>
         </view>
         <view class="form-item">
           <view class="form-title">Synonyms</view>
-          <input class="form-input" placeholder='Suggest some synonyms, split with ","' placeholder-class='form-input-placeholder' name='proposeSynonyms' />
+          <textarea class="form-textarea" auto-height="true" placeholder='Suggest some synonyms, split with ","' placeholder-class="form-input-placeholder" name="proposeSynonyms" disable-default-padding="false" maxlength="-1" value="{{proposeForm.synonyms}}" />
+          <view class="form-textarea-bottomLine"></view>
         </view>
       </view>
       <button form-type="submit" class="cu-btn bg-blue modal-btn" style="width: 100%;">Submit</button>
