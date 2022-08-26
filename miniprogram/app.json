@@ -23,12 +23,8 @@
     "pages/glossary/glossary",
     "pages/meal/tablesharing/tablesharing",
     "pages/meal/tabledetail/tabledetail",
-<<<<<<< HEAD
     "pages/meal/meal",
     "pages/gloassaryAdmin/gloassaryAdmin"
-=======
-    "pages/termadmin/termadmin"
->>>>>>> bbc92816d73ebc5813616b9cb909acb3f0d1602e
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
