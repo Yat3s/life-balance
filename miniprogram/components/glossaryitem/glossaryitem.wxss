@@ -6,6 +6,13 @@
   margin-bottom: 24rpx;
 }
 
+.glossary_edit {
+  width: 28rpx;
+  height: 28rpx;
+  vertical-align: middle;
+  margin-left: 10rpx;
+}
+
 .glossary-fullname {
   font-weight: bold;
   font-size: 14pt;

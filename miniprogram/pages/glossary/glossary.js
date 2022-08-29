@@ -12,17 +12,25 @@ Page({
     showingModal: "",
     pageNumber: 1,
     pageSize: 100,
-    proposeFrom: {
+    proposeForm: {
       termID: '',
       name: '',
       definition: '',
       synonyms: ''
     },
-    editTerm: false,
     scrollTop: 0,
     onReachBottomDistance: 300,
     isRequesting: false,
     isFinished: false,
+    onEdit: false,
+    newTerm: {
+      title: 'Suggest a New Term',
+      subTitle: 'Are you confused by a word, phrase, or acronym? Request that our researchers include the definition here:'
+    },
+    editTerm: {
+      title: 'Suggest a Edit',
+      subTitle: 'Have you noticed something is missing or inaccurate? Request that our researchers include the change here:'
+    },
   },
 
   resetListData(keyword = '') {
@@ -99,12 +107,37 @@ Page({
     })
   },
   onDismissModal() {
+    this.resetForm();
+  },
+  editTerm(e) {
+    let newProposeForm = {
+      termID: e.detail._id,
+      name: e.detail.name,
+      definition: e.detail.definition,
+      synonyms: e.detail.synonyms.join(',')
+    };
+    this.onShowModal();
     this.setData({
+      proposeForm: newProposeForm,
+      onEdit: true
+    })
+  },
+  resetForm() {
+    let newProposeForm = {
+      termID: '',
+      name: '',
+      definition: '',
+      synonyms: ''
+    };
+    this.setData({
+      proposeForm: newProposeForm,
+      onEdit: false,
       showingModal: ""
     })
   },
   formSubmit(e) {
     const {
+      termID,
       proposeName,
       proposeDefinition,
       proposeSynonyms
@@ -132,22 +165,23 @@ Page({
         synonyms: synonyms,
         definition: proposeDefinition,
         name: proposeName,
-        author: [author]
+        author: [author._id]
+      }
+      if (this.data.onEdit) {
+        data.id = termID
       }
       proposeTerm(data).then(res => {
-        if (res === 'Propose successfully!') {
+        if (res.errMsg.includes('ok')) {
           wx.showToast({
             icon: 'none',
             title: '提交成功',
           });
-          this.setData({
-            showingModal: "",
-          })
-          this.searchInput(this.data.searchGlossaryInput, this.data.pageNumber);
+          this.resetForm();
+          this.resetListData(this.data.searchGlossaryInput);
         } else {
           wx.showToast({
             icon: 'none',
-            title: 'name已存在！',
+            title: '提交失败，请重试！',
           });
         }
       });
