@@ -9,7 +9,7 @@
 .glossary_edit {
   width: 28rpx;
   height: 28rpx;
-  vertical-align: middle;
+  vertical-align: text-top;
   margin-left: 10rpx;
 }
 
