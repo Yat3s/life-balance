@@ -51,6 +51,9 @@ Page({
   },
   onSearchGlossaryChanged(e) {
     const keyword = e.detail.value;
+    this.setData({
+      searchGlossaryInput: keyword
+    })
     this.resetListData(keyword);
   },
   searchInput(keyword, pageNumber) {
@@ -84,6 +87,9 @@ Page({
     });
   },
   onClearInputClicked() {
+    this.setData({
+      searchGlossaryInput: ''
+    })
     this.resetListData();
   },
   onListScrolled() {
@@ -160,7 +166,7 @@ Page({
     fetchUserInfo().then(userMessage => {
       author = userMessage;
     }).then(e => {
-      let synonyms = proposeSynonyms.split(',').filter(item => item.length > 0);
+      let synonyms = proposeSynonyms.split(',').map(item => item.toUpperCase()).filter(item => item.length > 0);
       let data = {
         synonyms: synonyms,
         definition: proposeDefinition,
