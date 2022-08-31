@@ -152,6 +152,11 @@ Component({
       this.setData({
         bannerExpanded: !this.data.bannerExpanded
       });
+
+      wx.reportEvent("bannertap", {
+        "user_openid": this.data.userInfo._openid,
+        "toexpand": `${this.data.bannerExpanded}`
+      })
     },
     onBannerLinkClicked: function () {
       wx.setClipboardData({
@@ -159,6 +164,10 @@ Component({
       }), wx.showToast({
         title: "Link Copied"
       });
+
+      wx.reportEvent("bannerbuttontap", {
+        "user_openid": this.data.userInfo._openid,
+      })
     },
 
     onMsftBoostClicked() {
@@ -181,7 +190,7 @@ Component({
       })
     },
 
-    fetchBanner: function() {
+    fetchBanner: function () {
       fetchBanners().then(res => {
         if (res && 0 != res.length) {
           this.setData({
@@ -189,7 +198,7 @@ Component({
           })
         }
       });
-  },
+    },
 
     fetchDashboardData() {
       this.setData({

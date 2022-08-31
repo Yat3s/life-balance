@@ -28,7 +28,7 @@ Page({
       subTitle: 'Are you confused by a word, phrase, or acronym? Request that our researchers include the definition here:'
     },
     editTerm: {
-      title: 'Suggest a Edit',
+      title: 'Suggest an Edit',
       subTitle: 'Have you noticed something is missing or inaccurate? Request that our researchers include the change here:'
     },
   },
