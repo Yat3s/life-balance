@@ -25,7 +25,7 @@
     </view>
     <image class="banner-img" hidden="{{!bannerExpanded}}" mode="widthFix" src="{{banner.expandedImg}}"></image>
   </view>
-  
+
   <view class="widget-section-title common-widget">Common Widgets</view>
   <!-- MSFT -->
   <view class="widget-msft-container margin-top">
@@ -48,6 +48,7 @@
   </view>
 
   <view class="widget-section-title common-widget">Widgets for 微软(中国)有限公司-苏州</view>
+  <view wx:if="{{notice}}" class="notice margin-top-xs"><text class="text-bold">Notice:</text> {{notice}}</view>
   <view class="flex margin-top-sm">
     <!-- B25 Parking -->
     <view bindtap="onRefreshParkingSpace" class="widget-container widget-parking-container">
@@ -94,23 +95,9 @@
       </view>
     </view>
   </view>
-  <view class="flex widget-row">
-    <!-- WeWork Parking  -->
-    <!-- <view bindtap="onWeworkParkingClick" class="widget-container widget-wework-parking-container">
-      <image class="widget-icon" src="../../images/ic_widget_wework_parking.png"></image>
-      <view class="widget-title">WeWork Parking</view>
 
-      <view class="widget-wework-parking-info margin-top-sm margin-bottom-sm">
-        <view>已预定 <text class="text-bold text-black">{{weWorkBookedParticipantCount}}</text> 车位</view>
-        <view class="margin-top-xs">剩余 <text class="text-bold text-black">{{maxWeWorkPakingSpace - weWorkBookedParticipantCount}}</text> 车位</view>
-      </view>
-      <view class="flex justify-end">
-        <view class="flex align-center">
-          <view class="widget-go-detail-text">抢先预定</view>
-          <image class="widget-go-detail-icon" src="../../images/ic_widget_go.png"></image>
-        </view>
-      </view>
-    </view> -->
+
+  <view class="flex widget-row">
     <!-- Shuttle Bus  -->
     <view bindtap="onBusClick" class="widget-container widget-shuttle-bus-container">
       <image class="widget-icon" src="../../images/ic_widget_shuttle_bus.png"></image>
@@ -131,34 +118,39 @@
       </view>
     </view>
 
-    <view bindtap="onGlossaryClicked" class="widget-container widget-wework-parking-container center">
-      <view class="text-bold">Glossary</view>
+    <view class="widget-container widget-wework-parking-container center">
+      <view class="text-grey text-sm">更多功能正在开发中</view>
     </view>
   </view>
-
-  <view class="flex widget-row">
-    <!-- Canteen -->
-    <view bindtap="onCanteenTableClick" class="widget-container widget-wework-parking-container">
-      <image class="widget-icon" src="../../images/ic_widget_food_menu.png"></image>
-      <view class="widget-title">Canteen tables</view>
-    </view>
-  </view>
-
+  <!-- 
   <view class="widget-building2-container margin-top">
     <view class="widget-building2-title">微软苏州 #B26 大楼建筑预览</view>
-    <!-- <view class="widget-building2-progress-container margin-top-sm">
-      <view style="width: {{building2Progress + '%'}};" class="widget-building2-progress-indicator"></view>
-      <view class="widget-building2-progress-number margin-left-xs">{{building2Progress}}%</view>
-    </view>
-    <view class="flex justify-between align-center margin-top-xs">
-      <view class="widget-building2-progress-date">{{building2StartDateStr}}</view>
-      <view class="widget-building2-progress-date">{{building2EndDateStr}}</view>
-    </view> -->
-
     <image bindtap="onBuild2Click" class="margin-top widget-building2-picture" mode="widthFix" src="{{building2LatestProgress.picture}}" />
     <view class="widget-building2-update-date">更新于 {{building2LatestProgress.createDateStr}}</view>
+  </view> -->
+
+  <view class="widget-section-title common-widget">Experiments</view>
+
+  <view class="flex  margin-top-sm ">
+    <view bindtap="onGlossaryClicked" class="experiment-card">
+      <view class="beta">BETA</view>
+      <view class="margin-top-xs">
+        MS Glossary
+      </view>
+    </view>
+
+    <view bindtap="onCanteenTableClick" class="experiment-card margin-left-sm">
+      <view class="beta">BETA</view>
+      <view class="margin-top-xs">
+        Canteen Table Sharing
+      </view>
+    </view>
+
   </view>
 
+
+
+  <!-- Space for tab bar -->
   <view style="height: 100rpx;"></view>
 
 </scroll-view>

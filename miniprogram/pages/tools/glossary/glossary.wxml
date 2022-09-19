@@ -9,7 +9,7 @@
     </view>
     <view class="main">
       <view class="glossary-search-container">
-        <image src="../../images/ic_search_grey.png" class="glossary-search-icon" />
+        <image src="../../../images/ic_search_grey.png" class="glossary-search-icon" />
         <input class="glossary-search-input" id="glossary-input" value="{{searchGlossaryInput}}" placeholder="Term/acronym/glossary" placeholder-class='input-placeholder' bindinput="onSearchGlossaryChanged"></input>
         <text wx:if="{{searchGlossaryInput.length}}" class="cuIcon-roundclosefill" bindtap="onClearInputClicked"></text>
       </view>

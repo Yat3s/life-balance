@@ -256,6 +256,7 @@ Component({
           })
         }
         this.setData({
+          notice: config.notice,
           maxWeWorkPakingSpace,
           msftBoostCount: config.msftBoostCount
         })

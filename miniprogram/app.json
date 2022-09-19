@@ -20,7 +20,7 @@
     "pages/bus/bus",
     "pages/connection/connection",
     "pages/activity/activitypage",
-    "pages/glossary/glossary",
+    "pages/tools/glossary/glossary",
     "pages/meal/tablesharing/tablesharing",
     "pages/meal/tabledetail/tabledetail",
     "pages/meal/meal",
