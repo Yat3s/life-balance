@@ -1,6 +1,4 @@
 // pages/meal/tabledetail/tabledetail.js
-const { formatDate } = require("../../../common/util");
-
 Page({
 
   /**
@@ -12,14 +10,12 @@ Page({
    */
   onLoad(options) {
     console.log(options);
-
-    var now = new Date(Date.now());
-    const { user, area, index } = options;
+    const { user, area, index, time } = options;
     this.setData({
       user:user,
       area:area,
       index:index,
-      date:formatDate(now),
+      date:time,
     });
   },
 

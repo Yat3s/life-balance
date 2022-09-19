@@ -1,5 +1,6 @@
 // pages/meal/tablesharing/tablesharing.js
 import { fetchUserInfo } from "../../../repository/userRepo";
+const { formatDate } = require("../../../common/util");
 
 Page({
 
@@ -103,10 +104,11 @@ Page({
    */
   onShareAppMessage(e) {
     var table = this.data.area+this.data.index;
-    console.log("onShareAppMessage" + table)
+    var now = new Date(Date.now());
+    console.log("onShareAppMessage:" + table + ":" + now)
     return {
       title: 'Canteen Table:' + table,
-      path: '/pages/meal/tabledetail/tabledetail?area='+this.data.area+'&index='+this.data.index+'&user='+this.data.userInfo.nickName
+      path: '/pages/meal/tabledetail/tabledetail?area='+this.data.area+'&index='+this.data.index+'&user='+this.data.userInfo.nickName+'&time='+formatDate(now)
     }
   },
 
