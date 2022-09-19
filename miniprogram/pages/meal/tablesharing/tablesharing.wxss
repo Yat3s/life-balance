@@ -119,16 +119,16 @@
 }
 
 .scroll-view_H {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 .scroll-view-item_H{
-    display: inline-block;
-    width: 150%;
+  display: inline-block;
+  width: 150%;
 }
 
 .table-image {
-  height: 390px;
+  height: 400px;
   width: 100%;
 }
 

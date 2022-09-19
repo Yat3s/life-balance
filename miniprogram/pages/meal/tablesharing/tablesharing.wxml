@@ -25,15 +25,20 @@
 
   <view class="table-img-container">
     <scroll-view class="scroll-view_H" scroll-x="true" style="width: 100%">
-    <view class="scroll-view-item_H">
-        <!-- todo add the img without table indicator-->
-        <image wx:if="{{selecting}}" class="table-image" mode="scaleToFill" src='cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/app-assets/canteen-pics/Default.png'/>
-        <!-- canteen seat img-->
-        <image class="table-image" mode="scaleToFill" wx:if="{{tableConfirmed}}" src='cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/app-assets/canteen-pics/{{area}}{{index}}.png'/>
-    </view>
+      <view class="scroll-view-item_H">
+          <!-- canteen seat img
+                  <image class="table-image" mode="scaleToFill" wx:if="{{tableConfirmed}}" src='cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/app-assets/canteen-pics/{{area}}{{index}}.png'/>
+          -->
+          <view bindtouchmove="touchmoveCallback" bindtouchstart="touchstartCallback">
+            <image mode="aspectFit" wx:if="{{selecting}}" src='cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/app-assets/canteen-pics/Default.png'
+              style="width: {{ touch.scaleWidth }}px;height: {{ touch.scaleHeight }}px" bindload="bindload"/>
+
+            <image mode="aspectFit" wx:if="{{tableConfirmed}}" src="cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/app-assets/canteen-pics/{{area}}{{index}}.png" 
+              style="width: {{ touch.scaleWidth }}px;height: {{ touch.scaleHeight }}px" bindload="bindload"/>
+          </view>
+      </view>
     </scroll-view>
   </view>
-
 </view>
 
 <view>
@@ -47,7 +52,7 @@
       </picker-view-column>
     </picker-view>
     <view class="confirm-buttion-container">
-      <button class="button-common">      
+      <button class="button-common">
         <text class="share-text" bindtap="onTableConfirmed">Confirm</text>
       </button>
     </view>
