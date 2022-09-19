@@ -27,9 +27,9 @@
     <scroll-view class="scroll-view_H" scroll-x="true" style="width: 100%">
     <view class="scroll-view-item_H">
         <!-- todo add the img without table indicator-->
-        <image wx:if="{{selecting}}" class="table-image" mode="scaleToFill" src='https://canteenseat.blob.core.windows.net/canteenseat/A11.png'/>
+        <image wx:if="{{selecting}}" class="table-image" mode="scaleToFill" src='cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/app-assets/canteen-pics/A11.png'/>
         <!-- canteen seat img-->
-        <image class="table-image" mode="scaleToFill" wx:if="{{tableConfirmed}}" src='https://canteenseat.blob.core.windows.net/canteenseat/{{area}}{{index}}.png'/>
+        <image class="table-image" mode="scaleToFill" wx:if="{{tableConfirmed}}" src='cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/app-assets/canteen-pics/{{area}}{{index}}.png'/>
     </view>
     </scroll-view>
   </view>

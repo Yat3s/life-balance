@@ -21,7 +21,7 @@
 <view class="table-img-container">
   <!-- canteen seat img-->
   <scroll-view class="scroll-view_H" scroll-x="true" style="width: 100%">
-    <view class="scroll-view-item_H"><image class="table-image" src='https://canteenseat.blob.core.windows.net/canteenseat/{{area}}{{index}}.png'/></view>
+    <view class="scroll-view-item_H"><image class="table-image" src='cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/app-assets/canteen-pics/{{area}}{{index}}.png'/></view>
   </scroll-view>
 </view>
 
