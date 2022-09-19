@@ -349,3 +349,27 @@ page {
   width: 100%;
   text-align: right;
 }
+
+.experiment-card {
+  border-radius: 32rpx;
+  padding: 32rpx;
+  font-weight: bold;
+  color: #000;
+  font-size: 12pt;
+  background: #f1f5ee;
+}
+
+.beta {
+  border-radius: 40rpx;
+  background: rgb(136, 104, 224);
+  color: white;
+  font-weight: bold;
+  padding: 4rpx 16rpx;
+  font-size: 8pt;
+  width: fit-content;
+}
+
+.notice {
+  font-size: 10pt;
+  color: rgb(231, 87, 87);
+}

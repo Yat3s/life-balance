@@ -73,30 +73,30 @@ export const Pages = {
     authRequired: true,
     url: '/pages/user/profile/profile?&id='
   },
-  
+
   UserActivity: {
     authRequired: true,
     url: '/pages/user/useractivity/useractivity'
   },
-    
+
   BusInfo: {
     authRequired: true,
     url: '/pages/bus/bus'
   },
 
-  Meal:{
+  Meal: {
     authRequired: false,
     url: '/pages/meal/meal'
   },
 
-  CanteenTableSharing:{
+  CanteenTableSharing: {
     authRequired: false,
     url: '/pages/meal/tablesharing/tablesharing'
   },
-  
+
   Glossary: {
     authRequired: true,
-    url: '/pages/glossary/glossary'
+    url: '/pages/tools/glossary/glossary'
   },
 }
 

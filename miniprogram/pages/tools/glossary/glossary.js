@@ -1,6 +1,6 @@
 // pages/glossary/glossary.js
-import { proposeTerm, queryGlossary } from "../../repository/glossaryRepo";
-import { fetchUserInfo } from "../../repository/userRepo";
+import { proposeTerm, queryGlossary } from "../../../repository/glossaryRepo";
+import { fetchUserInfo } from "../../../repository/userRepo";
 
 Page({
   /**
