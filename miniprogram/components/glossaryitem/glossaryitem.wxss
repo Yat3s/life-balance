@@ -6,6 +6,13 @@
   margin-bottom: 24rpx;
 }
 
+.glossary_edit {
+  width: 28rpx;
+  height: 28rpx;
+  vertical-align: text-top;
+  margin-left: 10rpx;
+}
+
 .glossary-fullname {
   font-weight: bold;
   font-size: 14pt;
@@ -18,7 +25,7 @@
   font-size: 10pt;
   line-height: 12pt;
   margin-top: 10rpx;
-  margin-bottom: 3pt;
+  margin-bottom: 8rpx;
   color: #AAAAAA;
 }
 

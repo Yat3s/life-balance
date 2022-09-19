@@ -18,8 +18,15 @@
 <scroll-view scroll-y="true" class="main" bindscroll="onPageScrolled">
   <view style="height: 200px;"></view>
 
+  <view bindtap="onBannerClicked" class="{{bannerExpanded?'banner-container-expanded':'banner-container'}}" style="border: {{banner.borderSize}}rpx solid {{banner.borderColor}}; " wx:if="{{banner}}">
+    <image class="banner-img" mode="widthFix" src="{{banner.bannerImg}}"></image>
+    <view catchtap="onBannerLinkClicked" class="flex center padding" hidden="{{!bannerExpanded}}">
+      <view class="banner-copy-link-button">{{banner.copyLinkTitle}}</view>
+    </view>
+    <image class="banner-img" hidden="{{!bannerExpanded}}" mode="widthFix" src="{{banner.expandedImg}}"></image>
+  </view>
+  
   <view class="widget-section-title common-widget">Common Widgets</view>
-
   <!-- MSFT -->
   <view class="widget-msft-container margin-top">
     <view class="flex justify-between">
@@ -135,7 +142,7 @@
       <image class="widget-icon" src="../../images/ic_widget_food_menu.png"></image>
       <view class="widget-title">Canteen tables</view>
     </view>
-    </view>
+  </view>
 
   <view class="widget-building2-container margin-top">
     <view class="widget-building2-title">微软苏州 #B26 大楼建筑预览</view>

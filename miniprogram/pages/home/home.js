@@ -13,12 +13,15 @@ const {
   fetchStockData,
   fetchBuilding2Progress,
   fetchFoodMenus,
-  fetchWeworkParkingBooking
+  fetchWeworkParkingBooking,
+  fetchBanners
 } = require("../../repository/dashboardRepo");
 const {
   msftBoost
 } = require("../../repository/exploreRepo");
-const { fetchUserInfo } = require("../../repository/userRepo");
+const {
+  fetchUserInfo
+} = require("../../repository/userRepo");
 const {
   navigateToWechatGroup,
   navigateToActivityDetail,
@@ -61,6 +64,7 @@ Component({
     canteenStartDateStr: '2021/11/19',
     canteenEndDateStr: '2022/1/30',
     activeBusCount: 0,
+    bannerExpanded: false,
   },
 
   lifetimes: {
@@ -81,6 +85,7 @@ Component({
         welcomeMessage
       })
       this.fetchDashboardData();
+      this.fetchBanner();
     }
   },
 
@@ -143,6 +148,27 @@ Component({
     onGlossaryClicked() {
       navigateToGlossary();
     },
+    onBannerClicked: function () {
+      this.setData({
+        bannerExpanded: !this.data.bannerExpanded
+      });
+
+      wx.reportEvent("bannertap", {
+        "user_openid": this.data.userInfo._openid,
+        "toexpand": `${this.data.bannerExpanded}`
+      })
+    },
+    onBannerLinkClicked: function () {
+      wx.setClipboardData({
+        data: this.data.banner.link
+      }), wx.showToast({
+        title: "Link Copied"
+      });
+
+      wx.reportEvent("bannerbuttontap", {
+        "user_openid": this.data.userInfo._openid,
+      })
+    },
 
     onMsftBoostClicked() {
       const {
@@ -162,6 +188,16 @@ Component({
       wx.previewImage({
         urls: [this.data.building2LatestProgress.picture]
       })
+    },
+
+    fetchBanner: function () {
+      fetchBanners().then(res => {
+        if (res && 0 != res.length) {
+          this.setData({
+            banner: res[0]
+          })
+        }
+      });
     },
 
     fetchDashboardData() {

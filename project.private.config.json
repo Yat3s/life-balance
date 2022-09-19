@@ -91,6 +91,13 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/gloassaryAdmin/gloassaryAdmin",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

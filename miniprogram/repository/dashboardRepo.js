@@ -178,3 +178,9 @@ export function cancelWeworkParkingBooking(id) {
   }
   return cloudFunctionCall(FUNCTION_NAME, 'cancelWeworkParkingBooking', data);
 }
+
+export function fetchBanners() {
+  return cloudCall(db.collection("banners").where({
+      expireDate: _.gte(Date.now())
+  }).get(), "fetchBanners");
+}

@@ -8,7 +8,7 @@ page {
 }
 
 .toolbar {
-  width: 100%; 
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -16,12 +16,43 @@ page {
 }
 
 .appbar {
-  position: fixed; 
-  width: 100%; 
+  position: fixed;
+  width: 100%;
   z-index: 1;
   display: flex;
   flex-direction: column;
   background: white;
+}
+
+.banner-container,
+.banner-container-expanded {
+  border-radius: 24rpx;
+  overflow: hidden;
+  transition: max-height 2s;
+  width: 100%;
+}
+
+.banner-container {
+  max-height: 500rpx;
+}
+
+.banner-container-expanded {
+  max-height: 2000rpx;
+}
+
+.banner-copy-link-button {
+  background: #000;
+  border-radius: 40rpx;
+  color: #fff;
+  font-size: 14pt;
+  font-weight: 700;
+  padding: 12rpx 32rpx;
+  text-align: center;
+  width: 100%;
+}
+
+.banner-img {
+  width: 100%;
 }
 
 .main {
@@ -252,7 +283,8 @@ page {
   color: rgb(145, 145, 145);
 }
 
-.widget-shuttle-bus-status-active,  .widget-shuttle-bus-status-pending {
+.widget-shuttle-bus-status-active,
+.widget-shuttle-bus-status-pending {
   width: 20rpx;
   height: 20rpx;
   border-radius: 50%;

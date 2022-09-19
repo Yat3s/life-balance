@@ -4,34 +4,46 @@ cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
 });
 const db = cloud.database();
+const _ = db.command;
+const DATABASE = 'glossaries';
 
 exports.main = async (query, context) => {
-  const _ = db.command
-
-  if (!query) {
-    const result = await db.collection('glossaries').get()
-    return result.data
+  if (!Number.isInteger(query.pageSize) || !Number.isInteger(query.pageNumber) || query.pageSize <= 0 || query.pageNumber < 1) {
+    const result = [];
+    return result;
   }
-  else {
-    const result = await db.collection('glossaries').where(_.or([
+
+  const skipItems = query.pageSize * (query.pageNumber - 1);
+  if (!query.keyword) {
+    const result = await db.collection(DATABASE)
+      .skip(skipItems)
+      .limit(query.pageSize)
+      .get();
+    return result.data;
+  }
+
+  const result = await db.collection(DATABASE)
+    .where(_.or([
       {
         synonyms: {
-          $regex: '.*' + query,
+          $regex: query.keyword,
           $options: 'i'
         }
       },
       {
-        fullname: {
-          $regex: '.*' + query,
+        name: {
+          $regex: query.keyword,
           $options: 'i'
         }
       }
-    ])).field({
+    ]))
+    .skip(skipItems)
+    .limit(query.pageSize)
+    .field({
       _id: true,
       synonyms: true,
-      fullname: true,
-      description: true
-    }).get()
-    return result.data
-  }
+      name: true,
+      definition: true
+    }).get();
+  return result.data;
 }
