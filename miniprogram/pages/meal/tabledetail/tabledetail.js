@@ -10,9 +10,11 @@ Page({
    */
   onLoad(options) {
     console.log(options);
-    const { user, area, index, time } = options;
+    const { user, area, index, time, gender } = options;
+    
     this.setData({
       user:user,
+      gender:gender == 1? "他":"她",
       area:area,
       index:index,
       date:time,

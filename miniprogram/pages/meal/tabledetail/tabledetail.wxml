@@ -5,7 +5,7 @@
 
 <view class="selection-msg-container">
   <view class="selection-text-container" bindtap='bindShowMsg'>
-    <text class="selection-text"> {{user}} 正在这里疯狂啃饭，快去找他吧！</text>
+    <text class="selection-text"> {{user}} 正在这里疯狂啃饭，快去找{{gender}}吧！</text>
   </view>
 </view>
 

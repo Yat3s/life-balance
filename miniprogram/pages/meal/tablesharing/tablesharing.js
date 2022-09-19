@@ -108,7 +108,7 @@ Page({
     console.log("onShareAppMessage:" + table + ":" + now)
     return {
       title: 'Canteen Table:' + table,
-      path: '/pages/meal/tabledetail/tabledetail?area='+this.data.area+'&index='+this.data.index+'&user='+this.data.userInfo.nickName+'&time='+formatDate(now)
+      path: '/pages/meal/tabledetail/tabledetail?area='+this.data.area+'&index='+this.data.index+'&user='+this.data.userInfo.nickName+'&gender='+this.data.userInfo.gender+'&time='+formatDate(now)
     }
   },
 
