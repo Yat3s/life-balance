@@ -24,18 +24,19 @@
   </view>
 
   <view class="table-img-container">
-    <scroll-view class="scroll-view_H" scroll-x="true" style="width: 100%">
+    <scroll-view class="scroll-view_H" scroll-x="true" scroll-y="true" style="width: 100%">
       <view class="scroll-view-item_H">
-          <!-- canteen seat img
-                  <image class="table-image" mode="scaleToFill" wx:if="{{tableConfirmed}}" src='cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/app-assets/canteen-pics/{{area}}{{index}}.png'/>
-          -->
-          <view bindtouchmove="touchmoveCallback" bindtouchstart="touchstartCallback">
-            <image mode="aspectFit" wx:if="{{selecting}}" src='cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/app-assets/canteen-pics/Default.png'
-              style="width: {{ touch.scaleWidth }}px;height: {{ touch.scaleHeight }}px" bindload="bindload"/>
+        <canvas id="myCanvas" type="2d" style="width: {{ touch.scaleWidth }}px;height: {{ touch.scaleHeight }}px" bindtouchmove="touchmoveCallback" bindtouchstart="touchstartCallback"></canvas>
 
-            <image mode="aspectFit" wx:if="{{tableConfirmed}}" src="cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/app-assets/canteen-pics/{{area}}{{index}}.png" 
-              style="width: {{ touch.scaleWidth }}px;height: {{ touch.scaleHeight }}px" bindload="bindload"/>
-          </view>
+        <!--    
+        <view bindtouchmove="touchmoveCallback" wx:if="{{selecting}}" bindtouchstart="touchstartCallback">
+            <image mode="aspectFit" src='cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/app-assets/canteen-pics/Default.png'
+              style="width: {{ touch.scaleWidth }}px;height: {{ touch.scaleHeight }}px" bindload="bindload" id = "tableImage"/>
+
+              <image mode="aspectFit" wx:if="{{tableConfirmed}}" src="cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/app-assets/canteen-pics/{{area}}{{index}}.png" 
+              style="width: {{ touch.scaleWidth }}px;height: {{ touch.scaleHeight }}px" bindload="bindload" id = "tableImage"/>
+          </view>      
+        -->
       </view>
     </scroll-view>
   </view>
