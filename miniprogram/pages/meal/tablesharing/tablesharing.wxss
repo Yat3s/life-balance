@@ -60,10 +60,15 @@ page {
   border-radius: 40rpx;
   height: 45vh;
   border: 8rpx solid var(--primary-color);
+  overflow: scroll;
+}
+
+.table-map-scroll-window {
+  width: 150%;
 }
 
 .table-map-image {
-  border-radius: 40rpx;
+  height: 45vh;
   width: 100%;
 }
 
@@ -105,7 +110,8 @@ page {
   bottom: 0px;
   width: 100%;
   background-color: white;
-  border-radius: 100rpx;
+  border-radius: 40rpx;
+  overflow: hidden;
 }
 
 .table-picker-view {

@@ -23,8 +23,8 @@
   </view>
 
   <scroll-view class="table-map-container" scroll-x="true">
-    <view bindtouchmove="touchmoveCallback" bindtouchstart="touchstartCallback">
-      <image style="width: {{touch.scaleWidth}}px; height: {{touch.scaleHeight}}px" bindload="bindload" class="table-map-image" mode="aspectFill" src="https://canteenseat.blob.core.windows.net/canteenseat/{{area}}{{index}}.png" />
+    <view class="table-map-scroll-window" bindtouchmove="touchmoveCallback" bindtouchstart="touchstartCallback">
+      <image style="width: {{touch.scaleWidth}}px; height: {{touch.scaleHeight}}px" bindload="bindload" class="table-map-image" mode="aspectFill" src="cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/app-assets/canteen-pics/{{area}}{{index}}.png" />
     </view>
   </scroll-view>
 
