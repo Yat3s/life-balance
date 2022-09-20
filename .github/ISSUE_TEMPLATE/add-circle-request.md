@@ -7,9 +7,8 @@ assignees: Yat3s
 
 ---
 
-Please ensure the following requirements before raising your request
-- [ ] This Circle only serves Microsoft
-- [ ] Invited admin(Wechat ID: **4645643**) to Circle's Wechat group
+# You must know!
+Please invited admin(Wechat ID: **4645643**) to Circle's Wechat group before raising your request
 
 ### Circle name(displayed on Life Balance)
 [Circle name]
