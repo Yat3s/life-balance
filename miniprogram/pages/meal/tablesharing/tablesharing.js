@@ -49,6 +49,43 @@ Page({
     console.log("distance:"+this.data.touch.distance);
   },
 
+  scaleUp: function(e) {
+    if (this.data.touch.scale <= 2)
+    {
+      const newScale = this.data.touch.scale + 0.5
+      this.scale(newScale)
+    }
+  },
+
+  scaleDown: function(e) {
+    if (this.data.touch.scale >= 1)
+    {
+      const newScale = this.data.touch.scale - 0.5
+      this.scale(newScale)
+    }
+  },
+
+  scaleChange(e) {
+    console.log(e)
+    this.scale(e.detail.value)
+  },
+
+  scale(newScale) {
+    let touch = this.data.touch
+    let scaleWidth = newScale * touch.baseWidth
+    let scaleHeight = newScale * touch.baseHeight
+    // 赋值 新的 => 旧的
+    this.setData({
+       //'touch.distance': distance,
+       'touch.scale': newScale,
+       'touch.scaleWidth': scaleWidth,
+       'touch.scaleHeight': scaleHeight,
+       //'touch.diff': distanceDiff
+    })
+
+    console.log(this.data.touch)
+  },
+
   touchmoveCallback: function(e) {
     let touch = this.data.touch
     // 单手指缩放我们不做任何操作
@@ -87,25 +124,25 @@ Page({
   },
 
   bindShowMsg() {
-    if (this.data.selecting) {
-      wx.setBackgroundColor({
-        backgroundColor:"#F5F5F5"
-      })
-    }
-
     this.setData({
       selecting: !this.data.selecting,
-      tableConfirmed:this.data.selecting
     })
     
     // re-select
-    if (this.data.tableSelected) {
+    if (!this.data.tableConfirmed) {
       this.setData({
         area: "",
         index: "",
+      })
+    }
+    if (this.data.selecting) {
+      this.setData({
+        area: "A",
+        index: "11",
         tableConfirmed: false,
       })
     }
+
     console.log(this.data.tableMap);
   },
 

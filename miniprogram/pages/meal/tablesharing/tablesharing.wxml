@@ -8,9 +8,9 @@
 <view>
 
   <view class="selection-msg-container">
-    <view class="selection-text-container" bindtap='bindShowMsg'>
+    <view class="selection-text-container">
       <text class="selection-text" wx:if="{{!tableConfirmed}}">请选择你的座位:</text>
-      <text class="selection-text" wx:if="{{tableConfirmed}}"> {{userInfo.nickName}} 正在这里疯狂啃饭, 快去找他吧！</text>
+      <text class="selection-text" wx:if="{{tableConfirmed}}"> {{userInfo.nickName}} 正在这里疯狂啃饭, 快去找 Ta 吧！</text>
     </view>
   </view>
 
@@ -23,20 +23,14 @@
     </view>
   </view>
 
-  <view class="table-img-container">
+  <view class="table-img-container" bindtap='bindShowMsg'>
+    <view class="slider-view">
+      <slider bindchange="scaleChange" min="0.4" max="2.5" value = "1" step="0.1"
+      activeColor="#B193F0"/>
+    </view>
     <scroll-view class="scroll-view_H" scroll-x="true" scroll-y="true" style="width: 100%">
       <view class="scroll-view-item_H">
-        <canvas id="myCanvas" type="2d" style="width: {{ touch.scaleWidth }}px;height: {{ touch.scaleHeight }}px" bindtouchmove="touchmoveCallback" bindtouchstart="touchstartCallback"></canvas>
-
-        <!--    
-        <view bindtouchmove="touchmoveCallback" wx:if="{{selecting}}" bindtouchstart="touchstartCallback">
-            <image mode="aspectFit" src='cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/app-assets/canteen-pics/Default.png'
-              style="width: {{ touch.scaleWidth }}px;height: {{ touch.scaleHeight }}px" bindload="bindload" id = "tableImage"/>
-
-              <image mode="aspectFit" wx:if="{{tableConfirmed}}" src="cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/app-assets/canteen-pics/{{area}}{{index}}.png" 
-              style="width: {{ touch.scaleWidth }}px;height: {{ touch.scaleHeight }}px" bindload="bindload" id = "tableImage"/>
-          </view>      
-        -->
+        <canvas id="myCanvas" type="2d" style="width: {{ touch.scaleWidth }}px;height: {{ touch.scaleHeight }}px" ></canvas>
       </view>
     </scroll-view>
   </view>
@@ -60,6 +54,6 @@
   </view>
 
   <view class="share-buttion-container">
-    <button class="share-button button-common" open-type="share"><text class="share-text">Share</text></button>
+    <button wx:if="{{tableConfirmed}}" class="share-button button-common" open-type="share"><text class="share-text">Share</text></button>
   </view>
 </view>
