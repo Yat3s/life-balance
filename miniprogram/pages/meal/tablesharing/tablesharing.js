@@ -22,14 +22,15 @@ Page({
       D: [11, 12, 13, 14, 21, 22, 23, 31, 32, 33, 41, 42, 43, 51, 52, 53, 61],
       VIP: [1, 2]
     },
-    tableMap1:{
+    // todo replace with real data
+    tableCoords:{
       A: {"11": [40, 71], "12": [87, 75]},
       B: {"11": [45, 98], "12": [45, 68]},
       C: {"11": [45, 68], "12": [75, 168]},
       D: {"11": [55, 68], "12": [45, 68]},
       VIP:{"1": [600, 350], "2": [800, 400]}
     },
-    touch: {
+    map: {
       scale: 1,
       baseWidth: 814,
       baseHeight: 457,
@@ -44,17 +45,17 @@ Page({
   },
 
   scale(newScale) {
-    let touch = this.data.touch
-    let scaleWidth = newScale * touch.baseWidth
-    let scaleHeight = newScale * touch.baseHeight
+    let map = this.data.map
+    let scaleWidth = newScale * map.baseWidth
+    let scaleHeight = newScale * map.baseHeight
 
     this.setData({
-       'touch.scale': newScale,
-       'touch.scaleWidth': scaleWidth,
-       'touch.scaleHeight': scaleHeight,
+       'map.scale': newScale,
+       'map.scaleWidth': scaleWidth,
+       'map.scaleHeight': scaleHeight,
     })
 
-    console.log(this.data.touch)
+    console.log(this.data.map)
   },
 
   bindShowMsg() {
@@ -109,7 +110,7 @@ Page({
 
   drawImage() {
     // 通过 SelectorQuery 获取 Canvas 节点
-    const touch = this.data.touch
+    const map = this.data.map
     wx.createSelectorQuery()
     .select('#myCanvas')
     .fields({
@@ -120,8 +121,8 @@ Page({
         console.log(res)
         console.log(this.data.imagePath)
 
-        const width = touch.baseWidth
-        const height = touch.baseHeight 
+        const width = map.baseWidth
+        const height = map.baseHeight 
         console.log("canvas width:" + width + "height: " + height)
 
         const canvas = res[0].node
@@ -137,7 +138,6 @@ Page({
         const img = canvas.createImage()
 
         img.onload = (e) => {
-            console.log(ctx)
             ctx.drawImage(img, 0, 0)
             console.log("drwa image")
         }
@@ -191,20 +191,16 @@ Page({
           size: true,
         })
         .exec((res) => {
-          console.log(res)
-    
           const canvas = res[0].node
           const ctx = canvas.getContext('2d')
-          const obj = this.data.tableMap1[this.data.area]
-          console.log(obj)
+          const obj = this.data.tableCoords[this.data.area]
+
           const cords = obj[this.data.index]
-          if (cords == undefined)
-          {
+          if (cords == undefined) {
               cords = [100, 100]
           }
           console.log(cords)
           console.log("draw arrow")
-
           drawAarrowFunc(ctx, 256, 0, cords[0], cords[1])
         })
   },

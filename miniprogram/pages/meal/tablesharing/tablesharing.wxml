@@ -23,13 +23,13 @@
   </view>
 
   <view class="slider-view">
-      <slider bindchange="scaleChange" min="0.4" max="1.5" value = "{{touch.scale}}" step="0.05"
+      <slider bindchange="scaleChange" min="0.4" max="1.5" value = "{{map.scale}}" step="0.05"
       activeColor="#B193F0"/>
   </view>
 
   <scroll-view class="table-map-container" scroll-x="true" scroll-y="true" style="width: 100%" bindtap='bindShowMsg'>
       <view class="scroll-view-item_H">
-        <canvas id="myCanvas" type="2d" style="width: {{ touch.scaleWidth }}px;height: {{ touch.scaleHeight }}px" ></canvas>
+        <canvas id="myCanvas" type="2d" style="width: {{ map.scaleWidth }}px;height: {{ map.scaleHeight }}px" ></canvas>
       </view>
   </scroll-view>
 
