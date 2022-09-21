@@ -130,3 +130,19 @@ page {
   margin-top: 60rpx;
   margin-bottom: 60rpx;
 }
+
+.table-scale-text
+{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 50px;
+  /* identical to box height */
+  color: black;
+}
+
+.slider-view {
+  margin-left: 5px;
+  margin-right: 5px;
+}

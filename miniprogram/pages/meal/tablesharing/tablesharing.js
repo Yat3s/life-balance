@@ -8,6 +8,7 @@ Page({
    * Page initial data
    */
   data: {
+    imagePath:undefined,
     userInfo:undefined,
     tableConfirmed: false,
     selecting: true,
@@ -21,92 +22,65 @@ Page({
       D: [11, 12, 13, 14, 21, 22, 23, 31, 32, 33, 41, 42, 43, 51, 52, 53, 61],
       VIP: [1, 2]
     },
-    touch: {
-      distance: 0,
+    // todo replace with real data
+    tableCoords:{
+      A: {"11": [40, 71], "12": [87, 75]},
+      B: {"11": [45, 98], "12": [45, 68]},
+      C: {"11": [45, 68], "12": [75, 168]},
+      D: {"11": [55, 68], "12": [45, 68]},
+      VIP:{"1": [600, 350], "2": [800, 400]}
+    },
+    map: {
       scale: 1,
-      baseWidth: null,
-      baseHeight: null,
-      scaleWidth: null,
-      scaleHeight: null
+      baseWidth: 814,
+      baseHeight: 457,
+      scaleWidth: 814,
+      scaleHeight: 457
     }
   },
 
-  touchstartCallback: function(e) {
-    // 单手指缩放开始，也不做任何处理
-    if(e.touches.length == 1) return
-    console.log('双手指触发开始')
-    // 注意touchstartCallback 真正代码的开始
-    // 一开始我并没有这个回调函数，会出现缩小的时候有瞬间被放大过程的bug
-    // 当两根手指放上去的时候，就将distance 初始化。
-    let xMove = e.touches[1].clientX - e.touches[0].clientX;
-    let yMove = e.touches[1].clientY - e.touches[0].clientY;
-    let distance = Math.sqrt(xMove * xMove + yMove * yMove);
-    this.setData({
-       'touch.distance': distance,
-    })
+  scaleChange(e) {
+    console.log(e)
+    this.scale(e.detail.value)
   },
 
-  touchmoveCallback: function(e) {
-    let touch = this.data.touch
-    // 单手指缩放我们不做任何操作
-    if(e.touches.length == 1) return
-    console.log('双手指运动')
-    let xMove = e.touches[1].clientX - e.touches[0].clientX;
-    let yMove = e.touches[1].clientY - e.touches[0].clientY;
-    // 新的 ditance
-    let distance = Math.sqrt(xMove * xMove + yMove * yMove);
-    let distanceDiff = distance - touch.distance;
-    let newScale = touch.scale + 0.005 * distanceDiff
-    // 为了防止缩放得太大，所以scale需要限制，同理最小值也是
-    if(newScale >= 3) {
-        newScale = 3
-    }
-    if(newScale <= 0.4) {
-        newScale = 0.4
-    }
-    let scaleWidth = newScale * touch.baseWidth
-    let scaleHeight = newScale * touch.baseHeight
-    // 赋值 新的 => 旧的
-    this.setData({
-       'touch.distance': distance,
-       'touch.scale': newScale,
-       'touch.scaleWidth': scaleWidth,
-       'touch.scaleHeight': scaleHeight,
-       'touch.diff': distanceDiff
-    })
-  },
+  scale(newScale) {
+    let map = this.data.map
+    let scaleWidth = newScale * map.baseWidth
+    let scaleHeight = newScale * map.baseHeight
 
-  bindload: function(e) {
-    // bindload 这个api是<image>组件的api类似<img>的onload属性
     this.setData({
-        'touch.baseWidth': e.detail.width,
-        'touch.baseHeight': e.detail.height,
-        'touch.scaleWidth': e.detail.width,
-        'touch.scaleHeight': e.detail.height
+       'map.scale': newScale,
+       'map.scaleWidth': scaleWidth,
+       'map.scaleHeight': scaleHeight,
     })
+
+    console.log(this.data.map)
   },
 
   bindShowMsg() {
-    if (this.data.selecting) {
-      wx.setBackgroundColor({
-        backgroundColor:"#F5F5F5"
-      })
-    }
-
     this.setData({
       selecting: !this.data.selecting,
-      tableConfirmed:this.data.selecting
     })
     
     // re-select
-    if (this.data.tableSelected) {
+    if (!this.data.tableConfirmed) {
       this.setData({
         area: "",
         index: "",
+      })
+    }
+
+    if (this.data.selecting) {
+      this.setData({
+        area: "A",
+        index: "11",
         tableConfirmed: false,
       })
     }
-    console.log(this.data.tableMap);
+
+    this.drawImage()
+    this.scale(0.8)
   },
 
   /**
@@ -117,6 +91,133 @@ Page({
       this.setData({
         userInfo
       })
+    })
+
+    this.drawImage()
+    this.scale(0.8)
+  },
+
+
+  onTableConfirmed(e) {
+    console.log("onTableConfirmed")
+    this.setData({
+        tableConfirmed:true,
+        selecting: false
+    })
+    this.drawArrow()
+    this.scale(0.8)
+  },
+
+  drawImage() {
+    // 通过 SelectorQuery 获取 Canvas 节点
+    const map = this.data.map
+    wx.createSelectorQuery()
+    .select('#myCanvas')
+    .fields({
+        node: true,
+        size: true,
+    })
+    .exec((res) => {
+        console.log(res)
+        console.log(this.data.imagePath)
+
+        const width = map.baseWidth
+        const height = map.baseHeight 
+        console.log("canvas width:" + width + "height: " + height)
+
+        const canvas = res[0].node
+        const ctx = canvas.getContext('2d')
+    
+        const dpr = wx.getSystemInfoSync().pixelRatio
+        console.log("dpr: "+ dpr)
+
+        canvas.width = width * dpr
+        canvas.height = height * dpr
+        ctx.scale(dpr, dpr)
+    
+        const img = canvas.createImage()
+
+        img.onload = (e) => {
+            ctx.drawImage(img, 0, 0)
+            console.log("drwa image")
+        }
+
+        const setImagePath = (path) => {
+            this.setData({
+                imagePath : path
+            })
+
+            console.log("this.data.imagePath:" + this.data.imagePath)
+        }
+
+        if (this.data.imagePath == undefined) {
+            wx.getImageInfo({
+                src: 'cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/app-assets/canteen-pics/Default.png',
+                success: function(res) {
+                    img.src = res.path
+                    setImagePath(res.path)
+                }
+            })
+        }
+        else {
+            img.src = this.data.imagePath
+        }
+    })
+  },
+
+  drawArrow()
+  {
+    const drawAarrowFunc = (context, fromx, fromy, tox, toy) => {
+        var headlen = 10; // length of head in pixels
+        var dx = tox - fromx;
+        var dy = toy - fromy;
+        var angle = Math.atan2(dy, dx);
+    
+        context.beginPath()
+        context.moveTo(fromx, fromy);
+        context.lineTo(tox, toy);
+        context.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
+        context.moveTo(tox, toy);
+        context.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+        context.strokeStyle = "red"
+        context.lineWidth = 4
+        context.stroke()
+    };
+    
+      wx.createSelectorQuery()
+        .select('#myCanvas')
+        .fields({
+          node: true,
+          size: true,
+        })
+        .exec((res) => {
+          const canvas = res[0].node
+          const ctx = canvas.getContext('2d')
+          const obj = this.data.tableCoords[this.data.area]
+
+          let coords = obj[this.data.index]
+          if (coords == undefined) {
+              coords = [100, 100]
+          }
+          console.log(coords)
+          console.log("draw arrow")
+          drawAarrowFunc(ctx, 256, 0, coords[0], coords[1])
+        })
+  },
+
+  onTablePickerChange(e)
+  {
+    var val = e.detail.value;
+
+    let { areas, tableMap } = this.data;
+    var area = areas[val[0]];
+    var index = tableMap[area][val[1]];
+    console.log(area + index)
+
+    this.setData({
+      area,
+      index,
+      selecting: true,
     })
   },
 
@@ -173,29 +274,5 @@ Page({
       title: 'Canteen Table:' + table,
       path: '/pages/meal/tabledetail/tabledetail?area='+this.data.area+'&index='+this.data.index+'&user='+this.data.userInfo.nickName+'&gender='+this.data.userInfo.gender+'&time='+formatDate(now)
     }
-  },
-
-  onTableConfirmed(e) {
-    console.log("onTableConfirmed")
-    this.setData({
-      tableConfirmed:true,
-      selecting: false
-    })
-  },
-
-  onTablePickerChange(e)
-  {
-    var val = e.detail.value;
-
-    let { areas, tableMap } = this.data;
-    var area = areas[val[0]];
-    var index = tableMap[area][val[1]];
-    console.log(area + index)
-
-    this.setData({
-      area,
-      index,
-      selecting: true,
-    })
-  },
+  }
 })
