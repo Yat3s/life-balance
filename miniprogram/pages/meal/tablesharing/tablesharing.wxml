@@ -1,64 +1,44 @@
 <!--pages/meal/tablesharing/tablesharing.wxml-->
-<toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
 
-<view class="title">
-  <text>Share Your Seat</text>
-</view>
+<toolbar isBack="{{true}}" bgColor="bg-white" />
 
-<view>
-
-  <view class="selection-msg-container">
-    <view class="selection-text-container" bindtap='bindShowMsg'>
-      <text class="selection-text" wx:if="{{!tableConfirmed}}">请选择你的座位:</text>
-      <text class="selection-text" wx:if="{{tableConfirmed}}"> {{userInfo.nickName}} 正在这里疯狂啃饭, 快去找他吧！</text>
-    </view>
+<view class="main-container">
+  <view class="title">Share Your Seat</view>
+  <view class="sub-title">
+    {{tableConfirmed ? userInfo.nickName + " 正在这里疯狂啃饭, 快去找他吧！" : "请选择你的座位:"}}
   </view>
 
   <view class="table-box-container">
-    <view class="table-box table-box-area">
-      <text class="table-number-text">{{area}}</text>
-    </view>
-    <view class="table-box table-box-index">
-      <text class="table-number-text">{{index}}</text>
-    </view>
+    <text class="table-box table-box-area">{{area}}</text>
+    <text class="table-box table-box-index">{{index}}</text>
   </view>
 
-  <view class="table-img-container">
-    <scroll-view class="scroll-view_H" scroll-x="true" style="width: 100%">
-      <view class="scroll-view-item_H">
-          <!-- canteen seat img
-                  <image class="table-image" mode="scaleToFill" wx:if="{{tableConfirmed}}" src='cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/app-assets/canteen-pics/{{area}}{{index}}.png'/>
-          -->
-          <view bindtouchmove="touchmoveCallback" bindtouchstart="touchstartCallback">
-            <image mode="aspectFit" wx:if="{{selecting}}" src='cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/app-assets/canteen-pics/Default.png'
-              style="width: {{ touch.scaleWidth }}px;height: {{ touch.scaleHeight }}px" bindload="bindload"/>
-
-            <image mode="aspectFit" wx:if="{{tableConfirmed}}" src="cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/app-assets/canteen-pics/{{area}}{{index}}.png" 
-              style="width: {{ touch.scaleWidth }}px;height: {{ touch.scaleHeight }}px" bindload="bindload"/>
-          </view>
-      </view>
-    </scroll-view>
+  <view class="area-tab-container">
+    <text class="area-tab-box">全图</text>
+    <text class="area-tab-box">A 区</text>
+    <text class="area-tab-box">B 区</text>
+    <text class="area-tab-box">C 区</text>
+    <text class="area-tab-box">D 区</text>
+    <text class="area-tab-box">VIP 区</text>
   </view>
+
+  <scroll-view class="table-map-container" scroll-x="true">
+    <view class="table-map-scroll-window" bindtouchmove="touchmoveCallback" bindtouchstart="touchstartCallback">
+      <image style="width: {{touch.scaleWidth}}px; height: {{touch.scaleHeight}}px" bindload="bindload" class="table-map-image" mode="aspectFill" src="cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/app-assets/canteen-pics/{{area}}{{index}}.png" />
+    </view>
+  </scroll-view>
+
+  <button style="width: 600rpx;" class="button" open-type="share">Share</button>
 </view>
 
-<view>
-  <view wx:if="{{selecting}}" class="selection-table-container">
-    <picker-view class="table-picker" wx:if="{{selecting}}" indicator-style="height: 50px;" value="{{value}}" bindchange="onTablePickerChange">
-      <picker-view-column class="table-picker-column">
-        <view wx:for="{{areas}}">{{item}} 区</view>
-      </picker-view-column>
-      <picker-view-column class="table-picker-column">
-        <view wx:for="{{tableMap[area]}}">{{item}}</view>
-      </picker-view-column>
-    </picker-view>
-    <view class="confirm-buttion-container">
-      <button class="button-common">
-        <text class="share-text" bindtap="onTableConfirmed">Confirm</text>
-      </button>
-    </view>
-  </view>
-
-  <view class="share-buttion-container">
-    <button class="share-button button-common" open-type="share"><text class="share-text">Share</text></button>
-  </view>
+<view class="table-picker-container" wx:if="{{selecting}}">
+  <picker-view class="table-picker-view" indicator-style="height: 50px;" value="{{value}}" bindchange="onTablePickerChange">
+    <picker-view-column>
+      <view class="table-picker-column-text" wx:for="{{areas}}">{{item}} 区</view>
+    </picker-view-column>
+    <picker-view-column>
+      <view class="table-picker-column-text" wx:for="{{tableMap[area]}}">{{item}}</view>
+    </picker-view-column>
+  </picker-view>
+  <button style="width: 600rpx;" class="button confirm-button" bindtap="onTableConfirmed">Confirm</button>
 </view>
