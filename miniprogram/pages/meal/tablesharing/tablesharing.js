@@ -183,8 +183,7 @@ Page({
         context.lineWidth = 4
         context.stroke()
     };
-
-      const scale = this.data.touch.scale
+    
       wx.createSelectorQuery()
         .select('#myCanvas')
         .fields({
@@ -199,9 +198,14 @@ Page({
           const obj = this.data.tableMap1[this.data.area]
           console.log(obj)
           const cords = obj[this.data.index]
+          if (cords == undefined)
+          {
+              cords = [100, 100]
+          }
           console.log(cords)
           console.log("draw arrow")
-          drawAarrowFunc(ctx, 256, 0, cords[0] * scale, cords[1] * scale)
+
+          drawAarrowFunc(ctx, 256, 0, cords[0], cords[1])
         })
   },
 
