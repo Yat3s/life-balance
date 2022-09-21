@@ -195,13 +195,13 @@ Page({
           const ctx = canvas.getContext('2d')
           const obj = this.data.tableCoords[this.data.area]
 
-          const cords = obj[this.data.index]
-          if (cords == undefined) {
-              cords = [100, 100]
+          let coords = obj[this.data.index]
+          if (coords == undefined) {
+              coords = [100, 100]
           }
-          console.log(cords)
+          console.log(coords)
           console.log("draw arrow")
-          drawAarrowFunc(ctx, 256, 0, cords[0], cords[1])
+          drawAarrowFunc(ctx, 256, 0, coords[0], coords[1])
         })
   },
 
