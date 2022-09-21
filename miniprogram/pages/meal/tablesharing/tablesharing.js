@@ -8,6 +8,7 @@ Page({
    * Page initial data
    */
   data: {
+    imagePath:undefined,
     userInfo:undefined,
     tableConfirmed: false,
     selecting: true,
@@ -22,7 +23,7 @@ Page({
       VIP: [1, 2]
     },
     tableMap1:{
-      A: {"11": [45, 68], "12": [45, 68]},
+      A: {"11": [40, 71], "12": [87, 75]},
       B: {"11": [45, 98], "12": [45, 68]},
       C: {"11": [45, 68], "12": [75, 168]},
       D: {"11": [55, 68], "12": [45, 68]},
@@ -37,22 +38,6 @@ Page({
     }
   },
 
-  scaleUp: function(e) {
-    if (this.data.touch.scale <= 2)
-    {
-      const newScale = this.data.touch.scale + 0.5
-      this.scale(newScale)
-    }
-  },
-
-  scaleDown: function(e) {
-    if (this.data.touch.scale >= 1)
-    {
-      const newScale = this.data.touch.scale - 0.5
-      this.scale(newScale)
-    }
-  },
-
   scaleChange(e) {
     console.log(e)
     this.scale(e.detail.value)
@@ -62,13 +47,11 @@ Page({
     let touch = this.data.touch
     let scaleWidth = newScale * touch.baseWidth
     let scaleHeight = newScale * touch.baseHeight
-    // 赋值 新的 => 旧的
+
     this.setData({
-       //'touch.distance': distance,
        'touch.scale': newScale,
        'touch.scaleWidth': scaleWidth,
        'touch.scaleHeight': scaleHeight,
-       //'touch.diff': distanceDiff
     })
 
     console.log(this.data.touch)
@@ -95,7 +78,8 @@ Page({
       })
     }
 
-    console.log(this.data.tableMap)
+    this.drawImage()
+    this.scale(0.8)
   },
 
   /**
@@ -108,22 +92,44 @@ Page({
       })
     })
 
+    this.drawImage()
+    this.scale(0.8)
+  },
+
+
+  onTableConfirmed(e) {
+    console.log("onTableConfirmed")
+    this.setData({
+        tableConfirmed:true,
+        selecting: false
+    })
+    this.drawArrow()
+    this.scale(0.8)
+  },
+
+  drawImage() {
     // 通过 SelectorQuery 获取 Canvas 节点
+    const touch = this.data.touch
     wx.createSelectorQuery()
-      .select('#myCanvas')
-      .fields({
+    .select('#myCanvas')
+    .fields({
         node: true,
         size: true,
-      })
-      .exec((res) => {
+    })
+    .exec((res) => {
         console.log(res)
-        const width = res[0].width
-        const height = res[0].height
-    
+        console.log(this.data.imagePath)
+
+        const width = touch.baseWidth
+        const height = touch.baseHeight 
+        console.log("canvas width:" + width + "height: " + height)
+
         const canvas = res[0].node
         const ctx = canvas.getContext('2d')
     
         const dpr = wx.getSystemInfoSync().pixelRatio
+        console.log("dpr: "+ dpr)
+
         canvas.width = width * dpr
         canvas.height = height * dpr
         ctx.scale(dpr, dpr)
@@ -133,20 +139,86 @@ Page({
         img.onload = (e) => {
             console.log(ctx)
             ctx.drawImage(img, 0, 0)
+            console.log("drwa image")
         }
 
-        //ctx.save()
+        const setImagePath = (path) => {
+            this.setData({
+                imagePath : path
+            })
 
-        wx.getImageInfo({
-            src: 'cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/app-assets/canteen-pics/Default.png',
-            success: function(res) {
-                console.log(res)
-                img.src = res.path
-            }
-          })
+            console.log("this.data.imagePath:" + this.data.imagePath)
+        }
 
-        console.log(img.src)
-      })
+        if (this.data.imagePath == undefined) {
+            wx.getImageInfo({
+                src: 'cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/app-assets/canteen-pics/Default.png',
+                success: function(res) {
+                    img.src = res.path
+                    setImagePath(res.path)
+                }
+            })
+        }
+        else {
+            img.src = this.data.imagePath
+        }
+    })
+  },
+
+  drawArrow()
+  {
+    const drawAarrowFunc = (context, fromx, fromy, tox, toy) => {
+        var headlen = 10; // length of head in pixels
+        var dx = tox - fromx;
+        var dy = toy - fromy;
+        var angle = Math.atan2(dy, dx);
+    
+        context.beginPath()
+        context.moveTo(fromx, fromy);
+        context.lineTo(tox, toy);
+        context.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
+        context.moveTo(tox, toy);
+        context.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
+        context.strokeStyle = "red"
+        context.lineWidth = 4
+        context.stroke()
+    };
+
+      const scale = this.data.touch.scale
+      wx.createSelectorQuery()
+        .select('#myCanvas')
+        .fields({
+          node: true,
+          size: true,
+        })
+        .exec((res) => {
+          console.log(res)
+    
+          const canvas = res[0].node
+          const ctx = canvas.getContext('2d')
+          const obj = this.data.tableMap1[this.data.area]
+          console.log(obj)
+          const cords = obj[this.data.index]
+          console.log(cords)
+          console.log("draw arrow")
+          drawAarrowFunc(ctx, 256, 0, cords[0] * scale, cords[1] * scale)
+        })
+  },
+
+  onTablePickerChange(e)
+  {
+    var val = e.detail.value;
+
+    let { areas, tableMap } = this.data;
+    var area = areas[val[0]];
+    var index = tableMap[area][val[1]];
+    console.log(area + index)
+
+    this.setData({
+      area,
+      index,
+      selecting: true,
+    })
   },
 
   /**
@@ -202,67 +274,5 @@ Page({
       title: 'Canteen Table:' + table,
       path: '/pages/meal/tabledetail/tabledetail?area='+this.data.area+'&index='+this.data.index+'&user='+this.data.userInfo.nickName+'&gender='+this.data.userInfo.gender+'&time='+formatDate(now)
     }
-  },
-
-  onTableConfirmed(e) {
-    console.log("onTableConfirmed")
-
-    const drawAarrow = (context, fromx, fromy, tox, toy) => {
-      var headlen = 10; // length of head in pixels
-      var dx = tox - fromx;
-      var dy = toy - fromy;
-      var angle = Math.atan2(dy, dx);
-
-      context.beginPath()
-      context.moveTo(fromx, fromy);
-      context.lineTo(tox, toy);
-      context.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
-      context.moveTo(tox, toy);
-      context.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
-      context.strokeStyle = "red"
-      context.lineWidth = 3
-      context.stroke();
-      context.endPath()
-  };
-
-  // 通过 SelectorQuery 获取 Canvas 节点
-  wx.createSelectorQuery()
-    .select('#myCanvas')
-    .fields({
-      node: true,
-      size: true,
-    })
-    .exec((res) => {
-      console.log(res)
-
-      const canvas = res[0].node
-      const ctx = canvas.getContext('2d')
-      const obj = this.data.tableMap1[this.data.area]
-      console.log(obj)
-      const cords = obj[this.data.index]
-      console.log(cords)
-      drawAarrow(ctx, 256, 0, cords[0], cords[1])
-    })
-
-    this.setData({
-      tableConfirmed:true,
-      selecting: false
-    })
-  },
-
-  onTablePickerChange(e)
-  {
-    var val = e.detail.value;
-
-    let { areas, tableMap } = this.data;
-    var area = areas[val[0]];
-    var index = tableMap[area][val[1]];
-    console.log(area + index)
-
-    this.setData({
-      area,
-      index,
-      selecting: true,
-    })
-  },
+  }
 })
