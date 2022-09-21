@@ -122,6 +122,8 @@ page {
 .table-picker-column-text {
   text-align: center;
   line-height: 100rpx;
+  font-weight: bold;
+  font-size: 14pt;
 }
 
 .confirm-button {
