@@ -33,7 +33,7 @@
   </view>
   <text class="table-date" wx:if="{{fromUser}}">Shared at {{date}}</text>
 
-  <button style="width: 600rpx;" class="button" open-type="share" wx:if="{{!fromUser}}">Share</button>
+  <button style="width: 600rpx;" class="button" open-type="share" wx:if="{{!fromUser && tableConfirmed}}">Share</button>
 </view>
 
 <view class="table-picker-container" wx:if="{{selecting}}">
