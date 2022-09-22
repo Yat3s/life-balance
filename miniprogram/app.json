@@ -22,7 +22,6 @@
     "pages/activity/activitypage",
     "pages/tools/glossary/glossary",
     "pages/meal/tablesharing/tablesharing",
-    "pages/meal/tabledetail/tabledetail",
     "pages/meal/meal",
     "pages/gloassaryAdmin/gloassaryAdmin"
   ],

@@ -101,7 +101,7 @@
         },
         {
           "name": "tabledetail",
-          "pathName": "pages/meal/tabledetail/tabledetail",
+          "pathName": "pages/meal/tablesharing/tablesharing",
           "query": "user=foolment&area=A&index=11&gender=1&time=2022-09-20",
           "launchMode": "default",
           "scene": null

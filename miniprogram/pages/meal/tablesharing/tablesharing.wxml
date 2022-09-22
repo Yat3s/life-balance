@@ -3,9 +3,9 @@
 <toolbar isBack="{{true}}" bgColor="bg-white" />
 
 <view class="main-container">
-  <view class="title">Share Your Seat</view>
-  <view class="sub-title">
-    {{tableConfirmed ? userInfo.nickName + " 正在这里疯狂啃饭, 快去找Ta吧！" : "请选择你的座位:"}}
+  <view class="title"  wx:if="{{!fromUser}}">Share Your Seat</view>
+  <view class="sub-title {{fromUser ? 'sub-title-margin' : ''}}">
+    {{tableConfirmed ? (fromUser ? fromUser : userInfo.nickName) + " 正在这里疯狂啃饭, 快去找Ta吧！" : "请选择你的座位:"}}
   </view>
 
   <view class="table-box-container">
@@ -13,7 +13,7 @@
     <text class="table-box table-box-index">{{index}}</text>
   </view>
 
-  <view class="area-tab-container">
+  <view class="area-tab-container" wx:if="{{!fromUser}}">
     <text class="area-tab-box">全图</text>
     <text class="area-tab-box">A 区</text>
     <text class="area-tab-box">B 区</text>
@@ -22,18 +22,18 @@
     <text class="area-tab-box">VIP 区</text>
   </view>
 
-  <view class="slider-view">
-      <slider bindchange="scaleChange" min="0.4" max="1.5" value = "{{map.scale}}" step="0.05"
-      activeColor="#B193F0"/>
-  </view>
-
   <scroll-view class="table-map-container" scroll-x="true" scroll-y="true" style="width: 100%" bindtap='bindShowMsg'>
-      <view class="scroll-view-item_H">
-        <canvas id="myCanvas" type="2d" style="width: {{ map.scaleWidth }}px;height: {{ map.scaleHeight }}px" ></canvas>
-      </view>
+    <view class="scroll-view-item_H">
+      <canvas id="myCanvas" type="2d" style="width: {{ map.scaleWidth }}px;height: {{ map.scaleHeight }}px"></canvas>
+    </view>
   </scroll-view>
 
-  <button style="width: 600rpx;" class="button" open-type="share">Share</button>
+  <view class="slider-view">
+    <slider bindchange="scaleChange" min="0.4" max="1.5" value="{{map.scale}}" step="0.05" activeColor="#B193F0" />
+  </view>
+  <text class="table-date" wx:if="{{fromUser}}">Shared at {{date}}</text>
+
+  <button style="width: 600rpx;" class="button" open-type="share" wx:if="{{!fromUser}}">Share</button>
 </view>
 
 <view class="table-picker-container" wx:if="{{selecting}}">
