@@ -11,25 +11,23 @@ Page({
     imagePath: undefined,
     userInfo: undefined,
     tableConfirmed: false,
-    selecting: true,
-    area: "A",
-    index: "11",
-    areas: ["A", "B", "C", "D", "VIP"],
-    tableMap: {
-      A: [11, 12, 21, 22, 23, 24, 25, 26, 31, 32, 33, 34, 35, 41, 42],
-      B: [11, 12, 13, 14, 15, 16, 21, 22, 23, 24, 25, 31, 32, 33, 34, 35, 41, 42, 43, 44, 45],
-      C: [11, 12, 13, 14, 21, 22, 23, 31, 32, 33, 41, 42, 51, 52, 53, 54],
-      D: [11, 12, 13, 14, 21, 22, 23, 31, 32, 33, 41, 42, 43, 51, 52, 53, 61],
-      VIP: [1, 2]
-    },
-    // todo replace with real data
-    tableCoords: {
-      A: { "11": [40, 71], "12": [87, 75] },
-      B: { "11": [45, 98], "12": [45, 68] },
-      C: { "11": [45, 68], "12": [75, 168] },
-      D: { "11": [55, 68], "12": [45, 68] },
-      VIP: { "1": [600, 350], "2": [800, 400] }
-    },
+    selecting: false,
+    area:"",
+    index:"",
+    areas:[],
+    tableMap:{},
+    tableCoords:{
+      "A":{
+        "11":["48.5","71"],"21":["48.5","107"],"31":["48.5","161"],"41":["48.5","198"],"12":["96.5","75"],"22":["96.5","101"],"32":["96.5","168"],"42":["96.5","193"],"23":["158","120"],"24":["194.5","120"],"25":["231","120"],"26":["266.5","120"],"33":["168.5","170"],"34":["222","170"],"35":["276","170"]},
+      "B":{
+        "11":["52","260"],"21":["52","306"],"31":["52","351"],"41":["52","395"],"12":["97.5","260"],"22":["97.5","306"],"32":["97.5","351"],"42":["97.5","395"],"13":["158","244"],"14":["190.5","244"],"15":["255","244"],"16":["285.5","244"],"23":["167","296"],"33":["167","331"],"24":["221","296"],"34":["221","331"],"25":["274.5","296"],"35":["274.5","331"],"43":["163","393"],"44":["220.5","393"],"45":["296","393"]},
+      "C":{
+        "11":["350","163"],"12":["381","163"],"13":["417","163"],"14":["453","163"],"21":["369.5","212"],"31":["369","238"],"22":["441","213"],"32":["441","238"],"23":["483.5","213"],"33":["483","238"],"41":["370","319"],"42":["463.5","319"],"51":["358","388"],"52":["398","388"],"53":["438","388"],"54":["478","388"]},
+      "D":{
+          "11":["557","167"],"12":["588","167"],"13":["625","167"],"14":["660","167"],"21":["553.5","234"],"22":["623.5","234"],"23":["667","234"],"31":["561.5","278"],"32":["623.5","278"],"33":["667","278"],"41":["550.5","344"],"42":["625","344"],"43":["666.5","344"],"51":["549.5","393"],"52":["625","390"],"53":["666.5","390"],"61":["593.5","370"]},
+      "VIP":{
+        "1": [750, 280], "2": [750, 380]}
+   },
     map: {
       scale: 1,
       baseWidth: 814,
@@ -59,6 +57,12 @@ Page({
   },
 
   bindShowMsg() {
+    if (this.data.fromUser)
+    {
+      console.log("this is a shared page")
+      return
+    }
+
     this.setData({
       selecting: !this.data.selecting,
     })
@@ -87,9 +91,29 @@ Page({
    * Lifecycle function--Called when page load
    */
   onLoad(options) {
+    const coords = this.data.tableCoords
+    const areas = Object.keys(coords)
+    let tableMap = Object.create(null)
+    areas.forEach(area => {
+      const tableNumbers = Object.keys(coords[area])
+      tableMap[area] = tableNumbers
+    });
+    console.log(tableMap)
+
+    this.setData({
+      areas : areas,
+      tableMap : tableMap
+    })
+
+    fetchUserInfo().then(userInfo => {
+      this.setData({
+        userInfo
+      })
+    })
+
+    this.drawImage()
 
     const { user, area, index, time } = options;
-
     if (user && area && index) {
       this.setData({
         fromUser: user,
@@ -100,18 +124,15 @@ Page({
         tableConfirmed: true,
         selecting: false
       });
+
+      this.drawImage(this.drawArrow)
+    }
+    else{
+      this.drawImage()
     }
 
-    fetchUserInfo().then(userInfo => {
-      this.setData({
-        userInfo
-      })
-    })
-
-    this.drawImage()
     this.scale(0.8)
   },
-
 
   onTableConfirmed(e) {
     console.log("onTableConfirmed")
@@ -123,7 +144,7 @@ Page({
     this.scale(0.8)
   },
 
-  drawImage() {
+  drawImage(drawArrow) {
     // 通过 SelectorQuery 获取 Canvas 节点
     const map = this.data.map
     wx.createSelectorQuery()
@@ -155,6 +176,9 @@ Page({
         img.onload = (e) => {
           ctx.drawImage(img, 0, 0)
           console.log("drwa image")
+          if (drawArrow != undefined) {
+            drawArrow()
+          }
         }
 
         const setImagePath = (path) => {
@@ -285,7 +309,7 @@ Page({
     console.log("onShareAppMessage:" + table + ":" + now)
     return {
       title: 'Canteen Table:' + table,
-      path: '/pages/meal/tablesharing/tablesharing?area=' + this.data.area + '&index=' + this.data.index + '&user=' + this.data.userInfo.nickName + '&gender=' + this.data.userInfo.gender + '&time=' + formatDate(now)
+      path: '/pages/meal/tablesharing/tablesharing?area=' + this.data.area + '&index=' + this.data.index + '&user=' + this.data.userInfo.nickName + '&time=' + formatDate(now)
     }
   }
 })

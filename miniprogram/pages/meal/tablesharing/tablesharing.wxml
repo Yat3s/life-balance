@@ -8,7 +8,7 @@
     {{tableConfirmed ? (fromUser ? fromUser : userInfo.nickName) + " 正在这里疯狂啃饭, 快去找Ta吧！" : "请选择你的座位:"}}
   </view>
 
-  <view class="table-box-container">
+  <view class="table-box-container" bindtap='bindShowMsg'>
     <text class="table-box table-box-area">{{area}}</text>
     <text class="table-box table-box-index">{{index}}</text>
   </view>
