@@ -85,29 +85,6 @@ Page({
    * Lifecycle function--Called when page load
    */
   onLoad(options) {
-
-    const { user, area, index, time } = options;
-
-    if (user && area && index) {
-      this.setData({
-        fromUser: user,
-        area: area,
-        index: index,
-        date: time,
-
-        tableConfirmed: true,
-        selecting: false
-      });
-    }
-
-    fetchUserInfo().then(userInfo => {
-      this.setData({
-        userInfo
-      })
-    })
-    this.drawImage()
-    this.scale(0.8)
-
     const coords = this.data.tableCoords
     const areas = Object.keys(coords)
     let tableMap = Object.create(null)
@@ -121,8 +98,35 @@ Page({
       areas : areas,
       tableMap : tableMap
     })
-  },
 
+    fetchUserInfo().then(userInfo => {
+      this.setData({
+        userInfo
+      })
+    })
+
+    this.drawImage()
+
+    const { user, area, index, time } = options;
+    if (user && area && index) {
+      this.setData({
+        fromUser: user,
+        area: area,
+        index: index,
+        date: time,
+
+        tableConfirmed: true,
+        selecting: false
+      });
+
+      this.drawImage(this.drawArrow)
+    }
+    else{
+      this.drawImage()
+    }
+
+    this.scale(0.8)
+  },
 
   onTableConfirmed(e) {
     console.log("onTableConfirmed")
@@ -134,7 +138,7 @@ Page({
     this.scale(0.8)
   },
 
-  drawImage() {
+  drawImage(drawArrow) {
     // 通过 SelectorQuery 获取 Canvas 节点
     const map = this.data.map
     wx.createSelectorQuery()
@@ -166,6 +170,9 @@ Page({
         img.onload = (e) => {
           ctx.drawImage(img, 0, 0)
           console.log("drwa image")
+          if (drawArrow != undefined) {
+            drawArrow()
+          }
         }
 
         const setImagePath = (path) => {
@@ -296,7 +303,7 @@ Page({
     console.log("onShareAppMessage:" + table + ":" + now)
     return {
       title: 'Canteen Table:' + table,
-      path: '/pages/meal/tablesharing/tablesharing?area=' + this.data.area + '&index=' + this.data.index + '&user=' + this.data.userInfo.nickName + '&gender=' + this.data.userInfo.gender + '&time=' + formatDate(now)
+      path: '/pages/meal/tablesharing/tablesharing?area=' + this.data.area + '&index=' + this.data.index + '&user=' + this.data.userInfo.nickName + '&time=' + formatDate(now)
     }
   }
 })
