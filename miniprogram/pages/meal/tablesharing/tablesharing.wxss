@@ -26,10 +26,15 @@ page {
   margin-left: 20rpx;
 }
 
+.sub-title-margin {
+  margin-top: 100rpx;
+}
+
 .table-box-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 60rpx;
 }
 
 .table-box {
@@ -85,7 +90,6 @@ page {
   align-items: center;
   flex-direction: row;
   justify-content: center;
-  margin-top: 60rpx;
   margin-bottom: 20rpx;
 }
 
@@ -131,8 +135,7 @@ page {
   margin-bottom: 60rpx;
 }
 
-.table-scale-text
-{
+.table-scale-text {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 700;
@@ -145,4 +148,12 @@ page {
 .slider-view {
   margin-left: 5px;
   margin-right: 5px;
+}
+
+.table-date {
+  margin-top: 40rpx;
+  margin-right: 20rpx;
+  margin-left: auto;
+  color: #B8B8B8;
+  font-size: 12pt;
 }
