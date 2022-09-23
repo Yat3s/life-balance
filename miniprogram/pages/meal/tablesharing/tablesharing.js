@@ -111,8 +111,6 @@ Page({
       })
     })
 
-    this.drawImage()
-
     const { user, area, index, time } = options;
     if (user && area && index) {
       this.setData({
