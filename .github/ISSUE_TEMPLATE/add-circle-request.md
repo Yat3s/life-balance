@@ -8,7 +8,7 @@ assignees: Yat3s
 ---
 
 # You must know!
-Please invited admin(Wechat ID: **4645643**) to Circle's Wechat group before raising your request
+Please invite admin(Wechat ID: **4645643**) to Circle's Wechat group before raising your request
 
 ### Circle name(displayed on Life Balance)
 [Circle name]
