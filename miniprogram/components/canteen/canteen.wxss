@@ -1,0 +1,73 @@
+.main {
+  padding: 36rpx;
+  border-radius: 40rpx;
+  background: #E8F9F5;
+}
+
+.icon {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.title {
+  font-weight: bold;
+  color: black;
+  font-size: 12pt;
+}
+
+.status-indicator-crowd,
+.status-indicator-normal,
+.status-indicator-free {
+  border-radius: 50%;
+  height: 28rpx;
+  width: 28rpx;
+}
+
+.status-indicator-crowd {
+  background: linear-gradient(90.2deg, #869361 5.07%, #FA0926 99.85%);
+}
+
+.status-indicator-normal {
+  background: linear-gradient(90.2deg, #D1B1A7 5.07%, #BD842F 99.85%);
+}
+
+.status-indicator-free {
+  background: linear-gradient(90.2deg, #C1D782 5.07%, #E3A341 99.85%);
+}
+
+.status-text-crowd,
+.status-text-normal,
+.status-text-free {
+  font-size: 9pt;
+  font-weight: bold;
+}
+
+.status-text-crowd {
+  color: #dd2e2e;
+}
+
+.status-text-normal {
+  color: #966e1a;
+}
+
+.status-text-free {
+  color: #c09d51;
+}
+
+.menu-title {
+  font-size: 11pt;
+  color: var(--textGrey);
+}
+
+.detail-button {
+  background: white;
+  font-size: 9pt;
+  color: var(--textGrey);
+  padding: 12rpx 24rpx;
+  border-radius: 60rpx;
+}
+
+.forward-icon {
+  width: 32rpx;
+  height: 32rpx;
+}

@@ -1,0 +1,30 @@
+.title {
+  font-size: 10pt;
+  font-weight: bold;
+  line-height: 10pt;
+  color: black;
+}
+
+.price {
+  font-size: 12pt;
+  line-height: 12pt;
+  font-weight: bold;
+  color: black;
+}
+.price-change {
+  font-size: 8pt;
+  line-height: 8pt;
+  margin-left: 4rpx;
+  color: rgb(155, 155, 155);
+}
+
+.marketcap {
+  font-size: 8pt;
+  line-height: 8pt;
+  color: var(--textGrey);
+}
+
+.icon {
+  width: 40rpx;
+  height: 40rpx;
+}

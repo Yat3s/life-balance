@@ -1,0 +1,20 @@
+<view class="main" bindtap="toMenuDetail">
+  <view class="flex align-center">
+    <image src="/images/ic_canteen.png" class="icon"></image>
+    <view class="title margin-left-sm">Canteen</view>
+    <view class="flex-1"></view>
+
+    <view wx:if="{{canteenStatus.status === 2}}" class="status-text-crowd">拥挤</view>
+    <view wx:if="{{canteenStatus.status === 1}}" class="status-text-normal">正常</view>
+    <view wx:if="{{canteenStatus.status === 0}}" class="status-text-free ">空闲</view>
+    <view wx:if="{{canteenStatus.status === 2}}" class="status-indicator-crowd margin-left-xs"></view>
+    <view wx:if="{{canteenStatus.status === 1}}" class="status-indicator-normal margin-left-xs"></view>
+    <view wx:if="{{canteenStatus.status === 0}}" class="status-indicator-free margin-left-xs"></view>
+  </view>
+  <view class="flex align-center justify-between margin-top">
+    <view class="menu-title single-line ">{{todayMenu.special}}</view>
+    <view class="detail-button flex align-center">菜单详情
+      <image class="forward-icon margin-left-xs" src="../../images/ic_widget_go.png"></image>
+    </view>
+  </view>
+</view>

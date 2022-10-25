@@ -1,0 +1,73 @@
+<view class="main">
+
+  <!-- Parking -->
+  <view bindtap="refresh">
+    <view class="flex justify-between">
+      <view class="flex align-center">
+        <image class="commute-icon" src="/images/ic_widget_parking.png"></image>
+        <view class="commute-title margin-left-sm">B25 Parking</view>
+      </view>
+
+      <image class="parking-refresh-icon" src="/images/ic_refresh.png"></image>
+    </view>
+
+    <view class="margin-top">
+      <!-- Parking underground -->
+      <view class="flex align-center">
+        <view class="parking-left-title">地下剩余</view>
+        <view class="parking-progress-container margin-left-xs flex justify-end">
+          <view class="parking-progress-indicator" style="width: {{undergroundIndicatorWidth}}"></view>
+        </view>
+
+        <view class="flex align-end margin-left-sm">
+          <view class="parking-left-count">{{parkingSpace.underground}}</view>
+          <view class="parking-all-count">/{{maxUndergroundSpaces}}</view>
+        </view>
+        <view class="flex-1"></view>
+
+        <!-- <view class="parking-predict-text margin-left-sm"><text class="cuIcon-alram"></text> 预计 09:32 停满</view> -->
+      </view>
+
+      <!-- Parking ground -->
+      <view class="flex align-center margin-top-sm">
+        <view class="parking-left-title">地上剩余</view>
+        <view class="parking-progress-container margin-left-xs flex justify-end">
+          <view class="parking-progress-indicator" style="width: {{groundSpaceIndicatorWidth}}"></view>
+        </view>
+
+        <view class="flex align-end margin-left-sm">
+          <view class="parking-left-count">{{parkingSpace.ground}}</view>
+          <view class="parking-all-count">/{{maxGroundSpaces}}</view>
+        </view>
+
+        <view class="flex-1"></view>
+
+        <!-- <view class="parking-predict-text margin-left-sm">预计 09:32 停满</view> -->
+      </view>
+    </view>
+
+  </view>
+
+  <!-- Divider or progress bar -->
+  <view class="margin-top divider-container center">
+    <view wx:if="{{loadingParkingSpace}}" class="cu-progress round xs striped active">
+      <view class="bg-blue" style="width:100%;"></view>
+    </view>
+
+    <view wx:if="{{!loadingParkingSpace}}" class="divider"></view>
+  </view>
+
+  <!-- Shuttle bugs -->
+  <view class="flex align-center margin-top-sm" bindtap="toShuttleBusDetail">
+    <image class="commute-icon" src="/images/ic_shuttle_bus.png"></image>
+    <view class="commute-title margin-left-sm">Shuttle Bus</view>
+    <view class="flex-1"></view>
+
+    <view class="detail-button flex align-center">路线详情
+
+      <image class="forward-icon margin-left-xs" src="../../images/ic_widget_go.png"></image>
+
+    </view>
+  </view>
+
+</view>

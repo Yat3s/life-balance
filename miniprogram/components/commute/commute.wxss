@@ -1,0 +1,87 @@
+/* components/commute/commute.wxss */
+
+.main {
+  padding: 36rpx;
+  border-radius: 40rpx;
+  background: linear-gradient(140deg, #E1EDF1 0%, #FAFBFC 100%);
+}
+
+.commute-icon {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.commute-title {
+  font-weight: bold;
+  color: black;
+  font-size: 12pt;
+}
+
+.parking-refresh-icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.parking-left-title {
+  color: var(--textGrey);
+  font-size: 10pt;
+}
+
+.parking-progress-container {
+  background: #DFDFDF;
+  border-radius: 36rpx;
+  height: 36rpx;
+  width: 200rpx;
+  overflow: hidden;
+}
+
+.parking-progress-indicator {
+  background: linear-gradient(97.82deg, #90ABF1 9.38%, #573189 95.98%);
+  border-radius: 36rpx;
+  height: 36rpx;
+  transition: width 1s; 
+}
+
+.parking-left-count {
+  font-weight: bold;
+  font-size: 16pt;
+  line-height: 16pt;
+  letter-spacing: 4rpx;
+  color: black;
+}
+
+.parking-all-count {
+  font-size: 9pt;
+  line-height: 9pt;
+  letter-spacing: 3rpx;
+  color: #cacaca;
+  margin-left: 6rpx;
+}
+
+.parking-predict-text {
+  font-size: 9pt;
+  color: var(--textGrey);
+}
+
+.divider {
+  height: 1rpx;
+  background-color: #e9e9e9;
+  width: 100%;
+}
+
+.divider-container {
+  height: 40rpx;
+}
+
+.detail-button {
+  background: white;
+  font-size: 9pt;
+  color: var(--textGrey);
+  padding: 12rpx 24rpx;
+  border-radius: 60rpx;
+}
+
+.forward-icon {
+  width: 32rpx;
+  height: 32rpx;
+}
