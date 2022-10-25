@@ -21,7 +21,6 @@ page {
   z-index: 1;
   display: flex;
   flex-direction: column;
-  background: white;
 }
 
 .banner-container,
@@ -68,12 +67,20 @@ page {
   margin-top: 20rpx;
 }
 
+.card-divider {
+  margin-top: 28rpx;
+}
+
+.stock-container {
+  margin-top: 32rpx;
+}
+
 .user-avatar {
   width: 80rpx;
   height: 80rpx;
-  border-radius: 50%;
+  border-radius: 20rpx;
   overflow: hidden;
-  border: #f1f1f1 solid 4rpx;
+  border: #cce0f7 solid 4rpx;
 }
 
 .widget-row {
@@ -106,196 +113,6 @@ page {
 
 .common-widget {
   margin-top: 60rpx;
-}
-
-.widget-container {
-  border-radius: var(--widgetBorderRadius);
-  padding: var(--widgetPadding);
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.widget-title {
-  font-size: 12pt;
-  line-height: 12pt;
-  color: black;
-  font-weight: bold;
-  margin-top: 20rpx;
-}
-
-.widget-go-detail-text {
-  font-size: 10pt;
-  color: #8a8a8a;
-}
-
-.widget-go-detail-icon {
-  width: 30rpx;
-  height: 30rpx;
-  margin-left: 4rpx;
-}
-
-/* MSFT */
-.widget-msft-container {
-  border-radius: 28rpx;
-  padding: 40rpx;
-  background: linear-gradient(93.65deg, #925838 4.19%, #561B7A 97.45%);
-}
-
-.widget-msft-title {
-  font-weight: bold;
-  font-size: 12pt;
-  line-height: 12pt;
-  color: white;
-}
-
-.widget-msft-price-dollar {
-  color: #dadada;
-}
-
-.widget-msft-icon {
-  width: 66rpx;
-  height: 66rpx;
-}
-
-.widget-msft-price {
-  font-size: 20pt;
-  font-weight: bold;
-  line-height: 20pt;
-  color: white;
-}
-
-.widget-msft-price-change {
-  color: #B0B0EA;
-  font-size: 8pt;
-}
-
-.widget-msft-mktcap {
-  color: #DFDFDF;
-  font-size: 8pt;
-  font-weight: bold;
-}
-
-.widget-msft-top1 {
-  font-size: 14pt;
-  font-weight: bold;
-  color: white;
-}
-
-.widget-msft-no-top1 {
-  font-size: 8pt;
-  color: white;
-}
-
-.widget-msft-boost {
-  color: white;
-  font-size: 8pt;
-  font-weight: bold;
-}
-
-/* Parking */
-.widget-parking-container {
-  background: linear-gradient(180deg, #E1EDF1 0%, #FBFCFC 100%);
-  margin-right: var(--widgetGap);
-}
-
-.widget-parking-place-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.widget-parking-place-icon {
-  width: 24rpx;
-  height: 24rpx;
-}
-
-.widget-parking-place-title {
-  color: var(--textGrey);
-  font-size: 8pt;
-  font-weight: bold;
-  line-height: 8pt;
-}
-
-.widget-parking-place-number {
-  color: black;
-  font-weight: bold;
-  font-size: 14pt;
-  line-height: 14pt;
-}
-
-.widget-parking-place-number-shimmer {
-  width: 60rpx;
-  height: 32rpx;
-  background: #dbdbdb;
-  border-radius: 4rpx;
-}
-
-.widget-parking-total {
-  font-size: 8pt;
-  font-weight: normal;
-  color: var(--textGrey);
-}
-
-/* Food menu */
-.widget-foodmenu-container {
-  background: #E8F9F5;
-}
-
-.widget-foodmenu-special {
-  font-size: 10pt;
-  line-height: 10pt;
-  flex: 1;
-  color: rgb(145, 145, 145);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-/* WeWork Parking */
-.widget-wework-parking-container {
-  background: #FFF2F5;
-}
-
-.widget-wework-parking-info {
-  min-height: 100rpx;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  font-size: 10pt;
-  line-height: 10pt;
-  color: rgb(145, 145, 145);
-}
-
-/* Shuttle Bus */
-.widget-shuttle-bus-container {
-  background: #E6F8FB;
-  margin-right: var(--widgetGap);
-}
-
-.widget-shuttle-bus-info {
-  min-height: 100rpx;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  font-size: 10pt;
-  flex: 1;
-  line-height: 10pt;
-  color: rgb(145, 145, 145);
-}
-
-.widget-shuttle-bus-status-active,
-.widget-shuttle-bus-status-pending {
-  width: 20rpx;
-  height: 20rpx;
-  border-radius: 50%;
-}
-
-.widget-shuttle-bus-status-active {
-  background: #B8A87F;
-}
-
-.widget-shuttle-bus-status-pending {
-  background: #cccccc;
 }
 
 /* Building2 */

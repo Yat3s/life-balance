@@ -184,3 +184,7 @@ export function fetchBanners() {
       expireDate: _.gte(Date.now())
   }).get(), "fetchBanners");
 }
+
+export function fetchCanteenStatus() {
+  return cloudFunctionCall(FUNCTION_NAME, 'fetchCanteenStatus');
+}

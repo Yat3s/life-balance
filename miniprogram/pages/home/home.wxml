@@ -1,5 +1,5 @@
 <view class="appbar" style="height: {{appBarHeight}}px;">
-  <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="bg-white toolbar plr {{collapsed? 'shadow' : ''}}">
+  <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="toolbar plr {{collapsed? 'shadow bg-white' : ''}}">
     <view class="flex align-center">
       <image style="width: {{avatarScale * 80}}rpx; height: {{avatarScale * 80}}rpx;" class="user-avatar" wx:if="{{userInfo}}" src="{{userInfo.avatarUrl}}"></image>
 
@@ -16,7 +16,11 @@
 </view>
 
 <scroll-view scroll-y="true" class="main" bindscroll="onPageScrolled">
-  <view style="height: 200px;"></view>
+  <view style="height:200px; padding-top: {{statusBarHeight + toolbarHeight}}px;" class="flex justify-end">
+    <view class="stock-container">
+      <stock></stock>
+    </view>
+  </view>
 
   <view bindtap="onBannerClicked" class="{{bannerExpanded?'banner-container-expanded':'banner-container'}}" style="border: {{banner.borderSize}}rpx solid {{banner.borderColor}}; " wx:if="{{banner}}">
     <image class="banner-img" mode="widthFix" src="{{banner.bannerImg}}"></image>
@@ -26,108 +30,23 @@
     <image class="banner-img" hidden="{{!bannerExpanded}}" mode="widthFix" src="{{banner.expandedImg}}"></image>
   </view>
 
-  <view class="widget-section-title common-widget">Common Widgets</view>
-  <!-- MSFT -->
-  <view class="widget-msft-container margin-top">
-    <view class="flex justify-between">
-      <view class="flex align-center">
-        <image class="widget-msft-icon" src="../../images/ic_widget_msft.png"></image>
-        <view class="widget-msft-title margin-left-sm">微软市值第一了吗？<text wx:if="{{stockData}}" class="{{stockData.msftTop1 ? 'widget-msft-top1' : 'widget-msft-no-top1'}}">{{stockData.msftTop1 ? '是！' : '没有'}}</text></view>
-      </view>
-      <view class="widget-msft-boost" bindtap="onMsftBoostClicked"><text class="margin-right-xs {{boosted ? 'cuIcon-appreciatefill' : 'cuIcon-appreciate'}}"></text>{{boosted ? '已助力' : '助力'}}({{msftBoostCount}})</view>
-    </view>
-    <view class="flex margin-top align-end">
-      <view class="widget-msft-price-dollar">$</view>
-      <view class="widget-msft-price">{{stockData.msft.price}}</view>
-      <view class="widget-msft-price-change margin-left-xs">{{stockData.msft.change}}%</view>
-
-      <view class="widget-msft-mktcap margin-left">{{stockData.top1.symbol}}({{stockData.top1.mktcap}}T) -
-        <text wx:if="{{stockData.msftTop1}}">{{stockData.top2.symbol}}({{stockData.top2.mktcap}}T)</text><text wx:if="{{!stockData.msftTop1}}">{{stockData.msft.symbol}}({{stockData.msft.mktcap}}T)</text>
-      </view>
-    </view>
-  </view>
-
-  <view class="widget-section-title common-widget">Widgets for 微软(中国)有限公司-苏州</view>
+  <view class="widget-section-title common-widget">Board for 微软(中国)有限公司 - 苏州</view>
+  <!-- Notice -->
   <view wx:if="{{notice}}" class="notice margin-top-xs"><text class="text-bold">Notice:</text> {{notice}}</view>
-  <view class="flex margin-top-sm">
-    <!-- B25 Parking -->
-    <view bindtap="onRefreshParkingSpace" class="widget-container widget-parking-container">
-      <image class="widget-icon" src="../../images/ic_widget_parking.png"></image>
-      <view class="widget-title">B25 Parking</view>
-      <view style="height: 40rpx;">
-        <view wx:if="{{loadingParkingSpace}}" class="cu-progress round xs striped active">
-          <view class="bg-blue" style="width:100%;"></view>
-        </view>
-      </view>
-      <view class="widget-parking-place-container">
-        <view>
-          <image class="widget-parking-place-icon" src="../../images/ic_parking_ground.png"></image>
-          <view class="widget-parking-place-title">地上</view>
-          <view wx:if="{{!parkingSpace}}" class="widget-parking-place-number-shimmer margin-top-sm"></view>
-          <view wx:if="{{parkingSpace}}" class="widget-parking-place-number margin-top-sm">
-            {{parkingSpace.ground}}<text class="widget-parking-total"> /65</text>
-          </view>
-        </view>
-        <view>
-          <image class="widget-parking-place-icon" src="../../images/ic_parking_underground.png"></image>
-          <view class="widget-parking-place-title">地下</view>
-          <view wx:if="{{!parkingSpace}}" class="widget-parking-place-number-shimmer margin-top-sm"></view>
-          <view wx:if="{{parkingSpace}}" class="widget-parking-place-number margin-top-sm">
-            {{parkingSpace.underground}}<text class="widget-parking-total"> /308</text></view>
-        </view>
-      </view>
-    </view>
 
-    <!-- Food Menu -->
-    <view bindtap="onFoodMenuClick" class="widget-container widget-foodmenu-container">
-      <image class="widget-icon" src="../../images/ic_widget_food_menu.png"></image>
-      <view class="widget-title">Food Menu</view>
-
-      <view class="widget-foodmenu-special">
-        <view class="single-line">{{todayMenu.special}}</view>
-      </view>
-
-      <view class="flex justify-end">
-        <view class="flex align-center">
-          <view class="widget-go-detail-text">菜单详情</view>
-          <image class="widget-go-detail-icon" src="../../images/ic_widget_go.png"></image>
-        </view>
-      </view>
-    </view>
+  <view class="margin-top">
+    <commute></commute>
   </view>
 
-
-  <view class="flex widget-row">
-    <!-- Shuttle Bus  -->
-    <view bindtap="onBusClick" class="widget-container widget-shuttle-bus-container">
-      <image class="widget-icon" src="../../images/ic_widget_shuttle_bus.png"></image>
-      <view class="widget-title">Shuttle Bus</view>
-
-      <view class="widget-shuttle-bus-info">
-        <view class="flex align-center">
-          <view class="widget-shuttle-bus-status-{{activeBusCount > 0 ? 'active' : 'pending'}}"></view>
-          <view class="margin-left-xs">共 <text class="text-bold text-black">5</text> 条线路</view>
-        </view>
-      </view>
-
-      <view class="flex justify-end">
-        <view class="flex align-center">
-          <view class="widget-go-detail-text">路线详情</view>
-          <image class="widget-go-detail-icon" src="../../images/ic_widget_go.png"></image>
-        </view>
-      </view>
-    </view>
-
-    <view class="widget-container widget-wework-parking-container center">
-      <view class="text-grey text-sm">更多功能正在开发中</view>
-    </view>
+  <view class="card-divider">
+    <canteen></canteen>
   </view>
-  <!-- 
-  <view class="widget-building2-container margin-top">
-    <view class="widget-building2-title">微软苏州 #B26 大楼建筑预览</view>
+
+  <view class="widget-building2-container card-divider">
+    <view class="widget-building2-title">微软苏州 #B26 大楼建筑进度预览</view>
     <image bindtap="onBuild2Click" class="margin-top widget-building2-picture" mode="widthFix" src="{{building2LatestProgress.picture}}" />
-    <view class="widget-building2-update-date">更新于 {{building2LatestProgress.createDateStr}}</view>
-  </view> -->
+    <view class="widget-building2-update-date">Updated at {{building2LatestProgress.createDateStr}}</view>
+  </view>
 
   <view class="widget-section-title common-widget">Experiments</view>
 
@@ -147,7 +66,6 @@
     </view>
 
   </view>
-
 
 
   <!-- Space for tab bar -->

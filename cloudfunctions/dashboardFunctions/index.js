@@ -6,6 +6,8 @@ const faqPv = require('./actions/faqPv')
 const fetchWeworkParkingBooking = require('./actions/fetchWeworkParkingBooking')
 const signupWeworkParkingBooking = require('./actions/signupWeworkParkingBooking')
 const cancelWeworkParkingBooking = require('./actions/cancelWeworkParkingBooking')
+const fetchCanteenStatus = require('./actions/fetchCanteenStatus')
+
 
 exports.main = async (event, context) => {
   const data = event.data;
@@ -26,5 +28,7 @@ exports.main = async (event, context) => {
       return await signupWeworkParkingBooking.main(data, context);
     case 'cancelWeworkParkingBooking':
       return await cancelWeworkParkingBooking.main(data, context);
+    case 'fetchCanteenStatus':
+      return await fetchCanteenStatus.main(data, context);
   }
 }

@@ -58,12 +58,6 @@ Component({
     toolbarHeight: app.globalData.toolbarHeight,
     statusBarHeight: app.globalData.statusBarHeight,
     appBarHeight: MAX_APP_BAR_HEIGHT,
-    loadingParkingSpace: false,
-    building2StartDateStr: '2021/5/7',
-    building2EndDateStr: '2023/6/30',
-    canteenStartDateStr: '2021/11/19',
-    canteenEndDateStr: '2022/1/30',
-    activeBusCount: 0,
     bannerExpanded: false,
   },
 
@@ -113,36 +107,12 @@ Component({
       console.log(e);
     },
 
-    onWechatGroupCardClick() {
-      navigateToWechatGroup();
-    },
-
-    onActivityClick() {
-      navigateToActivityDetail(this.data.popularActivity._id);
-    },
-
-    onFoodMenuClick() {
-      navigateToFoodMenu();
-    },
-
     onCanteenTableClick() {
       navigateToCanteenTableSharing();
     },
 
     onMealClick() {
       navigateToMeal();
-    },
-
-    onHowToClick() {
-      navigateToHowTo();
-    },
-
-    onBusClick() {
-      navigateToBusInfo()
-    },
-
-    onWeworkParkingClick() {
-      navigateToWeworkParking();
     },
 
     onGlossaryClicked() {
@@ -170,20 +140,6 @@ Component({
       })
     },
 
-    onMsftBoostClicked() {
-      const {
-        boosted
-      } = this.data;
-      if (boosted) {
-        return;
-      }
-      msftBoost();
-      this.setData({
-        boosted: true,
-        msftBoostCount: ++this.data.msftBoostCount
-      })
-    },
-
     onBuild2Click() {
       wx.previewImage({
         urls: [this.data.building2LatestProgress.picture]
@@ -201,10 +157,6 @@ Component({
     },
 
     fetchDashboardData() {
-      this.setData({
-        loadingParkingSpace: true
-      })
-
       fetchUserInfo().then(userInfo => {
         this.setData({
           userInfo
@@ -212,81 +164,8 @@ Component({
       })
 
       getAppConfig().then(config => {
-        const allowedOrgs = config.features.weworkParking.allowedOrgs;
-        let maxWeWorkPakingSpace = 0
-        for (const org of allowedOrgs) {
-          maxWeWorkPakingSpace += parseInt(org.maxParticipant);
-        }
-
-        const nowDate = new Date().toISOString().substring(0, 10).replaceAll("-", "/");
-        const startTimeStr1 = config.features.shuttleBus.startTime1;
-        const startTimeStr2 = config.features.shuttleBus.startTime2;
-        const endTimeStr1 = config.features.shuttleBus.endTime1;
-        const endTimeStr2 = config.features.shuttleBus.endTime2;
-
-        const startTime1 = new Date(`${nowDate} ${startTimeStr1}`);
-        const startTime2 = new Date(`${nowDate} ${startTimeStr2}`);
-        const endTime1 = new Date(`${nowDate} ${endTimeStr1}`);
-        const endTime2 = new Date(`${nowDate} ${endTimeStr2}`);
-        const now = Date.now();
-        const gpsAvailable = (now > startTime1.getTime() && now < endTime1.getTime()) ||
-          (now > startTime2.getTime() && now < endTime2.getTime());
-
-        if (gpsAvailable) {
-          // Shuttle bus
-          const siteId = "c9172ca4-94d8-600c-162d-429c84522021";
-          fetchAllRoutes(siteId).then(routes => {
-            const allRequests = [];
-            for (const route of routes) {
-              allRequests.push(fetchGpsLocation(route.id));
-            }
-
-            Promise.allSettled(allRequests).then(results => {
-              let activeBusCount = 0;
-              results.forEach((result) => {
-                if (result.value && result.value.data) {
-                  activeBusCount++
-                }
-              });
-
-              this.setData({
-                activeBusCount
-              })
-            })
-          })
-        }
         this.setData({
           notice: config.notice,
-          maxWeWorkPakingSpace,
-          msftBoostCount: config.msftBoostCount
-        })
-      })
-
-      // Parking space
-      fetchParkingSpace().then(parkingSpace => {
-        this.setData({
-          parkingSpace,
-          loadingParkingSpace: false
-        })
-      })
-
-      // Stock
-      fetchStockData().then(stockData => {
-        console.log(stockData);
-        const top1 = stockData.stocks[0];
-        const top2 = stockData.stocks[1];
-        const msft = stockData.msft;
-        top1.mktcap = (top1.mktcap / 1000000000000).toFixed(2);
-        top2.mktcap = (top2.mktcap / 1000000000000).toFixed(2);
-        msft.mktcap = (msft.mktcap / 1000000000000).toFixed(2);
-        msft.price = msft.price;
-        stockData.msftTop1 = top1.symbol === 'MSFT';
-        stockData.top1 = top1;
-        stockData.top2 = top2;
-        stockData.msft = msft;
-
-        this.setData({
-          stockData
         })
       })
 
@@ -308,50 +187,6 @@ Component({
         this.setData({
           building2Progress,
           building2LatestProgress
-        })
-      })
-
-      // Food menu
-      fetchFoodMenus().then(menus => {
-        if (!menus || menus.length === 0) {
-          return;
-        }
-
-        const todayMenu = menus[0];
-        todayMenu.dateStr = new Date(todayMenu.date).mmdd();
-        const {
-          canteenStartDateStr,
-          canteenEndDateStr
-        } = this.data;
-        const wholeDayDiff = dateDiff(new Date(canteenEndDateStr), new Date(canteenStartDateStr));
-        const progressedDiff = dateDiff(new Date(), new Date(canteenStartDateStr));
-        const canteenUpdateProgress = ((progressedDiff / wholeDayDiff) * 100).toFixed(2);
-
-        this.setData({
-          canteenUpdateProgress,
-          todayMenu,
-        })
-      });
-
-      // WeWork Parking
-      fetchWeworkParkingBooking().then(bookings => {
-        const bookingTodayEnd = 11;
-        const booking = new Date().getHours() < bookingTodayEnd ? bookings[1] : bookings[0];
-        const weWorkBookedParticipantCount = booking.participants ? booking.participants.length : 0;
-        this.setData({
-          weWorkBookedParticipantCount
-        })
-      })
-    },
-
-    onRefreshParkingSpace() {
-      this.setData({
-        loadingParkingSpace: true
-      })
-      fetchParkingSpace().then(parkingSpace => {
-        this.setData({
-          parkingSpace,
-          loadingParkingSpace: false
         })
       })
     },

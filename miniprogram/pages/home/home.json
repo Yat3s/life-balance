@@ -1,4 +1,8 @@
 {
   "component": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "commute": "/components/commute/commute",
+    "canteen": "/components/canteen/canteen",
+    "stock": "/components/stock/stock"
+  }
 }
