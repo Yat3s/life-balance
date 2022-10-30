@@ -50,7 +50,7 @@
 
   <view class="widget-section-title common-widget">Experiments</view>
 
-  <view class="flex  margin-top-sm ">
+  <view style="padding-bottom: 200rpx;" class="flex  margin-top-sm ">
     <view bindtap="onGlossaryClicked" class="experiment-card">
       <view class="beta">BETA</view>
       <view class="margin-top-xs">
@@ -66,9 +66,5 @@
     </view>
 
   </view>
-
-
-  <!-- Space for tab bar -->
-  <view style="height: 100rpx;"></view>
 
 </scroll-view>

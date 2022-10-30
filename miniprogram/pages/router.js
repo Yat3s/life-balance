@@ -98,6 +98,14 @@ export const Pages = {
     authRequired: true,
     url: '/pages/tools/glossary/glossary'
   },
+  Contribution: {
+    authRequired: false,
+    url: '/pages/user/contribution/contribution'
+  },
+}
+
+export function navigationToContribution() {
+  navigate(Pages.Contribution)
 }
 
 export function navigateToGlossary() {

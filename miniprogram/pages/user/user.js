@@ -38,6 +38,10 @@ Component({
       router.navigateToEditUserInfo();
     },
 
+    onContributionClick(e) {
+      router.navigationToContribution();
+    },
+
     onActivityManageClick() {
       router.navigateToAdmin();
     },

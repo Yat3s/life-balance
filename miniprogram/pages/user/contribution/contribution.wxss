@@ -1,0 +1,5 @@
+/* pages/user/contribution/contribution.wxss */
+
+page {
+  background: white;
+}

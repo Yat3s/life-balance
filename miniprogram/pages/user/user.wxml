@@ -39,18 +39,17 @@
 <view class="divider margin-top"></view>
 <view bindtap="onSponsorClick" class="menu-item-container ">
   <image class="menu-item-icon" src="../../images/ic_coffee.png"></image>
-  <view class="menu-item-text">
-    <button style="width: fit-content;" >Buy developer a coffee</button>
+  <view class="menu-item-text margin-left">
+    Buy developer a coffee
   </view>
 </view>
 <view class="divider"></view>
 
-<view class="menu-item-container ">
-  <image class="menu-item-icon" src="../../images/ic_feedback.png"></image>
-  <view class="menu-item-text">
-    <button style="width: fit-content;" open-type="feedback">Feedback & Help</button>
+<view bindtap="onContributionClick" class="menu-item-container ">
+  <image class="menu-item-icon" src="/images/ic_code.png"></image>
+  <view class="menu-item-text margin-left">
+Contributions
   </view>
-
 </view>
 <view class="divider"></view>
 

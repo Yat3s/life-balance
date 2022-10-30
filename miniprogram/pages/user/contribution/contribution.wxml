@@ -1,0 +1,4 @@
+<toolbar isBack="true"></toolbar>
+<view class="plr">
+  <rich-text nodes="{{contribution}}"></rich-text>
+</view>

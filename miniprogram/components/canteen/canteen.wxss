@@ -57,6 +57,7 @@
 .menu-title {
   font-size: 11pt;
   color: var(--textGrey);
+  flex: 1;
 }
 
 .detail-button {
