@@ -1,4 +1,4 @@
-<view style="padding-bottom: 100rpx;">
+<view>
   <home wx:if="{{currentTab == 'board'}}" />
   <connection wx:if="{{currentTab == 'connection'}}" />
   <carpool wx:if="{{currentTab == 'carpool'}}" />
