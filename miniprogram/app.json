@@ -24,7 +24,6 @@
     "pages/meal/tablesharing/tablesharing",
     "pages/meal/meal",
     "pages/gloassaryAdmin/gloassaryAdmin",
-    "pages/user/contributor/contributor",
     "pages/user/contribution/contribution"
   ],
   "window": {

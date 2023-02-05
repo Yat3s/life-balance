@@ -101,6 +101,8 @@ Component({
             }
           }
 
+          item.shrinkCode = item.code.substring(0, item.code.length / 2) + "*".repeat(item.code.length / 2)
+
           if (item.teamOnly) {
             for (const team of teams) {
               if (team._id === item.teamOnly) {
@@ -191,6 +193,21 @@ Component({
           this.loadCircleData();
         });
       }
+    },
+
+    copyGroupCode() {
+      const {
+        showingCircle,
+      } = this.data;
+
+      wx.setClipboardData({
+        data: showingCircle.code,
+      });
+
+      wx.showToast({
+        icon: 'none',
+        title: 'Group code copied',
+      });
     },
 
     onSearchCircleChanged(e) {

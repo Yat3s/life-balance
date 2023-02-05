@@ -12,8 +12,12 @@
     <view wx:if="{{canteenStatus.status === 0}}" class="status-indicator-free margin-left-xs"></view>
   </view>
   <view class="flex align-center justify-between margin-top">
-    <view class="menu-title single-line ">{{todayMenu.special}}</view>
-    <view class="detail-button flex align-center">菜单详情
+    <view class="">
+      <view class="menu-title single-line ">{{todayMenuB25.special}}</view>
+      <view class="menu-title single-line ">{{todayMenuZhongmeng.special}}</view>
+    </view>
+
+    <view style="flex-shrink: 0; flex-grow: 0;" class="detail-button flex align-center">菜单详情
       <image class="forward-icon margin-left-xs" src="../../images/ic_widget_go.png"></image>
     </view>
   </view>

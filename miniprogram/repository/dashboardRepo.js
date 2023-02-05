@@ -8,7 +8,8 @@ const {
 } = require('./baseRepo');
 const FUNCTION_NAME = "dashboardFunctions"
 const COLLECTION_NAME_BUILDING2 = "building2"
-const COLLECTION_NAME_FOOD_MENU = "foodmenu"
+const COLLECTION_NAME_FOOD_MENU_B25 = "foodmenu"
+const COLLECTION_NAME_FOOD_MENU_ZM = "foodmenu-zhongmeng"
 const COLLECTION_NAME_WECHAT_GROUPS = "wechatgroups";
 const COLLECTION_NAME_FAQ = "faq";
 
@@ -112,13 +113,25 @@ export function fetchBuilding2Progress() {
   return cloudCall(db.collection(COLLECTION_NAME_BUILDING2).orderBy('_createTime', 'desc').get(), "fetchBuilding2Progress");
 }
 
-export function fetchFoodMenus() {
+export function fetchFoodMenus(site = 'b25') {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  return cloudCall(db.collection(COLLECTION_NAME_FOOD_MENU).where({
-    endDate: _.gte(today.getTime())
-  }).get(), "fetchFoodMenus", preProcessMenuData);
+  switch(site) {
+    case 'b25': {
+      return cloudCall(db.collection(COLLECTION_NAME_FOOD_MENU_B25).where({
+        endDate: _.gte(today.getTime())
+      }).get(), "fetchFoodMenusB25", preProcessMenuData);
+    }
+
+    case 'zhongmeng': {
+      return cloudCall(db.collection(COLLECTION_NAME_FOOD_MENU_ZM).where({
+        endDate: _.gte(today.getTime())
+      }).get(), "fetchFoodMenusZhongmeng", preProcessMenuData);
+    }
+  }
+
+  return null;
 }
 
 export function fetchTheMostPopularActivity() {
@@ -187,4 +200,8 @@ export function fetchBanners() {
 
 export function fetchCanteenStatus() {
   return cloudFunctionCall(FUNCTION_NAME, 'fetchCanteenStatus');
+}
+
+export function fetchParkingSpacePrediction() {
+  return cloudFunctionCall(FUNCTION_NAME, 'fetchParkingSpacePrediction');
 }

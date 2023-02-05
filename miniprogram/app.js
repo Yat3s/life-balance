@@ -70,6 +70,11 @@ Date.prototype.addDays = function(days) {
   return date;
 }
 
+Date.prototype.addMinutes = function(minutes) {
+  var date = new Date(this.valueOf());
+  return new Date(date.getTime() + minutes * 60000);
+}
+
 App({
   onLaunch: function () {
     if (!wx.cloud) {

@@ -1,6 +1,6 @@
 import { navigateToBusInfo } from "../../pages/router";
 import {
-  fetchParkingSpace
+  fetchParkingSpace, fetchParkingSpacePrediction
 } from "../../repository/dashboardRepo"
 
 // components/commute/commute.js
@@ -68,6 +68,27 @@ Component({
           loadingParkingSpace: false,
         })
       });
+
+      // fetchParkingSpacePrediction().then(parkingSpacePrediction => {
+      //   if (!parkingSpacePrediction) {
+      //     return;
+      //   }
+
+      //   console.log(parkingSpacePrediction);
+
+      //   if ((parkingSpacePrediction.ground >= 60 && parkingSpacePrediction.underground >= 60) || (parkingSpacePrediction.ground == 0.0 && parkingSpacePrediction.underground == 0.0)) {
+      //     return;
+      //   }
+        
+
+      //   const now = new Date();
+      //   const undergroundFullTime = now.addMinutes(parkingSpacePrediction.underground).hhmm();
+      //   const groundFullTime = now.addMinutes(parkingSpacePrediction.ground).hhmm();
+      //   this.setData({
+      //     undergroundFullTime,
+      //     groundFullTime
+      //   })
+      // })
     }
   }
 })

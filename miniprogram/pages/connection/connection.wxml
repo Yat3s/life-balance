@@ -228,13 +228,22 @@
     </view>
 
     <view class="step-title margin-top">
-      #1. Add Coconut as a Wechat friend by long-press the QR code.
+      #1. Copy group code.
+    </view>
+
+    <view class="modal-code-container margin-top-xs flex align-center justify-between">
+    <view class="modal-code-text">{{showingCircle.shrinkCode}}</view>
+    <view bindtap="copyGroupCode" class="modal-code-copy">Copy</view>
+    </view>
+
+    <view class="step-title margin-top">
+      #2. Add Coconut as a Wechat friend by long-press the QR code.
     </view>
 
     <image show-menu-by-longpress="true" class="coconut-contact margin-top-sm" src="../../images/img_coconut.png" />
 
     <view class="step-title margin-top">
-      #2. Send the Wechat group code to Coconut
+      #3. Send that group code to Coconut
     </view>
 
   </view>

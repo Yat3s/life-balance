@@ -28,7 +28,7 @@ Component({
         });
       });
 
-      fetchFoodMenus().then(menus => {
+      fetchFoodMenus('b25').then(menus => {
         if (!menus || menus.length === 0) {
           return;
         }
@@ -37,7 +37,20 @@ Component({
         todayMenu.dateStr = new Date(todayMenu.date).mmdd();
 
         this.setData({
-          todayMenu,
+          todayMenuB25: todayMenu,
+        })
+      });
+
+      fetchFoodMenus('zhongmeng').then(menus => {
+        if (!menus || menus.length === 0) {
+          return;
+        }
+
+        const todayMenu = menus[0];
+        todayMenu.dateStr = new Date(todayMenu.date).mmdd();
+
+        this.setData({
+          todayMenuZhongmeng: todayMenu,
         })
       });
     }

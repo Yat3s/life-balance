@@ -364,3 +364,21 @@
   font-size: 11pt;
   color: rgb(150, 127, 230);
 }
+
+.modal-code-container {
+  border-left: 10rpx solid rebeccapurple;
+  padding: 12rpx 24rpx;
+  background: #f1f1f1;
+  
+}
+
+.modal-code-text {
+  font-size: 14pt;
+  color: #150E3E;
+  font-weight: bold;
+}
+
+.modal-code-copy {
+  font-size: 10pt;
+  color: #3785FC;
+}

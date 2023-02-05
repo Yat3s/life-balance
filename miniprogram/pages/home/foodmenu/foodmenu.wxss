@@ -8,6 +8,16 @@ page {
   padding-bottom: 40rpx;
 }
 
+.main {
+  padding-left: var(--inset);
+  padding-right: var(--inset);
+}
+
+.head-img {
+  height: 80rpx;
+  margin-top: 20rpx;
+}
+
 .date-container {
   margin-left: var(--typeWidth);
   margin-top: 40rpx;
@@ -18,14 +28,13 @@ page {
 
 .title {
   font-weight: bold;
-  font-size: 16pt;
+  font-size: 26pt;
   line-height: 20pt;
   color: black;
-  margin-left: var(--typeWidth);
 }
 
-.menu {
-  padding: 0 var(--typeWidth);
+.menu-title-container {
+  margin-top: 100rpx;
 }
 
 .menu-imgh {
@@ -33,10 +42,38 @@ page {
 }
 
 .company {
-  font-size: 9pt;
+  font-size: 10pt;
   line-height: 119ptpt;
   color: var(--textGrey);
   margin-right: var(--inset);
+}
+
+.menu-title, .menu-title-selected {
+  font-size: 16pt;
+  font-weight: bold;
+  line-height: 16pt;
+}
+
+.menu-title {
+  color: var(--textGrey);
+}
+
+.menu-title-selected {
+  color: black;
+}
+
+.menu-underline, .menu-underline-selected {
+  height: 16rpx;
+  width: 260rpx;
+  margin-top: 8rpx;
+}
+
+.menu-underline {
+  background-color: rgb(216, 216, 216);
+}
+
+.menu-underline-selected {
+  background-color: rgb(188, 164, 231);
 }
 
 .date-selected {
@@ -50,13 +87,8 @@ page {
 }
 
 .date {
-  border: 2rpx solid #f1f1f1;
-  border-radius: 100rpx;
-  color: #7f7caf;
-  padding: 4rpx 32rpx;
+  color: #b1b1b1;
   font-size: 10pt;
-  width: fit-content;
-  font-weight: bold;
 }
 
 .special {

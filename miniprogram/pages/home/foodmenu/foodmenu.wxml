@@ -1,33 +1,53 @@
 <toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
 
 
-<view class="flex align-end justify-between">
+<view class="main">
+  <image src="/images/img_header_food_menu.png" class="head-img" mode="heightFix"></image>
+  <view class="title margin-top-lg">食堂菜单</view>
+  <view class="company margin-top-sm">微软(中国)有限公司 - 苏州</view>
 
-  <view class="title margin-top-lg">食堂本周菜单</view>
-  <view class="company">微软(中国)有限公司 - 苏州</view>
-</view>
+  <view class="flex menu-title-container">
+    <view bindtap="onMenuClick" data-selected="b25">
+      <view class="{{selected == 'b25' ? 'menu-title-selected' : 'menu-title'}}">
+        B25 菜单
+      </view>
+      <view class="date">
+        <text>{{b25Menu.startDateStr}}</text> - <text>{{b25Menu.endDateStr}}</text>
+      </view>
 
-<view class="flex date-container">
-  <view class="date">{{menu.startDateStr}}</view>
-  <view class="margin-left margin-right">-</view>
-  <view class="date">{{menu.endDateStr}}</view>
-</view>
+      <view class="{{selected == 'b25' ? 'menu-underline-selected' : 'menu-underline'}}"></view>
+    </view>
 
-<view class="menu margin-top">
-  <view class="special">本周特供: <text class="text-black text-bold">{{menu.special}}</text></view>
+    <view bindtap="onMenuClick" data-selected="zhongmeng">
+      <view class="{{selected == 'zhongmeng' ? 'menu-title-selected' : 'menu-title'}}">
+        中盟大厦菜单
+      </view>
+      <view class="date">
+        <text>{{zhongmengMenu.startDateStr}}</text> - <text>{{zhongmengMenu.endDateStr}}</text>
+      </view>
+      <view class="{{selected == 'zhongmeng' ? 'menu-underline-selected' : 'menu-underline'}}"></view>
+    </view>
+  </view>
 
-  <view style="height: 1rpx; background: #f1f1f1;" class="margin-top-sm"></view>
   <view class="margin-top">
-    <rich-text nodes="{{menu.menuContent}}"></rich-text>
+    <view class="margin-top">
+      <rich-text wx:if="{{selected == 'b25'}}" nodes="{{b25Menu.menuContent}}"></rich-text>
+      <rich-text wx:if="{{selected == 'zhongmeng'}}" nodes="{{zhongmengMenu.menuContent}}"></rich-text>
+    </view>
+
+    <view class="margin-top-sm">
+      <view class="special">点击图片放大查看</view>
+
+      <block wx:if="{{selected == 'b25'}}" wx:for="{{b25Menu.imgs}}" wx:key="" wx:for-item="item">
+        <image show-menu-by-longpress="true" class='menu-img' mode="widthFix" src='{{item}}' bindtap='previewImage' data-src='{{item}}'>
+        </image>
+      </block>
+
+      <block wx:if="{{selected == 'zhongmeng'}}" wx:for="{{zhongmengMenu.imgs}} "wx:key="" wx:for-item="item">
+        <image show-menu-by-longpress="true" class='menu-img' mode="widthFix" src='{{item}}' bindtap='previewImage' data-src='{{item}}'>
+        </image>
+      </block>
+    </view>
   </view>
 
-  <view class="margin-top-sm">
-    <view class="special">点击图片放大查看</view>
-
-    <block wx:for="{{imgs}}" wx:key="" wx:for-item="item">
-      <image show-menu-by-longpress="true" class='menu-img' mode="widthFix" src='{{item}}' bindtap='previewImage'
-        data-src='{{item}}'>
-      </image>
-    </block>
-  </view>
 </view>

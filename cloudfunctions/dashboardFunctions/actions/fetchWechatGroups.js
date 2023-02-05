@@ -8,5 +8,12 @@ cloud.init({
 const db = cloud.database();
 
 exports.main = async (data, context) => {
-  return (await db.collection(COLLECTION_NAME_WECHAT_GROUPS).orderBy('code', 'asc').get()).data;
+  const circles = (await db.collection(COLLECTION_NAME_WECHAT_GROUPS).orderBy('code', 'asc').get()).data;
+
+  for (const circle of circles) {
+    if (circle.participants) {
+      circle.participants = circle.participants.slice(0, 10);
+    }
+  }
+  return circles;
 }
