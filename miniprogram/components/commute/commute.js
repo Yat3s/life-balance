@@ -1,6 +1,6 @@
-import { navigateToBusInfo } from "../../pages/router";
+import { navigateToBusInfo, navigationToParkingTip } from "../../pages/router";
 import {
-  fetchParkingSpace, fetchParkingSpacePrediction
+  fetchParkingSpace, fetchParkingSpacePrediction, recordParkingFull
 } from "../../repository/dashboardRepo"
 
 // components/commute/commute.js
@@ -29,8 +29,8 @@ Component({
   lifetimes: {
     attached() {
       this.fetchParkingData();
+      this.fetchParkingSpacePredictionData();
     },
-
   },
 
   pageLifetimes: {
@@ -52,14 +52,42 @@ Component({
       navigateToBusInfo();
     },
 
+    toParkingTip() {
+      navigationToParkingTip();
+    },
+
+    fetchParkingSpacePredictionData() {
+      fetchParkingSpacePrediction().then(res => {
+        if (!res) {
+          return;
+        }
+
+        const predictFullTime = (new Date(res)).hhmm();
+        console.log("fetchParkingSpacePredictionData", predictFullTime);
+        this.setData({
+          predictFullTime
+        })
+      })
+    },
+
     fetchParkingData() {
       const {
         maxGroundSpaces,
         maxUndergroundSpaces,
       } = this.data;
       fetchParkingSpace().then(parkingSpace => {
+        console.log("parkingSpace", parkingSpace);
         const groundSpaceIndicatorWidth = (parkingSpace.ground / maxGroundSpaces) * 100 + "%"
         const undergroundIndicatorWidth = (parkingSpace.underground / maxUndergroundSpaces) * 100 + "%"
+
+        const leftSpace = parkingSpace.ground + parkingSpace.underground;
+        if (leftSpace == 0) {
+          recordParkingFull(Date.now());
+        } else if (leftSpace <= 10) {
+          recordParkingFull(null, null, Date.now());
+        } else if (leftSpace <= 20) {
+          recordParkingFull(null, Date.now(), null);
+        }
 
         this.setData({
           parkingSpace,
@@ -68,27 +96,6 @@ Component({
           loadingParkingSpace: false,
         })
       });
-
-      // fetchParkingSpacePrediction().then(parkingSpacePrediction => {
-      //   if (!parkingSpacePrediction) {
-      //     return;
-      //   }
-
-      //   console.log(parkingSpacePrediction);
-
-      //   if ((parkingSpacePrediction.ground >= 60 && parkingSpacePrediction.underground >= 60) || (parkingSpacePrediction.ground == 0.0 && parkingSpacePrediction.underground == 0.0)) {
-      //     return;
-      //   }
-        
-
-      //   const now = new Date();
-      //   const undergroundFullTime = now.addMinutes(parkingSpacePrediction.underground).hhmm();
-      //   const groundFullTime = now.addMinutes(parkingSpacePrediction.ground).hhmm();
-      //   this.setData({
-      //     undergroundFullTime,
-      //     groundFullTime
-      //   })
-      // })
     }
   }
 })

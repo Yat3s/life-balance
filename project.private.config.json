@@ -112,6 +112,13 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/parkingtip/parkingtip",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

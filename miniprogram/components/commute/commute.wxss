@@ -22,6 +22,26 @@
   height: 40rpx;
 }
 
+.prediction-icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.parking-predict-text {
+  font-size: 9pt;
+  color: var(--textGrey);
+}
+
+.full-tip {
+  color: var(--textGrey);
+  font-size: 9pt;
+}
+
+.full-tip-underline {
+  color: #7F6CA7;
+  text-decoration: underline;
+}
+
 .parking-left-title {
   color: var(--textGrey);
   font-size: 10pt;
@@ -56,11 +76,6 @@
   letter-spacing: 3rpx;
   color: #cacaca;
   margin-left: 6rpx;
-}
-
-.parking-predict-text {
-  font-size: 9pt;
-  color: var(--textGrey);
 }
 
 .divider {

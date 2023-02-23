@@ -18,16 +18,16 @@ Page({
    */
   onLoad: function (options) {
     fetchFoodMenus('b25').then(menus => {
-      console.log("b25", menus);
       const b25Menu = this.processMenuData(menus);
+      console.log("b25", b25Menu);
       this.setData({
         b25Menu,
       })
     });
 
     fetchFoodMenus('zhongmeng').then(menus => {
-      console.log("zhongmeng", menus);
       const zhongmengMenu = this.processMenuData(menus);
+      console.log("zhongmeng", zhongmengMenu);
       this.setData({
         zhongmengMenu
       })

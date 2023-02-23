@@ -102,6 +102,14 @@ export const Pages = {
     authRequired: false,
     url: '/pages/user/contribution/contribution'
   },
+  ParkingTip: {
+    authRequired: false,
+    url: '/pages/parkingtip/parkingtip'
+  },
+}
+
+export function navigationToParkingTip() {
+  navigate(Pages.ParkingTip)
 }
 
 export function navigationToContribution() {

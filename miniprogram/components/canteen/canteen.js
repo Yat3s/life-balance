@@ -22,12 +22,6 @@ Component({
 
   lifetimes: {
     attached() {
-      fetchCanteenStatus().then(canteenStatus => {
-        this.setData({
-          canteenStatus
-        });
-      });
-
       fetchFoodMenus('b25').then(menus => {
         if (!menus || menus.length === 0) {
           return;

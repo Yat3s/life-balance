@@ -24,7 +24,8 @@
     "pages/meal/tablesharing/tablesharing",
     "pages/meal/meal",
     "pages/gloassaryAdmin/gloassaryAdmin",
-    "pages/user/contribution/contribution"
+    "pages/user/contribution/contribution",
+    "pages/parkingtip/parkingtip"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

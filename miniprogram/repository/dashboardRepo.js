@@ -18,7 +18,7 @@ const _ = db.command
 
 const preProcessWechatGroups = (groups) => {
   groups.sort((a, b) => {
-   
+
     if (a.index && b.index) {
       return a.index - b.index;
     } else if (a.index) {
@@ -26,9 +26,9 @@ const preProcessWechatGroups = (groups) => {
     } else if (b.index) {
       return 1;
     } else {
-      const participantCountA = a.participants ?  a.participants.length : 0
-      const participantCountB = b.participants ?  b.participants.length : 0
-      
+      const participantCountA = a.participants ? a.participants.length : 0
+      const participantCountB = b.participants ? b.participants.length : 0
+
       return participantCountB - participantCountA;
     }
   });
@@ -117,7 +117,7 @@ export function fetchFoodMenus(site = 'b25') {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  switch(site) {
+  switch (site) {
     case 'b25': {
       return cloudCall(db.collection(COLLECTION_NAME_FOOD_MENU_B25).where({
         endDate: _.gte(today.getTime())
@@ -165,7 +165,7 @@ export function fetchTheMostPopularActivity() {
         activities.sort(compare);
         resolve(activities[0]);
       }
-      
+
     }).catch(err => {
       reject(err);
     })
@@ -194,7 +194,7 @@ export function cancelWeworkParkingBooking(id) {
 
 export function fetchBanners() {
   return cloudCall(db.collection("banners").where({
-      expireDate: _.gte(Date.now())
+    expireDate: _.gte(Date.now())
   }).get(), "fetchBanners");
 }
 
@@ -203,5 +203,112 @@ export function fetchCanteenStatus() {
 }
 
 export function fetchParkingSpacePrediction() {
-  return cloudFunctionCall(FUNCTION_NAME, 'fetchParkingSpacePrediction');
+  const now = new Date();
+  const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+  oneWeekAgo.setHours(0, 0, 0, 0);
+  const oneWeekAgoTimestamp = oneWeekAgo.getTime();
+
+  return new Promise((reslove, reject) => {
+    cloudCall(db.collection("parking-full").where({
+      date: _.gte(oneWeekAgoTimestamp)
+    }).get(), "fetchParkingSpacePrediction").then(res => {
+      if (!res || res.length == 0) {
+        reslove(null);
+      }
+
+      console.log("fetchParkingSpacePrediction", res);
+
+      let dayCount = 0;
+      let theDayFullOneWeekAgo = res[0].full;
+      if (theDayFullOneWeekAgo) {
+        const date = new Date(theDayFullOneWeekAgo);
+        date.setFullYear(now.getFullYear());
+        date.setMonth(now.getMonth());
+        date.setDate(now.getDate());
+
+        theDayFullOneWeekAgo = date.getTime();
+        dayCount ++;
+      } else {
+        theDayFullOneWeekAgo = 0;
+      }
+
+      // Find a record before today
+      let theDayFullBeforeToday = 0;
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      for (let i = res.length - 1; i >= 0; i--) {
+        const parkingFull = res[i];
+        if (parkingFull.date < today.getTime() && parkingFull.full) {
+          const date = new Date(parkingFull.full);
+          date.setFullYear(now.getFullYear());
+          date.setMonth(now.getMonth());
+          date.setDate(now.getDate());
+
+          theDayFullBeforeToday = date.getTime();
+          dayCount ++;
+          break;
+        }
+      }
+
+      if (dayCount == 0) {
+        reslove(null);
+      }
+
+      console.log("fetchParkingSpacePrediction test", `${dayCount}, ${(new Date(theDayFullOneWeekAgo)).toISOString()}, ${(new Date(theDayFullBeforeToday)).toISOString()}`);
+
+      const predictionTime = (theDayFullOneWeekAgo + theDayFullBeforeToday) / dayCount;
+      reslove(predictionTime);
+    });
+  });
+}
+
+export function recordParkingFull(full = null, left20 = null, left10 = null) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const todayTimestamp = today.getTime();
+  cloudCall(db.collection("parking-full").where({
+    date: todayTimestamp
+  }).get(), "FetchTodayParkingFull").then(res => {
+    console.log("FetchTodayParkingFull", res);
+    if (res == null || res.length == 0) {
+      // Create a record
+      cloudCall(db.collection("parking-full").add({
+        data: {
+          date: todayTimestamp,
+          full,
+          left_10: left10,
+          left_20: left20,
+        }
+      }), "RecordTodayParkingFull")
+    } else {
+      const parkingFull = res[0];
+      const data = {};
+      if (!parkingFull.left_10 && left10) {
+        data.left_10 = left10;
+      }
+      if (!parkingFull.left_20 && left20) {
+        data.left_20 = left20;
+      }
+      if (!parkingFull.full && full) {
+        data.full = full;
+      }
+
+      if (isObjectEmpty(data)) {
+        return;
+      }
+
+      cloudCall(db.collection("parking-full").doc(parkingFull._id).update({
+        data
+      }), "UpdateTodayParkingFull")
+    }
+  })
+}
+
+function isObjectEmpty(obj) {
+  for (var prop in obj) {
+    if (obj.hasOwnProperty(prop)) {
+      return false;
+    }
+  }
+  return true;
 }

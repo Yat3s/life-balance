@@ -49,7 +49,7 @@ page {
 }
 
 .menu-title, .menu-title-selected {
-  font-size: 16pt;
+  font-size: 14pt;
   font-weight: bold;
   line-height: 16pt;
 }

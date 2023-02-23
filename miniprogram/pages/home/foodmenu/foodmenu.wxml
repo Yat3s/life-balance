@@ -9,7 +9,7 @@
   <view class="flex menu-title-container">
     <view bindtap="onMenuClick" data-selected="b25">
       <view class="{{selected == 'b25' ? 'menu-title-selected' : 'menu-title'}}">
-        B25 菜单
+        B25 餐厅菜单
       </view>
       <view class="date">
         <text>{{b25Menu.startDateStr}}</text> - <text>{{b25Menu.endDateStr}}</text>
@@ -20,7 +20,7 @@
 
     <view bindtap="onMenuClick" data-selected="zhongmeng">
       <view class="{{selected == 'zhongmeng' ? 'menu-title-selected' : 'menu-title'}}">
-        中盟大厦菜单
+        中盟餐厅菜单
       </view>
       <view class="date">
         <text>{{zhongmengMenu.startDateStr}}</text> - <text>{{zhongmengMenu.endDateStr}}</text>
@@ -43,7 +43,7 @@
         </image>
       </block>
 
-      <block wx:if="{{selected == 'zhongmeng'}}" wx:for="{{zhongmengMenu.imgs}} "wx:key="" wx:for-item="item">
+      <block wx:if="{{selected == 'zhongmeng'}}" wx:for="{{zhongmengMenu.imgs}}" wx:key="" wx:for-item="item">
         <image show-menu-by-longpress="true" class='menu-img' mode="widthFix" src='{{item}}' bindtap='previewImage' data-src='{{item}}'>
         </image>
       </block>
