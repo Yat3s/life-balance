@@ -262,6 +262,26 @@ export function fetchParkingSpacePrediction() {
   });
 }
 
+export function fetchLastParkingFullTime() {
+  const now = new Date();
+  const isMonday = now.getDay() == 1;
+  const lastParkingFullDate = new Date(now.getTime() - (isMonday ? 3 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000));
+  lastParkingFullDate.setHours(0, 0, 0, 0);
+
+  return new Promise((reslove, reject) => {
+    cloudCall(db.collection("parking-full").where({
+      date: _.gte(lastParkingFullDate.getTime())
+    }).get(), "fetchLastParkingFullTime").then(res => {
+      if (!res || res.length == 0) {
+        reslove(null);
+      }
+
+      let lastParkingFull = res[0].full;
+      reslove(lastParkingFull);
+    });
+  });
+}
+
 export function recordParkingFull(full = null, left20 = null, left10 = null) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -297,9 +317,12 @@ export function recordParkingFull(full = null, left20 = null, left10 = null) {
         return;
       }
 
-      cloudCall(db.collection("parking-full").doc(parkingFull._id).update({
+      console.log("record", data + ", " + parkingFull._id);
+
+      cloudFunctionCall(FUNCTION_NAME, 'recordParkingFull', {
+        id: parkingFull._id,
         data
-      }), "UpdateTodayParkingFull")
+      })
     }
   })
 }

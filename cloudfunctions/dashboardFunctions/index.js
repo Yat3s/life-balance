@@ -8,6 +8,7 @@ const signupWeworkParkingBooking = require('./actions/signupWeworkParkingBooking
 const cancelWeworkParkingBooking = require('./actions/cancelWeworkParkingBooking')
 const fetchCanteenStatus = require('./actions/fetchCanteenStatus')
 const fetchParkingSpacePrediction = require('./actions/fetchParkingSpacePrediction')
+const recordParkingFull = require('./actions/recordParkingFull')
 
 exports.main = async (event, context) => {
   const data = event.data;
@@ -32,5 +33,7 @@ exports.main = async (event, context) => {
       return await fetchCanteenStatus.main(data, context);
     case `fetchParkingSpacePrediction`:
       return await fetchParkingSpacePrediction.main(data, context);
+    case `recordParkingFull`:
+      return await recordParkingFull.main(data, context);
   }
 }

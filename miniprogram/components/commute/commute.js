@@ -1,6 +1,12 @@
-import { navigateToBusInfo, navigationToParkingTip } from "../../pages/router";
 import {
-  fetchParkingSpace, fetchParkingSpacePrediction, recordParkingFull
+  navigateToBusInfo,
+  navigationToParkingTip
+} from "../../pages/router";
+import {
+  fetchLastParkingFullTime,
+  fetchParkingSpace,
+  fetchParkingSpacePrediction,
+  recordParkingFull
 } from "../../repository/dashboardRepo"
 
 // components/commute/commute.js
@@ -34,7 +40,7 @@ Component({
   },
 
   pageLifetimes: {
-    
+
   },
 
   /**
@@ -57,15 +63,31 @@ Component({
     },
 
     fetchParkingSpacePredictionData() {
-      fetchParkingSpacePrediction().then(res => {
-        if (!res) {
-          return;
-        }
+      // fetchParkingSpacePrediction().then(res => {
+      //   if (!res) {
+      //     return;
+      //   }
 
-        const predictFullTime = (new Date(res)).hhmm();
-        console.log("fetchParkingSpacePredictionData", predictFullTime);
+      //   const predictFullTime = (new Date(res)).hhmm();
+      //   console.log("fetchParkingSpacePredictionData", predictFullTime);
+      //   this.setData({
+      //     predictFullTime
+      //   })
+      // })
+
+      fetchLastParkingFullTime().then(res => {
+        let lastParkingFullTimeStr = ""
+        let dayStrPrefix = (new Date()).getDay() == 1 ? '上周五' : '昨日'
+        const showParkingFullTip = res != null
+        if (res) {
+          const lastParkingFullTime = (new Date(res)).hhmm();
+          lastParkingFullTimeStr = `${dayStrPrefix}停满时间：${lastParkingFullTime}`
+        } else {
+          lastParkingFullTimeStr = `${dayStrPrefix}车位充足`
+        }
         this.setData({
-          predictFullTime
+          showParkingFullTip,
+          lastParkingFullTimeStr
         })
       })
     },
@@ -80,13 +102,17 @@ Component({
         const groundSpaceIndicatorWidth = (parkingSpace.ground / maxGroundSpaces) * 100 + "%"
         const undergroundIndicatorWidth = (parkingSpace.underground / maxUndergroundSpaces) * 100 + "%"
 
-        const leftSpace = parkingSpace.ground + parkingSpace.underground;
-        if (leftSpace == 0) {
-          recordParkingFull(Date.now());
-        } else if (leftSpace <= 10) {
-          recordParkingFull(null, null, Date.now());
-        } else if (leftSpace <= 20) {
-          recordParkingFull(null, Date.now(), null);
+
+        const now = new Date();
+        if (now.getHours() >= 9 && now.getHours() <= 13) {
+          const leftSpace = parkingSpace.ground + parkingSpace.underground;
+          if (leftSpace <= 3) {
+            recordParkingFull(Date.now());
+          } else if (leftSpace <= 10) {
+            recordParkingFull(null, null, Date.now());
+          } else if (leftSpace <= 20) {
+            recordParkingFull(null, Date.now(), null);
+          }
         }
 
         this.setData({
