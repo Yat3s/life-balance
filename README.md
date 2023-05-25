@@ -1,11 +1,11 @@
 # Life Balance
-This WeChat mini-program is designed to assist MS employees with their daily life activities.
+This WeChat mini-program is designed to assist MS employees with daily life activities.
 
 ![gh_1367f1ab3ae6_860](https://user-images.githubusercontent.com/14801837/137245752-3eb634ec-93a9-4185-b541-50ba0f277d52.jpg)
 
 # Contribute code
 Please ensure you've been added into the developer list of Life Balance before coding, please reach out to Chris Ye(Wechat: 4645643)
-- Clone this repo
+- Clone the repo
 - Use [Wechat Dev Tool](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html) to develop your feature
 - Raise your PR
 - Publish a new version via CI or manually
