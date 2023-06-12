@@ -1,17 +1,17 @@
 # Life Balance
-This is a mini-program for the LIFE of employees.
+This WeChat mini-program is designed to assist MS employees with daily life activities.
+
 ![gh_1367f1ab3ae6_860](https://user-images.githubusercontent.com/14801837/137245752-3eb634ec-93a9-4185-b541-50ba0f277d52.jpg)
 
-# Contribution
-Please ensure you've been added into the developer list of Life Balance, please reach out Chris Ye(Wechat: 4645643)
-- Clone this repo
-- Use VSCode + Github Copilot + [Wechat Dev Tool](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html) to develop your feature
-- Raise your PR
-- Publish a new version
+# Contribute code
+Please ensure you've been added into the developer list of Life Balance before coding, please reach out to Chris Ye(Wechat: 4645643)
+- Clone the repo
+- Use VSCode + Github Copilot + [Wechat Dev Tool](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html) to develop your feature- Raise your PR
+- Publish a new version via CI or manually
 
 ## Structure
-- Cloudfunctions: run on server, the place defined all API requests which is used for mini-program.
-- Miniprogram: run on Wechat, including pages, components, and some UI resources.
+- Cloudfunctions: backend code, run on a Tencent server, the place defined all API requests which are used for mini-program.
+- Miniprogram: frontend code, run on Wechat client, including pages, components, and other UI resources.
 ![image](https://user-images.githubusercontent.com/14801837/179477557-c10b9e8e-0ca3-4392-9bd9-c1ac237ee37a.png)
 
 ## Design Figma:
