@@ -37,7 +37,8 @@
     "minifyWXML": true,
     "disableUseStrict": false,
     "useStaticServer": true,
-    "useCompilerPlugins": false
+    "useCompilerPlugins": false,
+    "condition": false
   },
   "appid": "wxb6958279836e16fc",
   "projectname": "Life",

@@ -5,7 +5,7 @@ This is a mini-program for the LIFE of employees.
 # Contribution
 Please ensure you've been added into the developer list of Life Balance, please reach out Chris Ye(Wechat: 4645643)
 - Clone this repo
-- Use [Wechat Dev Tool](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html) to develop your feature
+- Use VSCode + Github Copilot + [Wechat Dev Tool](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html) to develop your feature
 - Raise your PR
 - Publish a new version
 
