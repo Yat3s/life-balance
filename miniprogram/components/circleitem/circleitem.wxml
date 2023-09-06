@@ -1,7 +1,7 @@
 <!--components/circleitem/circle.wxml-->
 <view class="circle-item">
   <view class="flex justify-between">
-    <image src="{{circle.coverPic}}" mode="aspectFill" wx:if="{{circle.coverPic}}" class="circle-cover-pic"></image>
+    <image lazy-load="true" src="{{circle.coverPic}}" mode="aspectFill" wx:if="{{circle.coverPic}}" class="circle-cover-pic"></image>
     <view wx:if="{{!circle.coverPic}}" class="circle-logo-bg center">
       <image class="circle-logo" src="{{circle.icon}}"></image>
     </view>

@@ -35,7 +35,7 @@
 
         <view class="flex align-end margin-left-sm">
           <view class="parking-left-count">{{parkingSpace.ground}}</view>
-          <view class="parking-all-count">/{{maxGroundSpaces}}</view>
+          <view class="parking-all-count">/暂未开放</view>
         </view>
 
         <view class="flex-1"></view>

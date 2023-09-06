@@ -18,19 +18,7 @@ const _ = db.command
 
 const preProcessWechatGroups = (groups) => {
   groups.sort((a, b) => {
-
-    if (a.index && b.index) {
-      return a.index - b.index;
-    } else if (a.index) {
-      return -1;
-    } else if (b.index) {
-      return 1;
-    } else {
-      const participantCountA = a.participants ? a.participants.length : 0
-      const participantCountB = b.participants ? b.participants.length : 0
-
-      return participantCountB - participantCountA;
-    }
+    return b._createTime - a._createTime;
   });
   for (const group of groups) {
     let tagStr = "";
@@ -268,16 +256,17 @@ export function fetchLastParkingFullTime() {
   const lastParkingFullDate = new Date(now.getTime() - (isMonday ? 3 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000));
   lastParkingFullDate.setHours(0, 0, 0, 0);
 
-  return new Promise((reslove, reject) => {
+  return new Promise((resolve, reject) => {
     cloudCall(db.collection("parking-full").where({
       date: _.gte(lastParkingFullDate.getTime())
     }).get(), "fetchLastParkingFullTime").then(res => {
-      if (!res || res.length == 0) {
-        reslove(null);
+      if (!res || res.length === 0) {
+        resolve(null);
+        return;
       }
 
       let lastParkingFull = res[0].full;
-      reslove(lastParkingFull);
+      resolve(lastParkingFull);
     });
   });
 }

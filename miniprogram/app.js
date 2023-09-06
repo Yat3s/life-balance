@@ -64,13 +64,13 @@ Date.prototype.hhmmss = function () {
   ].join(':');
 };
 
-Date.prototype.addDays = function(days) {
+Date.prototype.addDays = function (days) {
   var date = new Date(this.valueOf());
   date.setDate(date.getDate() + days);
   return date;
 }
 
-Date.prototype.addMinutes = function(minutes) {
+Date.prototype.addMinutes = function (minutes) {
   var date = new Date(this.valueOf());
   return new Date(date.getTime() + minutes * 60000);
 }
@@ -85,6 +85,7 @@ App({
         //   env 参数决定接下来小程序发起的云开发调用（wx.cloud.xxx）会默认请求到哪个云环境的资源
         //   此处请填入环境 ID, 环境 ID 可打开云控制台查看
         //   如不填则使用默认环境（第一个创建的环境）
+        env: 'life-6go5gey72a61a773',
         traceUser: true,
       })
     }

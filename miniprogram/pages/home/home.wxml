@@ -42,11 +42,11 @@
     <canteen></canteen>
   </view>
 
-  <view class="widget-building2-container card-divider">
+  <!-- <view class="widget-building2-container card-divider">
     <view class="widget-building2-title">微软苏州 #B26 大楼建筑进度预览</view>
     <image bindtap="onBuild2Click" class="margin-top widget-building2-picture" mode="widthFix" src="{{building2LatestProgress.picture}}" />
     <view class="widget-building2-update-date">Updated at {{building2LatestProgress.createDateStr}}</view>
-  </view>
+  </view> -->
 
   <view class="widget-section-title common-widget">Experiments</view>
 

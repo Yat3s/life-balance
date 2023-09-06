@@ -25,8 +25,8 @@ Component({
    * 组件的初始数据
    */
   data: {
-    maxGroundSpaces: 65,
-    maxUndergroundSpaces: 308,
+    maxGroundSpaces: 0,
+    maxUndergroundSpaces: 512,
     groundSpaceIndicatorWidth: "100%",
     undergroundIndicatorWidth: "100%",
     loadingParkingSpace: true,
