@@ -1,14 +1,15 @@
 # Life Balance
-This WeChat mini-program is designed to assist MS employees with daily life activities.
+This WeChat mini-program is designed specifically to assist MS employees with their daily life activities.
 
 ![gh_1367f1ab3ae6_860](https://user-images.githubusercontent.com/14801837/137245752-3eb634ec-93a9-4185-b541-50ba0f277d52.jpg)
 
 # Contribute code
-Please ensure you've been added into the developer list of Life Balance before coding, please reach out to Chris Ye(Wechat: 4645643)
+Before starting coding, please make sure you have been added to the developer list of Life Balance. If you have not been added, please contact Chris Ye (WeChat: 4645643).
 - Clone the repo
-- Use VSCode + Github Copilot + [Wechat Dev Tool](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html) to develop your feature- Raise your PR
-- Publish a new version via CI or manually
-
+- Use VSCode + Github Copilot + [Wechat Dev Tool](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html) to develop your feature
+- Raise your PR
+- Deploy and publish to Wechat
+  
 ## Structure
 - Cloudfunctions: backend code, run on a Tencent server, the place defined all API requests which are used for mini-program.
 - Miniprogram: frontend code, run on Wechat client, including pages, components, and other UI resources.
