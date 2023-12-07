@@ -2,13 +2,13 @@
 
 .main {
   padding: 36rpx;
-  border-radius: 40rpx;
+  border-radius: 28rpx;
   background: linear-gradient(140deg, #E1EDF1 0%, #FAFBFC 100%);
 }
 
 .commute-icon {
-  width: 60rpx;
-  height: 60rpx;
+  width: 48rpx;
+  height: 48rpx;
 }
 
 .commute-title {
@@ -59,22 +59,22 @@
   background: linear-gradient(97.82deg, #90ABF1 9.38%, #573189 95.98%);
   border-radius: 36rpx;
   height: 36rpx;
-  transition: width 1s; 
+  transition: width 1s;
 }
 
 .parking-left-count {
   font-weight: bold;
-  font-size: 16pt;
-  line-height: 16pt;
+  font-size: 24pt;
+  line-height: 24pt;
   letter-spacing: 4rpx;
   color: black;
 }
 
 .parking-all-count {
-  font-size: 9pt;
-  line-height: 9pt;
+  font-size: 10pt;
+  line-height: 10pt;
   letter-spacing: 3rpx;
-  color: #cacaca;
+  color: #b1b1b1;
   margin-left: 6rpx;
 }
 

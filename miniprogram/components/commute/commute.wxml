@@ -26,26 +26,11 @@
         <view class="flex-1"></view>
       </view>
 
-      <!-- Parking ground -->
-      <view class="flex align-center margin-top-sm">
-        <view class="parking-left-title">地上剩余</view>
-        <view class="parking-progress-container margin-left-xs flex">
-          <view class="parking-progress-indicator" style="width: {{groundSpaceIndicatorWidth}}"></view>
-        </view>
-
-        <view class="flex align-end margin-left-sm">
-          <view class="parking-left-count">{{parkingSpace.ground}}</view>
-          <view class="parking-all-count">/暂未开放</view>
-        </view>
-
-        <view class="flex-1"></view>
-      </view>
 
       <!-- <view wx:if="{{predictFullTime}}" class="flex align-center margin-top">
         <image class="prediction-icon" src="/images/ic_bulb-fill.png"></image>
         <view class="parking-predict-text margin-left-xs">预计在 {{predictFullTime}} 停满</view>
       </view> -->
-
 
       <view wx:if="{{lastParkingFullTimeStr}}" class="flex align-center margin-top">
         <image class="prediction-icon" src="/images/ic_bulb-fill.png"></image>

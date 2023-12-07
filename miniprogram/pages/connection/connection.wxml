@@ -7,7 +7,7 @@
 </view>
 
 <scroll-view class="main" scroll-y="true" bindscroll="onPageScrolled">
-  <view style="height: 280px;"></view>
+  <view style="height: 200px;"></view>
   <!-- Activities -->
   <view class="plr activity-title-container flex align-center justify-between">
     <view class="flex align-center">
@@ -166,7 +166,7 @@
   <view class="cu-dialog modal-main" catchtap>
 
     <view class="flex justify-between margin-bottom-lg">
-      <image bindtap="onCircleImageClick"  src="{{showingCircle.coverPic}}" mode="aspectFill" wx:if="{{showingCircle.coverPic}}" class="circle-detail-cover-pic"></image>
+      <image bindtap="onCircleImageClick" src="{{showingCircle.coverPic}}" mode="aspectFill" wx:if="{{showingCircle.coverPic}}" class="circle-detail-cover-pic"></image>
       <view wx:if="{{!showingCircle.coverPic}}" class="circle-detail-logo-bg center">
         <image class="circle-detail-logo" src="{{showingCircle.icon}}"></image>
       </view>
@@ -176,7 +176,10 @@
       </view>
     </view>
 
-    <view class="circle-detail-name">{{showingCircle.name}}</view>
+    <view class="flex circle-detail-name">
+      <view>{{showingCircle.name}}</view>
+      ({{showingCircle.memberCount}}+)
+    </view>
     <view class="flex margin-top-sm">
       <view wx:for="{{showingCircle.tags}}" class="circle-detail-tag margin-right-sm">{{item}}</view>
     </view>
@@ -186,14 +189,6 @@
       <view wx:if="{{!showingCircle.intro}}" class="circle-detail-intro margin-top-lg">这个圈主很懒，什么都没留下...</view>
     </view>
 
-    <view class="margin-top circle-detail-section">
-      Members({{showingCircle.memberCount}}+)
-    </view>
-
-    <view wx:if="{{!showingCircle.participants}}" class="text-grey text-sm margin-top-xs">你点加入，这里的第一个头像就是你！</view>
-    <view class="flex margin-top-sm">
-      <image src="{{item.avatarUrl}}" wx:if="{{index < 7}}" wx:for="{{showingCircle.participants}}" class="circle-detail-member margin-right-sm"></image>
-    </view>
 
 
     <view wx:if="{{showingCircle.citys && showingCircle.citys.length > 0}}">
@@ -232,8 +227,8 @@
     </view>
 
     <view class="modal-code-container margin-top-xs flex align-center justify-between">
-    <view class="modal-code-text">{{showingCircle.shrinkCode}}</view>
-    <view bindtap="copyGroupCode" class="modal-code-copy">Copy</view>
+      <view class="modal-code-text">{{showingCircle.shrinkCode}}</view>
+      <view bindtap="copyGroupCode" class="modal-code-copy">Copy</view>
     </view>
 
     <view class="step-title margin-top">

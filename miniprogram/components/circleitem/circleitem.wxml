@@ -3,14 +3,11 @@
   <view class="flex justify-between">
     <image lazy-load="true" src="{{circle.coverPic}}" mode="aspectFill" wx:if="{{circle.coverPic}}" class="circle-cover-pic"></image>
     <view wx:if="{{!circle.coverPic}}" class="circle-logo-bg center">
-      <image class="circle-logo" src="{{circle.icon}}"></image>
+      <image lazy-load="true" class="circle-logo" src="{{circle.icon}}"></image>
     </view>
-    <view wx:if="{{circle.joined}}" class="circle-joined-text">Joined</view>
-    <image wx:if="{{!circle.joined}}" class="circle-join-icon" src="../../images/ic_plus_circle.png"></image>
   </view>
 
   <view class="margin-top circle-name single-line">{{circle.name}}</view>
-  <image class="circle-dot margin-top-sm" src="../../images/ic_circle_dots.png"></image>
 
   <view class="margin-top circle-team-only">{{circle.teamOnly ? circle.teamOnlyStr + " Only" : ''}}</view>
   <view class="margin-top-sm circle-tag single-line">{{circle.tagStr}}</view>
