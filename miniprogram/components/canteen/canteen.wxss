@@ -5,8 +5,8 @@
 }
 
 .icon {
-  width: 60rpx;
-  height: 60rpx;
+  width: 48rpx;
+  height: 48rpx;
 }
 
 .title {

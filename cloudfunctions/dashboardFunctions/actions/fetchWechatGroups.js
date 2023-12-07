@@ -36,6 +36,9 @@ exports.main = async (data, context) => {
   for (let i = 0; i < batchTimes; i++) {
     const promise = db
       .collection(COLLECTION_NAME)
+      .field({
+        participants: false
+      })
       .skip(i * MAX_LIMIT)
       .limit(MAX_LIMIT)
       .get();
@@ -47,10 +50,5 @@ exports.main = async (data, context) => {
     list = list.concat(result.data);
   })
 
-  for (const circle of list) {
-    if (circle.participants) {
-      circle.participants = circle.participants.slice(0, 10);
-    }
-  }
   return list;
 };
