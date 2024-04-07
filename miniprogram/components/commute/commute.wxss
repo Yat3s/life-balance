@@ -50,22 +50,22 @@
 .parking-progress-container {
   background: #DFDFDF;
   border-radius: 36rpx;
-  height: 36rpx;
+  height: 32rpx;
   width: 200rpx;
   overflow: hidden;
 }
 
 .parking-progress-indicator {
   background: linear-gradient(97.82deg, #90ABF1 9.38%, #573189 95.98%);
-  border-radius: 36rpx;
-  height: 36rpx;
+  border-radius: 2rpx;
+  height: 32rpx;
   transition: width 1s;
 }
 
 .parking-left-count {
   font-weight: bold;
-  font-size: 24pt;
-  line-height: 24pt;
+  font-size: 20pt;
+  line-height: 20pt;
   letter-spacing: 4rpx;
   color: black;
 }
