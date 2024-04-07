@@ -5,32 +5,40 @@
     <view class="flex justify-between">
       <view class="flex align-center">
         <image class="commute-icon" src="/images/ic_widget_parking.png"></image>
-        <view class="commute-title margin-left-sm">B25 Parking</view>
+        <view class="commute-title margin-left-sm">Parking Space</view>
       </view>
 
       <image class="parking-refresh-icon" src="/images/ic_refresh.png"></image>
     </view>
 
     <view class="margin-top">
-      <!-- Parking underground -->
+      <!-- B25  -->
       <view class="flex align-center">
-        <view class="parking-left-title">地下剩余</view>
+        <view class="parking-left-title">B25</view>
         <view class="parking-progress-container margin-left-xs flex">
-          <view class="parking-progress-indicator" style="width: {{undergroundIndicatorWidth}}"></view>
+          <view class="parking-progress-indicator" style="width: {{b25SpaceIndicatorWidth}}"></view>
         </view>
 
         <view class="flex align-end margin-left-sm">
-          <view class="parking-left-count">{{parkingSpace.underground}}</view>
-          <view class="parking-all-count">/{{maxUndergroundSpaces}}</view>
+          <view class="parking-left-count">{{parkingSpace.b25}}</view>
+          <view class="parking-all-count">/{{maxB25Spaces}}</view>
         </view>
         <view class="flex-1"></view>
       </view>
 
+      <!-- Zhongmeng  -->
+      <view class="flex align-center margin-top-sm">
+        <view class="parking-left-title">中盟</view>
+        <view class="parking-progress-container margin-left-xs flex">
+          <view class="parking-progress-indicator" style="width: {{zhongmengSpaceIndicatorWidth}}"></view>
+        </view>
 
-      <!-- <view wx:if="{{predictFullTime}}" class="flex align-center margin-top">
-        <image class="prediction-icon" src="/images/ic_bulb-fill.png"></image>
-        <view class="parking-predict-text margin-left-xs">预计在 {{predictFullTime}} 停满</view>
-      </view> -->
+        <view class="flex align-end margin-left-sm">
+          <view class="parking-left-count">{{parkingSpace.zhongmeng}}</view>
+          <view class="parking-all-count">/{{maxZhongmengSpaces}}</view>
+        </view>
+        <view class="flex-1"></view>
+      </view>
 
       <view wx:if="{{lastParkingFullTimeStr}}" class="flex align-center margin-top">
         <image class="prediction-icon" src="/images/ic_bulb-fill.png"></image>
@@ -38,7 +46,7 @@
       </view>
 
       <view catchtap="toParkingTip" class="full-tip margin-top-xs" wx:if="{{showParkingFullTip}}">
-      车位已满？<text class="full-tip-underline">查看其他停车方案</text>
+        车位已满？<text class="full-tip-underline">查看其他停车方案</text>
       </view>
 
     </view>
