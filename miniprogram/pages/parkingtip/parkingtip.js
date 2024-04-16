@@ -14,9 +14,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    const { type } = options;
     getAppConfig().then(appConfig => {
+      const parkingTip = type === 'shuttle' ? appConfig.shuttleTip : appConfig.parkingTip
       this.setData({
-        parkingTip: appConfig.parkingTip
+        parkingTip
       })
     });
   },

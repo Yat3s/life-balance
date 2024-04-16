@@ -42,6 +42,29 @@
   text-decoration: underline;
 }
 
+.tip-text {
+  color: #7F6CA7;
+  text-decoration: underline;
+  font-size: 9pt;
+}
+
+.shuttle-tip {
+  color: #7F6CA7;
+  font-size: 9pt;
+}
+
+.shuttle-tip-icon {
+  width: 12px;
+  height: 12px;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.tip-container {
+  border-radius: 12rpx;
+  border: 1rpx solid #dadada;
+}
+
 .parking-left-title {
   color: var(--textGrey);
   font-size: 10pt;

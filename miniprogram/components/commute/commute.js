@@ -41,7 +41,11 @@ Component({
     },
 
     toParkingTip() {
-      navigationToParkingTip();
+      navigationToParkingTip("parking");
+    },
+
+    toShuttleSchedule() {
+      navigationToParkingTip("shuttle");
     },
 
     fetchParkingSpacePredictionData() {

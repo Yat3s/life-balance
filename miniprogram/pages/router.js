@@ -104,12 +104,12 @@ export const Pages = {
   },
   ParkingTip: {
     authRequired: false,
-    url: '/pages/parkingtip/parkingtip'
+    url: '/pages/parkingtip/parkingtip?type='
   },
 }
 
-export function navigationToParkingTip() {
-  navigate(Pages.ParkingTip)
+export function navigationToParkingTip(type) {
+  navigate(Pages.ParkingTip, type)
 }
 
 export function navigationToContribution() {
