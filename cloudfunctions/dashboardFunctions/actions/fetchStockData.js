@@ -7,10 +7,10 @@ cloud.init({
 });
 
 exports.main = async (data, context) => {
-  const symbols = ['MSFT', 'AAPL', 'AMZN', 'GOOG'];
+  const symbols = ['MSFT', 'AAPL', 'NVDA', 'GOOG'];
 
   var option = {
-    uri: `http://hq.sinajs.cn/list=gb_msft,gb_aapl,gb_amzn,gb_goog`,
+    uri: `http://hq.sinajs.cn/list=gb_msft,gb_aapl,gb_nvda,gb_goog`,
     headers: {
       'Referer': 'https://stock.finance.sina.com.cn/',
     },

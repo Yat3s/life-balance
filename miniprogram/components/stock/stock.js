@@ -27,6 +27,7 @@ Component({
   lifetimes: {
     attached() {
       fetchStockData().then(stockData => {
+        console.log("Stock data", stockData);
         const top1 = stockData.stocks[0];
         const top2 = stockData.stocks[1];
         const msft = stockData.msft;
