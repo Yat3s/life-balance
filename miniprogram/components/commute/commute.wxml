@@ -1,13 +1,12 @@
-<view class="main">
+<view class="main {{loadingParkingSpace ? 'rainbow' : ''}}">
 
   <!-- Parking -->
-  <view bindtap="refresh">
+  <view bindtap="refresh" >
     <view class="flex justify-between">
       <view class="flex align-center">
         <image class="commute-icon" src="/images/ic_widget_parking.png"></image>
         <view class="commute-title margin-left-sm">Parking Space</view>
       </view>
-
       <image class="parking-refresh-icon" src="/images/ic_refresh.png"></image>
     </view>
 
@@ -50,20 +49,10 @@
       </view>
 
     </view>
-
-  </view>
-
-  <!-- Divider or progress bar -->
-  <view class="margin-top-xs divider-container center">
-    <view wx:if="{{loadingParkingSpace}}" class="cu-progress round xs striped active">
-      <view class="bg-blue" style="width:100%;"></view>
-    </view>
-
-    <view wx:if="{{!loadingParkingSpace}}" class="divider"></view>
   </view>
 
   <!-- Shuttle bus -->
-  <view class="flex align-center margin-top-sm" bindtap="toShuttleBusDetail">
+  <!-- <view class="flex align-center margin-top-sm" bindtap="toShuttleBusDetail">
     <image class="commute-icon" src="/images/ic_shuttle_bus.png"></image>
     <view class="commute-title margin-left-sm">Shuttle Bus</view>
     <view class="flex-1"></view>
@@ -73,6 +62,6 @@
       <image class="forward-icon margin-left-xs" src="../../images/ic_widget_go.png"></image>
 
     </view>
-  </view>
+  </view> -->
 
 </view>

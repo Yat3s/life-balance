@@ -1,6 +1,12 @@
 <view class="appbar" style="height: {{appBarHeight}}px;">
   <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="toolbar plr {{collapsed? 'shadow bg-white' : ''}}">
-    <view class="flex align-center">
+    
+  </view>
+</view>
+
+<scroll-view scroll-y="true" class="main" bindscroll="onPageScrolled">
+  <view style="height:160px; padding-top: {{statusBarHeight + toolbarHeight}}px; margin-top: 32rpx;" class="flex justify-between flex-top">
+    <view class="flex">
       <image style="width: {{avatarScale * 80}}rpx; height: {{avatarScale * 80}}rpx;" class="user-avatar" wx:if="{{userInfo}}" src="{{userInfo.avatarUrl}}"></image>
 
       <view class="user-avatar" wx:if="{{!userInfo}}">
@@ -12,11 +18,7 @@
         <view style="font-size: {{titleScale * 11}}pt; line-height: {{titleScale * 11}}pt;" class="user-welcome-message margin-top-xs">{{welcomeMessage}}</view>
       </view>
     </view>
-  </view>
-</view>
 
-<scroll-view scroll-y="true" class="main" bindscroll="onPageScrolled">
-  <view style="height:200px; padding-top: {{statusBarHeight + toolbarHeight}}px;" class="flex justify-end">
     <view class="stock-container">
       <stock></stock>
     </view>

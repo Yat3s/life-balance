@@ -71,10 +71,6 @@ page {
   margin-top: 28rpx;
 }
 
-.stock-container {
-  margin-top: 32rpx;
-}
-
 .user-avatar {
   width: 80rpx;
   height: 80rpx;
