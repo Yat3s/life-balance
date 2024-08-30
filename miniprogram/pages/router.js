@@ -102,14 +102,14 @@ export const Pages = {
     authRequired: false,
     url: '/pages/user/contribution/contribution'
   },
-  ParkingTip: {
+  AppConfigWebView: {
     authRequired: false,
-    url: '/pages/parkingtip/parkingtip'
+    url: '/pages/appconfigwebview/appconfigwebview?config='
   },
 }
 
-export function navigationToParkingTip() {
-  navigate(Pages.ParkingTip)
+export function navigationToAppConfigWebView(config) {
+  navigate(Pages.AppConfigWebView, config)
 }
 
 export function navigationToContribution() {

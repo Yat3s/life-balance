@@ -1,6 +1,6 @@
 import {
   navigateToBusInfo,
-  navigationToParkingTip
+  navigationToAppConfigWebView
 } from "../../pages/router";
 import {
   fetchLastParkingFullTime,
@@ -41,7 +41,11 @@ Component({
     },
 
     toParkingTip() {
-      navigationToParkingTip();
+      navigationToAppConfigWebView("parkingTip");
+    },
+
+    toShuttleTip() {
+      navigationToAppConfigWebView("shuttleTip");
     },
 
     fetchParkingSpacePredictionData() {

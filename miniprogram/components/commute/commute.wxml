@@ -1,7 +1,7 @@
 <view class="main {{loadingParkingSpace ? 'rainbow' : ''}}">
 
   <!-- Parking -->
-  <view bindtap="refresh" >
+  <view bindtap="refresh">
     <view class="flex justify-between">
       <view class="flex align-center">
         <image class="commute-icon" src="/images/ic_widget_parking.png"></image>
@@ -45,7 +45,11 @@
       </view>
 
       <view catchtap="toParkingTip" class="full-tip margin-top-xs" wx:if="{{showParkingFullTip}}">
-        车位已满？<text class="full-tip-underline">查看其他停车方案</text>
+
+        <view class="flex justify-between align-center">
+          <view>车位已满？<text class="full-tip-underline">查看其他停车方案</text></view>
+          <view bind:tap="toShuttleTip" class="flex align-center full-tip-underline">中盟<image class="switch-icon " src="/images/ic_switch_blue.png"></image>B25 接驳车时间表</view>
+        </view>
       </view>
 
     </view>

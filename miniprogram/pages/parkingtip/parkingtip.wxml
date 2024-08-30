@@ -1,5 +1,0 @@
-<toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
-
-<view class="plr bg-white">
-  <rich-text nodes="{{parkingTip}}"></rich-text>
-</view>
