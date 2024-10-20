@@ -271,6 +271,26 @@ export function fetchLastParkingFullTime() {
   });
 }
 
+export function fetchLastWeekParkingFullTime() {
+  const now = new Date();
+  const lastWeekParkingFullDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+  lastWeekParkingFullDate.setHours(0, 0, 0, 0);
+
+  return new Promise((resolve, reject) => {
+    cloudCall(db.collection("parking-full").where({
+      date: _.gte(lastWeekParkingFullDate.getTime())
+    }).get(), "fetchLastWeekParkingFullTime").then(res => {
+      if (!res || res.length === 0) {
+        resolve(null);
+        return;
+      }
+
+      let lastWeekParkingFull = res[0].full;
+      resolve(lastWeekParkingFull);
+    });
+  });
+}
+
 export function recordParkingFull(full = null, left20 = null, left10 = null) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
