@@ -40,8 +40,7 @@
       </view>
 
       <view wx:if="{{lastParkingFullTimeStr}}" class="flex align-center margin-top">
-        <image class="prediction-icon" src="/images/ic_bulb-fill.png"></image>
-        <view class="parking-predict-text margin-left-xs">{{lastParkingFullTimeStr}}</view>
+        <view class="parking-predict-text">{{lastParkingFullTimeStr}}</view>
       </view>
 
       <view catchtap="toParkingTip" class="full-tip margin-top-xs" wx:if="{{showParkingFullTip}}">

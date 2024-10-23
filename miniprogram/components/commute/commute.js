@@ -8,6 +8,9 @@ import {
   fetchParkingSpace,
   recordParkingFull
 } from "../../repository/dashboardRepo"
+import {
+  getWeekdayIndexStr
+} from "../../util";
 
 // components/commute/commute.js
 Component({
@@ -52,7 +55,7 @@ Component({
     fetchParkingSpacePredictionData() {
       fetchLastWeekParkingFullTime().then(res => {
         let lastParkingFullTimeStr = ""
-        let dayStrPrefix = '上周今日'
+        let dayStrPrefix = '上周' + getWeekdayIndexStr(new Date())
         const showParkingFullTip = res != null
         if (res) {
           const lastParkingFullTime = (new Date(res)).hhmm();
