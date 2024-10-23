@@ -4,6 +4,7 @@ import {
 } from "../../pages/router";
 import {
   fetchLastParkingFullTime,
+  fetchLastWeekParkingFullTime,
   fetchParkingSpace,
   recordParkingFull
 } from "../../repository/dashboardRepo"
@@ -49,9 +50,9 @@ Component({
     },
 
     fetchParkingSpacePredictionData() {
-      fetchLastParkingFullTime().then(res => {
+      fetchLastWeekParkingFullTime().then(res => {
         let lastParkingFullTimeStr = ""
-        let dayStrPrefix = (new Date()).getDay() == 1 ? '上周五' : '昨日'
+        let dayStrPrefix = '上周今日'
         const showParkingFullTip = res != null
         if (res) {
           const lastParkingFullTime = (new Date(res)).hhmm();
