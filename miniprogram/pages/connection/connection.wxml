@@ -1,11 +1,12 @@
-<!--pages/explore/explore.wxml-->
+<!-- pages/explore/explore.wxml -->
 <view class="appbar" style="height: {{appBarHeight}}px;">
   <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="bg-white toolbar plr {{collapsed? 'shadow' : ''}}">
     <view style="font-size: {{titleScale * 24}}pt;" class="title">Connection</view>
-    <view style="font-size: {{subtitleScale * 12}}pt;" class="subtitle">Build more connections with colleagues</view>
+    <view style="font-size: {{subtitleScale * 12}}pt;" class="subtitle">
+      Build more connections with colleagues
+    </view>
   </view>
 </view>
-
 <scroll-view class="main" scroll-y="true" bindscroll="onPageScrolled">
   <view style="height: 200px;"></view>
   <!-- Activities -->
@@ -13,21 +14,17 @@
     <view class="flex align-center">
       <view class="section-title">Activities</view>
     </view>
-
     <view bindtap="onNewActivityClicked" class="section-action">New Activity</view>
   </view>
-
   <scroll-view scroll-x="true" class="padding-top padding-bottom">
     <view class="flex">
       <view bindtap="onActivityItemClicked" data-id="{{item._id}}" wx:for="{{activities}}" class="activity-item-active">
-
         <!-- Title -->
         <view class="flex justify-between">
           <view class="flex align-center">
             <image class="activity-title-icon" src="../../images/ic_comma.png"></image>
             <view class="activity-title margin-left-xs single-line">{{item.title}}</view>
           </view>
-
           <view wx:if="{{item.isActive}}" class="flex align-center">
             <view class="activity-state-active-icon"></view>
             <view class="activity-state-active-text margin-left-xs">Active</view>
@@ -37,57 +34,44 @@
             <view class="activity-state-ended-text margin-left-xs">Ended</view>
           </view>
         </view>
-
         <!-- Info -->
-        <view class="activity-info margin-top-sm single-line">{{item.startDateStr}} {{item.location.name}}</view>
-
+        <view class="activity-info margin-top-sm single-line">
+          {{item.startDateStr}} {{item.location.name}}
+        </view>
         <!-- Participants -->
         <view class="flex margin-top">
-          <image wx:if="{{index < 5}}" class="activity-participant-avatar" src="{{participant.avatarUrl}}" wx:for="{{item.participants}}" wx:key="id" wx:for-item="participant">
-          </image>
-
+          <image wx:if="{{index < 5}}" class="activity-participant-avatar" src="{{participant.avatarUrl}}" wx:for="{{item.participants}}" wx:key="id" wx:for-item="participant"></image>
           <image wx:if="{{item.isActive}}" src="../../images/ic_plus.png" class="activity-participant-join" />
-
           <view class="flex margin-left align-center">
             <view class="activity-participant-number">{{item.participants.length}}</view>
-
-            <view class="activity-participant-number-max">/{{item.maxParticipant}}
-            </view>
+            <view class="activity-participant-number-max">/{{item.maxParticipant}}</view>
           </view>
         </view>
       </view>
-
       <!-- Shimmer layout -->
       <view wx:if="{{!activities}}" wx:key="nonthing" wx:for="{{2}}" class="activity-item-shimmer">
         <view class="shine-grey" style="width: 90%; height: 50rpx" />
         <view class="shine-grey margin-top-sm" style="width: 400rpx; height: 40rpx" />
         <view class="shine-grey margin-top-xs" style="width: 200rpx; height: 30rpx" />
       </view>
-
       <!-- More item -->
       <view bindtap="onMoreActivitiesClicked" class="activity-item-more center">
         <view class="activity-item-more-title">More activities</view>
       </view>
     </view>
-
-
   </scroll-view>
-
   <!-- Circles Title -->
   <view id="circle-title" class="circle-title plr flex align-center justify-between">
     <view class="flex align-center">
       <view class="section-title">Circles</view>
     </view>
-
     <view bindtap="onAddCircleClicked" class="section-action">Add Circle</view>
   </view>
-
   <!-- Search -->
   <share-element duration="200" key="search-input" transform>
     <view class="plr margin-top-sm">
       <view bindtap="onCircleSearchClicked" class="circle-search-container flex align-center">
         <image src="../../images/ic_search_grey.png" class="circle-search-icon" />
-
         <swiper class="circle-search-keyword-swiper margin-left-sm" duration="500" autoplay="true" vertical="true" circular="true" interval="3000">
           <block wx:for="{{circleKeywords}}" wx:key="*this">
             <swiper-item class="circle-search-keyword-swiper-item">
@@ -98,13 +82,11 @@
       </view>
     </view>
   </share-element>
-
   <!-- Circle Items -->
-  <view class="grid col-2 margin-top-sm circle-list-container">
+  <view class="grid grid-cols-2 margin-top-sm circle-list-container">
     <view bindtap="onCircleItemClicked" data-circle="{{item}}" class="circle-item-frame" wx:for="{{circles}}" wx:key="id">
       <circleitem circle="{{item}}" />
     </view>
-
     <!-- Shimmer layout -->
     <view wx:if="{{!circles}}" wx:key="nonthing" wx:for="{{2}}" class="circle-item-frame">
       <view class="circle-item-shimmer">
@@ -116,16 +98,12 @@
     </view>
   </view>
 </scroll-view>
-
-
 <!-- Circle search page -->
 <page-container bind:afterenter="onCircleSearchPageEnter" bind:afterleave="onCircleSearchPageExit" duration="200" position="center" show="{{showSearchPage}}">
   <view class="circle-search-page">
-
     <!-- <view class="circle-search-page-header"> -->
     <text bindtap="onDismissSearchPage" class="cuIcon-close circle-search-page-close"></text>
     <view style="flex: 1;"></view>
-
     <share-element duration="200" key="search-input" transform>
       <view class="plr margin-top-sm">
         <view class="circle-search-container flex align-center">
@@ -133,20 +111,19 @@
           <view class="margin-left-xs">
             <input focus="{{circleSearchFocus}}" style="width: 100%;" value="{{searchCircleInput}}" bindinput="onSearchCircleChanged" placeholder="Search Circles"></input>
           </view>
-
         </view>
       </view>
     </share-element>
-
     <view wx:if="{{showCircleSearchContent}}" class="animation-fade">
       <!-- Search Keyword -->
       <scroll-view scroll-x="true" class="margin-top-sm">
         <view class="plr flex align-center">
-          <view bindtap="onCircleKeyboardClicked" data-keyword="{{item}}" class="circle-search-keyword margin-right-sm" wx:for="{{circleKeywords}}" wx:key="item">{{item}}</view>
+          <view bindtap="onCircleKeyboardClicked" data-keyword="{{item}}" class="circle-search-keyword margin-right-sm" wx:for="{{circleKeywords}}" wx:key="item">
+            {{item}}
+          </view>
         </view>
       </scroll-view>
       <!-- </view> -->
-
       <!-- Circle Items -->
       <scroll-view class="circle-search-page-list margin-top-sm " scroll-y="true">
         <view class="grid col-2 circle-list-container">
@@ -157,48 +134,38 @@
       </scroll-view>
     </view>
   </view>
-
 </page-container>
-
-
 <!-- Circle detail modal -->
 <view class="cu-modal {{showingModal === 'circle' ? 'show' : ''}}" bindtap="onDismissModal" catchtouchmove>
   <view class="cu-dialog modal-main" catchtap>
-
     <view class="flex justify-between margin-bottom-lg">
       <image bindtap="onCircleImageClick" src="{{showingCircle.coverPic}}" mode="aspectFill" wx:if="{{showingCircle.coverPic}}" class="circle-detail-cover-pic"></image>
       <view wx:if="{{!showingCircle.coverPic}}" class="circle-detail-logo-bg center">
         <image class="circle-detail-logo" src="{{showingCircle.icon}}"></image>
       </view>
-
       <view class="action" bindtap="onDismissModal">
         <text class="modal-dismiss-icon cuIcon-close text-red"></text>
       </view>
     </view>
-
     <view class="flex circle-detail-name">
       <view>{{showingCircle.name}}</view>
       ({{showingCircle.memberCount}}+)
     </view>
     <view class="flex margin-top-sm">
-      <view wx:for="{{showingCircle.tags}}" class="circle-detail-tag margin-right-sm">{{item}}</view>
+      <view wx:for="{{showingCircle.tags}}" class="circle-detail-tag margin-right-sm">
+        {{item}}
+      </view>
     </view>
-
     <view class="margin-top">
       <rich-text class="text-grey" wx:if="{{showingCircle.intro}}" nodes="{{showingCircle.intro}}"></rich-text>
-      <view wx:if="{{!showingCircle.intro}}" class="circle-detail-intro margin-top-lg">这个圈主很懒，什么都没留下...</view>
-    </view>
-
-
-
-    <view wx:if="{{showingCircle.citys && showingCircle.citys.length > 0}}">
-      <view class="margin-top circle-detail-section">
-        City
+      <view wx:if="{{!showingCircle.intro}}" class="circle-detail-intro margin-top-lg">
+        这个圈主很懒，什么都没留下...
       </view>
-
+    </view>
+    <view wx:if="{{showingCircle.citys && showingCircle.citys.length > 0}}">
+      <view class="margin-top circle-detail-section">City</view>
       <view class="circle-detail-city margin-top-xs">{{showingCircle.cityStr}}</view>
     </view>
-
     <view class="circle-detail-join-btn-container">
       <view wx:if="{{showingCircle.teamOnly}}" class="flex justify-end">
         <view class="flex">
@@ -206,12 +173,12 @@
           <view class="circle-detail-team-only margin-left-xs">Outlook Only</view>
         </view>
       </view>
-
-      <view catchtap="onJoinClicked" class="cu-btn bg-blue modal-btn">{{showingCircle.joined ? '': 'Join & '}}Copy Group Code</view>
+      <view catchtap="onJoinClicked" class="cu-btn bg-blue modal-btn">
+        {{showingCircle.joined ? '': 'Join & '}}Copy Group Code
+      </view>
     </view>
   </view>
 </view>
-
 <!-- Join Wechat group modal -->
 <view class="cu-modal {{showingModal === 'joinSuccess' ? 'show' : ''}}" bindtap="onDismissModal" catchtouchmove>
   <view class="cu-dialog modal-main" catchtap>
@@ -221,29 +188,18 @@
         <text class="cuIcon-close text-red"></text>
       </view>
     </view>
-
-    <view class="step-title margin-top">
-      #1. Copy group code.
-    </view>
-
+    <view class="step-title margin-top">#1. Copy group code.</view>
     <view class="modal-code-container margin-top-xs flex align-center justify-between">
       <view class="modal-code-text">{{showingCircle.shrinkCode}}</view>
       <view bindtap="copyGroupCode" class="modal-code-copy">Copy</view>
     </view>
-
     <view class="step-title margin-top">
       #2. Add Coconut as a Wechat friend by long-press the QR code.
     </view>
-
     <image show-menu-by-longpress="true" class="coconut-contact margin-top-sm" src="../../images/img_coconut.png" />
-
-    <view class="step-title margin-top">
-      #3. Send that group code to Coconut
-    </view>
-
+    <view class="step-title margin-top">#3. Send that group code to Coconut</view>
   </view>
 </view>
-
 <!-- Create Circle modal -->
 <view class="cu-modal {{showingModal === 'addCircle' ? 'show' : ''}}" bindtap="onDismissModal" catchtouchmove>
   <view class="cu-dialog modal-main" catchtap>
@@ -253,17 +209,21 @@
         <text class="cuIcon-close text-red"></text>
       </view>
     </view>
-
     <view class="flex justify-center margin-top-sm">
       <image src="../../images/ic_under_construction.png" class="under-construction"></image>
-
     </view>
     <view class="flex justify-center margin-top-sm">
       <view class="on-it-text ">We're on it!</view>
     </view>
-
-    <view class="create-circle-text margin-top">Now we only support adding Circle manually, please go to the link: <text class="create-circle-link">https://github.com/Yat3s/Life-Balance/issues/new/choose</text></view>
+    <view class="create-circle-text margin-top">
+      Now we only support adding Circle manually, please go to the link:
+      <text class="create-circle-link">
+        https://github.com/Yat3s/Life-Balance/issues/new/choose
+      </text>
+    </view>
     <view class="create-circle-text margin-top-sm">Choose "New Circle Request"</view>
-    <view catchtap="onCopyAddCircleLink" class="cu-btn bg-blue modal-btn margin-top-lg">Copy Link</view>
+    <view catchtap="onCopyAddCircleLink" class="cu-btn bg-blue modal-btn margin-top-lg">
+      Copy Link
+    </view>
   </view>
 </view>
