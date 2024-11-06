@@ -1,5 +1,4 @@
 <view class="main {{loadingParkingSpace ? 'rainbow' : ''}}">
-
   <!-- Parking -->
   <view bindtap="refresh">
     <view class="flex justify-between">
@@ -9,51 +8,49 @@
       </view>
       <image class="parking-refresh-icon" src="/images/ic_refresh.png"></image>
     </view>
-
     <view class="margin-top">
-      <!-- B25  -->
+      <!-- B25 -->
       <view class="flex align-center">
         <view class="parking-left-title">B25</view>
         <view class="parking-progress-container margin-left-xs flex">
           <view class="parking-progress-indicator" style="width: {{b25SpaceIndicatorWidth}}"></view>
         </view>
-
         <view class="flex align-end margin-left-sm">
           <view class="parking-left-count">{{parkingSpace.b25}}</view>
           <view class="parking-all-count">/{{maxB25Spaces}}</view>
         </view>
         <view class="flex-1"></view>
       </view>
-
-      <!-- Zhongmeng  -->
+      <!-- Zhongmeng -->
       <view class="flex align-center margin-top-sm">
         <view class="parking-left-title">中盟</view>
         <view class="parking-progress-container margin-left-xs flex">
           <view class="parking-progress-indicator" style="width: {{zhongmengSpaceIndicatorWidth}}"></view>
         </view>
-
         <view class="flex align-end margin-left-sm">
           <view class="parking-left-count">{{parkingSpace.zhongmeng}}</view>
           <view class="parking-all-count">/{{maxZhongmengSpaces}}</view>
         </view>
         <view class="flex-1"></view>
       </view>
-
       <view wx:if="{{lastParkingFullTimeStr}}" class="flex align-center margin-top">
         <view class="parking-predict-text">{{lastParkingFullTimeStr}}</view>
       </view>
-
       <view catchtap="toParkingTip" class="full-tip margin-top-xs" wx:if="{{showParkingFullTip}}">
-
         <view class="flex justify-between align-center">
-          <view>车位已满？<text class="full-tip-underline">查看其他停车方案</text></view>
-          <view bind:tap="toShuttleTip" class="flex align-center full-tip-underline">中盟<image class="switch-icon " src="/images/ic_switch_blue.png"></image>B25 接驳车时间表</view>
+          <view>
+            车位已满？
+            <text class="full-tip-underline">查看其他停车方案</text>
+          </view>
+          <view bind:tap="toShuttleTip" class="flex align-center full-tip-underline">
+            中盟
+            <image class="switch-icon " src="/images/ic_switch_blue.png"></image>
+            B25 接驳车时间表
+          </view>
         </view>
       </view>
-
     </view>
   </view>
-
   <!-- Shuttle bus -->
   <!-- <view class="flex align-center margin-top-sm" bindtap="toShuttleBusDetail">
     <image class="commute-icon" src="/images/ic_shuttle_bus.png"></image>
@@ -66,5 +63,4 @@
 
     </view>
   </view> -->
-
 </view>
