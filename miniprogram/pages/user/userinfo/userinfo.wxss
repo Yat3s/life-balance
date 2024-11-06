@@ -1,7 +1,7 @@
-
 page {
   padding-bottom: 100rpx;
 }
+
 .main {
   padding: 24rpx;
 }
@@ -56,7 +56,7 @@ page {
 
 .name-underline {
   height: 12rpx;
-  background: #C5BCFF;
+  background: #c5bcff;
   position: absolute;
   bottom: 0rpx;
   left: 0;
@@ -67,4 +67,9 @@ page {
   border-radius: 24rpx;
   width: 160rpx;
   height: 160rpx;
+}
+
+.desc {
+  color: #bebec0;
+  font-size: 26rpx;
 }

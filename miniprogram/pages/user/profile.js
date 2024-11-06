@@ -1,69 +1,52 @@
-// pages/profile/profile.js
-const app = getApp();
+const { fetchAllPersonalCarpools } = require('../../repository/carpoolRepo');
 const activityRepo = require('../../repository/activityRepo');
-const {
-  fetchAllPersonalCarpools
-} = require('../../repository/carpoolRepo');
 const userRepo = require('../../repository/userRepo');
 const router = require('../router');
+const app = getApp();
 
 Component({
   options: {
-    addGlobalClass: true
+    addGlobalClass: true,
   },
 
-  /**
-   * 组件的属性列表
-   */
-  properties: {
+  properties: {},
 
-  },
-
-  /**
-   * 组件的初始数据
-   */
   data: {
     windowWidth: app.globalData.windowWidth,
     selectedTabId: 'all',
     organizeCount: 0,
     showEmpty: true,
-    tabs: [{
+    tabs: [
+      {
         id: 'all',
-        name: "All activities",
+        name: 'All activities',
         count: 0,
       },
       {
         id: 'organizer',
-        name: "Posted activities",
+        name: 'Posted activities',
         count: 0,
       },
       {
         id: 'like',
-        name: "Favorite activities",
+        name: 'Favorite activities',
         count: 0,
       },
       {
         id: 'carpool',
-        name: "All carpools",
+        name: 'All carpools',
         count: 0,
       },
-    ]
+    ],
   },
 
-  /**
-   * 组件的方法列表
-   */
   methods: {
     onSettingCompanyClick() {
       router.navigateToAuth();
     },
     onTabSelected(e) {
       const selectedTabId = e.currentTarget.dataset.id;
-      const {
-        activities,
-        likedActivities,
-        carpools
-      } = this.data;
+      const { activities, likedActivities, carpools } = this.data;
 
       let showEmpty = false;
       switch (selectedTabId) {
@@ -73,11 +56,11 @@ Component({
 
         case 'organizer':
           let count = 0;
-          activities.forEach(activity => {
+          activities.forEach((activity) => {
             if (activity.type == 'organizer') {
               count++;
             }
-          })
+          });
           showEmpty = count == 0;
           break;
 
@@ -101,20 +84,19 @@ Component({
         return;
       }
 
-      activityRepo.fetchActivitiesByIds(ids).then(likedActivities => {
+      activityRepo.fetchActivitiesByIds(ids).then((likedActivities) => {
         this.setData({
-          likedActivities
+          likedActivities,
         });
 
         this.updateTabCount('like', likedActivities.length);
-      })
+      });
     },
 
     fetchAllPersonalActivities(openid) {
-      activityRepo.fetchAllPersonalActivities().then(activities => {
-
+      activityRepo.fetchAllPersonalActivities().then((activities) => {
         let organizeCount = 0;
-        activities.forEach(activity => {
+        activities.forEach((activity) => {
           if (activity.organizer._openid == openid) {
             activity.type = 'organizer';
             organizeCount++;
@@ -123,12 +105,12 @@ Component({
 
         this.setData({
           activities,
-          showEmpty: activities.length == 0
+          showEmpty: activities.length == 0,
         });
 
         this.updateTabCount('organizer', organizeCount);
         this.updateTabCount('all', activities.length);
-      })
+      });
     },
 
     onUserInfoClick(e) {
@@ -136,9 +118,7 @@ Component({
     },
 
     updateTabCount(tabId, count) {
-      const {
-        tabs
-      } = this.data;
+      const { tabs } = this.data;
       for (const tab of tabs) {
         if (tab.id == tabId) {
           tab.count = count;
@@ -147,53 +127,53 @@ Component({
       }
 
       this.setData({
-        tabs
+        tabs,
       });
-    }
+    },
   },
-
 
   pageLifetimes: {
     show() {
       // Update profile
-      userRepo.fetchUserInfo().then(userInfo => {
+      userRepo.fetchUserInfo().then((userInfo) => {
         if (!userInfo) {
           return;
         }
 
         this.setData({
-          userInfo
+          userInfo,
         });
-      })
-    }
+      });
+    },
   },
+
   lifetimes: {
     attached() {
-      userRepo.fetchUserInfo().then(userInfo => {
+      userRepo.fetchUserInfo().then((userInfo) => {
         if (!userInfo) {
           return;
         }
 
         this.setData({
-          userInfo
+          userInfo,
         });
 
         this.fetchAllPersonalActivities(userInfo._openid);
         this.fetchAllLikedActivities(userInfo.likes);
 
-        fetchAllPersonalCarpools().then(carpools => {
+        fetchAllPersonalCarpools().then((carpools) => {
           this.setData({
-            carpools
+            carpools,
           });
           this.updateTabCount('carpool', carpools.length);
         });
 
         if (userInfo.company) {
-          userRepo.fetchCompany(userInfo.company).then(company => {
-            this.setData({company})
-          })
+          userRepo.fetchCompany(userInfo.company).then((company) => {
+            this.setData({ company });
+          });
         }
-      })
-    }
-  }
-})
+      });
+    },
+  },
+});
