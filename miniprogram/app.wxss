@@ -1,29 +1,29 @@
 /**app.wxss**/
 @import 'colorui/main.wxss';
 @import 'colorui/icon.wxss';
-@import "colorui/animation.wxss";
+@import 'colorui/animation.wxss';
+@import 'styles/tailwind.wxss';
 
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-} 
+}
 
 .flex-1 {
   flex: 1;
 }
 
-
 button {
   background: initial;
 }
 
-button:focus{
+button:focus {
   outline: 0;
 }
 
-button::after{
+button::after {
   border: none;
 }
 
@@ -68,7 +68,13 @@ button::after{
 
 .shine {
   background: #f6f7f8;
-  background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+  background-image: linear-gradient(
+    to right,
+    #f6f7f8 0%,
+    #edeef1 20%,
+    #f6f7f8 40%,
+    #f6f7f8 100%
+  );
   background-repeat: no-repeat;
   background-size: 800px 104px;
   display: inline-block;
@@ -84,7 +90,13 @@ button::after{
 
 .shine-grey {
   background: #f1f1f1;
-  background-image: linear-gradient(to right, #eeeeee 0%, #edeef1 20%, #eeeeee 40%, #eef4fa 100%);
+  background-image: linear-gradient(
+    to right,
+    #eeeeee 0%,
+    #edeef1 20%,
+    #eeeeee 40%,
+    #eef4fa 100%
+  );
   background-repeat: no-repeat;
   background-size: 800px 104px;
   display: inline-block;
@@ -116,8 +128,8 @@ page {
 
   /* Theme */
   --primary: #181853;
-  --secondary: #8F97FD;
-  --lightBlue: #ECF4FF;
+  --secondary: #8f97fd;
+  --lightBlue: #ecf4ff;
   --inset: 40rpx;
   --textGrey: #aaaaaa;
 }
