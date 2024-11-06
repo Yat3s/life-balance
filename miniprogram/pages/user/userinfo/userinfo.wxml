@@ -1,75 +1,75 @@
 <toolbar isBack="{{true}}" />
-
-
 <form bindsubmit="onUserInfoSubmit">
-
   <view class="main">
     <view class="section-container">
       <view class="name-container">
         <view class="section-title">My pictures</view>
-        <view class="name-underline"></view>
+        <view class="name-underline" />
       </view>
-      <mp-uploader binddelete="onPhotoDelete" delete="{{true}}" bindsuccess="onUploadSuccess" max-count="6" upload="{{uploadFile}}" files="{{files}}" title=""></mp-uploader>
+      <mp-uploader binddelete="onPhotoDelete" delete="{{true}}" bindsuccess="onUploadSuccess" max-count="6" upload="{{uploadFile}}" files="{{files}}" title="" />
     </view>
-
     <view class="section-container margin-top-lg">
       <view class="name-container">
         <view class="section-title">Basic information</view>
-        <view class="name-underline"></view>
+        <view class="name-underline" />
       </view>
-
       <view style="margin-top: 2rpx;" class="form-section">
         <view class="form-section-title">Contact</view>
-        <input placeholder="Alias or email" name="contact" value="{{contact}}"></input>
+        <input placeholder="Alias or email" name="contact" value="{{contact}}" />
       </view>
-
       <view style="margin-top: 2rpx;" class="form-section">
         <view class="form-section-title">Height</view>
-        <input placeholder="cm" name="height" value="{{height}}"></input>
+        <input placeholder="cm" name="height" value="{{height}}" />
       </view>
-
       <view style="margin-top: 2rpx;" class="form-section">
         <view class="form-section-title">Birthday</view>
         <picker mode="date" bindchange="onBirthdayPicked">
           <view class="{{birthday ? '' : 'unset'}} picker">{{birthday ? birthday : 'Unset'}}</view>
         </picker>
       </view>
-
       <view style="margin-top: 2rpx;" class="form-section">
         <view class="form-section-title">Hometown</view>
         <picker mode="region" bindchange="onHometownPicked">
           <view class="{{hometown ? '' : 'unset'}} picker">{{hometown ? hometown : 'Unset'}}</view>
         </picker>
       </view>
-
       <view style="margin-top: 2rpx;" class="form-section">
         <view class="form-section-title">School</view>
-        <input placeholder="School name" name="school" value="{{school}}"></input>
+        <input placeholder="School name" name="school" value="{{school}}" />
       </view>
-
       <view style="margin-top: 2rpx;" class="form-section">
         <view class="form-section-title">Occupation</view>
-        <input placeholder="Occupation" name="occupation" value="{{occupation}}"></input>
+        <input placeholder="Occupation" name="occupation" value="{{occupation}}" />
       </view>
     </view>
-
     <view class="section-container margin-top-lg">
       <view class="name-container">
         <view class="section-title">My story</view>
-        <view class="name-underline"></view>
+        <view class="name-underline" />
       </view>
-
       <view style="margin-top: 2rpx;" class="form-section">
-        <textarea maxlength="300" value="{{desc}}" name="desc" class="margin-top-xs" placeholder="Your story（within 300 characters）"
-          style="font-size: 11pt; width: 100%; min-height: 200rpx; border-radius: 12rpx; "></textarea>
+        <textarea maxlength="300" value="{{desc}}" name="desc" class="margin-top-xs" placeholder="Your story（within 300 characters）" style="font-size: 11pt; width: 100%; min-height: 200rpx; border-radius: 12rpx; " />
       </view>
     </view>
-
-
+    <view class="section-container margin-top-lg">
+      <view class="name-container">
+        <view class="section-title">Logistics Information</view>
+        <view class="name-underline" />
+      </view>
+      <view style="margin-top: 2rpx;" class="form-section">
+        <view class="form-section-title">Phone number</view>
+        <input type="number" maxlength="11" placeholder="Phone number" name="phoneNumber" value="{{phoneNumber}}" bindinput="onPhoneNumberInput" />
+      </view>
+      <view style="margin-top: 2rpx;" class="form-section">
+        <view class="form-section-title">Address</view>
+        <input placeholder="Shipping address" name="address" value="{{address}}" />
+      </view>
+    </view>
     <!-- Submit -->
     <view style="margin-top: 40rpx;" class="flex justify-end">
-      <button form-type="submit" style="width: 200rpx; border-radius: 16rpx;" class="cu-btn bg-primary">Submit</button>
+      <button form-type="submit" style="width: 200rpx; border-radius: 16rpx;" class="cu-btn bg-primary">
+        Submit
+      </button>
     </view>
-
   </view>
 </form>
