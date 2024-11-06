@@ -56,6 +56,9 @@
         <view class="section-title">Logistics Information</view>
         <view class="name-underline" />
       </view>
+      <view class="desc" style="margin-top: 32rpx;">
+        Information used to contact others regarding your purchase of official products and in the flea market.
+      </view>
       <view style="margin-top: 2rpx;" class="form-section">
         <view class="form-section-title">Phone number</view>
         <input type="number" maxlength="11" placeholder="Phone number" name="phoneNumber" value="{{phoneNumber}}" bindinput="onPhoneNumberInput" />
