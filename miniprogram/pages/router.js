@@ -90,7 +90,7 @@ export const Pages = {
   },
   PublishItem: {
     authRequired: false,
-    url: '/pages/shopping/publish-item/publish-item',
+    url: '/pages/mall/publish-item/publish-item',
   },
 };
 

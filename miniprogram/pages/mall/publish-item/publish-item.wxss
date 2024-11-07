@@ -1,0 +1,8 @@
+.main {
+  padding: 0 40rpx 0 40rpx;
+  height: 100vh;
+}
+
+.bg-gray {
+  background-color: #f9f9f9;
+}

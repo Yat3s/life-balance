@@ -1,12 +1,12 @@
 <view class="appbar" style="height: {{appBarHeight}}px;">
   <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="bg-white toolbar plr {{collapsed? 'shadow' : ''}}">
-    <view style="font-size: {{titleScale * 24}}pt;" class="title">Shopping</view>
+    <view style="font-size: {{titleScale * 24}}pt;" class="title">Mall</view>
     <view style="font-size: {{subtitleScale * 12}}pt;" class="subtitle">
       Browse and pick what you want
     </view>
   </view>
 </view>
-<scroll-view scroll-y="true" class="main" bindscroll="onPageScrolled">
+<scroll-view scroll-y="true" class="main mb-24" bindscroll="onPageScrolled">
   <view style="height: 200px;" />
   <view class="plr activity-title-container flex align-center justify-between">
     <view class="flex align-center">
@@ -53,10 +53,16 @@
   <!-- Category Pills -->
   <scroll-view scroll-x="true" class="mt-4 whitespace-nowrap plr">
     <view class="inline-flex gap-4">
-      <text class="text-indigo-900 border-b-2 border-indigo-900 pb-1">New</text>
-      <text class="text-gray-500">微软员工专属</text>
+      <text class="text-indigo-900 border-b-2 border-indigo-900 pb-1" data-category="New" bindtap="handleCategorySelect">
+        New
+      </text>
+      <text class="text-gray-500" data-category="微软员工专属" bindtap="handleCategorySelect">
+        微软员工专属
+      </text>
       <block wx:for="{{fleaMarketKeywords}}" wx:key="*this">
-        <text class="text-gray-500">{{item}}</text>
+        <text class="text-gray-500" data-category="{{item}}" bindtap="handleCategorySelect">
+          {{item}}
+        </text>
       </block>
     </view>
   </scroll-view>
@@ -67,7 +73,11 @@
       <view class="mt-2">
         <text class="text-sm text-gray-800">{{item.title}}</text>
         <view class="mt-2 flex justify-between items-center">
-          <text class="text-gray-400 text-xs">{{item.categories[0] || '未分类'}}</text>
+          <view class="flex">
+            <text class="text-gray-400 text-xs" wx:for="{{item.categories}}" wx:key="{{index}}">
+              {{index > 0 ? ' / ' : ''}}{{item}}
+            </text>
+          </view>
           <text class="text-base font-medium">¥{{item.price}}</text>
         </view>
       </view>

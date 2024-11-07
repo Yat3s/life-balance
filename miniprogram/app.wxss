@@ -3,6 +3,21 @@
 @import 'colorui/animation.wxss';
 @import 'styles/tailwind.wxss';
 
+page {
+  background: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  /* Theme */
+  --primary: #181853;
+  --secondary: #8f97fd;
+  --lightBlue: #ecf4ff;
+  --inset: 40rpx;
+  --textGrey: #aaaaaa;
+  --blue: #4f85d8;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -39,12 +54,20 @@ button::after {
   color: white;
 }
 
+.bg-blue {
+  background-color: var(--blue);
+}
+
 .text-primary {
   color: var(--primary);
 }
 
 .text-secondary {
   color: var(--secondary);
+}
+
+.text-blue {
+  color: var(--blue);
 }
 
 .plr {
@@ -125,18 +148,4 @@ button::after {
   100% {
     background-position: 468px 0;
   }
-}
-
-page {
-  background: #f9f9f9;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-
-  /* Theme */
-  --primary: #181853;
-  --secondary: #8f97fd;
-  --lightBlue: #ecf4ff;
-  --inset: 40rpx;
-  --textGrey: #aaaaaa;
 }

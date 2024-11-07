@@ -19,6 +19,13 @@ Component({
     toolbarHeight: app.globalData.toolbarHeight,
     statusBarHeight: app.globalData.statusBarHeight,
     appBarHeight: MAX_APP_BAR_HEIGHT,
+    selectedCategory: 'New', // Default selected category
+  },
+
+  pageLifetimes: {
+    show() {
+      this.fetchAllProducts();
+    },
   },
 
   lifetimes: {
@@ -51,7 +58,6 @@ Component({
         appBarHeight,
         collapsed,
       });
-      console.log(e);
     },
 
     fetchAllProducts() {
@@ -65,9 +71,11 @@ Component({
           );
 
           this.setData({
-            officialProducts: officialProducts,
-            secondhandProducts: secondhandProducts,
+            officialProducts,
+            secondhandProducts,
           });
+
+          this.filterProductsByCategory();
         }
       });
 
@@ -78,32 +86,31 @@ Component({
       });
     },
 
-    onFleaMarketSearchClicked() {
+    filterProductsByCategory() {
+      const { secondhandProducts, selectedCategory } = this.data;
+
+      // Filter based on selected category, with a check for undefined categories
+      const filteredProducts = secondhandProducts.filter(
+        (product) =>
+          product.categories && product.categories.includes(selectedCategory)
+      );
+
       this.setData({
-        showSearchPage: true,
+        filteredSecondhandProducts: filteredProducts,
       });
     },
 
-    onCircleSearchPageEnter() {
-      console.log('onCircleSearchPageEnter');
+    handleCategorySelect(e) {
+      const selectedCategory = e.currentTarget.dataset.category;
+
       this.setData(
         {
-          showFleaMarketSearchContent: true,
+          selectedCategory,
         },
         () => {
-          setTimeout(() => {
-            this.setData({
-              fleaMarketSearchFocus: true,
-            });
-          }, 200);
+          this.filterProductsByCategory(); // Re-filter products after updating category
         }
       );
-    },
-
-    onCircleSearchPageExit() {
-      this.setData({
-        showFleaMarketSearchContent: false,
-      });
     },
 
     handleNavToPublishItemPage() {
