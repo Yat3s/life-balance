@@ -57,5 +57,5 @@
 }
 
 .text-xxs {
-  font-size: 18rpx;
+  font-size: 14rpx;
 }

@@ -21,10 +21,10 @@ Page({
         isBeta: false,
       },
       {
-        id: 'shopping',
-        title: 'Shopping',
-        icon: '../../images/ic_shopping.png',
-        iconActive: '../../images/ic_shopping_active.png',
+        id: 'mall',
+        title: 'Mall',
+        icon: '../../images/ic_mall.png',
+        iconActive: '../../images/ic_mall_active.png',
         isBeta: true,
       },
       {

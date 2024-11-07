@@ -2,7 +2,7 @@
   "navigationStyle": "custom",
   "usingComponents": {
     "home": "/pages/home/home",
-    "shopping": "/pages/shopping/shopping",
+    "mall": "/pages/mall/mall",
     "connection": "/pages/connection/connection",
     "carpool": "/pages/carpool/carpool",
     "user": "/pages/user/user"

@@ -1,0 +1,59 @@
+<toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
+<view class="main mb-10">
+  <view class="text-2xl font-bold text-primary my-8">Describe your item</view>
+  <view class="bg-white rounded-lg p-5 py-4 space-y-6 mb-4">
+    <view class="flex items-center justify-between py-3dot5 border-b border-gray-100">
+      <text class="text-primary font-medium">Title</text>
+      <input class="w-full h-10 bg-transparent text-right" placeholder="Within 30 characters" placeholder-class="text-gray-300" maxlength="30" model:value="{{title}}" bindinput="onTitleInput" />
+    </view>
+    <view class="flex items-center justify-between py-3dot5 border-b border-gray-100">
+      <text class="text-primary font-medium">Price</text>
+      <input class="w-24 h-10 text-right" placeholder="CNY 0.00" placeholder-class="text-gray-300" type="digit" model:value="{{price}}" bindinput="onPriceInput" />
+    </view>
+    <view class="flex justify-between gap-8 py-3dot5">
+      <text class="text-primary font-medium">Categories</text>
+      <view class="flex flex-wrap gap-2dot5">
+        <view wx:for="{{categoriesWithSelection}}" wx:key="*this" bindtap="onCategorySelect" data-category="{{item.name}}" class="px-4 py-1.5 rounded-md text-sm {{item.isSelected ? 'bg-primary text-white' : 'bg-gray-100 text-gray-500'}}">
+          {{item.name}}
+        </view>
+      </view>
+    </view>
+    <view class="flex items-center justify-between py-3dot5">
+      <view>
+        <text class="text-primary font-medium">微软员工专属</text>
+        <text class="text-gray-400 text-xs ml-4">开启后只有微软员工可购买</text>
+      </view>
+      <switch class="transform scale-75" checked="{{isStaffOnly}}" bindchange="onStaffOnlyChange" color="#1a237e" />
+    </view>
+    <view class="flex items-center justify-between py-3dot5 border-b border-gray-100">
+      <text class="text-primary font-medium">Contact</text>
+      <input class="w-full h-10 bg-transparent text-right" type="number" placeholder="Alias or email" placeholder-class="text-gray-300" model:value="{{contact}}" bindinput="onContactInput" />
+    </view>
+  </view>
+  <view class="bg-white rounded-lg p-5 py-4 space-y-6">
+    <view>
+      <textarea class="w-full h-56 bg-transparent" placeholder="Please introduce the item you want to sell~" placeholder-class="text-gray-300" model:value="{{description}}" bindinput="onDescriptionInput" />
+    </view>
+    <view class="space-y-2">
+      <view class="grid grid-cols-3 gap-2">
+        <view wx:for="{{pictures}}" wx:key="*this" class="relative bg-gray-100 rounded-lg overflow-hidden h-28">
+          <image src="{{item}}" class="w-full h-full" />
+          <view class="absolute top-1 right-1 w-4 h-4 bg-black/50 rounded-full flex items-center justify-center" catchtap="onRemoveImage" data-index="{{index}}">
+            <text class="text-white text-xs">×</text>
+          </view>
+        </view>
+      </view>
+      <view wx:if="{{!pictures || pictures.length < 9}}" class="text-blue text-sm font-medium z-50" bindtap="onAddImage">
+        + Add Image
+      </view>
+    </view>
+  </view>
+  <view class="px-4 flex gap-4 justify-end mt-6">
+    <view class="py-1dot5 px-6 rounded-full text-gray-500 bg-gray border border-solid border-gray-300" bindtap="onCancel">
+      Cancel
+    </view>
+    <view class="py-1dot5 px-6 rounded-full bg-primary text-white" bindtap="onPublish">
+      Publish
+    </view>
+  </view>
+</view>
