@@ -1,29 +1,26 @@
 <view class="appbar" style="height: {{appBarHeight}}px;">
-  <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="toolbar plr {{collapsed? 'shadow bg-white' : ''}}">
-    
-  </view>
+  <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="toolbar plr {{collapsed? 'shadow bg-white' : ''}}" />
 </view>
-
 <scroll-view scroll-y="true" class="main" bindscroll="onPageScrolled">
-  <view style="height:160px; padding-top: {{statusBarHeight + toolbarHeight}}px; margin-top: 32rpx;" class="flex justify-between flex-top">
+  <view style="height:160px; padding-top: {{statusBarHeight + toolbarHeight}}px; margin-top: 32rpx;" class="flex justify-between">
     <view class="flex">
       <image style="width: {{avatarScale * 80}}rpx; height: {{avatarScale * 80}}rpx;" class="user-avatar" wx:if="{{userInfo}}" src="{{userInfo.avatarUrl}}"></image>
-
       <view class="user-avatar" wx:if="{{!userInfo}}">
         <open-data type="userAvatarUrl"></open-data>
       </view>
-
       <view class="margin-left">
-        <view style="font-size: {{titleScale * 14}}pt; line-height: {{titleScale * 14}}pt;" class="user-name">Hi, {{userInfo ? userInfo.nickName : 'Friend!'}}</view>
-        <view style="font-size: {{titleScale * 11}}pt; line-height: {{titleScale * 11}}pt;" class="user-welcome-message margin-top-xs">{{welcomeMessage}}</view>
+        <view style="font-size: {{titleScale * 14}}pt; line-height: {{titleScale * 14}}pt;" class="user-name">
+          Hi, {{userInfo ? userInfo.nickName : 'Friend!'}}
+        </view>
+        <view style="font-size: {{titleScale * 11}}pt; line-height: {{titleScale * 11}}pt;" class="user-welcome-message margin-top-xs">
+          {{welcomeMessage}}
+        </view>
       </view>
     </view>
-
     <view class="stock-container">
       <stock></stock>
     </view>
   </view>
-
   <view bindtap="onBannerClicked" class="{{bannerExpanded?'banner-container-expanded':'banner-container'}}" style="border: {{banner.borderSize}}rpx solid {{banner.borderColor}}; " wx:if="{{banner}}">
     <image class="banner-img" mode="widthFix" src="{{banner.bannerImg}}"></image>
     <view catchtap="onBannerLinkClicked" class="flex center padding" hidden="{{!bannerExpanded}}">
@@ -31,42 +28,32 @@
     </view>
     <image class="banner-img" hidden="{{!bannerExpanded}}" mode="widthFix" src="{{banner.expandedImg}}"></image>
   </view>
-
   <view class="widget-section-title common-widget">Board for 微软(中国)有限公司 - 苏州</view>
   <!-- Notice -->
-  <view wx:if="{{notice}}" class="notice margin-top-xs"><text class="text-bold">Notice:</text> {{notice}}</view>
-
+  <view wx:if="{{notice}}" class="notice margin-top-xs">
+    <text class="text-bold">Notice:</text>
+    {{notice}}
+  </view>
   <view class="margin-top">
     <commute></commute>
   </view>
-
   <view class="card-divider">
     <canteen></canteen>
   </view>
-
   <!-- <view class="widget-building2-container card-divider">
     <view class="widget-building2-title">微软苏州 #B26 大楼建筑进度预览</view>
     <image bindtap="onBuild2Click" class="margin-top widget-building2-picture" mode="widthFix" src="{{building2LatestProgress.picture}}" />
     <view class="widget-building2-update-date">Updated at {{building2LatestProgress.createDateStr}}</view>
   </view> -->
-
   <view class="widget-section-title common-widget">Experiments</view>
-
   <view style="padding-bottom: 200rpx;" class="flex  margin-top-sm ">
     <view bindtap="onGlossaryClicked" class="experiment-card">
       <view class="beta">BETA</view>
-      <view class="margin-top-xs">
-        MS Glossary
-      </view>
+      <view class="margin-top-xs">MS Glossary</view>
     </view>
-
     <view bindtap="onCanteenTableClick" class="experiment-card margin-left-sm">
       <view class="beta">BETA</view>
-      <view class="margin-top-xs">
-        Canteen Table Sharing
-      </view>
+      <view class="margin-top-xs">Canteen Table Sharing</view>
     </view>
-
   </view>
-
 </scroll-view>

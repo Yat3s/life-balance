@@ -1,5 +1,3 @@
-/* miniprogram/pages/index/index.wxss */
-
 .tab-container {
   display: flex;
   padding-top: 20rpx;

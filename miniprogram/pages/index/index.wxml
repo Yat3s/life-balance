@@ -1,14 +1,17 @@
 <view>
   <home wx:if="{{currentTab == 'board'}}" />
+  <shopping wx:if="{{currentTab == 'shopping'}}" />
   <connection wx:if="{{currentTab == 'connection'}}" />
   <carpool wx:if="{{currentTab == 'carpool'}}" />
   <user wx:if="{{currentTab == 'user'}}" />
 </view>
-
 <!-- Bottom tab -->
 <view class="cu-bar bg-white shadow foot tab-container" style="padding-bottom: {{navigationBarHeight > 0 ? (navigationBarHeight + 8) : 20}}rpx;">
-  <view bindtap="onTabSelect" class="{{currentTab === item.id ? 'tab-highlight' : 'tab'}} flex" data-tabid="{{item.id}}" style="width:{{currentTab === item.id ? tabWidth * 1.5 : tabWidth}}px;" wx:for="{{pages}}" wx:key="id">
+  <view bindtap="onTabSelect" class="{{currentTab === item.id ? 'tab-highlight' : 'tab'}} flex relative" data-tabid="{{item.id}}" style="width:{{currentTab === item.id ? tabWidth * 1.5 : tabWidth}}px;" wx:for="{{pages}}" wx:key="id">
     <image class="tab-icon" src="{{currentTab === item.id ? item.iconActive : item.icon}}"></image>
     <view wx:if="{{currentTab === item.id}}" class="tab-text margin-left-sm">{{item.title}}</view>
+    <view wx:if="{{item.isBeta && currentTab === item.id}}" class="text-xxs absolute -top-1 right-0 text-blue-500">
+      Beta
+    </view>
   </view>
 </view>
