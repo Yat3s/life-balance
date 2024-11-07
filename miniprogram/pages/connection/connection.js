@@ -1,30 +1,28 @@
+import { fetchRecentActivities } from '../../repository/activityRepo';
+import { getAppConfig } from '../../repository/baseRepo';
+import { fetchWechatGroups } from '../../repository/dashboardRepo';
+import { fetchAllTeams, joinCircle } from '../../repository/exploreRepo';
+import { fetchUserInfo } from '../../repository/userRepo';
 import {
-  fetchRecentActivities
-} from "../../repository/activityRepo"
-import {
-  getAppConfig
-} from "../../repository/baseRepo";
-import {
-  fetchWechatGroups
-} from "../../repository/dashboardRepo";
-import { fetchAllTeams, joinCircle } from "../../repository/exploreRepo";
-import {
-  fetchUserInfo
-} from "../../repository/userRepo";
-import { navigateToActivityDetail, navigateToDraftActivity, navigateToActivityPage, navigateToAuth } from "../router";
+  navigateToActivityDetail,
+  navigateToDraftActivity,
+  navigateToActivityPage,
+  navigateToAuth,
+} from '../router';
 
 const app = getApp();
 const COLLAPSED_SCROLL_TOP = 200;
 const MIN_TITLE_SCALE = 0.5;
 const MIN_SUBTITLE_SCALE = 0.9;
 const MAX_APP_BAR_HEIGHT = 200; //px
-const ADD_CIRCLE_LINK = "https://github.com/Yat3s/Life-Balance/issues/new/choose";
+const ADD_CIRCLE_LINK =
+  'https://github.com/Yat3s/Life-Balance/issues/new/choose';
 const MIN_DISPLAY_ACTIVITY_LENGTH = 3;
 
 // pages/explore/explore.js
 Component({
   options: {
-    addGlobalClass: true
+    addGlobalClass: true,
   },
 
   /**
@@ -46,26 +44,26 @@ Component({
       if (this.data.activities) {
         this.loadRecentActivities();
       }
-    }
+    },
   },
 
   lifetimes: {
     attached() {
-      getAppConfig().then(config => {
+      getAppConfig().then((config) => {
         this.setData({
-          circleKeywords: config.circleKeywords
-        })
+          circleKeywords: config.circleKeywords,
+        });
       });
 
       this.loadRecentActivities();
-  
+
       this.loadCircleData();
-    }
+    },
   },
 
   methods: {
     loadRecentActivities() {
-      fetchRecentActivities().then(activities => {
+      fetchRecentActivities().then((activities) => {
         const displayActivities = [];
         for (const activity of activities) {
           if (displayActivities.length < MIN_DISPLAY_ACTIVITY_LENGTH) {
@@ -77,20 +75,20 @@ Component({
             displayActivities.push(activity);
           }
         }
-        displayActivities.push()
+        displayActivities.push();
         this.setData({
-          activities: displayActivities
+          activities: displayActivities,
         });
       });
     },
 
     loadCircleData() {
       const calls = [fetchWechatGroups(), fetchAllTeams(), fetchUserInfo()];
-      Promise.allSettled(calls).then(results => {
+      Promise.allSettled(calls).then((results) => {
         const circles = results[0].value;
         const teams = results[1].value;
         const userInfo = results[2].value;
-        circles.forEach(item => {
+        circles.forEach((item) => {
           let joined = false;
           if (item.participants) {
             for (const participant of item.participants) {
@@ -101,7 +99,9 @@ Component({
             }
           }
 
-          item.shrinkCode = item.code.substring(0, item.code.length / 2) + "*".repeat(item.code.length / 2)
+          item.shrinkCode =
+            item.code.substring(0, item.code.length / 2) +
+            '*'.repeat(item.code.length / 2);
 
           if (item.teamOnly) {
             for (const team of teams) {
@@ -116,48 +116,53 @@ Component({
         });
         this.setData({
           userInfo,
-          circles
-        })
-      })
+          circles,
+        });
+      });
     },
+
     onPageScrolled(e) {
       const scrollTop = Math.min(COLLAPSED_SCROLL_TOP, e.detail.scrollTop);
-      const minAppbarHeight = app.globalData.toolbarHeight + app.globalData.statusBarHeight;
-      const appBarHeight = MAX_APP_BAR_HEIGHT - (MAX_APP_BAR_HEIGHT - minAppbarHeight) * (scrollTop / COLLAPSED_SCROLL_TOP)
-      const collapsed = appBarHeight == minAppbarHeight;
+      const minAppBarHeight =
+        app.globalData.toolbarHeight + app.globalData.statusBarHeight;
+      const appBarHeight =
+        MAX_APP_BAR_HEIGHT -
+        (MAX_APP_BAR_HEIGHT - minAppBarHeight) *
+          (scrollTop / COLLAPSED_SCROLL_TOP);
+      const collapsed = appBarHeight == minAppBarHeight;
       if (this.data.collapsed === true && collapsed === true) {
-        return
+        return;
       }
-      const titleScale = 1.0 - (scrollTop / COLLAPSED_SCROLL_TOP) * (1.0 - MIN_TITLE_SCALE);
-      const subtitleScale = 1.0 - (scrollTop / COLLAPSED_SCROLL_TOP) * (1.0 - MIN_SUBTITLE_SCALE);
+      const titleScale =
+        1.0 - (scrollTop / COLLAPSED_SCROLL_TOP) * (1.0 - MIN_TITLE_SCALE);
+      const subtitleScale =
+        1.0 - (scrollTop / COLLAPSED_SCROLL_TOP) * (1.0 - MIN_SUBTITLE_SCALE);
 
       this.setData({
         titleScale,
         subtitleScale,
         appBarHeight,
-        collapsed
-      })
+        collapsed,
+      });
       console.log(e);
     },
+
     onJoinClicked() {
-      const {
-        userInfo,
-        showingCircle,
-      } = this.data;
+      const { userInfo, showingCircle } = this.data;
 
       if (!userInfo || !userInfo.company) {
         wx.showModal({
           title: 'Join failed',
           icon: 'error',
-          content: "Please verify your company first 请先完成企业认证.",
+          content: 'Please verify your company first 请先完成企业认证.',
           success(res) {
             if (res.confirm) {
               navigateToAuth();
             } else if (res.cancel) {
-              console.log('用户点击取消')
+              console.log('用户点击取消');
             }
-          }
-        })
+          },
+        });
 
         return;
       }
@@ -167,10 +172,8 @@ Component({
           title: 'Join failed',
           icon: 'error',
           content: `Only members of the ${showingCircle.teamOnlyStr} team are allowed to join this group`,
-          success(res) {
-            
-          }
-        })
+          success(res) {},
+        });
 
         return;
       }
@@ -186,19 +189,17 @@ Component({
 
       this.setData({
         showingModal: 'joinSuccess',
-      })
+      });
 
       if (!showingCircle.joined) {
-        joinCircle(showingCircle._id, userInfo).then(res => {
+        joinCircle(showingCircle._id, userInfo).then((res) => {
           this.loadCircleData();
         });
       }
     },
 
     copyGroupCode() {
-      const {
-        showingCircle,
-      } = this.data;
+      const { showingCircle } = this.data;
 
       wx.setClipboardData({
         data: showingCircle.code,
@@ -219,72 +220,68 @@ Component({
       const showingCircle = e.currentTarget.dataset.circle;
       this.setData({
         showingCircle,
-        showingModal: "circle"
-      })
+        showingModal: 'circle',
+      });
     },
 
     onCircleSearchClicked() {
       this.setData({
-        showSearchPage: true
-      })
+        showSearchPage: true,
+      });
     },
 
     onCircleKeyboardClicked(e) {
       const keyword = e.currentTarget.dataset.keyword;
       this.setData({
-        searchCircleInput: keyword
-      })
+        searchCircleInput: keyword,
+      });
       this.searchCircle(keyword);
     },
 
     onDismissSearchPage() {
-      
       this.setData({
         searchCircleInput: '',
-        showSearchPage: false
+        showSearchPage: false,
       });
 
       setTimeout(() => {
-        const {
-          circles
-        } = this.data;
-        circles.forEach(item => {
+        const { circles } = this.data;
+        circles.forEach((item) => {
           item.hide = false;
-        })
-        this.setData({
-          circles
         });
-      }, 300)
+        this.setData({
+          circles,
+        });
+      }, 300);
     },
 
     searchCircle(keyword) {
-      const {
-        circles
-      } = this.data;
+      const { circles } = this.data;
       for (const circle of circles) {
         let combinedQueryText = circle.name;
         if (circle.citys) {
-          combinedQueryText += ";" + circle.citys.join(";");
+          combinedQueryText += ';' + circle.citys.join(';');
         }
         if (circle.tags) {
-          combinedQueryText += ";" + circle.tags.join(";");
+          combinedQueryText += ';' + circle.tags.join(';');
         }
         if (circle.teamOnly) {
-          combinedQueryText += ";" + circle.teamOnlyStr
+          combinedQueryText += ';' + circle.teamOnlyStr;
         }
 
-        circle.hide = combinedQueryText.toLowerCase().search(keyword.toLowerCase()) == -1;
+        circle.hide =
+          combinedQueryText.toLowerCase().search(keyword.toLowerCase()) == -1;
       }
 
       this.setData({
-        circles
-      })
+        circles,
+      });
     },
 
     onDismissModal() {
       this.setData({
-        showingModal: ""
-      })
+        showingModal: '',
+      });
     },
 
     onCopyAddCircleLink() {
@@ -292,33 +289,36 @@ Component({
         data: ADD_CIRCLE_LINK,
       });
       this.setData({
-        showingModal: ""
-      })
+        showingModal: '',
+      });
     },
 
     onAddCircleClicked() {
       this.setData({
-        showingModal: "addCircle"
-      })
+        showingModal: 'addCircle',
+      });
     },
 
     onCircleSearchPageEnter() {
-      console.log("onCircleSearchPageEnter");
-      this.setData({
-        showCircleSearchContent: true,
-      }, () => {
-        setTimeout(() => {
-          this.setData({
-            circleSearchFocus: true
-          });
-        }, 200);
-      })
+      console.log('onCircleSearchPageEnter');
+      this.setData(
+        {
+          showCircleSearchContent: true,
+        },
+        () => {
+          setTimeout(() => {
+            this.setData({
+              circleSearchFocus: true,
+            });
+          }, 200);
+        }
+      );
     },
 
     onCircleImageClick() {
       wx.previewImage({
-        urls: [this.data.showingCircle.coverPic]
-      })
+        urls: [this.data.showingCircle.coverPic],
+      });
     },
 
     onCircleSearchPageExit() {
@@ -339,6 +339,6 @@ Component({
 
     onNewActivityClicked() {
       navigateToDraftActivity();
-    }
-  }
-})
+    },
+  },
+});

@@ -1,4 +1,3 @@
-<!-- pages/explore/explore.wxml -->
 <view class="appbar" style="height: {{appBarHeight}}px;">
   <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="bg-white toolbar plr {{collapsed? 'shadow' : ''}}">
     <view style="font-size: {{titleScale * 24}}pt;" class="title">Connection</view>

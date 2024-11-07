@@ -138,7 +138,11 @@ page {
   height: 100%;
   width: 100rpx;
   background: rgb(167, 74, 246);
-  background: linear-gradient(135deg, rgba(167, 74, 246, 1) 0%, rgba(251, 130, 75, 1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(167, 74, 246, 1) 0%,
+    rgba(251, 130, 75, 1) 100%
+  );
 }
 
 .widget-building2-progress-date {
