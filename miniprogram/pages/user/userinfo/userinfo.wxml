@@ -53,7 +53,7 @@
     </view>
     <view class="section-container margin-top-lg">
       <view class="name-container">
-        <view class="section-title">Logistics Information</view>
+        <view class="section-title">Delivery information</view>
         <view class="name-underline" />
       </view>
       <view class="desc" style="margin-top: 32rpx;">
