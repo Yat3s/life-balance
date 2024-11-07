@@ -1,0 +1,76 @@
+<view class="appbar" style="height: {{appBarHeight}}px;">
+  <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="bg-white toolbar plr {{collapsed? 'shadow' : ''}}">
+    <view style="font-size: {{titleScale * 24}}pt;" class="title">Shopping</view>
+    <view style="font-size: {{subtitleScale * 12}}pt;" class="subtitle">
+      Browse and pick what you want
+    </view>
+  </view>
+</view>
+<scroll-view scroll-y="true" class="main" bindscroll="onPageScrolled">
+  <view style="height: 200px;" />
+  <view class="plr activity-title-container flex align-center justify-between">
+    <view class="flex align-center">
+      <view class="section-title">Official Products</view>
+    </view>
+  </view>
+  <!-- Official Section -->
+  <swiper class="mt-4 h-36" previous-margin="32rpx" next-margin="32rpx" bindchange="onSwiperChange">
+    <block wx:if="{{officialProducts}}">
+      <swiper-item wx:for="{{officialProducts}}" wx:key="{{item._id}}">
+        <view class="h-full mr-2">
+          <view class="bg-gray-50 rounded-lg p-4 h-full flex flex-row">
+            <view class="w-32 h-full flex-shrink-0">
+              <image class="w-full h-full rounded-lg object-cover" src="{{item.pictures[0] || '/images/img_macbook.png'}}" mode="aspectFill" />
+            </view>
+            <view class="ml-4 flex flex-col justify-center flex-1 gap-2">
+              <view>
+                <text class="text-indigo-900 font-medium">{{item.title}}</text>
+                <text class="block text-indigo-900 font-medium">
+                  {{item.description || 'No description available'}}
+                </text>
+              </view>
+              <view class="flex gap-2 mt-2">
+                <view class="bg-gray-200/60 text-gray-600 text-center text-xs px-3 py-1 rounded-full">
+                  限时折扣
+                </view>
+                <view class="bg-gray-200/60 text-gray-600 text-center text-xs px-3 py-1 rounded-full">
+                  New
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+  <!-- Flea Market Section -->
+  <view class="mt-10 plr">
+    <view class="flex justify-between items-center">
+      <text class="section-title">Flea Market</text>
+      <text bind:tap="handleNavToPublishItemPage" class="text-gray-400">Add item</text>
+    </view>
+  </view>
+  <!-- Category Pills -->
+  <scroll-view scroll-x="true" class="mt-4 whitespace-nowrap plr">
+    <view class="inline-flex gap-4">
+      <text class="text-indigo-900 border-b-2 border-indigo-900 pb-1">New</text>
+      <text class="text-gray-500">微软员工专属</text>
+      <block wx:for="{{fleaMarketKeywords}}" wx:key="*this">
+        <text class="text-gray-500">{{item}}</text>
+      </block>
+    </view>
+  </scroll-view>
+  <!-- Product Grid -->
+  <view class="mt-4 grid grid-cols-2 gap-4 plr">
+    <view class="bg-white rounded-lg p-2 border border-solid border-gray-200" wx:for="{{secondhandProducts}}" wx:key="{{item._id}}">
+      <image class="w-full h-32 rounded-lg" src="{{item.pictures[0] || '/images/img_macbook.png'}}" mode="aspectFill" />
+      <view class="mt-2">
+        <text class="text-sm text-gray-800">{{item.title}}</text>
+        <view class="mt-2 flex justify-between items-center">
+          <text class="text-gray-400 text-xs">{{item.categories[0] || '未分类'}}</text>
+          <text class="text-base font-medium">¥{{item.price}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>

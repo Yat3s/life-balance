@@ -55,3 +55,7 @@
   font-size: 10pt;
   color: var(--textGrey);
 }
+
+.text-xxs {
+  font-size: 18rpx;
+}
