@@ -126,7 +126,7 @@
       <!-- </view> -->
       <!-- Circle Items -->
       <scroll-view class="circle-search-page-list margin-top-sm " scroll-y="true">
-        <view class="grid col-2 circle-list-container">
+        <view class="grid grid-cols-2 circle-list-container">
           <view bindtap="onCircleItemClicked" data-circle="{{item}}" class="circle-item-frame" wx:for="{{circles}}" wx:key="id" wx:if="{{!item.hide}}">
             <circleitem circle="{{item}}" />
           </view>
