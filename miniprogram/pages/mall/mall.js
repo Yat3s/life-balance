@@ -76,7 +76,7 @@ Component({
               secondhandProducts,
             },
             () => {
-              this.filterProductsByCategory(); // 应用初始筛选
+              this.filterProductsByCategory();
             }
           );
         }
