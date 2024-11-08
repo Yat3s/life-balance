@@ -1,38 +1,37 @@
-<!--pages/user/profile/profile.wxml-->
-
-<toolbar isBack="{{true}}">
-</toolbar>
-
+<toolbar isBack="{{true}}"></toolbar>
 <view class="main">
-
   <!-- About -->
   <view class="about-container">
     <view class="name-container">
       <view class="about-name">{{user.nickName}}</view>
       <view class="about-name-underline"></view>
     </view>
-
     <view class="about-section-title margin-top-lg">About me</view>
     <view style="flex-wrap: wrap;" class="flex align-center">
-      <view class="about-tag margin-right-sm margin-bottom-xs" wx:if="{{user.age}}">{{user.age}} 岁</view>
-      <view class="about-tag margin-right-sm margin-bottom-xs" wx:if="{{user.height}}">{{user.height}} cm</view>
-      <view class="about-tag margin-right-sm margin-bottom-xs" wx:if="{{user.hometown}}">家乡 · {{user.hometown}}</view>
-      <view class="about-tag margin-right-sm margin-bottom-xs" wx:if="{{user.school}}">{{user.school}}</view>
-      <view class="about-tag margin-right-sm margin-bottom-xs" wx:if="{{user.occupation}}">{{user.occupation}}</view>
+      <view class="about-tag margin-right-sm margin-bottom-xs" wx:if="{{user.age}}">
+        {{user.age}} 岁
+      </view>
+      <view class="about-tag margin-right-sm margin-bottom-xs" wx:if="{{user.height}}">
+        {{user.height}} cm
+      </view>
+      <view class="about-tag margin-right-sm margin-bottom-xs" wx:if="{{user.hometown}}">
+        家乡 · {{user.hometown}}
+      </view>
+      <view class="about-tag margin-right-sm margin-bottom-xs" wx:if="{{user.school}}">
+        {{user.school}}
+      </view>
+      <view class="about-tag margin-right-sm margin-bottom-xs" wx:if="{{user.occupation}}">
+        {{user.occupation}}
+      </view>
     </view>
-
     <view class="about-section-title margin-top-lg">My story</view>
     <view class="about-description margin-top-xs">{{user.desc || 'Nothing here'}}</view>
-
     <view class="about-section-title margin-top-lg">My Pictures</view>
     <view class="flex margin-top-xs">
-      <image bindtap="onPhotoClick" wx:if="{{!user.photos || user.photos.length == 0}}" class="about-photo"
-        src="{{user.avatarUrl}}"></image>
-      <image bindtap="onPhotoClick" wx:for="{{user.photos}}" wx:key="item" mode="aspectFill"
-        class="about-photo margin-right" src="{{item}}"></image>
+      <image bindtap="onPhotoClick" wx:if="{{!user.photos || user.photos.length == 0}}" class="about-photo" src="{{user.avatarUrl}}"></image>
+      <image bindtap="onPhotoClick" wx:for="{{user.photos}}" wx:key="item" mode="aspectFill" class="about-photo margin-right" src="{{item}}"></image>
     </view>
   </view>
-
   <!-- Groups -->
   <!-- <view class="group-container margin-top-lg">
 
@@ -57,35 +56,35 @@
       </view>
     </view>
   </view> -->
-
   <!-- Activities -->
   <view class="activity-container margin-top-lg">
     <view class="name-container">
       <view class="section-title">{{user.nickName}}'s activities</view>
       <view class="name-underline"></view>
     </view>
-
     <view class="empty-message margin-top" wx:if="{{!activities || activities.length == 0}}">
       Nothing here
     </view>
-
     <view class="margin-top-lg">
       <view wx:for="{{activities}}" wx:key="_id" class="margin-bottom">
         <view wx:if="{{item.isOrganizer}}" class="flex align-center">
           <view class="activity-timeline-container">
             <view class="activity-timeline-point-organizer"></view>
           </view>
-          <view class="activity-event-title margin-left-xs">Posted this activity at <text class="text-black">{{item.createDateStr}}</text> </view>
+          <view class="activity-event-title margin-left-xs">
+            Posted this activity at
+            <text class="text-black">{{item.createDateStr}}</text>
+          </view>
         </view>
-
         <view wx:if="{{!item.isOrganizer}}" class="flex align-center">
           <view class="activity-timeline-container">
             <view class="activity-timeline-point-participant"></view>
           </view>
-
-          <view class="activity-event-title">Join this activity at <text class="text-black"> {{item.createDateStr}} </text></view>
+          <view class="activity-event-title">
+            Join this activity at
+            <text class="text-black">{{item.createDateStr}}</text>
+          </view>
         </view>
-
         <view class="flex margin-top-xs">
           <view class="activity-timeline-container">
             <view class="activity-timeline-line"></view>
@@ -95,9 +94,6 @@
           </view>
         </view>
       </view>
-
     </view>
-
-
   </view>
 </view>

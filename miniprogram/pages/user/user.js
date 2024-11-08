@@ -1,70 +1,60 @@
-const app = getApp();
-const activityRepo = require('../../repository/activityRepo');
 const userRepo = require('../../repository/userRepo');
 const router = require('../router');
 
 Component({
   options: {
-    addGlobalClass: true
+    addGlobalClass: true,
   },
 
-  /**
-   * 组件的属性列表
-   */
-  properties: {
+  properties: {},
 
-  },
+  data: {},
 
-  /**
-   * 组件的初始数据
-   */
-  data: {
-
-  },
-
-  /**
-   * 组件的方法列表
-   */
   methods: {
-    onActivityClick(e) {
+    onActivityClick() {
       router.navigateToUserActivity();
     },
 
-    onProfileClick(e) {
+    onProfileClick() {
       router.navigateToProfile(this.data.userInfo._id);
     },
 
-    onEditUserInfoClick(e) {
+    onMallClick() {
+      router.navigateToUserProduct();
+    },
+
+    onEditUserInfoClick() {
       router.navigateToEditUserInfo();
     },
 
-    onContributionClick(e) {
+    onContributionClick() {
       router.navigationToContribution();
     },
 
     onActivityManageClick() {
       router.navigateToAdmin();
     },
+
     onSettingCompanyClick() {
       router.navigateToAuth();
-    }, 
-    
+    },
+
     onSponsorClick() {
       this.setData({
-        showingModal: 'sponsor'
-      })
+        showingModal: 'sponsor',
+      });
     },
 
     onFeedbackClick() {
       this.setData({
-        showingModal: 'feedback'
-      })
+        showingModal: 'feedback',
+      });
     },
 
     onDismissModal() {
       this.setData({
-        showingModal: ''
-      })
+        showingModal: '',
+      });
     },
 
     onCopyId() {
@@ -72,28 +62,27 @@ Component({
       wx.setClipboardData({
         data: userInfo.id,
       });
-    }
+    },
   },
 
   pageLifetimes: {
-    show() {
-
-    }
+    show() {},
   },
+
   lifetimes: {
     attached() {
-      userRepo.fetchUserInfo().then(userInfo => {
+      userRepo.fetchUserInfo().then((userInfo) => {
         userInfo.id = userInfo._openid.substring(0, 16);
         this.setData({
-          userInfo
-        })
+          userInfo,
+        });
 
         if (userInfo.company) {
-          userRepo.fetchCompany(userInfo.company).then(company => {
-            this.setData({company})
-          })
+          userRepo.fetchCompany(userInfo.company).then((company) => {
+            this.setData({ company });
+          });
         }
-      })
-    }
-  }
-})
+      });
+    },
+  },
+});
