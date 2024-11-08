@@ -1,32 +1,32 @@
 <toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
 <view class="main mb-10">
-  <view class="text-2xl font-bold text-primary my-8">Describe your item</view>
+  <view class="text-2xl font-bold text-foreground my-8">Describe your item</view>
   <view class="bg-white rounded-lg p-5 py-4 space-y-6 mb-4">
     <view class="flex items-center justify-between py-3dot5 border-b border-gray-100">
-      <text class="text-primary font-medium">Title</text>
+      <text class="text-foreground font-medium">Title</text>
       <input class="w-full h-10 bg-transparent text-right" placeholder="Within 30 characters" placeholder-class="text-gray-300" maxlength="30" model:value="{{title}}" bindinput="onTitleInput" />
     </view>
     <view class="flex items-center justify-between py-3dot5 border-b border-gray-100">
-      <text class="text-primary font-medium">Price</text>
+      <text class="text-foreground font-medium">Price</text>
       <input class="w-24 h-10 text-right" placeholder="CNY 0.00" placeholder-class="text-gray-300" type="digit" model:value="{{price}}" bindinput="onPriceInput" />
     </view>
     <view class="flex justify-between gap-8 py-3dot5">
-      <text class="text-primary font-medium">Categories</text>
+      <text class="text-foreground font-medium">Categories</text>
       <view class="flex flex-wrap gap-2dot5">
-        <view wx:for="{{categoriesWithSelection}}" wx:key="*this" bindtap="onCategorySelect" data-category="{{item.name}}" class="px-4 py-1.5 rounded-md text-sm {{item.isSelected ? 'bg-primary text-white' : 'bg-gray-100 text-gray-500'}}">
+        <view wx:for="{{categoriesWithSelection}}" wx:key="*this" bindtap="onCategorySelect" data-category="{{item.name}}" class="px-4 py-1.5 rounded-md text-sm {{item.isSelected ? 'bg-primary text-white' : 'bg-gray-100 text-gray'}}">
           {{item.name}}
         </view>
       </view>
     </view>
     <view class="flex items-center justify-between py-3dot5">
       <view>
-        <text class="text-primary font-medium">微软员工专属</text>
+        <text class="text-foreground font-medium">微软员工专属</text>
         <text class="text-gray-400 text-xs ml-4">开启后只有微软员工可购买</text>
       </view>
       <switch class="transform scale-75" checked="{{isStaffOnly}}" bindchange="onStaffOnlyChange" color="#1a237e" />
     </view>
     <view class="flex items-center justify-between py-3dot5 border-b border-gray-100">
-      <text class="text-primary font-medium">Contact</text>
+      <text class="text-foreground font-medium">Contact</text>
       <input class="w-full h-10 bg-transparent text-right" type="number" placeholder="Alias or email" placeholder-class="text-gray-300" model:value="{{contact}}" bindinput="onContactInput" />
     </view>
   </view>
@@ -52,7 +52,7 @@
     <view class="py-1dot5 px-6 rounded-full text-gray-500 bg-gray border border-solid border-gray-300" bindtap="onCancel">
       Cancel
     </view>
-    <view class="py-1dot5 px-6 rounded-full bg-primary text-white" bindtap="onPublish">
+    <view class="py-1dot5 px-6 rounded-full bg-foreground text-white" bindtap="onPublish">
       Publish
     </view>
   </view>
