@@ -70,12 +70,15 @@ Component({
             (product) => product.type === 'secondhand'
           );
 
-          this.setData({
-            officialProducts,
-            secondhandProducts,
-          });
-
-          this.filterProductsByCategory();
+          this.setData(
+            {
+              officialProducts,
+              secondhandProducts,
+            },
+            () => {
+              this.filterProductsByCategory();
+            }
+          );
         }
       });
 
@@ -88,15 +91,51 @@ Component({
 
     filterProductsByCategory() {
       const { secondhandProducts, selectedCategory } = this.data;
+      let filteredProducts = [...secondhandProducts];
 
-      // Filter based on selected category, with a check for undefined categories
-      const filteredProducts = secondhandProducts.filter(
-        (product) =>
-          product.categories && product.categories.includes(selectedCategory)
+      switch (selectedCategory) {
+        case 'New':
+          filteredProducts.sort((a, b) => b.createdAt - a.createdAt);
+          break;
+        case '微软员工专属':
+          filteredProducts = filteredProducts.filter(
+            (product) => product.isStaffOnly === true
+          );
+          break;
+        default:
+          filteredProducts = filteredProducts.filter(
+            (product) =>
+              product.categories &&
+              product.categories.includes(selectedCategory)
+          );
+      }
+
+      this.setData(
+        {
+          filteredSecondhandProducts: filteredProducts,
+        },
+        () => {
+          this.distributeProductsToColumns();
+        }
       );
+    },
+
+    distributeProductsToColumns() {
+      const { filteredSecondhandProducts } = this.data;
+      const leftColumn = [];
+      const rightColumn = [];
+
+      filteredSecondhandProducts.forEach((product, index) => {
+        if (index % 2 === 0) {
+          leftColumn.push(product);
+        } else {
+          rightColumn.push(product);
+        }
+      });
 
       this.setData({
-        filteredSecondhandProducts: filteredProducts,
+        leftColumnProducts: leftColumn,
+        rightColumnProducts: rightColumn,
       });
     },
 
@@ -108,7 +147,7 @@ Component({
           selectedCategory,
         },
         () => {
-          this.filterProductsByCategory(); // Re-filter products after updating category
+          this.filterProductsByCategory();
         }
       );
     },

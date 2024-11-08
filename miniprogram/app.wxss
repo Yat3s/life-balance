@@ -18,10 +18,21 @@ page {
   --textGrey: #aaaaaa;
   --blue: #4f85d8;
   --buttonBlue: #f6f8ff;
+  --purpleLight: #b8b8d7;
+  --gray: #acacac;
+  --grayLight: #e9e9e9;
 }
 
 .bg-buttonBlue {
   background: var(--buttonBlue);
+}
+
+.bg-gray {
+  background: var(--gray);
+}
+
+.bg-purpleLight {
+  background: var(--purpleLight);
 }
 
 .bg-foreground {
@@ -41,6 +52,14 @@ page {
   color: var(--primary);
 }
 
+.text-gray {
+  color: var(--gray);
+}
+
+.text-purpleLight {
+  color: var(--purpleLight);
+}
+
 .text-foreground {
   color: var(--foreground);
 }
@@ -51,6 +70,14 @@ page {
 
 .text-blue {
   color: var(--blue);
+}
+
+.border-purple-light {
+  border: 1rpx solid var(--purpleLight);
+}
+
+.border-gray-light {
+  border: 1rpx solid var(--grayLight);
 }
 
 .plr {

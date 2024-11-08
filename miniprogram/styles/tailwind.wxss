@@ -4049,6 +4049,10 @@ video {
   font-weight: 200;
 }
 
+.font-lesslight {
+  font-weight: 250;
+}
+
 .font-light {
   font-weight: 300;
 }
@@ -12403,6 +12407,14 @@ video {
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .overflow-ellipsis {

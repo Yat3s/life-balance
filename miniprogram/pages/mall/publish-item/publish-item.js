@@ -13,6 +13,10 @@ Page({
     appBarHeight: MAX_APP_BAR_HEIGHT,
     pictures: [],
     categories: [],
+    categoriesWithSelection: [],
+    selectedCategory: [],
+    userInfo: null,
+    contact: '',
   },
 
   onLoad() {
@@ -20,7 +24,9 @@ Page({
   },
 
   onShow() {
-    this.initData();
+    if (!this.data.categories.length) {
+      this.initData();
+    }
   },
 
   initData() {
@@ -32,19 +38,23 @@ Page({
         });
       }
     });
-    getAppConfig().then((config) => {
-      const categories = config.fleaMarketKeywords || [];
 
-      const categoriesWithSelection = categories.map((category) => ({
-        name: category,
-        isSelected: false,
-      }));
+    if (!this.data.categories.length) {
+      getAppConfig().then((config) => {
+        const categories = config.fleaMarketKeywords || [];
 
-      this.setData({
-        categories,
-        categoriesWithSelection,
+        const categoriesWithSelection = categories.map((category) => ({
+          name: category,
+          isSelected: false,
+        }));
+
+        this.setData({
+          categories,
+          categoriesWithSelection,
+          selectedCategory: [],
+        });
       });
-    });
+    }
   },
 
   onTitleInput(e) {
@@ -57,11 +67,7 @@ Page({
 
   onCategorySelect(e) {
     const category = e.currentTarget.dataset.category;
-    let selectedCategory = this.data.selectedCategory;
-
-    if (!Array.isArray(selectedCategory)) {
-      selectedCategory = [];
-    }
+    let selectedCategory = [...this.data.selectedCategory];
 
     if (selectedCategory.includes(category)) {
       selectedCategory = selectedCategory.filter((item) => item !== category);
@@ -110,10 +116,10 @@ Page({
 
   onRemoveImage(e) {
     const index = e.currentTarget.dataset.index;
-    let pictures = this.data.pictures;
+    const pictures = [...this.data.pictures];
     pictures.splice(index, 1);
     this.setData({
-      pictures: pictures,
+      pictures,
     });
   },
 
@@ -142,6 +148,10 @@ Page({
       })
       .catch((err) => {
         console.error('Image upload failed: ', err);
+        wx.showToast({
+          title: 'Image upload failed',
+          icon: 'none',
+        });
       });
   },
 
@@ -150,7 +160,7 @@ Page({
   },
 
   onPublish() {
-    let {
+    const {
       title,
       price,
       contact,
@@ -158,24 +168,27 @@ Page({
       description,
       isStaffOnly,
       selectedCategory,
+      userInfo,
     } = this.data;
 
     if (!title) {
       wx.showToast({
-        title: '请输入标题',
+        title: 'Please enter a title',
         icon: 'none',
       });
       return;
     }
     if (!price) {
       wx.showToast({
-        title: '请输入正确的价格',
+        title: 'Please enter a valid price',
         icon: 'none',
       });
       return;
     }
-    if (!contact) {
-      contact = userInfo.contact;
+
+    let finalContact = contact;
+    if (!finalContact && userInfo) {
+      finalContact = userInfo.contact;
     }
 
     wx.showLoading({
@@ -185,7 +198,7 @@ Page({
     const createItemData = {
       title,
       price,
-      contact,
+      contact: finalContact,
       description: description ?? '',
       pictures: pictures ?? [],
       saleStatus: 'on',
@@ -194,12 +207,20 @@ Page({
       categories: selectedCategory || [],
     };
 
-    createItem(createItemData).then((res) => {
-      wx.showToast({
-        title: 'Publish successfully!',
-        icon: 'none',
+    createItem(createItemData)
+      .then(() => {
+        wx.showToast({
+          title: 'Publish successfully!',
+          icon: 'none',
+        });
+        wx.navigateBack();
+      })
+      .catch((err) => {
+        console.error('Publish failed: ', err);
+        wx.showToast({
+          title: 'Publish failed',
+          icon: 'none',
+        });
       });
-      wx.navigateBack();
-    });
   },
 });
