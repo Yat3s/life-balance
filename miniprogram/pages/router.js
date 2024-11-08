@@ -92,6 +92,10 @@ export const Pages = {
     authRequired: false,
     url: '/pages/mall/publish-item/publish-item',
   },
+  UserProduct: {
+    authRequired: false,
+    url: '/pages/user/user-product/user-product',
+  },
 };
 
 export function navigationToAppConfigWebView(config) {
@@ -180,6 +184,10 @@ export function navigateToUserActivity() {
 
 export function navigateToPublishItem() {
   navigate(Pages.PublishItem);
+}
+
+export function navigateToUserProduct() {
+  navigate(Pages.UserProduct);
 }
 
 export function navigate(page, urlParam = null) {

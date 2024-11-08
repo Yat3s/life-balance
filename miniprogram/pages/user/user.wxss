@@ -10,13 +10,6 @@
   border-radius: 50%;
 }
 
-.name {
-  font-weight: bold;
-  font-size: 14pt;
-  line-height: 14pt;
-  color: black;
-}
-
 .id-text {
   font-size: 9pt;
   line-height: 9pt;
@@ -43,7 +36,7 @@
 
 .activity-container {
   flex: 1;
-  background: #EBEFFD;
+  background: #ebeffd;
   padding: 20rpx 36rpx;
   display: flex;
   align-items: center;

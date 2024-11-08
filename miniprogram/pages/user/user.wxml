@@ -1,10 +1,16 @@
 <view class="base-info-container">
-  <view class="flex justify-between align-center">
-    <view class="flex align-center">
+  <view class="flex justify-between items-center">
+    <view class="flex items-center">
       <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
-      <view class="margin-left">
-        <view class="name">{{userInfo.nickName}}</view>
-        <view bindtap="onCopyId" class="flex align-center margin-top-xs">
+      <view class="margin-left flex flex-col gap-3">
+        <view class="flex item-center gap-2">
+          <view class="text-foreground font-semibold truncate w-20">{{userInfo.nickName}}</view>
+          <view wx:if="{{userInfo.company}}" class="profile-company">{{company.name}}</view>
+          <view bindtap="onSettingCompanyClick" wx:if="{{!userInfo.company}}" class="profile-company-unset mt-0dot5">
+            Verify your company
+          </view>
+        </view>
+        <view bindtap="onCopyId" class="flex items-center margin-top-xs">
           <view class="id-text">ID: {{userInfo.id}}</view>
           <view class="id-copy margin-left-sm">copy</view>
         </view>
@@ -12,19 +18,26 @@
     </view>
     <image src="../../images/ic_edit.png" bindtap="onEditUserInfoClick" class="edit-info margin-top-xs"></image>
   </view>
-  <view wx:if="{{userInfo.company}}" class="profile-company margin-top">{{company.name}}</view>
-  <view bindtap="onSettingCompanyClick" wx:if="{{!userInfo.company}}" class="profile-company-unset margin-top">
-    Verify your
-    company
-  </view>
-  <view style="margin-top: 60rpx" class="flex">
-    <view bindtap="onActivityClick" class="activity-container">
-      <image class="collection-icon" src="../../images/ic_activity_2.png"></image>
-      <view class="collection-title margin-left">Activities</view>
-    </view>
-    <view bindtap="onProfileClick" class="profile-container">
-      <image class="collection-icon" src="../../images/ic_user.png"></image>
-      <view class="collection-title margin-left">Profile</view>
+  <view class="mt-8">
+    <view class="grid grid-cols-2 gap-4">
+      <view bindtap="onProfileClick" class="flex items-center bg-buttonBlue rounded-xl p-4 gap-6">
+        <view class="flex items-center justify-center w-8 h-8 bg-white rounded-full">
+          <image class="w-4 h-4" src="../../images/ic_profile.svg"></image>
+        </view>
+        <view class="font-semibold text-foreground">Profile</view>
+      </view>
+      <view bindtap="onActivityClick" class="flex items-center bg-buttonBlue rounded-xl p-4 gap-6">
+        <view class="flex items-center justify-center w-8 h-8 bg-white rounded-full">
+          <image class="w-4 h-4" src="../../images/ic_activity_2.png"></image>
+        </view>
+        <view class="font-semibold text-foreground">Activities</view>
+      </view>
+      <view bindtap="onMallClick" class="flex items-center bg-buttonBlue rounded-xl p-4 gap-6">
+        <view class="flex items-center justify-center w-8 h-8 bg-white rounded-full">
+          <image class="w-4 h-4" src="../../images/ic_mall.svg"></image>
+        </view>
+        <view class="font-semibold text-foreground">Mall</view>
+      </view>
     </view>
   </view>
 </view>
@@ -53,7 +66,7 @@
     </view>
     <image show-menu-by-longpress="true" class="coconut-contact margin-top-sm" src="../../images/img_coconut.png" />
     <view class="text-grey">Long press to scan</view>
-    <view class="flex align-center justify-end margin-top-lg">
+    <view class="flex items-center justify-end margin-top-lg">
       <view catchtap="onDismissModal" class="cu-btn modal-btn-ok">Done</view>
     </view>
   </view>
@@ -68,7 +81,7 @@
     <image mode="heightFix" show-menu-by-longpress="true" class="pay margin-top-sm" src="../../images/img_praise.png" />
     <view class="text-grey">Long press to save QR code</view>
     <view class="text-red text-bold">THANK YOU!</view>
-    <view class="flex align-center justify-end margin-top-lg">
+    <view class="flex items-center justify-end margin-top-lg">
       <view catchtap="onDismissModal" class="cu-btn modal-btn-ok">Done</view>
     </view>
   </view>
