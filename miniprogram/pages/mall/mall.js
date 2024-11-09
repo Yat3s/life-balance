@@ -170,10 +170,17 @@ Component({
     },
 
     handleOpenProductModal(e) {
-      const { product } = e.currentTarget.dataset;
+      const product = e.currentTarget.dataset.product;
+
       this.setData({
         showingModal: 'product',
         selectedProduct: product,
+      });
+    },
+
+    handleViewAllOfficialProducts() {
+      this.setData({
+        showingModal: 'official-products',
       });
     },
 
