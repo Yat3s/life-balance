@@ -72,3 +72,7 @@
   background-color: #1c1c55;
   border-radius: 4rpx;
 }
+
+.max-official-height {
+  max-height: 880rpx;
+}

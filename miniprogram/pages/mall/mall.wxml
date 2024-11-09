@@ -10,13 +10,13 @@
   <view style="height: 200px;" />
   <view class="plr flex items-center justify-between">
     <view class="section-title">Official Products</view>
-    <view class="section-action">View all</view>
+    <view class="section-action" bind:tap="handleViewAllOfficialProducts">View all</view>
   </view>
   <!-- Official Section -->
   <swiper class="mt-4 h-36" previous-margin="60rpx" next-margin="60rpx" bindchange="onSwiperChange">
     <block wx:if="{{officialProducts}}">
-      <swiper-item wx:for="{{officialProducts}}" wx:key="{{item._id}}" bindtap="handleOpenProductModal" data-product="{{item}}">
-        <view class="h-full mr-2">
+      <swiper-item wx:for="{{officialProducts}}" wx:key="{{item._id}}">
+        <view class="h-full mr-2" bind:tap="handleOpenProductModal" data-product="{{item}}">
           <view class="gradient-bg rounded-lg p-4 py-5 h-full flex">
             <view class="w-32 h-full flex-shrink-0">
               <image class="w-full h-full rounded-lg object-cover" src="{{item.pictures[0]}}" mode="aspectFill" />
@@ -108,7 +108,7 @@
   </view>
 </scroll-view>
 <view class="cu-modal {{ showingModal === 'product' ? 'show' : '' }}" bindtap="hideModal">
-  <view class="cu-dialog rounded-2xl bg-white" catchtap>
+  <view class="cu-dialog rounded-lg bg-white" catchtap>
     <!-- Image Carousel -->
     <swiper class="w-full h-72 rounded-t-lg" indicator-dots="true" indicator-color="#ECECEC" indicator-active-color="#1C1C55">
       <swiper-item wx:for="{{selectedProduct.pictures}}" wx:key="*this">
@@ -144,9 +144,9 @@
           <view class="text-gray text-sm">发布人：</view>
           <view class="flex items-center gap-3">
             <image class="w-6 h-6 rounded-full" src="{{selectedProduct.user.avatarUrl}}" mode="aspectFill" />
-            <text class="text-foreground text-sm font-medium">
+            <view class="text-foreground text-sm font-medium">
               {{selectedProduct.user.nickName}}
-            </text>
+            </view>
           </view>
         </view>
         <!-- Price -->
@@ -171,6 +171,39 @@
           </view>
         </view>
       </block>
+    </view>
+  </view>
+</view>
+<view class="cu-modal {{ showingModal === 'official-products' ? 'show' : '' }}" bindtap="hideModal">
+  <view class="cu-dialog rounded-lg bg-white" catchtap>
+    <view class="p-6">
+      <view class="text-foreground text-lg font-medium text-left mb-2">官方周边</view>
+      <view class="text-sm text-foreground font-light text-left mb-2">
+        Choose from the carefully selected products we have prepared for you.
+      </view>
+      <view class="max-official-height overflow-scroll">
+        <block wx:if="{{officialProducts}}">
+          <block wx:for="{{officialProducts}}" wx:key="{{item._id}}">
+            <view class="h-full mb-4" bind:tap="handleOpenProductModal" data-product="{{item}}">
+              <view class="gradient-bg rounded-lg p-4 py-5 h-full flex">
+                <view class="w-28 h-28 rounded-lg overflow-hidden">
+                  <image class="w-full h-full object-cover" src="{{item.pictures[0]}}" mode="aspectFill" />
+                </view>
+                <view class="ml-4 flex flex-col justify-center flex-1 gap-2 text-left">
+                  <view>
+                    <text class="text-foreground text-lg font-medium">{{item.title}}</text>
+                  </view>
+                  <view class="flex gap-2 mt-2 flex-wrap">
+                    <view wx:for="{{item.categories}}" wx:key="*this" wx:for-item="category" class="text-purpleLight text-center text-xs px-3 py-1 rounded-lg border-purple-light">
+                      {{category}}
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </block>
+        </block>
+      </view>
     </view>
   </view>
 </view>
