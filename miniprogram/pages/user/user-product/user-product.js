@@ -1,66 +1,101 @@
-// pages/user/user-product/user-product.js
+const {
+  fetchAllUserProducts,
+  updateProduct,
+} = require('../../../repository/productRepo');
+
 Page({
-
-  /**
-   * Page initial data
-   */
   data: {
-
+    activeTab: 'published',
+    purchasedProducts: [],
   },
 
-  /**
-   * Lifecycle function--Called when page load
-   */
-  onLoad(options) {
-
+  onLoad() {
+    this.fetchAllRecords();
   },
 
-  /**
-   * Lifecycle function--Called when page is initially rendered
-   */
-  onReady() {
-
+  fetchAllRecords() {
+    fetchAllUserProducts()
+      .then((res) => {
+        this.setData({
+          userProducts: res.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 
-  /**
-   * Lifecycle function--Called when page show
-   */
-  onShow() {
-
+  switchTab(e) {
+    const tab = e.currentTarget.dataset.tab;
+    this.setData({
+      activeTab: tab,
+    });
   },
 
-  /**
-   * Lifecycle function--Called when page hide
-   */
-  onHide() {
+  toggleStatus(e) {
+    const id = e.currentTarget.dataset.id;
+    const products = [...this.data.userProducts];
+    const index = products.findIndex((p) => p._id === id);
 
+    if (index > -1) {
+      const newStatus = products[index].saleStatus === 'on' ? 'off' : 'on';
+      products[index].saleStatus = newStatus;
+
+      this.setData({
+        userProducts: products,
+      });
+
+      const updateProductData = {
+        saleStatus: newStatus,
+      };
+
+      updateProduct(id, updateProductData)
+        .then((res) => {
+          if (res.success) {
+            wx.showToast({
+              title: newStatus === 'on' ? '上架成功' : '下架成功',
+              icon: 'success',
+            });
+            this.fetchAllRecords();
+          } else {
+            wx.showToast({
+              title: 'Update failed',
+              icon: 'error',
+            });
+            this.fetchAllRecords();
+          }
+        })
+        .catch((err) => {
+          console.error('Update failed:', err);
+          wx.showToast({
+            title: 'Update failed',
+            icon: 'error',
+          });
+          this.fetchAllRecords();
+        });
+    }
   },
 
-  /**
-   * Lifecycle function--Called when page unload
-   */
-  onUnload() {
-
+  editProduct(e) {
+    const id = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: `/pages/edit/edit?id=${id}`,
+    });
   },
 
-  /**
-   * Page event handler function--Called when user drop down
-   */
-  onPullDownRefresh() {
-
+  deleteOrder(e) {
+    const id = e.currentTarget.dataset.id;
+    wx.showModal({
+      title: '提示',
+      content: '确定要删除这个订单吗？',
+      success: (res) => {
+        if (res.confirm) {
+          const orders = this.data.purchasedProducts.filter((p) => p.id !== id);
+          this.setData({
+            purchasedProducts: orders,
+          });
+        }
+      },
+    });
   },
-
-  /**
-   * Called when page reach bottom
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * Called when user click on the top right corner to share
-   */
-  onShareAppMessage() {
-
-  }
-})
+});
