@@ -39,6 +39,10 @@ page {
   background: var(--foreground);
 }
 
+.bg-blue-gradient {
+  background: linear-gradient(33.14deg, #ffffff 0.76%, #f8fbff 100%);
+}
+
 .bg-primary {
   background: var(--primary);
   color: white;
@@ -76,6 +80,10 @@ page {
   border: 1rpx solid var(--purpleLight);
 }
 
+.border-primary {
+  border: 1rpx solid var(--primary);
+}
+
 .border-gray-light {
   border: 1rpx solid var(--grayLight);
 }
@@ -101,6 +109,10 @@ page {
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
+}
+
+.gradient-bg {
+  background: linear-gradient(180deg, #fffefe 0%, #f9f6ff 100%);
 }
 
 .appbar {

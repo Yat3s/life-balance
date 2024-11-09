@@ -1,1 +1,16 @@
-/* pages/user/user-product/user-product.wxss */
+page {
+  background-color: #ffffff;
+  padding-bottom: 100rpx;
+}
+
+.text-xxs {
+  font-size: 20rpx;
+}
+
+.text-custom-purple {
+  color: #abb3cb;
+}
+
+.text-sold {
+  color: #abb3cb;
+}

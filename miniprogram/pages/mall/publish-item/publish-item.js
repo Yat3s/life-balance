@@ -1,5 +1,5 @@
 import { getAppConfig } from '../../../repository/baseRepo';
-import { createItem } from '../../../repository/productRepo';
+import { createProduct } from '../../../repository/productRepo';
 import { fetchUserInfo } from '../../../repository/userRepo';
 
 const app = getApp();
@@ -195,7 +195,7 @@ Page({
       title: 'Publishing...',
     });
 
-    const createItemData = {
+    const createProductData = {
       title,
       price,
       contact: finalContact,
@@ -207,7 +207,7 @@ Page({
       categories: selectedCategory || [],
     };
 
-    createItem(createItemData)
+    createProduct(createProductData)
       .then(() => {
         wx.showToast({
           title: 'Publish successfully!',

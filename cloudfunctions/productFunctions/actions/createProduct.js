@@ -8,11 +8,11 @@ const COLLECTION_NAME_PRODUCTS = 'products';
 exports.main = async (props, context) => {
   const wxContext = cloud.getWXContext();
   const openid = wxContext.OPENID;
-  const { createItemData } = props;
+  const { createProductData } = props;
 
   try {
     const dataToInsert = {
-      ...createItemData,
+      ...createProductData,
       userId: openid,
       createdAt: new Date().getTime(),
     };

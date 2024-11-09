@@ -49,10 +49,6 @@
   color: #3785fc;
 }
 
-.gradient-bg {
-  background: linear-gradient(180deg, #fffefe 0%, #f9f6ff 100%);
-}
-
 .category-item {
   position: relative;
   padding-bottom: 10rpx;
