@@ -1,3 +1,4 @@
+import { formatTimeAgo } from '../../common/util';
 import { getAppConfig } from '../../repository/baseRepo';
 import { fetchAllProducts } from '../../repository/productRepo';
 import { navigateToPublishItem } from '../router';
@@ -63,10 +64,15 @@ Component({
     fetchAllProducts() {
       fetchAllProducts().then((res) => {
         if (res) {
-          const officialProducts = res.data.filter(
+          const processedData = res.data.map((product) => ({
+            ...product,
+            formattedTime: formatTimeAgo(product.createdAt),
+          }));
+
+          const officialProducts = processedData.filter(
             (product) => product.type === 'official'
           );
-          const secondhandProducts = res.data.filter(
+          const secondhandProducts = processedData.filter(
             (product) => product.type === 'secondhand'
           );
 
@@ -154,6 +160,35 @@ Component({
 
     handleNavToPublishItemPage() {
       navigateToPublishItem();
+    },
+
+    hideModal() {
+      this.setData({
+        showingModal: null,
+        selectedProduct: null,
+      });
+    },
+
+    handleOpenProductModal(e) {
+      const { product } = e.currentTarget.dataset;
+      this.setData({
+        showingModal: 'product',
+        selectedProduct: product,
+      });
+    },
+
+    handleCopyContact(e) {
+      const { contact } = e.currentTarget.dataset;
+      wx.setClipboardData({
+        data: contact,
+        success: () => {
+          wx.showToast({
+            title: '已复制联系方式',
+            icon: 'success',
+            duration: 2000,
+          });
+        },
+      });
     },
   },
 });
