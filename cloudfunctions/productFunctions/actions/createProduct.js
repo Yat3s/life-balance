@@ -4,6 +4,7 @@ cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 const _ = db.command;
 const COLLECTION_NAME_PRODUCTS = 'products';
+const COLLECTION_NAME_USERS = 'users';
 
 exports.main = async (props, context) => {
   const wxContext = cloud.getWXContext();
@@ -11,9 +12,17 @@ exports.main = async (props, context) => {
   const { createProductData } = props;
 
   try {
+    const userResult = await db
+      .collection(COLLECTION_NAME_USERS)
+      .where({
+        _openid: openid,
+      })
+      .get();
+
     const dataToInsert = {
       ...createProductData,
       userId: openid,
+      user: userResult.data[0],
       createdAt: new Date().getTime(),
     };
 

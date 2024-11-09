@@ -15,7 +15,7 @@
   <!-- Official Section -->
   <swiper class="mt-4 h-36" previous-margin="60rpx" next-margin="60rpx" bindchange="onSwiperChange">
     <block wx:if="{{officialProducts}}">
-      <swiper-item wx:for="{{officialProducts}}" wx:key="{{item._id}}">
+      <swiper-item wx:for="{{officialProducts}}" wx:key="{{item._id}}" bindtap="handleOpenProductModal" data-product="{{item}}">
         <view class="h-full mr-2">
           <view class="gradient-bg rounded-lg p-4 py-5 h-full flex">
             <view class="w-32 h-full flex-shrink-0">
@@ -62,7 +62,7 @@
   <!-- Product Grid -->
   <view class="mt-4 px-4 flex gap-3">
     <view class="flex-1 flex flex-col gap-3">
-      <view class="bg-white rounded-lg p-4 border-gray-light" wx:for="{{leftColumnProducts}}" wx:key="{{item._id}}">
+      <view class="bg-white rounded-lg p-4 border-gray-light" wx:for="{{leftColumnProducts}}" wx:key="{{item._id}}" bindtap="handleOpenProductModal" data-product="{{item}}">
         <image class="w-full h-36 rounded-lg" src="{{item.pictures[0]}}" mode="aspectFill" wx:if="{{item.pictures && item.pictures.length > 0}}" />
         <view class="mt-2">
           <text class="text-sm line-clamp-2">{{item.title}}</text>
@@ -84,7 +84,7 @@
       </view>
     </view>
     <view class="flex-1 flex flex-col gap-3">
-      <view class="bg-white rounded-lg p-4 border-gray-light" wx:for="{{rightColumnProducts}}" wx:key="{{item._id}}">
+      <view class="bg-white rounded-lg p-4 border-gray-light" wx:for="{{rightColumnProducts}}" wx:key="{{item._id}}" bindtap="handleOpenProductModal" data-product="{{item}}">
         <image class="w-full h-36 rounded-lg" src="{{item.pictures[0]}}" mode="aspectFill" wx:if="{{item.pictures && item.pictures.length > 0}}" />
         <view class="mt-2">
           <text class="text-sm line-clamp-2">{{item.title}}</text>
@@ -107,3 +107,70 @@
     </view>
   </view>
 </scroll-view>
+<view class="cu-modal {{ showingModal === 'product' ? 'show' : '' }}" bindtap="hideModal">
+  <view class="cu-dialog rounded-2xl bg-white" catchtap>
+    <!-- Image Carousel -->
+    <swiper class="w-full h-72 rounded-t-lg" indicator-dots="true" indicator-color="#ECECEC" indicator-active-color="#1C1C55">
+      <swiper-item wx:for="{{selectedProduct.pictures}}" wx:key="*this">
+        <image src="{{item}}" mode="aspectFill" class="w-full h-full" />
+      </swiper-item>
+    </swiper>
+    <view class="p-6">
+      <!-- Product Title -->
+      <view class="text-lg text-left font-medium text-foreground mb-4">
+        {{selectedProduct.title}}
+      </view>
+      <!-- Category Tag -->
+      <view class="flex items-center justify-between mb-6">
+        <view class="flex gap-2">
+          <block wx:for="{{selectedProduct.categories}}" wx:key="*this">
+            <view class="bg-gray-100 px-3 py-1 rounded-lg text-xs text-gray-600">{{item}}</view>
+          </block>
+          <view class="bg-gray-100 px-3 py-1 rounded-lg text-xs text-gray-600" wx:if="{{!selectedProduct.categories || selectedProduct.categories.length === 0}}">
+            未分类
+          </view>
+        </view>
+        <view wx:if="{{selectedProduct.type === 'secondhand'}}" class="text-gray text-xs">
+          {{selectedProduct.formattedTime}}发布
+        </view>
+      </view>
+      <block wx:if="{{selectedProduct.type === 'secondhand'}}">
+        <!-- Description -->
+        <view class="text-foreground text-sm mb-6 text-left">
+          {{selectedProduct.description || '这里是描述'}}
+        </view>
+        <!-- Seller Info -->
+        <view class="flex items-center justify-between gap-3 mb-4">
+          <view class="text-gray text-sm">发布人：</view>
+          <view class="flex items-center gap-3">
+            <image class="w-6 h-6 rounded-full" src="{{selectedProduct.user.avatarUrl}}" mode="aspectFill" />
+            <text class="text-foreground text-sm font-medium">
+              {{selectedProduct.user.nickName}}
+            </text>
+          </view>
+        </view>
+        <!-- Price -->
+        <view class="flex items-center justify-between gap-3 mb-6">
+          <view class="text-gray text-sm">定价：</view>
+          <view class="flex items-baseline gap-1 text-foreground font-medium">
+            <text class="text-xs">¥</text>
+            <text>{{selectedProduct.price}}</text>
+          </view>
+        </view>
+        <!-- Contact Info -->
+        <view class="flex items-center justify-center text-center py-2 bg-gray-50 rounded-lg text-foreground">
+          <text>联系：{{selectedProduct.contact}}</text>
+          <image catchtap="handleCopyContact" data-contact="{{selectedProduct.contact}}" class="w-4 h-4 ml-2" src="/images/ic_copy.svg" />
+        </view>
+      </block>
+      <block wx:if="{{selectedProduct.type === 'official'}}">
+        <view class="flex items-center justify-center bg-foreground py-2dot5 rounded-lg" hover-class="none" hover-stop-propagation="false">
+          <view class="flex items-baseline text-white gap-1">
+            <text class="text-xs" selectable="false" space="false" decode="false">¥</text>
+            <view>{{selectedProduct.price}} 购买</view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>
