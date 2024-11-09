@@ -8,7 +8,6 @@ const COLLAPSED_SCROLL_TOP = 200;
 const MIN_TITLE_SCALE = 0.5;
 const MIN_SUBTITLE_SCALE = 0.9;
 const MAX_APP_BAR_HEIGHT = 200; //px
-const OPEN_MODAL_DURATION = 100;
 
 Component({
   options: {
