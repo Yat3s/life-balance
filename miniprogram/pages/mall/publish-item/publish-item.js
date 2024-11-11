@@ -20,11 +20,7 @@ Page({
     categoriesWithSelection: [],
     selectedCategory: [],
     userInfo: null,
-    contact: '',
     productId: null,
-    title: '',
-    price: '',
-    description: '',
   },
 
   async onLoad(options) {
@@ -34,7 +30,6 @@ Page({
 
       if (options.id) {
         const product = (await fetchProduct(options.id)).data[0];
-        console.log('🚀 ~ onLoad ~ product:', product);
         if (!product) {
           throw new Error('Product not found');
         }
