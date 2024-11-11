@@ -25,7 +25,7 @@
   <view class="p-4">
     <block wx:if="{{activeTab === 'published'}}">
       <block wx:if="{{!userProducts || userProducts.length === 0}}">
-        <view class="flex items-center justify-center pt-40">暂无发布记录</view>
+        <view class="flex items-center justify-center pt-40 text-foreground">暂无发布记录</view>
       </block>
       <block wx:else>
         <view wx:for="{{userProducts}}" wx:key="_id" class="flex bg-blue-gradient p-5 mb-4 rounded-lg">
@@ -68,7 +68,7 @@
     </block>
     <block wx:else>
       <block wx:if="{{!purchasedProducts || purchasedProducts.length === 0}}">
-        <view class="flex items-center justify-center pt-40">暂无购买记录</view>
+        <view class="flex items-center justify-center pt-40 text-foreground">暂无购买记录</view>
       </block>
       <block wx:else>
         <view wx:for="{{purchasedProducts}}" wx:key="id" class="flex bg-blue-gradient p-6 mb-4 rounded-lg">

@@ -24,6 +24,7 @@ exports.main = async (props, context) => {
       userId: openid,
       user: userResult.data[0],
       createdAt: new Date().getTime(),
+      updatedAt: new Date().getTime(),
     };
 
     const result = await db.collection(COLLECTION_NAME_PRODUCTS).add({

@@ -4,28 +4,26 @@ const { getAllData } = require('../lib/utils');
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 
-const COLLECTION_NAME_PRODUCTS = 'products';
-const PRODUCT_TYPE = 'secondhand';
+const COLLECTION_NAME_ORDERS = 'orders';
 
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext();
 
   try {
-    const products = await getAllData(db, {
-      collection: COLLECTION_NAME_PRODUCTS,
+    const orders = await getAllData(db, {
+      collection: COLLECTION_NAME_ORDERS,
       whereCondition: {
         userId: wxContext.OPENID,
-        type: PRODUCT_TYPE,
       },
       orderBy: {
-        field: 'updatedAt',
+        field: 'createdAt',
         type: 'desc',
       },
     });
 
     return {
       success: true,
-      data: products,
+      data: orders,
       message: 'Data retrieved successfully',
     };
   } catch (error) {

@@ -15,7 +15,7 @@ exports.main = async (props, context) => {
         saleStatus: SALE_STATUS,
       },
       orderBy: {
-        field: 'createdAt',
+        field: 'updatedAt',
         type: 'desc',
       },
     });
