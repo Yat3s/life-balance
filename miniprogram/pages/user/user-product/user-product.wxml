@@ -55,10 +55,10 @@
               <view wx:if="{{(!item.pictures || item.pictures.length === 0) && item.saleStatus === 'off'}}" class="w-10 h-10 absolute left-2 -bottom-1">
                 <image class="w-full h-full" src="/images/ic_sold.svg" />
               </view>
-              <view class="px-3 py-1 border-primary rounded-md text-xxs text-primary" bindtap="toggleStatus" data-id="{{item._id}}">
+              <view class="px-3 py-1 border-foreground rounded-md text-xxs text-foreground" bindtap="toggleStatus" data-id="{{item._id}}">
                 {{item.saleStatus === 'on' ? '下架' : '重新上架'}}
               </view>
-              <view class="px-3 py-1 border-primary rounded-md text-xxs text-primary" bindtap="editProduct" data-id="{{item._id}}">
+              <view class="px-3 py-1 border-foreground rounded-md text-xxs text-foreground" bindtap="editProduct" data-id="{{item._id}}">
                 编辑
               </view>
             </view>
@@ -67,34 +67,24 @@
       </block>
     </block>
     <block wx:else>
-      <block wx:if="{{!purchasedProducts || purchasedProducts.length === 0}}">
+      <block wx:if="{{!userOrders || userOrders.length === 0}}">
         <view class="flex items-center justify-center pt-40 text-foreground">暂无购买记录</view>
       </block>
       <block wx:else>
-        <view wx:for="{{purchasedProducts}}" wx:key="id" class="flex bg-blue-gradient p-6 mb-4 rounded-lg">
+        <view wx:for="{{userOrders}}" wx:key="id" class="flex bg-blue-gradient p-6 mb-4 rounded-lg">
           <image wx:if="{{item.pictures && item.pictures[0]}}" class="w-28 h-28 rounded-lg" src="{{item.pictures[0]}}" mode="aspectFill" data-index="{{index}}" />
           <view class="flex-1 ml-6">
             <text class="text-sm line-clamp-2 text-foreground">{{item.title}}</text>
-            <view class="mt-3 flex justify-between items-center">
-              <view class="flex gap-2">
-                <block wx:if="{{item.categories && item.categories.length > 0}}">
-                  <view class="text-custom-purple font-lesslight text-xs" wx:for="{{item.categories}}" wx:key="{{index}}">
-                    {{item}}
-                  </view>
-                </block>
-                <view class="text-custom-purple font-lesslight text-xs" wx:else>未分类</view>
-              </view>
+            <view class="mt-3 flex justify-end">
               <view class="text-lg text-primary font-bold flex items-baseline gap-1">
                 <text class="text-xs">¥</text>
                 <text>{{item.price}}</text>
               </view>
             </view>
-            <view class="flex justify-end mt-6 gap-4">
-              <text class="text-sm text-gray-500 mt-2">{{item.purchaseDate}}</text>
-              <view class="flex justify-end mt-6">
-                <view class="px-8 py-2 border border-gray-300 rounded-full text-sm bg-white" bindtap="deleteOrder" data-id="{{item.id}}">
-                  删除订单
-                </view>
+            <view class="flex items-center justify-between mt-6 gap-4">
+              <view class="text-xs text-gray">{{item.purchaseDate}} 购买</view>
+              <view class="px-3 py-1 border-foreground rounded-lg text-xxs text-foreground" bindtap="deleteOrder" data-id="{{item.id}}">
+                删除订单
               </view>
             </view>
           </view>

@@ -1,5 +1,6 @@
 const createOrder = require('./actions/createOrder');
 const deleteOrder = require('./actions/deleteOrder');
+const updateOrder = require('./actions/updateOrder');
 const fetchAllUserOrders = require('./actions/fetchAllUserOrders');
 
 exports.main = async (event, context) => {
@@ -10,6 +11,8 @@ exports.main = async (event, context) => {
       return await createOrder.main(props, context);
     case 'deleteOrder':
       return await deleteOrder.main(props, context);
+    case 'updateOrder':
+      return await updateOrder.main(props, context);
     case 'fetchAllUserOrders':
       return await fetchAllUserOrders.main(props, context);
     default:
