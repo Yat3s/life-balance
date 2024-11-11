@@ -1,7 +1,7 @@
-const {
+import {
   fetchAllUserProducts,
   updateProduct,
-} = require('../../../repository/productRepo');
+} from '../../../repository/productRepo';
 
 Page({
   data: {
@@ -10,6 +10,10 @@ Page({
   },
 
   onLoad() {
+    this.fetchAllRecords();
+  },
+
+  onShow() {
     this.fetchAllRecords();
   },
 
@@ -79,7 +83,7 @@ Page({
   editProduct(e) {
     const id = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: `/pages/edit/edit?id=${id}`,
+      url: `/pages/mall/publish-item/publish-item?id=${id}`,
     });
   },
 

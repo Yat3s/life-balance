@@ -36,8 +36,8 @@
     </view>
     <view class="space-y-2">
       <view class="grid grid-cols-3 gap-2">
-        <view wx:for="{{pictures}}" wx:key="*this" class="relative bg-gray-100 rounded-lg overflow-hidden h-28">
-          <image src="{{item}}" class="w-full h-full" />
+        <view wx:for="{{pictures}}" wx:key="*this" class="relative bg-gray-100 rounded-lg overflow-hidden h-24">
+          <image src="{{item}}" class="w-full h-full" mode="aspectFill" />
           <view class="absolute top-1 right-1 w-4 h-4 bg-black/50 rounded-full flex items-center justify-center" catchtap="onRemoveImage" data-index="{{index}}">
             <text class="text-white text-xs">×</text>
           </view>
