@@ -42,7 +42,7 @@ Page({
         this.setData({
           productId: options.id,
           title: product.title || '',
-          price: product.price?.toString() || '', // 确保显示时转为字符串
+          price: product.price?.toString() || '',
           description: product.description || '',
           pictures: product.pictures || [],
           isStaffOnly: product.isStaffOnly ?? true,
