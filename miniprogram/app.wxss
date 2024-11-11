@@ -84,6 +84,10 @@ page {
   border: 1rpx solid var(--primary);
 }
 
+.border-foreground {
+  border: 1rpx solid var(--foreground);
+}
+
 .border-gray-light {
   border: 1rpx solid var(--grayLight);
 }

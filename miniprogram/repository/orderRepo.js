@@ -11,14 +11,18 @@ export const createOrder = (productId) => {
 };
 
 export const updateOrder = (orderId, paid) => {
-  return cloudCall(
-    db.doc(orderId).update({ data: { paid, paidAt: Date.now() } }),
-    'updateOrder'
-  );
+  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, 'updateOrder', {
+    orderId,
+    paid,
+  });
 };
 
 export const deleteOrder = (orderId) => {
   return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, 'deleteOrder', {
     orderId,
   });
+};
+
+export const fetchAllUserOrders = () => {
+  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, 'fetchAllUserOrders', {});
 };
