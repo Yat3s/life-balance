@@ -136,6 +136,10 @@ Page({
           });
           deleteOrder(id);
           this.fetchAllRecords();
+          wx.showToast({
+            title: '删除成功',
+            icon: 'success',
+          });
         }
       },
     });
