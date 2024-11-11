@@ -31,7 +31,7 @@
         <view wx:for="{{userProducts}}" wx:key="_id" class="flex bg-blue-gradient p-5 mb-4 rounded-lg">
           <view wx:if="{{item.pictures && item.pictures[0]}}" class="relative w-28 h-28 rounded-lg overflow-hidden" data-index="{{index}}">
             <image class="w-full h-full" src="{{item.pictures[0]}}" mode="aspectFill" />
-            <image class="w-10 h-10 absolute right-1 top-1 z-20" src="/images/ic_sold.svg" />
+            <image wx:if="{{item.saleStatus === 'off'}}" class="w-10 h-10 absolute right-1 top-1 z-20" src="/images/ic_sold.svg" />
           </view>
           <view class="flex-1 ml-6">
             <text class="text-sm line-clamp-2 {{item.saleStatus === 'off' ? 'text-sold' : 'text-foreground'}}">

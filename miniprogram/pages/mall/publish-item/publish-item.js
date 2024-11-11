@@ -1,5 +1,9 @@
 import { getAppConfig } from '../../../repository/baseRepo';
-import { createProduct } from '../../../repository/productRepo';
+import {
+  createProduct,
+  fetchProduct,
+  updateProduct,
+} from '../../../repository/productRepo';
 import { fetchUserInfo } from '../../../repository/userRepo';
 
 const app = getApp();
@@ -16,33 +20,38 @@ Page({
     categoriesWithSelection: [],
     selectedCategory: [],
     userInfo: null,
-    contact: '',
+    productId: null,
   },
 
-  onLoad() {
-    this.initData();
-  },
+  async onLoad(options) {
+    try {
+      const config = await getAppConfig();
+      const categories = config.fleaMarketKeywords || [];
 
-  onShow() {
-    if (!this.data.categories.length) {
-      this.initData();
-    }
-  },
+      if (options.id) {
+        const product = (await fetchProduct(options.id)).data[0];
+        if (!product) {
+          throw new Error('Product not found');
+        }
 
-  initData() {
-    fetchUserInfo().then((userInfo) => {
-      if (userInfo) {
+        const categoriesWithSelection = categories.map((category) => ({
+          name: category,
+          isSelected: product.categories?.includes(category) || false,
+        }));
+
         this.setData({
-          userInfo,
-          contact: userInfo.contact,
+          productId: options.id,
+          title: product.title || '',
+          price: product.price || '',
+          description: product.description || '',
+          pictures: product.pictures || [],
+          isStaffOnly: product.isStaffOnly ?? true,
+          contact: product.contact || '',
+          categories,
+          categoriesWithSelection,
+          selectedCategory: product.categories || [],
         });
-      }
-    });
-
-    if (!this.data.categories.length) {
-      getAppConfig().then((config) => {
-        const categories = config.fleaMarketKeywords || [];
-
+      } else {
         const categoriesWithSelection = categories.map((category) => ({
           name: category,
           isSelected: false,
@@ -53,6 +62,20 @@ Page({
           categoriesWithSelection,
           selectedCategory: [],
         });
+      }
+
+      const userInfo = await fetchUserInfo();
+      if (userInfo) {
+        this.setData({
+          userInfo,
+          contact: this.data.contact || userInfo.contact,
+        });
+      }
+    } catch (err) {
+      console.error('Failed to initialize page:', err);
+      wx.showToast({
+        title: 'Failed to load data',
+        icon: 'none',
       });
     }
   },
@@ -159,8 +182,9 @@ Page({
     wx.navigateBack();
   },
 
-  onPublish() {
+  async onPublish() {
     const {
+      productId,
       title,
       price,
       contact,
@@ -192,35 +216,45 @@ Page({
     }
 
     wx.showLoading({
-      title: 'Publishing...',
+      title: productId ? 'Updating...' : 'Publishing...',
     });
 
-    const createProductData = {
-      title,
-      price,
-      contact: finalContact,
-      description: description ?? '',
-      pictures: pictures ?? [],
-      saleStatus: 'on',
-      isStaffOnly,
-      type: 'secondhand',
-      categories: selectedCategory || [],
-    };
+    try {
+      const productData = {
+        title,
+        price,
+        contact: finalContact,
+        description: description || '',
+        pictures: pictures || [],
+        saleStatus: 'on',
+        isStaffOnly,
+        type: 'secondhand',
+        categories: selectedCategory || [],
+      };
 
-    createProduct(createProductData)
-      .then(() => {
+      if (productId) {
+        await updateProduct(productId, productData);
+        wx.showToast({
+          title: 'Update successfully!',
+          icon: 'none',
+        });
+      } else {
+        await createProduct(productData);
         wx.showToast({
           title: 'Publish successfully!',
           icon: 'none',
         });
-        wx.navigateBack();
-      })
-      .catch((err) => {
-        console.error('Publish failed: ', err);
-        wx.showToast({
-          title: 'Publish failed',
-          icon: 'none',
-        });
+      }
+
+      wx.hideLoading();
+      wx.navigateBack();
+    } catch (err) {
+      console.error(productId ? 'Update failed: ' : 'Publish failed: ', err);
+      wx.hideLoading();
+      wx.showToast({
+        title: productId ? 'Update failed' : 'Publish failed',
+        icon: 'none',
       });
+    }
   },
 });
