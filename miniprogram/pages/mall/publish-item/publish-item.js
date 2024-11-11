@@ -42,7 +42,7 @@ Page({
         this.setData({
           productId: options.id,
           title: product.title || '',
-          price: product.price || '',
+          price: product.price?.toString() || '',
           description: product.description || '',
           pictures: product.pictures || [],
           isStaffOnly: product.isStaffOnly ?? true,
@@ -85,7 +85,10 @@ Page({
   },
 
   onPriceInput(e) {
-    this.setData({ price: e.detail.value });
+    const value = e.detail.value.replace(/[^\d.]/g, '');
+    const parts = value.split('.');
+    const formatted = parts.length > 2 ? `${parts[0]}.${parts[1]}` : value;
+    this.setData({ price: formatted });
   },
 
   onCategorySelect(e) {
@@ -119,6 +122,28 @@ Page({
 
   onDescriptionInput(e) {
     this.setData({ description: e.detail.value });
+  },
+
+  validatePrice(price) {
+    const numberPrice = Number(price);
+
+    if (isNaN(numberPrice) || numberPrice <= 0) {
+      wx.showToast({
+        title: 'Please enter a valid price greater than 0',
+        icon: 'none',
+      });
+      return null;
+    }
+
+    if (price.includes('.') && price.split('.')[1].length > 2) {
+      wx.showToast({
+        title: 'Price can only have up to 2 decimal places',
+        icon: 'none',
+      });
+      return null;
+    }
+
+    return numberPrice;
   },
 
   onAddImage() {
@@ -202,11 +227,9 @@ Page({
       });
       return;
     }
-    if (!price) {
-      wx.showToast({
-        title: 'Please enter a valid price',
-        icon: 'none',
-      });
+
+    const validatedPrice = this.validatePrice(price);
+    if (validatedPrice === null) {
       return;
     }
 
@@ -222,7 +245,7 @@ Page({
     try {
       const productData = {
         title,
-        price,
+        price: validatedPrice,
         contact: finalContact,
         description: description || '',
         pictures: pictures || [],

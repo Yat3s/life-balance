@@ -18,7 +18,7 @@ exports.main = async (event, context) => {
         type: PRODUCT_TYPE,
       },
       orderBy: {
-        field: 'updatedAt',
+        field: 'createdAt',
         type: 'desc',
       },
     });

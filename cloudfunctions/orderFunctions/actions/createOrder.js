@@ -21,14 +21,14 @@ exports.main = async (props, context) => {
   const productTitle = `安得科技-${product.title}`;
   const createOrderResponse = await cloud.cloudPay.unifiedOrder({
     body: productTitle,
+    outTradeNo: wechatOrderId,
+    spbillCreateIp: '123.12.12.123',
+    subMchId: '1638480210',
     totalFee: product.price * 100,
     functionName: 'paycallback',
     envId: 'life-6go5gey72a61a773',
-    subMchId: '1675638558',
     nonceStr: generateNonceStr(),
-    outTradeNo: wechatOrderId,
     freeType: 'CNY',
-    spbillCreateIp: '123.12.12.123',
     tradeType: 'JSAPI',
     openid,
   });
