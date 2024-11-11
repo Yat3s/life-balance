@@ -1,7 +1,6 @@
 <toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
 <view class="main mb-10">
-  <view class="text-2xl font-bold text-foreground my-8">Describe your item</view>
-  <view class="bg-white rounded-lg p-5 py-4 space-y-6 mb-4">
+  <view class="bg-white rounded-lg p-5 py-4 space-y-6 mb-4 mt-8">
     <view class="flex items-center justify-between py-3dot5 border-b border-gray-100">
       <text class="text-foreground font-medium">Title</text>
       <input class="w-full h-10 bg-transparent text-right" placeholder="Within 30 characters" placeholder-class="text-gray-300" maxlength="30" model:value="{{title}}" bindinput="onTitleInput" />
@@ -19,9 +18,9 @@
       </view>
     </view>
     <view class="flex items-center justify-between py-3dot5">
-      <view>
-        <text class="text-foreground font-medium">微软员工专属</text>
-        <text class="text-gray-400 text-xs ml-4">开启后只有微软员工可购买</text>
+      <view class="flex flex-col gap-1">
+        <text class="text-foreground font-medium">Internal</text>
+        <text class="text-gray-400 text-xs">开启后只有微软员工可购买</text>
       </view>
       <switch class="transform scale-75" checked="{{isStaffOnly}}" bindchange="onStaffOnlyChange" color="#1a237e" />
     </view>
@@ -32,7 +31,7 @@
   </view>
   <view class="bg-white rounded-lg p-5 py-4 space-y-6">
     <view>
-      <textarea class="w-full h-56 bg-transparent" placeholder="Please introduce the item you want to sell~" placeholder-class="text-gray-300" model:value="{{description}}" bindinput="onDescriptionInput" />
+      <textarea class="w-full h-56 bg-transparent" placeholder="Please describe your product(s)" placeholder-class="text-gray-300" model:value="{{description}}" bindinput="onDescriptionInput" />
     </view>
     <view class="space-y-2">
       <view class="grid grid-cols-3 gap-2">
@@ -44,7 +43,7 @@
         </view>
       </view>
       <view wx:if="{{!pictures || pictures.length < 9}}" class="text-blue text-sm font-medium z-50" bindtap="onAddImage">
-        + Add Image
+        + Add Picture
       </view>
     </view>
   </view>

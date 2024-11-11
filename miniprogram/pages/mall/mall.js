@@ -166,7 +166,6 @@ Component({
     hideModal() {
       this.setData({
         showingModal: null,
-        selectedProduct: null,
       });
     },
 

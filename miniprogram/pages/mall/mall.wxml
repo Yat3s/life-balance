@@ -9,7 +9,7 @@
 <scroll-view scroll-y="true" class="main mb-24" bindscroll="onPageScrolled">
   <view style="height: 200px;" />
   <view class="plr flex items-center justify-between">
-    <view class="section-title">Official Products</view>
+    <view class="section-title">Popular</view>
     <view class="section-action" bind:tap="handleViewAllOfficialProducts">View all</view>
   </view>
   <!-- Official Section -->
@@ -40,7 +40,7 @@
   <view class="mt-10 plr">
     <view class="flex justify-between items-center">
       <text class="section-title">Flea Market</text>
-      <text bind:tap="handleNavToPublishItemPage" class="section-action">Add item</text>
+      <text bind:tap="handleNavToPublishItemPage" class="section-action">发布二手</text>
     </view>
   </view>
   <!-- Category Pills -->
@@ -107,7 +107,7 @@
     </view>
   </view>
 </scroll-view>
-<view class="cu-modal {{ showingModal === 'product' ? 'show' : '' }}" bindtap="hideModal">
+<view class="cu-modal {{ showingModal === 'product' ? 'show' : '' }}" bindtap="hideModal" catchtouchmove>
   <view class="cu-dialog rounded-lg bg-white" catchtap>
     <!-- Image Carousel -->
     <block wx:if="{{selectedProduct.pictures && selectedProduct.pictures.length > 0}}">
