@@ -82,7 +82,7 @@
               </view>
             </view>
             <view class="flex items-center justify-between mt-6 gap-4">
-              <view class="text-xs text-gray">{{item.purchaseDate}} 购买</view>
+              <view class="text-xs text-gray">{{item.purchaseDate}}</view>
               <view class="px-3 py-1 border-foreground rounded-lg text-xxs text-foreground" bindtap="deleteOrder" data-id="{{item.id}}">
                 删除订单
               </view>
