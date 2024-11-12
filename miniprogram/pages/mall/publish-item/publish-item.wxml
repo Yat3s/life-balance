@@ -22,7 +22,7 @@
         <text class="text-foreground font-medium">Internal</text>
         <text class="text-gray-400 text-xs">开启后只有微软员工可购买</text>
       </view>
-      <switch class="transform scale-75" checked="{{isStaffOnly}}" bindchange="onStaffOnlyChange" color="#1a237e" />
+      <switch class="transform scale-75" checked="{{internal}}" bindchange="onStaffOnlyChange" color="#1a237e" />
     </view>
     <view class="flex items-center justify-between py-3dot5 border-b border-gray-100">
       <text class="text-foreground font-medium">Contact</text>
