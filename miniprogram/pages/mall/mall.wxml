@@ -34,7 +34,7 @@
   </block>
   <block wx:else>
     <swiper class="mt-4 h-36" previous-margin="60rpx" next-margin="60rpx" bindchange="onSwiperChange">
-      <swiper-item wx:for="{{officialProducts}}" wx:key="{{item._id}}">
+      <swiper-item wx:for="{{officialProducts}}" wx:key="_id">
         <view class="h-full mr-2" bind:tap="handleOpenProductModal" data-product="{{item}}">
           <view class="gradient-bg rounded-lg p-4 py-5 h-full flex">
             <view class="w-32 h-full flex-shrink-0">
@@ -129,14 +129,14 @@
   <block wx:else>
     <view class="mt-4 px-4 flex gap-3">
       <view class="flex-1 flex flex-col gap-3">
-        <view class="bg-white rounded-lg p-4 border-gray-light" wx:for="{{leftColumnProducts}}" wx:key="{{item._id}}" bindtap="handleOpenProductModal" data-product="{{item}}">
+        <view class="bg-white rounded-lg p-4 border-gray-light" wx:for="{{leftColumnProducts}}" wx:key="_id" bindtap="handleOpenProductModal" data-product="{{item}}">
           <image class="w-full h-36 rounded-lg" src="{{item.pictures[0]}}" mode="aspectFill" wx:if="{{item.pictures && item.pictures.length > 0}}" />
           <view class="mt-2">
             <text class="text-sm line-clamp-2">{{item.title}}</text>
             <view class="mt-3 flex justify-between items-center">
               <view class="flex gap-2">
                 <block wx:if="{{item.categories && item.categories.length > 0}}">
-                  <view class="text-gray font-lesslight text-xs" wx:for="{{item.categories}}" wx:key="{{index}}">
+                  <view class="text-gray font-lesslight text-xs" wx:for="{{item.categories}}" wx:key="index">
                     {{item}}
                   </view>
                 </block>
@@ -151,14 +151,14 @@
         </view>
       </view>
       <view class="flex-1 flex flex-col gap-3">
-        <view class="bg-white rounded-lg p-4 border-gray-light" wx:for="{{rightColumnProducts}}" wx:key="{{item._id}}" bindtap="handleOpenProductModal" data-product="{{item}}">
+        <view class="bg-white rounded-lg p-4 border-gray-light" wx:for="{{rightColumnProducts}}" wx:key="_id" bindtap="handleOpenProductModal" data-product="{{item}}">
           <image class="w-full h-36 rounded-lg" src="{{item.pictures[0]}}" mode="aspectFill" wx:if="{{item.pictures && item.pictures.length > 0}}" />
           <view class="mt-2">
             <text class="text-sm line-clamp-2">{{item.title}}</text>
             <view class="mt-3 flex justify-between items-center">
               <view class="flex gap-2">
                 <block wx:if="{{item.categories && item.categories.length > 0}}">
-                  <view class="text-gray font-lesslight text-xs" wx:for="{{item.categories}}" wx:key="{{index}}">
+                  <view class="text-gray font-lesslight text-xs" wx:for="{{item.categories}}" wx:key="index">
                     {{item}}
                   </view>
                 </block>
@@ -179,7 +179,7 @@
   <view class="cu-dialog rounded-lg bg-white" catchtap>
     <!-- Image Carousel -->
     <block wx:if="{{selectedProduct.pictures && selectedProduct.pictures.length > 0}}">
-      <swiper class="w-full h-72 rounded-t-lg" indicator-dots="true" indicator-color="#ECECEC" indicator-active-color="#1C1C55">
+      <swiper catch:tap="previewProductPicture" class="w-full h-72 rounded-t-lg" indicator-dots="true" indicator-color="#ECECEC" indicator-active-color="#1C1C55">
         <swiper-item wx:for="{{selectedProduct.pictures}}" wx:key="*this">
           <image src="{{item}}" mode="aspectFill" class="w-full h-full" />
         </swiper-item>
@@ -211,7 +211,7 @@
         <view class="flex items-center justify-between gap-3 mb-4">
           <view class="text-gray text-sm">发布人：</view>
           <view class="flex items-center gap-3">
-            <image class="w-6 h-6 rounded-full" src="{{selectedProduct.user.avatarUrl}}" mode="aspectFill" />
+            <image catch:tap="previewUserAvatar" class="w-6 h-6 rounded-full" src="{{selectedProduct.user.avatarUrl}}" mode="aspectFill" />
             <view class="text-foreground text-sm font-medium">
               {{selectedProduct.user.nickName}}
             </view>
@@ -251,7 +251,7 @@
       </view>
       <view class="max-official-height overflow-scroll">
         <block wx:if="{{officialProducts}}">
-          <block wx:for="{{officialProducts}}" wx:key="{{item._id}}">
+          <block wx:for="{{officialProducts}}" wx:key="_id">
             <view class="h-full mb-4" bind:tap="handleOpenProductModal" data-product="{{item}}">
               <view class="gradient-bg rounded-lg p-4 py-5 h-full flex">
                 <view class="w-28 h-28 rounded-lg overflow-hidden">
