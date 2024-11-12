@@ -1,3 +1,4 @@
+import { formatTimeAgo } from '../../../common/util';
 import { deleteOrder, fetchAllUserOrders } from '../../../repository/orderRepo';
 import {
   fetchAllUserProducts,
@@ -20,9 +21,15 @@ Page({
   fetchAllRecords() {
     fetchAllUserProducts()
       .then((res) => {
-        this.setData({
-          userProducts: res.data,
-        });
+        if (res) {
+          const processedData = res.data.map((product) => ({
+            ...product,
+            formattedTime: formatTimeAgo(product.createdAt),
+          }));
+          this.setData({
+            userProducts: processedData,
+          });
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -97,6 +104,7 @@ Page({
               icon: 'success',
             });
             this.fetchAllRecords();
+            this.hideModal();
           } else {
             wx.showToast({
               title: 'Update failed',
@@ -121,6 +129,7 @@ Page({
     wx.navigateTo({
       url: `/pages/mall/publish-item/publish-item?id=${id}`,
     });
+    this.hideModal();
   },
 
   deleteOrder(e) {
@@ -142,6 +151,27 @@ Page({
           });
         }
       },
+    });
+  },
+
+  handleOpenProductModal(e) {
+    const product = e.currentTarget.dataset.product;
+
+    this.setData({
+      showingModal: 'product',
+      selectedProduct: product,
+    });
+  },
+
+  hideModal() {
+    this.setData({
+      showingModal: null,
+    });
+  },
+
+  previewProductPicture() {
+    wx.previewImage({
+      urls: this.data.selectedProduct.pictures,
     });
   },
 });
