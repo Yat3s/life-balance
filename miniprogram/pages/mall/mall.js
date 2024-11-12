@@ -106,7 +106,7 @@ Component({
           break;
         case '微软员工专属':
           filteredProducts = filteredProducts.filter(
-            (product) => product.isStaffOnly === true
+            (product) => product.internal === true
           );
           break;
         default:
