@@ -89,7 +89,7 @@
       </block>
     </block>
     <block wx:else>
-      <block wx:if="{{userOrders}}">
+      <block wx:if="{{!userOrders}}">
         <!-- Orders Skeleton -->
         <view wx:for="{{[1,2,3,4,5]}}" wx:key="*this" class="flex bg-blue-gradient p-6 mb-4 rounded-lg">
           <view class="w-28 h-28 skeleton-bg rounded-lg skeleton-animate"></view>
@@ -110,7 +110,7 @@
       </block>
       <block wx:else>
         <block wx:for="{{userOrders}}" wx:key="id">
-          <view class="flex bg-blue-gradient p-6 mb-4 rounded-lg" bind:tap="handleOpenProductModal" data-product="{{item}}">
+          <view class="flex bg-blue-gradient p-6 mb-4 rounded-lg">
             <image wx:if="{{item.pictures && item.pictures[0]}}" class="w-28 h-28 rounded-lg" src="{{item.pictures[0]}}" mode="aspectFill" data-index="index" />
             <view class="flex-1 ml-6">
               <text class="text-sm line-clamp-2 text-foreground">{{item.title}}</text>

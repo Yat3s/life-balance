@@ -27,7 +27,8 @@
     "pages/user/contribution/contribution",
     "pages/appconfigwebview/appconfigwebview",
     "pages/mall/publish-item/publish-item",
-    "pages/user/user-product/user-product"
+    "pages/user/user-product/user-product",
+    "pages/mall/purchase/purchase"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

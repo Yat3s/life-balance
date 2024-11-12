@@ -92,6 +92,10 @@ export const Pages = {
     authRequired: false,
     url: '/pages/mall/publish-item/publish-item',
   },
+  Purchase: {
+    authRequired: false,
+    url: '/pages/mall/purchase/purchase?id=',
+  },
   UserProduct: {
     authRequired: false,
     url: '/pages/user/user-product/user-product',
@@ -184,6 +188,10 @@ export function navigateToUserActivity() {
 
 export function navigateToPublishItem() {
   navigate(Pages.PublishItem);
+}
+
+export function navigateToPurchase(id) {
+  navigate(Pages.Purchase, id);
 }
 
 export function navigateToUserProduct() {

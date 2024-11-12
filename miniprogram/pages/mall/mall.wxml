@@ -232,7 +232,7 @@
         </view>
       </block>
       <block wx:if="{{selectedProduct.type === 'official'}}">
-        <view bind:tap="handleCreateOrder" class="flex items-center justify-center bg-foreground py-2dot5 rounded-lg" hover-class="none" hover-stop-propagation="false">
+        <view bind:tap="onPurchase" data-id="{{selectedProduct._id}}" class="flex items-center justify-center bg-foreground py-2dot5 rounded-lg" hover-class="none" hover-stop-propagation="false">
           <view class="flex items-baseline text-white gap-1">
             <text class="text-xs" selectable="false" space="false" decode="false">¥</text>
             <view>{{selectedProduct.price}} 购买</view>
