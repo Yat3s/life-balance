@@ -21,13 +21,6 @@ Page({
         isBeta: false,
       },
       {
-        id: 'mall',
-        title: 'Mall',
-        icon: '../../images/ic_mall.png',
-        iconActive: '../../images/ic_mall_active.png',
-        isBeta: true,
-      },
-      {
         id: 'connection',
         title: 'Connection',
         icon: '../../images/ic_connect.png',
@@ -91,8 +84,8 @@ Page({
     // App Config
     getAppConfig().then((config) => {
       const { featureFlags } = config;
-
       const { pages } = this.data;
+
       const carpoolTabItem = {
         id: 'carpool',
         title: 'Carpool',
@@ -100,8 +93,25 @@ Page({
         iconActive: '../../images/ic_carpool_active.png',
       };
 
+      const mallTabItem = {
+        id: 'mall',
+        title: 'Mall',
+        icon: '../../images/ic_mall.png',
+        iconActive: '../../images/ic_mall_active.png',
+        isBeta: true,
+      };
+
+      // Insert mall tab after board if enabled
+      if (featureFlags.mallEnabled) {
+        pages.splice(1, 0, mallTabItem);
+      }
+
+      // Insert carpool tab before connection if enabled
       if (featureFlags.carpoolEnabled) {
-        pages.splice(2, 0, carpoolTabItem);
+        const connectionIndex = pages.findIndex(
+          (page) => page.id === 'connection'
+        );
+        pages.splice(connectionIndex, 0, carpoolTabItem);
       }
 
       this.setData({
