@@ -1,8 +1,7 @@
 import { formatTimeAgo } from '../../common/util';
 import { getAppConfig } from '../../repository/baseRepo';
 import { fetchAllProducts } from '../../repository/productRepo';
-import { createOrder, updateOrder } from '../../repository/orderRepo';
-import { navigateToPublishItem } from '../router';
+import { navigateToPublishItem, navigateToPurchase } from '../router';
 
 const app = getApp();
 const COLLAPSED_SCROLL_TOP = 200;
@@ -201,38 +200,9 @@ Component({
       });
     },
 
-    handleCreateOrder() {
-      const { selectedProduct } = this.data;
-      var that = this;
-
-      createOrder(selectedProduct._id)
-        .then((order) => {
-          const { payment, orderId, totalFee } = order;
-
-          wx.requestPayment({
-            ...payment,
-            success(res) {
-              updateOrder(orderId, totalFee);
-
-              wx.showToast({
-                title: '支付成功',
-                icon: 'success',
-              });
-            },
-            fail(err) {
-              wx.showToast({
-                title: '支付失败，请重试',
-                icon: 'none',
-              });
-            },
-          });
-        })
-        .catch((error) => {
-          wx.showToast({
-            title: '创建订单失败，请重试',
-            icon: 'none',
-          });
-        });
+    onPurchase(e) {
+      const id = e.currentTarget.dataset.id;
+      navigateToPurchase(id);
     },
 
     previewProductPicture() {
