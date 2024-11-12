@@ -16,8 +16,11 @@ Component({
   },
   properties: {},
   data: {
-    officialProducts: [],
-    secondhandProducts: [],
+    officialProducts: null,
+    secondhandProducts: null,
+    leftColumnProducts: null,
+    rightColumnProducts: null,
+    fleaMarketKeywords: null,
     toolbarHeight: app.globalData.toolbarHeight,
     statusBarHeight: app.globalData.statusBarHeight,
     appBarHeight: MAX_APP_BAR_HEIGHT,
@@ -178,7 +181,7 @@ Component({
       });
     },
 
-    handleViewAllOfficialProducts() {
+    handleViewAllPopularProducts() {
       this.setData({
         showingModal: 'official-products',
       });
