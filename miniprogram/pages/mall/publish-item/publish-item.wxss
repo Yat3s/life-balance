@@ -6,3 +6,11 @@
 .bg-gray {
   background-color: #f9f9f9;
 }
+
+switch::before {
+  content: '' !important;
+}
+
+switch::after {
+  content: '' !important;
+}
