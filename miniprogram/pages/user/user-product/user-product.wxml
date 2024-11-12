@@ -29,7 +29,7 @@
       </block>
       <block wx:else>
         <view wx:for="{{userProducts}}" wx:key="_id" class="flex bg-blue-gradient p-5 mb-4 rounded-lg">
-          <view wx:if="{{item.pictures && item.pictures[0]}}" class="relative w-28 h-28 rounded-lg overflow-hidden" data-index="{{index}}">
+          <view wx:if="{{item.pictures && item.pictures[0]}}" class="relative w-28 h-28 rounded-lg overflow-hidden" data-index="index">
             <image class="w-full h-full" src="{{item.pictures[0]}}" mode="aspectFill" />
             <image wx:if="{{item.saleStatus === 'off'}}" class="w-10 h-10 absolute right-1 top-1 z-20" src="/images/ic_sold.svg" />
           </view>
@@ -40,7 +40,7 @@
             <view class="mt-3 flex justify-between items-center">
               <view class="flex gap-2">
                 <block wx:if="{{item.categories && item.categories.length > 0}}">
-                  <view class="text-custom-purple font-lesslight text-xs" wx:for="{{item.categories}}" wx:key="{{index}}">
+                  <view class="text-custom-purple font-lesslight text-xs" wx:for="{{item.categories}}" wx:key="index">
                     {{item}}
                   </view>
                 </block>
@@ -72,7 +72,7 @@
       </block>
       <block wx:else>
         <view wx:for="{{userOrders}}" wx:key="id" class="flex bg-blue-gradient p-6 mb-4 rounded-lg">
-          <image wx:if="{{item.pictures && item.pictures[0]}}" class="w-28 h-28 rounded-lg" src="{{item.pictures[0]}}" mode="aspectFill" data-index="{{index}}" />
+          <image wx:if="{{item.pictures && item.pictures[0]}}" class="w-28 h-28 rounded-lg" src="{{item.pictures[0]}}" mode="aspectFill" data-index="index" />
           <view class="flex-1 ml-6">
             <text class="text-sm line-clamp-2 text-foreground">{{item.title}}</text>
             <view class="mt-3 flex justify-end">

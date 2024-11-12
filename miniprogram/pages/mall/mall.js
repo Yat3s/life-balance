@@ -234,5 +234,17 @@ Component({
           });
         });
     },
+
+    previewProductPicture() {
+      wx.previewImage({
+        urls: this.data.selectedProduct.pictures,
+      });
+    },
+
+    previewUserAvatar() {
+      wx.previewImage({
+        urls: [this.data.selectedProduct.user.avatarUrl],
+      });
+    },
   },
 });
