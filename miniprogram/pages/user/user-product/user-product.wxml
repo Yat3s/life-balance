@@ -24,7 +24,27 @@
   <!-- Product List -->
   <view class="p-4">
     <block wx:if="{{activeTab === 'published'}}">
-      <block wx:if="{{!userProducts || userProducts.length === 0}}">
+      <block wx:if="{{!userProducts}}">
+        <!-- Published Items Skeleton -->
+        <view wx:for="{{[1,2,3,4,5]}}" wx:key="*this" class="flex bg-blue-gradient p-5 mb-4 rounded-lg">
+          <view class="w-28 h-28 skeleton-bg rounded-lg skeleton-animate"></view>
+          <view class="flex-1 ml-6">
+            <view class="h-4 skeleton-bg rounded w-28 skeleton-animate"></view>
+            <view class="mt-3 flex justify-between items-center">
+              <view class="flex gap-2">
+                <view class="h-3 skeleton-bg rounded w-12 skeleton-animate"></view>
+                <view class="h-3 skeleton-bg rounded w-12 skeleton-animate"></view>
+              </view>
+              <view class="h-4 skeleton-bg rounded w-16 skeleton-animate"></view>
+            </view>
+            <view class="flex justify-end mt-6 gap-4">
+              <view class="w-16 h-6 skeleton-bg rounded-md skeleton-animate"></view>
+              <view class="w-16 h-6 skeleton-bg rounded-md skeleton-animate"></view>
+            </view>
+          </view>
+        </view>
+      </block>
+      <block wx:elif="{{userProducts.length === 0}}">
         <view class="flex items-center justify-center pt-40 text-foreground">暂无发布记录</view>
       </block>
       <block wx:else>
@@ -69,7 +89,23 @@
       </block>
     </block>
     <block wx:else>
-      <block wx:if="{{!userOrders || userOrders.length === 0}}">
+      <block wx:if="{{userOrders}}">
+        <!-- Orders Skeleton -->
+        <view wx:for="{{[1,2,3,4,5]}}" wx:key="*this" class="flex bg-blue-gradient p-6 mb-4 rounded-lg">
+          <view class="w-28 h-28 skeleton-bg rounded-lg skeleton-animate"></view>
+          <view class="flex-1 ml-6">
+            <view class="h-4 skeleton-bg rounded w-28 skeleton-animate"></view>
+            <view class="mt-3 flex justify-end">
+              <view class="h-4 skeleton-bg rounded w-16 skeleton-animate"></view>
+            </view>
+            <view class="flex items-center justify-between mt-6 gap-4">
+              <view class="h-3 skeleton-bg rounded w-20 skeleton-animate"></view>
+              <view class="w-16 h-6 skeleton-bg rounded-lg skeleton-animate"></view>
+            </view>
+          </view>
+        </view>
+      </block>
+      <block wx:elif="{{userOrders.length === 0}}">
         <view class="flex items-center justify-center pt-40 text-foreground">暂无购买记录</view>
       </block>
       <block wx:else>
