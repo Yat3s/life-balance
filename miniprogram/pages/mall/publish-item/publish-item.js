@@ -11,7 +11,7 @@ const MAX_APP_BAR_HEIGHT = 150; //px
 
 Page({
   data: {
-    internal: true,
+    isInternal: true,
     toolbarHeight: app.globalData.toolbarHeight,
     statusBarHeight: app.globalData.statusBarHeight,
     appBarHeight: MAX_APP_BAR_HEIGHT,
@@ -45,7 +45,7 @@ Page({
           price: product.price?.toString() || '',
           description: product.description || '',
           pictures: product.pictures || [],
-          internal: product.internal ?? true,
+          isInternal: product.isInternal ?? true,
           contact: product.contact || '',
           categories,
           categoriesWithSelection,
@@ -112,8 +112,8 @@ Page({
     });
   },
 
-  onStaffOnlyChange(e) {
-    this.setData({ internal: e.detail.value });
+  onIsInternalChange(e) {
+    this.setData({ isInternal: e.detail.value });
   },
 
   onContactInput(e) {
@@ -215,7 +215,7 @@ Page({
       contact,
       pictures,
       description,
-      internal,
+      isInternal,
       selectedCategory,
       userInfo,
     } = this.data;
@@ -250,7 +250,7 @@ Page({
         description: description || '',
         pictures: pictures || [],
         saleStatus: 'on',
-        internal,
+        isInternal,
         type: 'secondhand',
         categories: selectedCategory || [],
       };
