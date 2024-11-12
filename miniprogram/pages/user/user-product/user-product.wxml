@@ -28,42 +28,44 @@
         <view class="flex items-center justify-center pt-40 text-foreground">暂无发布记录</view>
       </block>
       <block wx:else>
-        <view wx:for="{{userProducts}}" wx:key="_id" class="flex bg-blue-gradient p-5 mb-4 rounded-lg">
-          <view wx:if="{{item.pictures && item.pictures[0]}}" class="relative w-28 h-28 rounded-lg overflow-hidden" data-index="index">
-            <image class="w-full h-full" src="{{item.pictures[0]}}" mode="aspectFill" />
-            <image wx:if="{{item.saleStatus === 'off'}}" class="w-10 h-10 absolute right-1 top-1 z-20" src="/images/ic_sold.svg" />
-          </view>
-          <view class="flex-1 ml-6">
-            <text class="text-sm line-clamp-2 {{item.saleStatus === 'off' ? 'text-sold' : 'text-foreground'}}">
-              {{item.title}}
-            </text>
-            <view class="mt-3 flex justify-between items-center">
-              <view class="flex gap-2">
-                <block wx:if="{{item.categories && item.categories.length > 0}}">
-                  <view class="text-custom-purple font-lesslight text-xs" wx:for="{{item.categories}}" wx:key="index">
-                    {{item}}
-                  </view>
-                </block>
-                <view class="text-custom-purple font-lesslight text-xs" wx:else>未分类</view>
+        <block wx:for="{{userProducts}}" wx:key="_id">
+          <view bind:tap="handleOpenProductModal" data-product="{{item}}" class="flex bg-blue-gradient p-5 mb-4 rounded-lg">
+            <view wx:if="{{item.pictures && item.pictures[0]}}" class="relative w-28 h-28 rounded-lg overflow-hidden" data-index="index">
+              <image class="w-full h-full" src="{{item.pictures[0]}}" mode="aspectFill" />
+              <image wx:if="{{item.saleStatus === 'off'}}" class="w-10 h-10 absolute right-1 top-1 z-20" src="/images/ic_sold.svg" />
+            </view>
+            <view class="flex-1 ml-6">
+              <text class="text-sm line-clamp-2 {{item.saleStatus === 'off' ? 'text-sold' : 'text-foreground'}}">
+                {{item.title}}
+              </text>
+              <view class="mt-3 flex justify-between items-center">
+                <view class="flex gap-2">
+                  <block wx:if="{{item.categories && item.categories.length > 0}}">
+                    <view class="text-custom-purple font-lesslight text-xs" wx:for="{{item.categories}}" wx:key="index">
+                      {{item}}
+                    </view>
+                  </block>
+                  <view class="text-custom-purple font-lesslight text-xs" wx:else>未分类</view>
+                </view>
+                <view class="text-lg font-bold flex items-baseline gap-1 {{item.saleStatus === 'off' ? 'text-sold' : 'text-foreground'}}">
+                  <text class="text-xs">¥</text>
+                  <text>{{item.price}}</text>
+                </view>
               </view>
-              <view class="text-lg font-bold flex items-baseline gap-1 {{item.saleStatus === 'off' ? 'text-sold' : 'text-foreground'}}">
-                <text class="text-xs">¥</text>
-                <text>{{item.price}}</text>
+              <view class="flex justify-end mt-6 gap-4 relative">
+                <view wx:if="{{(!item.pictures || item.pictures.length === 0) && item.saleStatus === 'off'}}" class="w-10 h-10 absolute left-2 -bottom-1">
+                  <image class="w-full h-full" src="/images/ic_sold.svg" />
+                </view>
+                <view class="px-3 py-1 border-foreground rounded-md text-xxs text-foreground" catch:tap="toggleStatus" data-id="{{item._id}}">
+                  {{item.saleStatus === 'on' ? '下架' : '重新上架'}}
+                </view>
+                <view class="px-3 py-1 border-foreground rounded-md text-xxs text-foreground" catch:tap="editProduct" data-id="{{item._id}}">
+                  编辑
+                </view>
               </view>
             </view>
-            <view class="flex justify-end mt-6 gap-4 relative">
-              <view wx:if="{{(!item.pictures || item.pictures.length === 0) && item.saleStatus === 'off'}}" class="w-10 h-10 absolute left-2 -bottom-1">
-                <image class="w-full h-full" src="/images/ic_sold.svg" />
-              </view>
-              <view class="px-3 py-1 border-foreground rounded-md text-xxs text-foreground" bindtap="toggleStatus" data-id="{{item._id}}">
-                {{item.saleStatus === 'on' ? '下架' : '重新上架'}}
-              </view>
-              <view class="px-3 py-1 border-foreground rounded-md text-xxs text-foreground" bindtap="editProduct" data-id="{{item._id}}">
-                编辑
-              </view>
-            </view>
           </view>
-        </view>
+        </block>
       </block>
     </block>
     <block wx:else>
@@ -71,25 +73,92 @@
         <view class="flex items-center justify-center pt-40 text-foreground">暂无购买记录</view>
       </block>
       <block wx:else>
-        <view wx:for="{{userOrders}}" wx:key="id" class="flex bg-blue-gradient p-6 mb-4 rounded-lg">
-          <image wx:if="{{item.pictures && item.pictures[0]}}" class="w-28 h-28 rounded-lg" src="{{item.pictures[0]}}" mode="aspectFill" data-index="index" />
-          <view class="flex-1 ml-6">
-            <text class="text-sm line-clamp-2 text-foreground">{{item.title}}</text>
-            <view class="mt-3 flex justify-end">
-              <view class="text-lg text-primary font-bold flex items-baseline gap-1">
-                <text class="text-xs">¥</text>
-                <text>{{item.price}}</text>
+        <block wx:for="{{userOrders}}" wx:key="id">
+          <view class="flex bg-blue-gradient p-6 mb-4 rounded-lg" bind:tap="handleOpenProductModal" data-product="{{item}}">
+            <image wx:if="{{item.pictures && item.pictures[0]}}" class="w-28 h-28 rounded-lg" src="{{item.pictures[0]}}" mode="aspectFill" data-index="index" />
+            <view class="flex-1 ml-6">
+              <text class="text-sm line-clamp-2 text-foreground">{{item.title}}</text>
+              <view class="mt-3 flex justify-end">
+                <view class="text-lg text-primary font-bold flex items-baseline gap-1">
+                  <text class="text-xs">¥</text>
+                  <text>{{item.price}}</text>
+                </view>
               </view>
-            </view>
-            <view class="flex items-center justify-between mt-6 gap-4">
-              <view class="text-xs text-gray">{{item.purchaseDate}}</view>
-              <view class="px-3 py-1 border-foreground rounded-lg text-xxs text-foreground" bindtap="deleteOrder" data-id="{{item.id}}">
-                删除订单
+              <view class="flex items-center justify-between mt-6 gap-4">
+                <view class="text-xs text-gray">{{item.purchaseDate}}</view>
+                <view class="px-3 py-1 border-foreground rounded-lg text-xxs text-foreground" bindtap="deleteOrder" data-id="{{item.id}}">
+                  删除订单
+                </view>
               </view>
             </view>
           </view>
-        </view>
+        </block>
       </block>
     </block>
+  </view>
+</view>
+<view class="cu-modal {{ showingModal === 'product' ? 'show' : '' }}" bindtap="hideModal" catchtouchmove>
+  <view class="cu-dialog rounded-lg bg-white" catchtap>
+    <!-- Image Carousel -->
+    <block wx:if="{{selectedProduct.pictures && selectedProduct.pictures.length > 0}}">
+      <swiper catch:tap="previewProductPicture" class="w-full h-72 rounded-t-lg" indicator-dots="true" indicator-color="#ECECEC" indicator-active-color="#1C1C55">
+        <swiper-item wx:for="{{selectedProduct.pictures}}" wx:key="*this">
+          <image src="{{item}}" mode="aspectFill" class="w-full h-full" />
+        </swiper-item>
+      </swiper>
+    </block>
+    <view class="p-6">
+      <!-- Product Title -->
+      <view class="text-lg text-left font-medium text-foreground mb-4">
+        {{selectedProduct.title}}
+      </view>
+      <!-- Category Tag -->
+      <view class="flex items-center justify-between mb-6">
+        <view class="flex gap-2">
+          <block wx:for="{{selectedProduct.categories}}" wx:key="*this">
+            <view class="bg-gray-100 px-3 py-1 rounded-lg text-xs text-gray-600">{{item}}</view>
+          </block>
+          <view class="bg-gray-100 px-3 py-1 rounded-lg text-xs text-gray-600" wx:if="{{!selectedProduct.categories || selectedProduct.categories.length === 0}}">
+            未分类
+          </view>
+        </view>
+        <view wx:if="{{selectedProduct.type === 'secondhand'}}" class="text-gray text-xs">
+          {{selectedProduct.formattedTime}}发布
+        </view>
+      </view>
+      <block wx:if="{{selectedProduct.type === 'secondhand'}}">
+        <!-- Description -->
+        <view class="text-foreground text-sm mb-6 text-left">{{selectedProduct.description}}</view>
+        <!-- Price -->
+        <view class="flex items-center justify-between gap-3 mb-6">
+          <view class="text-gray text-sm">定价：</view>
+          <view class="flex items-baseline gap-1 text-foreground font-medium">
+            <text class="text-xs">¥</text>
+            <text>{{selectedProduct.price}}</text>
+          </view>
+        </view>
+        <!-- Contact Info -->
+        <view class="flex items-center justify-center text-center py-2 bg-gray-50 rounded-lg text-foreground mb-6">
+          <text>联系：{{selectedProduct.contact}}</text>
+          <image catchtap="handleCopyContact" data-contact="{{selectedProduct.contact}}" class="w-4 h-4 ml-2" src="/images/ic_copy.svg" />
+        </view>
+        <view class="flex items-center justify-between gap-4">
+          <view class="flex-1 py-1dot5 border-foreground rounded-md text-sm text-foreground" catch:tap="toggleStatus" data-id="{{selectedProduct._id}}">
+            {{selectedProduct.saleStatus === 'on' ? '下架' : '重新上架'}}
+          </view>
+          <view class="flex-1 py-1dot5 border-foreground rounded-md text-sm text-foreground" catch:tap="editProduct" data-id="{{selectedProduct._id}}">
+            编辑
+          </view>
+        </view>
+      </block>
+      <block wx:if="{{selectedProduct.type === 'official'}}">
+        <view bind:tap="handleCreateOrder" class="flex items-center justify-center bg-foreground py-2dot5 rounded-lg" hover-class="none" hover-stop-propagation="false">
+          <view class="flex items-baseline text-white gap-1">
+            <text class="text-xs" selectable="false" space="false" decode="false">¥</text>
+            <view>{{selectedProduct.price}} 购买</view>
+          </view>
+        </view>
+      </block>
+    </view>
   </view>
 </view>
