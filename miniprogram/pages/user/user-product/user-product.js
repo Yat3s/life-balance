@@ -8,6 +8,8 @@ import {
 Page({
   data: {
     activeTab: 'published',
+    userProducts: null,
+    userOrders: null,
   },
 
   onLoad() {
