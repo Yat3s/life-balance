@@ -1,9 +1,10 @@
 import { formatTimeAgo } from '../../../common/util';
-import { deleteOrder, fetchAllUserOrders } from '../../../repository/orderRepo';
+import { fetchAllUserOrders } from '../../../repository/orderRepo';
 import {
   fetchAllUserProducts,
   updateProduct,
 } from '../../../repository/productRepo';
+import { ORDER_STATUS } from '../../../lib/constants';
 
 Page({
   data: {
@@ -54,6 +55,7 @@ Page({
             purchaseDate: this.formatDate(order.paidAt),
             totalFee: order.totalFee,
             productId: order.productId,
+            status: this.getOrderStatus(order.status),
           };
         });
 
@@ -68,6 +70,21 @@ Page({
           icon: 'error',
         });
       });
+  },
+
+  getOrderStatus(status) {
+    switch (status) {
+      case ORDER_STATUS.UNPAID:
+        return '待支付';
+      case ORDER_STATUS.PENDING_DELIVERY:
+        return '待发货';
+      case ORDER_STATUS.DELIVERED:
+        return '已发货';
+      case ORDER_STATUS.COMPLETED:
+        return '已完成';
+      default:
+        return '';
+    }
   },
 
   formatDate(timestamp) {
@@ -137,28 +154,6 @@ Page({
       url: `/pages/mall/publish-item/publish-item?id=${id}`,
     });
     this.hideModal();
-  },
-
-  deleteOrder(e) {
-    const id = e.currentTarget.dataset.id;
-    wx.showModal({
-      title: '提示',
-      content: '确定要删除这个订单吗？',
-      success: (res) => {
-        if (res.confirm) {
-          const orders = this.data.userOrders.filter((p) => p.id !== id);
-          this.setData({
-            userOrders: orders,
-          });
-          deleteOrder(id);
-          this.fetchAllRecords();
-          wx.showToast({
-            title: '删除成功',
-            icon: 'success',
-          });
-        }
-      },
-    });
   },
 
   handleOpenProductModal(e) {
