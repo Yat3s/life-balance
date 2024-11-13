@@ -1,13 +1,11 @@
 import { cloudFunctionCall } from './baseRepo';
 
-const db = wx.cloud.database();
-const _ = db.command;
 const COLLECTION_NAME_PRODUCTS = 'products';
 const CLOUD_FUNCTION_COLLECTION = 'productFunctions';
+const db = wx.cloud.database().collection(COLLECTION_NAME_PRODUCTS);
 
 export const fetchProduct = (productId) => {
   return db
-    .collection(COLLECTION_NAME_PRODUCTS)
     .where({
       _id: productId,
     })

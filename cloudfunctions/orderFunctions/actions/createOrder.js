@@ -7,7 +7,7 @@ const COLLECTION_NAME_PRODUCTS = 'products';
 
 exports.main = async (props, context) => {
   const openid = cloud.getWXContext().OPENID;
-  const { productId } = props;
+  const { productId, createOrderData } = props;
 
   const product = (
     await db.collection(COLLECTION_NAME_PRODUCTS).doc(productId).get()
@@ -35,11 +35,14 @@ exports.main = async (props, context) => {
 
   const res = await db.collection(COLLECTION_NAME_ORDERS).add({
     data: {
+      ...createOrderData,
       totalFee: product.price,
       product: product,
       productId,
       paid: 0,
       wechatOrderId,
+      trackingNumber: '',
+      status: 'unpaid',
       userId: openid,
       createdAt: Date.now(),
     },

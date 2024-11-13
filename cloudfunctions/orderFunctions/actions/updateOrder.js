@@ -1,15 +1,14 @@
 const cloud = require('wx-server-sdk');
+const { ORDER_STATUS } = require('../lib/constants');
 
-cloud.init({
-  env: cloud.DYNAMIC_CURRENT_ENV,
-});
+cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 
 const db = cloud.database();
 const COLLECTION_NAME_ORDERS = 'orders';
 
 exports.main = async (props, context) => {
   const openid = cloud.getWXContext().OPENID;
-  const { orderId, paid } = props;
+  const { orderId, updateOrderData } = props;
 
   try {
     const order = await db
@@ -32,8 +31,9 @@ exports.main = async (props, context) => {
       .doc(orderId)
       .update({
         data: {
-          paid,
+          ...updateOrderData,
           paidAt: Date.now(),
+          status: ORDER_STATUS.PENDING_DELIVERY,
         },
       });
 
