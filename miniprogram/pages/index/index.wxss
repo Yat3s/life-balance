@@ -56,6 +56,6 @@
   color: var(--textGrey);
 }
 
-.text-xxs {
+.text-xxxs {
   font-size: 14rpx;
 }
