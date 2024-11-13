@@ -1,6 +1,7 @@
 {
   "component": true,
   "usingComponents": {
-    "stockV2": "/components/stockV2/stockV2"
+    "stockV2": "/components/stockV2/stockV2",
+    "commuteV2": "/components/commuteV2/commuteV2"
   }
 }

@@ -1,0 +1,45 @@
+<view class="border border-solid border-gray-200 p-4 rounded-lg">
+  <!-- Parking -->
+  <view bindtap="refresh">
+    <view class="flex items-center justify-between">
+      <view class="commute-title">Parking Space</view>
+      <image class="parking-refresh-icon {{loadingParkingSpace ? 'animation-rotate' : ''}}" src="/images/ic_refresh.png"></image>
+    </view>
+    <view class="margin-top pb-10 border-0 border-b border-dashed border-gray-200">
+      <view class="flex items-center">  
+        <!-- B25 -->
+        <view>
+          <view class="flex align-end margin-left-sm">
+            <view class="parking-left-count">{{parkingSpace.b25}}</view>
+            <view class="parking-all-count">/{{maxB25Spaces}}</view>
+          </view>
+        </view>
+        <!-- Zhongmeng -->
+        <view>
+          <view class="flex align-end margin-left-sm">
+            <view class="parking-left-count">{{parkingSpace.zhongmeng}}</view>
+            <view class="parking-all-count">/{{maxZhongmengSpaces}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="margin-top-sm text-gray-400 text-xs">车位已满？试试以下方案：</view>
+
+    <view class="flex gap-2 mt-1">
+      <view bind:tap="toShuttleTip" class="whitespace-nowrap py-1 px-2 bg-link rounded-full flex items-center text-xs text-link">
+      <view>
+        中盟
+      </view>
+      <image class="switch-icon " src="/images/ic_switch_blue.png"></image>
+      <view>
+        B25 接驳车
+      </view>
+    </view>
+
+      <view bind:tap="toParkingTip" class="whitespace-nowrap py-1 px-2 bg-link rounded-full flex items-center text-xs text-link">
+        其他停车方案
+    </view>
+    </view>
+  </view>
+</view>
