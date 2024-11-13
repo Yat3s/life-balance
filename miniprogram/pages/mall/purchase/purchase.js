@@ -73,7 +73,7 @@ Page({
     }
 
     if (
-      deliveryType !== DELIVERY_TYPE.DELIVERY &&
+      deliveryType !== DELIVERY_TYPE.SELF_PICKUP &&
       (!phoneNumber || phoneNumber.length !== 11)
     ) {
       wx.showToast({
