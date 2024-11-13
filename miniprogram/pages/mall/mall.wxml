@@ -8,55 +8,57 @@
 </view>
 <scroll-view scroll-y="true" class="main mb-24" bindscroll="onPageScrolled">
   <view style="height: 200px;" />
-  <view class="plr flex items-center justify-between">
-    <view class="section-title">Popular</view>
-    <view class="section-action" bind:tap="handleViewAllPopularProducts">View all</view>
-  </view>
-  <!-- Official Section -->
-  <block wx:if="{{!officialProducts}}">
-    <swiper class="mt-4 h-36" previous-margin="60rpx" next-margin="60rpx">
-      <swiper-item wx:for="{{[1,2,3]}}" wx:key="*this">
-        <view class="h-full mr-2">
-          <view class="gradient-bg rounded-lg p-4 py-5 h-full flex skeleton-animate">
-            <view class="w-32 h-full flex-shrink-0 skeleton-bg rounded-lg" />
-            <view class="ml-4 flex flex-col justify-center flex-1 gap-2">
-              <view class="h-6 skeleton-bg rounded w-24" />
-              <view class="flex gap-2 mt-2">
-                <view class="h-6 skeleton-bg rounded w-14" />
-                <view class="h-6 skeleton-bg rounded w-14" />
-                <view class="h-6 skeleton-bg rounded w-14" />
-              </view>
-            </view>
-          </view>
-        </view>
-      </swiper-item>
-    </swiper>
-  </block>
-  <block wx:else>
-    <swiper class="mt-4 h-36" previous-margin="60rpx" next-margin="60rpx" bindchange="onSwiperChange">
-      <swiper-item wx:for="{{officialProducts}}" wx:key="_id">
-        <view class="h-full mr-2" bind:tap="handleOpenProductModal" data-product="{{item}}">
-          <view class="gradient-bg rounded-lg p-4 py-5 h-full flex border-gray-light">
-            <view class="w-32 h-full flex-shrink-0">
-              <image class="w-full h-full rounded-lg object-cover" src="{{item.pictures[0]}}" mode="aspectFill" />
-            </view>
-            <view class="ml-4 flex flex-col justify-center flex-1 gap-2">
-              <view>
-                <text class="text-foreground text-lg font-medium">{{item.title}}</text>
-              </view>
-              <view class="flex gap-2 mt-2 flex-wrap">
-                <view wx:for="{{item.categories}}" wx:key="*this" wx:for-item="category" class="text-purpleLight text-center text-xs px-3 py-1 rounded-lg border-purple-light">
-                  {{category}}
+  <block wx:if="{{popularProductsEnabled}}">
+    <view class="plr flex items-center justify-between">
+      <view class="section-title">Popular</view>
+      <view class="section-action" bind:tap="handleViewAllPopularProducts">View all</view>
+    </view>
+    <!-- Official Section -->
+    <block wx:if="{{!officialProducts}}">
+      <swiper class="mt-4 h-36" previous-margin="60rpx" next-margin="60rpx">
+        <swiper-item wx:for="{{[1,2,3]}}" wx:key="*this">
+          <view class="h-full mr-2">
+            <view class="gradient-bg rounded-lg p-4 py-5 h-full flex skeleton-animate">
+              <view class="w-32 h-full flex-shrink-0 skeleton-bg rounded-lg" />
+              <view class="ml-4 flex flex-col justify-center flex-1 gap-2">
+                <view class="h-6 skeleton-bg rounded w-24" />
+                <view class="flex gap-2 mt-2">
+                  <view class="h-6 skeleton-bg rounded w-14" />
+                  <view class="h-6 skeleton-bg rounded w-14" />
+                  <view class="h-6 skeleton-bg rounded w-14" />
                 </view>
               </view>
             </view>
           </view>
-        </view>
-      </swiper-item>
-    </swiper>
+        </swiper-item>
+      </swiper>
+    </block>
+    <block wx:else>
+      <swiper class="mt-4 h-36" previous-margin="60rpx" next-margin="60rpx" bindchange="onSwiperChange">
+        <swiper-item wx:for="{{officialProducts}}" wx:key="_id">
+          <view class="h-full mr-2" bind:tap="handleOpenProductModal" data-product="{{item}}">
+            <view class="gradient-bg rounded-lg p-4 py-5 h-full flex border-gray-light">
+              <view class="w-32 h-full flex-shrink-0">
+                <image class="w-full h-full rounded-lg object-cover" src="{{item.pictures[0]}}" mode="aspectFill" />
+              </view>
+              <view class="ml-4 flex flex-col justify-center flex-1 gap-2">
+                <view>
+                  <text class="text-foreground text-lg font-medium">{{item.title}}</text>
+                </view>
+                <view class="flex gap-2 mt-2 flex-wrap">
+                  <view wx:for="{{item.categories}}" wx:key="*this" wx:for-item="category" class="text-purpleLight text-center text-xs px-3 py-1 rounded-lg border-purple-light">
+                    {{category}}
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </swiper-item>
+      </swiper>
+    </block>
   </block>
   <!-- Flea Market Section -->
-  <view class="mt-10 plr">
+  <view class="plr">
     <view class="flex justify-between items-center">
       <text class="section-title">Flea Market</text>
       <text bind:tap="handleNavToPublishItemPage" class="section-action">发布二手</text>
