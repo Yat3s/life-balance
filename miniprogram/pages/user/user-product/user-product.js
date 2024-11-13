@@ -7,12 +7,17 @@ import {
 
 Page({
   data: {
-    activeTab: 'published',
+    activeTab: 'userProducts',
     userProducts: null,
     userOrders: null,
   },
 
-  onLoad() {
+  onLoad(options) {
+    if (options.tab) {
+      this.setData({
+        activeTab: options.tab,
+      });
+    }
     this.fetchAllRecords();
   },
 

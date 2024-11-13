@@ -1,2 +1,49 @@
-<!--pages/user/user-order/user-order.wxml-->
-<text>pages/user/user-order/user-order.wxml</text>
+<toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
+<view class="plr pt-5">
+  <view class="mb-5">
+    <text class="text-xl font-bold text-foreground">支付成功</text>
+  </view>
+  <view class="bg-white p-4 mb-4 flex items-center rounded-lg">
+    <image wx:if="{{order.product.pictures && order.product.pictures[0]}}" class="w-24 h-24 rounded-lg object-cover mr-3" src="{{order.product.pictures[0]}}" mode="aspectFill" />
+    <view class="flex-1 flex flex-col">
+      <text class="text-foreground text-sm mb-2 block line-clamp-2">{{order.product.title}}</text>
+      <view class="text-tag bg-tag text-xs rounded-lg py-1dot5 px-3 self-end">
+        {{order.orderStatus}}
+      </view>
+    </view>
+  </view>
+  <view class="bg-white p-4 rounded-lg">
+    <view class="py-3 flex justify-between items-center border-b border-gray-100">
+      <text class="text-title text-sm">实付款</text>
+      <text class="text-foreground text-sm">¥ {{order.paid}}</text>
+    </view>
+    <view class="py-3 flex justify-between items-center border-b border-gray-100">
+      <text class="text-title text-sm">取货方式</text>
+      <view class="text-foreground text-sm">{{order.deliveryType}}</view>
+    </view>
+    <view class="py-3 flex justify-between items-center border-b border-gray-100">
+      <text class="text-title text-sm">物流单号</text>
+      <text class="text-foreground text-sm">{{order.trackingNumber || '暂未发货，发货后可查看单号'}}</text>
+    </view>
+    <view class="py-3 flex justify-between items-center border-b border-gray-100">
+      <text class="text-title text-sm">收货地址</text>
+      <text class="text-foreground text-sm text-right flex-1 ml-4">{{order.address}}</text>
+    </view>
+    <view class="py-3 flex justify-between items-center border-b border-gray-100">
+      <text class="text-title text-sm">联系方式</text>
+      <text class="text-foreground text-sm">{{order.contactPhone}}</text>
+    </view>
+    <view class="py-3 flex justify-between items-center">
+      <text class="text-title text-sm">下单时间</text>
+      <text class="text-foreground text-sm">{{order.formattedTime}}</text>
+    </view>
+  </view>
+  <view class="flex items-center justify-between gap-6 fixed bottom-0 left-0 right-0 px-4 py-3">
+    <view class="flex-1 py-2dot5 bg-foreground text-white rounded-lg text-sm flex items-center justify-center" bindtap="navigateToHome">
+      回到首页
+    </view>
+    <view class="flex-1 py-2dot5 text-foreground border-foreground rounded-lg text-sm flex items-center justify-center" bindtap="navigateToOrders">
+      购买记录
+    </view>
+  </view>
+</view>
