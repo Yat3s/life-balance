@@ -87,6 +87,7 @@ Page({
         ...(deliveryType === 'delivery' && {
           address,
           contactPhone: phoneNumber,
+          trackingNumber: '',
         }),
       };
 

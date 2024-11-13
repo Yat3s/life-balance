@@ -41,7 +41,7 @@
     <block wx:if="{{deliveryType === 'delivery'}}">
       <view class="mb-6 flex items-center justify-between">
         <text class="text-base text-foreground">收货地址</text>
-        <input class="text-right" placeholder="详细地址" value="{{address}}" placeholder-class="text-gray" bindinput="onAddressInput" />
+        <input class="text-right" placeholder="请填写收货地址" value="{{address}}" placeholder-class="text-gray" bindinput="onAddressInput" />
       </view>
     </block>
     <!-- Contact Info -->

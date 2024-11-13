@@ -4,6 +4,7 @@ cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 const COLLECTION_NAME_ORDERS = 'orders';
 const COLLECTION_NAME_PRODUCTS = 'products';
+const { ORDER_STATUS } = require('../lib/constants');
 
 exports.main = async (props, context) => {
   const openid = cloud.getWXContext().OPENID;
@@ -41,8 +42,7 @@ exports.main = async (props, context) => {
       productId,
       paid: 0,
       wechatOrderId,
-      trackingNumber: '',
-      status: 'unpaid',
+      status: ORDER_STATUS.UNPAID,
       userId: openid,
       createdAt: Date.now(),
     },
