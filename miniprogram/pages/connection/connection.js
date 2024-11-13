@@ -19,15 +19,11 @@ const ADD_CIRCLE_LINK =
   'https://github.com/Yat3s/Life-Balance/issues/new/choose';
 const MIN_DISPLAY_ACTIVITY_LENGTH = 3;
 
-// pages/explore/explore.js
 Component({
   options: {
     addGlobalClass: true,
   },
 
-  /**
-   * 页面的初始数据
-   */
   data: {
     toolbarHeight: app.globalData.toolbarHeight,
     statusBarHeight: app.globalData.statusBarHeight,
