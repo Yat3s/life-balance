@@ -26,8 +26,8 @@
     </view>
 
     <!-- Canteen -->
-    <view class="flex-0dot7 border border-solid border-gray-200 p-4 rounded-lg">
-      <text>Canteen</text>
+    <view class="flex-0dot7">
+      <canteenV2></canteenV2>
     </view>
   </view>
 

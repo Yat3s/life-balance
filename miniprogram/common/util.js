@@ -78,3 +78,11 @@ export const getDateInEnglish = (date) => {
 
   return new Intl.DateTimeFormat("en-US", options).format(new Date(date));
 };
+
+export const formatDateToMMDD = (timestamp) => {
+  const date = new Date(timestamp);
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+
+  return `${month}月${day}日`;
+};
