@@ -156,6 +156,13 @@ Page({
     this.hideModal();
   },
 
+  viewOrder(e) {
+    const orderId = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: `/pages/user/user-order/user-order?id=${orderId}&from=userOrders`,
+    });
+  },
+
   handleOpenProductModal(e) {
     const product = e.currentTarget.dataset.product;
 

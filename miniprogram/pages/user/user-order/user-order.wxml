@@ -1,6 +1,6 @@
 <toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
 <view class="plr pt-5">
-  <view class="mb-5">
+  <view wx:if="{{from === 'paySuccess'}}" class="mb-5">
     <text class="text-xl font-bold text-foreground">支付成功</text>
   </view>
   <view class="bg-white p-4 mb-4 flex items-center rounded-lg">
@@ -50,7 +50,7 @@
       <text class="text-foreground text-sm">{{order.formattedTime}}</text>
     </view>
   </view>
-  <view class="flex items-center justify-between gap-6 fixed bottom-0 left-0 right-0 px-4 py-3">
+  <view wx:if="{{from === 'paySuccess'}}" class="flex items-center justify-between gap-6 fixed bottom-0 left-0 right-0 px-4 py-3">
     <view class="flex-1 py-2dot5 bg-foreground text-white rounded-lg text-sm flex items-center justify-center" bindtap="navigateToHome">
       回到首页
     </view>
