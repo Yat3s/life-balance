@@ -1,0 +1,11 @@
+<view bindtap="toMenuDetail" class="border border-solid border-gray-200 p-4 rounded-lg">
+  <view class="title">Canteen</view>
+  <view class="flex items-center justify-between margin-top">
+    <view class="text-sm">
+      <view class="font-bold">{{todayMenuB25.canteenName}}</view>
+      <view class="text-gray-400">{{todayMenuB25.startDateStr}} - {{todayMenuB25.endDateStr}}</view>
+      <view class="mt-2 font-bold">{{todayMenuZhongmeng.canteenName}}</view>
+      <view class="text-gray-400">{{todayMenuZhongmeng.startDateStr}} - {{todayMenuZhongmeng.endDateStr}}</view>
+    </view>
+  </view>
+</view>

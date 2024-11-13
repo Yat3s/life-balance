@@ -39,7 +39,6 @@ Component({
         nowDateInEnglish,
       });
       this.fetchDashboardData();
-      this.fetchBanner();
     },
   },
 

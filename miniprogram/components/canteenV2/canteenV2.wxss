@@ -1,0 +1,39 @@
+.main {
+  padding: 36rpx;
+  border-radius: 40rpx;
+  background: #e8f9f5;
+}
+
+.icon {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.title {
+  font-weight: bold;
+  color: black;
+  font-size: 12pt;
+}
+
+.menu-title {
+  font-size: 11pt;
+  color: var(--textGrey);
+  flex: 1;
+}
+
+.detail-button {
+  background: white;
+  font-size: 9pt;
+  color: var(--textGrey);
+  padding: 12rpx 24rpx;
+  border-radius: 60rpx;
+}
+
+.forward-icon {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.text-tip {
+  color: #7f6ca7;
+}
