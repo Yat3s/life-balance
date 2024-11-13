@@ -21,8 +21,8 @@
 <view class="flex flex-col gap-2 mt-4">
   <view class="flex gap-2">
     <!-- Parking Space -->
-    <view class="flex-1 border border-solid border-gray-200 p-4 rounded-lg">
-      <text>Parking Space</text>
+    <view class="flex-1">
+      <commuteV2></commuteV2>
     </view>
 
     <!-- Canteen -->
