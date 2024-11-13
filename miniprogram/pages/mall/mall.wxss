@@ -109,3 +109,179 @@
     transform: translateX(100%);
   }
 }
+
+/* Below are todo */
+
+/* Circles */
+.search-container {
+  background: #f9f9f9;
+  border-radius: 60rpx;
+  padding: 16rpx 24rpx;
+  height: 70rpx;
+}
+
+.search-icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.input-placeholder {
+  color: rgb(194, 195, 197);
+  font-size: 11pt;
+}
+
+.circle-title {
+  margin-top: 60rpx;
+}
+
+.search-keyword {
+  border-radius: 48rpx;
+  background: #f8f8f8;
+  padding: 6rpx 20rpx;
+  font-size: 9pt;
+  color: var(--textGrey);
+}
+
+.list-container {
+  padding: 0 30rpx;
+}
+
+.product-item-frame {
+  padding: 0 10rpx 16rpx 10rpx;
+}
+
+.circle-item-shimmer {
+  background: #f9f9f9;
+  border-radius: 28rpx;
+  padding: 24rpx;
+  border: #f1f1f1 solid 1rpx;
+}
+
+.search-page {
+  height: 100vh;
+  padding-top: 100rpx;
+}
+
+.search-page-close {
+  font-size: 14pt;
+  padding: var(--inset);
+}
+
+.circle-search-page-header {
+  height: 200rpx;
+  margin-top: 100rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-page-list {
+  height: calc(100vh - 340rpx);
+  padding-bottom: 120rpx;
+}
+
+.search-keyword-swiper {
+  width: 500rpx;
+  height: 100%;
+}
+
+.search-keyword-swiper-item {
+  color: #bdbdbd;
+  display: flex;
+  font-size: 11pt;
+  justify-items: center;
+  align-items: center;
+}
+
+/* Circle detail */
+.modal-main {
+  padding: 48rpx;
+  border-radius: 32rpx;
+  text-align: start;
+  background: white;
+}
+
+.modal-dismiss-icon {
+  font-size: 16pt;
+}
+
+.circle-detail-logo-bg {
+  width: 400rpx;
+  height: 200rpx;
+  border-radius: 12rpx;
+  background: rgb(255, 235, 224);
+  background: linear-gradient(
+    42deg,
+    rgba(255, 235, 224, 1) 0%,
+    rgba(220, 222, 244, 1) 100%
+  );
+}
+
+.circle-detail-cover-pic {
+  width: 400rpx;
+  height: 200rpx;
+  border-radius: 12rpx;
+}
+
+.circle-detail-logo {
+  width: 90rpx;
+  height: 90rpx;
+}
+
+.circle-detail-name {
+  font-size: 14pt;
+  line-height: 14pt;
+  color: black;
+  font-weight: bold;
+}
+
+.circle-detail-tag {
+  border-radius: 48rpx;
+  background: #f0f0f0;
+  padding: 4rpx 20rpx;
+  font-size: 9pt;
+  color: #979797;
+}
+
+.circle-detail-intro {
+  font-size: 10pt;
+  color: var(--textGrey);
+}
+
+.circle-detail-section {
+  font-size: 11pt;
+  line-height: 11pt;
+  font-weight: bold;
+  color: #150e3e;
+}
+
+.circle-detail-member {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  border: white solid 2rpx;
+}
+
+.circle-detail-join-btn-container {
+  margin-top: 120rpx;
+}
+
+.modal-btn {
+  font-size: 13pt;
+  font-weight: bold;
+  color: white;
+  border-radius: 16rpx;
+  width: 100%;
+  height: 90rpx;
+  background: #b193f0;
+}
+
+.circle-detail-team-only {
+  color: rgb(81, 126, 224);
+  font-size: 11pt;
+  font-weight: bold;
+}
+
+.circle-detail-city {
+  font-size: 10pt;
+  color: var(--textGrey);
+}

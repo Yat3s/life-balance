@@ -1,6 +1,6 @@
 <view class="appbar" style="height: {{appBarHeight}}px;">
   <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="bg-white toolbar plr {{collapsed? 'shadow' : ''}}">
-    <view style="font-size: {{titleScale * 24}}pt;" class="title">Mall</view>
+    <view style="font-size: {{titleScale * 24}}pt;" class="title">Flea Market</view>
     <view style="font-size: {{subtitleScale * 12}}pt;" class="subtitle">
       Browse and pick what you want
     </view>
@@ -59,11 +59,25 @@
   </block>
   <!-- Flea Market Section -->
   <view class="plr">
-    <view class="flex justify-between items-center">
-      <text class="section-title">Flea Market</text>
-      <text bind:tap="handleNavToPublishItemPage" class="section-action">发布二手</text>
+    <view class="flex justify-end items-center">
+      <text bind:tap="handleNavToPublishItemPage" class="section-action self-end">Publish</text>
     </view>
   </view>
+  <!-- Search -->
+  <share-element duration="200" key="search-input" transform>
+    <view class="plr margin-top-sm">
+      <view bindtap="onSearchClicked" class="search-container flex align-center">
+        <image src="../../images/ic_search_grey.png" class="search-icon" />
+        <swiper class="search-keyword-swiper margin-left-sm" duration="500" autoplay="true" vertical="true" circular="true" interval="3000">
+          <block wx:for="{{fleaMarketKeywords}}" wx:key="*this">
+            <swiper-item class="search-keyword-swiper-item">
+              <view>{{item}}</view>
+            </swiper-item>
+          </block>
+        </swiper>
+      </view>
+    </view>
+  </share-element>
   <!-- Category Pills -->
   <block wx:if="{{!fleaMarketKeywords}}">
     <scroll-view scroll-x="true" class="whitespace-nowrap plr mt-4">
@@ -129,7 +143,7 @@
     </view>
   </block>
   <block wx:else>
-    <view class="mt-4 px-4 flex gap-3">
+    <view class="mt-4 plr flex gap-3">
       <view class="flex-1 flex flex-col gap-3">
         <view class="bg-white rounded-lg p-4 border-gray-light" wx:for="{{leftColumnProducts}}" wx:key="_id" bindtap="handleOpenProductModal" data-product="{{item}}">
           <image class="w-full h-36 rounded-lg" src="{{item.pictures[0]}}" mode="aspectFill" wx:if="{{item.pictures && item.pictures.length > 0}}" />
@@ -237,7 +251,7 @@
         <view bind:tap="onPurchase" data-id="{{selectedProduct._id}}" class="flex items-center justify-center bg-foreground py-2dot5 rounded-lg" hover-class="none" hover-stop-propagation="false">
           <view class="flex items-baseline text-white gap-1">
             <text class="text-xs" selectable="false" space="false" decode="false">¥</text>
-            <view>{{selectedProduct.price}} 购买</view>
+            <view>{{selectedProduct.price}} 立即购买</view>
           </view>
         </view>
       </block>
@@ -277,3 +291,78 @@
     </view>
   </view>
 </view>
+<!-- Flea Market Search Page -->
+<page-container bind:afterenter="onSearchPageEnter" bind:afterleave="onSearchPageExit" duration="200" position="center" show="{{showSearchPage}}">
+  <view class="search-page">
+    <text bindtap="onDismissSearchPage" class="cuIcon-close search-page-close" />
+    <view class="flex-1" />
+    <share-element duration="200" key="search-input" transform>
+      <view class="plr margin-top-sm">
+        <view class="search-container flex items-center">
+          <image src="../../images/ic_search_grey.png" class="search-icon" />
+          <view class="margin-left-xs">
+            <input focus="{{searchFocus}}" style="width: 100%;" value="{{searchInput}}" bindinput="onSearchChanged" placeholder="Search Products" />
+          </view>
+        </view>
+      </view>
+    </share-element>
+    <view wx:if="{{showProductSearchContent}}" class="animation-fade">
+      <!-- Search Keywords -->
+      <scroll-view scroll-x="true" class="margin-top-sm">
+        <view class="plr flex items-center">
+          <view bindtap="onProductKeyboardClicked" data-keyword="{{item}}" class="search-keyword margin-right-sm" wx:for="{{fleaMarketKeywords}}" wx:key="item">
+            {{item}}
+          </view>
+        </view>
+      </scroll-view>
+      <scroll-view class="search-page-list margin-top-sm" scroll-y="true">
+        <view class="flex gap-3 plr">
+          <view class="flex-1 flex flex-col gap-3">
+            <view class="bg-white rounded-lg p-4 border-gray-light" wx:for="{{leftSearchResults}}" wx:key="_id" bindtap="handleOpenProductModal" data-product="{{item}}">
+              <image wx:if="{{item.pictures && item.pictures[0]}}" src="{{item.pictures[0]}}" mode="aspectFill" class="w-full h-36 rounded-lg" />
+              <view class="mt-2">
+                <text class="text-sm line-clamp-2">{{item.title}}</text>
+                <view class="mt-3 flex justify-between items-center">
+                  <view class="flex gap-2">
+                    <block wx:if="{{item.categories && item.categories.length > 0}}">
+                      <view class="text-gray-500 text-xs" wx:for="{{item.categories}}" wx:key="index" wx:for-item="category">
+                        {{category}}
+                      </view>
+                    </block>
+                    <view class="text-gray-500 text-xs" wx:else>未分类</view>
+                  </view>
+                  <view class="text-base text-primary font-bold flex items-baseline gap-1">
+                    <text class="text-xs">¥</text>
+                    <text>{{item.price}}</text>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="flex-1 flex flex-col gap-3">
+            <view class="bg-white rounded-lg p-4 border-gray-light" wx:for="{{rightSearchResults}}" wx:key="_id" bindtap="handleOpenProductModal" data-product="{{item}}">
+              <image wx:if="{{item.pictures && item.pictures[0]}}" src="{{item.pictures[0]}}" mode="aspectFill" class="w-full h-36 rounded-lg" />
+              <view class="mt-2">
+                <text class="text-sm line-clamp-2">{{item.title}}</text>
+                <view class="mt-3 flex justify-between items-center">
+                  <view class="flex gap-2">
+                    <block wx:if="{{item.categories && item.categories.length > 0}}">
+                      <view class="text-gray-500 text-xs" wx:for="{{item.categories}}" wx:key="index" wx:for-item="category">
+                        {{category}}
+                      </view>
+                    </block>
+                    <view class="text-gray-500 text-xs" wx:else>未分类</view>
+                  </view>
+                  <view class="text-base text-primary font-bold flex items-baseline gap-1">
+                    <text class="text-xs">¥</text>
+                    <text>{{item.price}}</text>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</page-container>
