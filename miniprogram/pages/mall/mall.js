@@ -24,6 +24,7 @@ Component({
     statusBarHeight: app.globalData.statusBarHeight,
     appBarHeight: MAX_APP_BAR_HEIGHT,
     selectedCategory: 'New', // Default selected category
+    popularProductsEnabled: false,
   },
 
   pageLifetimes: {
