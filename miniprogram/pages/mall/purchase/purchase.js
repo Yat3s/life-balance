@@ -2,7 +2,6 @@ import { fetchProduct } from '../../../repository/productRepo';
 import { createOrder, updateOrder } from '../../../repository/orderRepo';
 import { getAppConfig } from '../../../repository/baseRepo';
 import { fetchUserInfo } from '../../../repository/userRepo';
-import { navigateToUserOrder } from '../../router';
 import { ORDER_STATUS, DELIVERY_TYPE } from '../../../lib/constants';
 
 Page({
@@ -125,7 +124,9 @@ Page({
             title: '支付成功',
             icon: 'success',
           });
-          navigateToUserOrder(orderId);
+          wx.navigateTo({
+            url: `/pages/user/user-order/user-order?id=${orderId}&from=paySuccess`,
+          });
         },
         fail: () => {
           wx.showToast({

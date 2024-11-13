@@ -9,7 +9,7 @@ Page({
   },
 
   async onLoad(options) {
-    const orderId = options.id;
+    const { id: orderId, from } = options;
     if (orderId) {
       const config = await getAppConfig();
       const order = (await fetchOrder(orderId)).data[0];
@@ -17,13 +17,16 @@ Page({
       this.setData({
         order: {
           ...order,
-          contactPhone: maskPhoneNumber(order.contactPhone),
+          contactPhone: order.contactPhone
+            ? maskPhoneNumber(order.contactPhone)
+            : '',
           orderStatus: this.getOrderStatus(order.status),
           deliveryTypeText: this.getDeliveryType(order.deliveryType),
           formattedTime: formatDate(order.paidAt),
           contactNumber: config.contactNumber,
           contactName: config.contactName,
           pickUpLocation: config.pickUpLocation,
+          from,
         },
       });
     }
