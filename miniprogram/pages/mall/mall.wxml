@@ -1,4 +1,4 @@
-<view class="appbar" style="height: {{appBarHeight}}px;">
+<view class="appBar" style="height: {{appBarHeight}}px;">
   <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="bg-white toolbar plr {{collapsed? 'shadow' : ''}}">
     <view style="font-size: {{titleScale * 24}}pt;" class="title">Flea Market</view>
     <view style="font-size: {{subtitleScale * 12}}pt;" class="subtitle">
