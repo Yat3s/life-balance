@@ -19,17 +19,29 @@
     </view>
     <view class="py-3 flex justify-between items-center border-b border-gray-100">
       <text class="text-title text-sm">取货方式</text>
-      <view class="text-foreground text-sm">{{order.deliveryType}}</view>
+      <view class="text-foreground text-sm">{{order.deliveryTypeText}}</view>
     </view>
-    <view class="py-3 flex justify-between items-center border-b border-gray-100">
+    <view wx:if="{{order.deliveryType === 'delivery'}}" class="py-3 flex justify-between items-center border-b border-gray-100">
       <text class="text-title text-sm">物流单号</text>
       <text class="text-foreground text-sm">{{order.trackingNumber || '暂未发货，发货后可查看单号'}}</text>
     </view>
-    <view class="py-3 flex justify-between items-center border-b border-gray-100">
+    <view wx:if="{{order.deliveryType === 'self_pickup'}}" class="py-3 flex justify-between items-center border-b border-gray-100">
+      <text class="text-title text-sm">联系人</text>
+      <text class="text-foreground text-sm">{{order.contactNumber}} ( {{order.contactName}} )</text>
+    </view>
+    <view wx:if="{{order.deliveryType === 'delivery'}}" class="py-3 flex justify-between items-center border-b border-gray-100">
       <text class="text-title text-sm">收货地址</text>
       <text class="text-foreground text-sm text-right flex-1 ml-4">{{order.address}}</text>
     </view>
-    <view class="py-3 flex justify-between items-center border-b border-gray-100">
+    <view wx:if="{{order.deliveryType === 'workplace'}}" class="py-3 flex justify-between items-center border-b border-gray-100">
+      <text class="text-title text-sm">工位地址</text>
+      <text class="text-foreground text-sm text-right flex-1 ml-4">{{order.workplace}}</text>
+    </view>
+    <view wx:if="{{order.deliveryType === 'self_pickup'}}" class="py-3 flex justify-between items-center border-b border-gray-100">
+      <text class="text-title text-sm">自提地址</text>
+      <text class="text-foreground text-sm text-right flex-1 ml-4">{{order.pickUpLocation}}</text>
+    </view>
+    <view wx:if="{{order.deliveryType === 'delivery' || order.deliveryType === 'workplace'}}" class="py-3 flex justify-between items-center border-b border-gray-100">
       <text class="text-title text-sm">联系方式</text>
       <text class="text-foreground text-sm">{{order.contactPhone}}</text>
     </view>

@@ -1,5 +1,6 @@
 import { DELIVERY_TYPE, ORDER_STATUS } from '../../../lib/constants';
 import { formatDate, maskPhoneNumber } from '../../../lib/utils';
+import { getAppConfig } from '../../../repository/baseRepo';
 import { fetchOrder } from '../../../repository/orderRepo';
 
 Page({
@@ -9,21 +10,20 @@ Page({
 
   async onLoad(options) {
     const orderId = options.id;
-
     if (orderId) {
       const config = await getAppConfig();
       const order = (await fetchOrder(orderId)).data[0];
 
       this.setData({
-        contactNumber: config.contactNumber,
-        contactName: config.contactName,
-        pickUpLocation: config.pickUpLocation,
         order: {
           ...order,
           contactPhone: maskPhoneNumber(order.contactPhone),
           orderStatus: this.getOrderStatus(order.status),
-          deliveryType: this.getDeliveryType(order.deliveryType),
+          deliveryTypeText: this.getDeliveryType(order.deliveryType),
           formattedTime: formatDate(order.paidAt),
+          contactNumber: config.contactNumber,
+          contactName: config.contactName,
+          pickUpLocation: config.pickUpLocation,
         },
       });
     }
@@ -58,8 +58,8 @@ Page({
   },
 
   navigateToHome() {
-    wx.navigateBack({
-      delta: 1,
+    wx.reLaunch({
+      url: '/pages/index/index',
     });
   },
 
