@@ -1,4 +1,3 @@
-<!-- Template -->
 <toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
 <view class="px-4 py-3">
   <!-- Product Header -->
@@ -20,22 +19,31 @@
     <view class="mb-6 flex items-center justify-between">
       <text class="text-base text-foreground">取货方式</text>
       <view class="flex gap-3">
-        <view class="{{deliveryType === 'pickup' ? 'bg-foreground text-white' : 'bg-gray-100 text-gray'}} px-4 py-2 rounded-lg text-sm" bindtap="onDeliveryTypeChange" data-type="pickup">
+        <view class="{{deliveryType === 'self_pickup' ? 'bg-foreground text-white' : 'border-gray-light text-title'}} px-3 py-1dot5 rounded-lg text-sm" bindtap="onDeliveryTypeChange" data-type="self_pickup">
           自提
         </view>
-        <view class="{{deliveryType === 'delivery' ? 'bg-foreground text-white' : 'bg-gray-100 text-gray'}} px-4 py-2 rounded-lg text-sm" bindtap="onDeliveryTypeChange" data-type="delivery">
+        <view class="{{deliveryType === 'workplace' ? 'bg-foreground text-white' : 'border-gray-light text-title'}} px-3 py-1dot5 rounded-lg text-sm" bindtap="onDeliveryTypeChange" data-type="workplace">
+          送至工位
+        </view>
+        <view class="{{deliveryType === 'delivery' ? 'bg-foreground text-white' : 'border-gray-light text-title'}} px-3 py-1dot5 rounded-lg text-sm" bindtap="onDeliveryTypeChange" data-type="delivery">
           快递
         </view>
       </view>
     </view>
     <!-- Delivery Location -->
-    <block wx:if="{{deliveryType === 'pickup'}}">
+    <block wx:if="{{deliveryType === 'self_pickup'}}">
       <view class="mb-6 flex items-center justify-between">
         <text class="text-base text-foreground">自提位置</text>
         <view class="flex items-center gap-1">
           <image class="w-4 h-4" src="/images/ic_location.svg" />
-          <text class="text-foreground">微软大厦 5F #65</text>
+          <text class="text-foreground">{{pickUpLocation}}</text>
         </view>
+      </view>
+    </block>
+    <block wx:if="{{deliveryType === 'workplace'}}">
+      <view class="mb-6 flex items-center justify-between">
+        <text class="text-base text-foreground">工位信息</text>
+        <input class="text-right" placeholder="请填写工位号" value="{{workplaceNumber}}" placeholder-class="text-gray" bindinput="onWorkplaceNumberInput" />
       </view>
     </block>
     <block wx:if="{{deliveryType === 'delivery'}}">
@@ -45,7 +53,7 @@
       </view>
     </block>
     <!-- Contact Info -->
-    <block wx:if="{{deliveryType === 'pickup'}}">
+    <block wx:if="{{deliveryType === 'self_pickup'}}">
       <view class="flex items-center justify-between">
         <text class="text-base text-foreground">联系人</text>
         <view class="flex items-center">
@@ -54,7 +62,7 @@
         </view>
       </view>
     </block>
-    <block wx:if="{{deliveryType === 'delivery'}}">
+    <block wx:if="{{deliveryType === 'workplace' || deliveryType === 'delivery'}}">
       <view class="flex items-center justify-between">
         <text class="text-base text-foreground">联系方式</text>
         <input type="number" class="text-right" maxlength="11" placeholder="手机号" placeholder-class="text-gray" value="{{phoneNumber}}" bindinput="onPhoneNumberInput" />
@@ -63,7 +71,7 @@
   </view>
 </view>
 <!-- Bottom Payment Button -->
-<view class="fixed bottom-0 left-0 right-0 px-4 py-3 bg-white border-t border-gray-100">
+<view class="fixed bottom-0 left-0 right-0 px-4 py-3">
   <view class="w-full bg-foreground text-white py-3 rounded-lg text-center" bindtap="onPaymentConfirm">
     确认支付
   </view>
