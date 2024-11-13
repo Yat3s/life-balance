@@ -41,7 +41,7 @@
     <block wx:if="{{deliveryType === 'delivery'}}">
       <view class="mb-6 flex items-center justify-between">
         <text class="text-base text-foreground">收货地址</text>
-        <input class="text-right" placeholder="详细地址" value="{{deliveryAddress}}" placeholder-class="text-gray" bindinput="onDeliveryAddressInput" />
+        <input class="text-right" placeholder="请填写收货地址" value="{{address}}" placeholder-class="text-gray" bindinput="onAddressInput" />
       </view>
     </block>
     <!-- Contact Info -->
@@ -49,8 +49,8 @@
       <view class="flex items-center justify-between">
         <text class="text-base text-foreground">联系人</text>
         <view class="flex items-center">
-          <view class="text-foreground">{{contactPhone}}</view>
-          <view class="text-foreground ml-2" wx:if="{{contactName}}">( {{contactName}} )</view>
+          <view class="text-foreground">{{contactNumber}}</view>
+          <view class="text-foreground ml-2">( {{contactName}} )</view>
         </view>
       </view>
     </block>

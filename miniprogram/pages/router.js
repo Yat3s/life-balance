@@ -100,6 +100,10 @@ export const Pages = {
     authRequired: false,
     url: '/pages/user/user-product/user-product',
   },
+  UserOrder: {
+    authRequired: false,
+    url: '/pages/user/user-order/user-order?id=',
+  },
 };
 
 export function navigationToAppConfigWebView(config) {
@@ -196,6 +200,10 @@ export function navigateToPurchase(id) {
 
 export function navigateToUserProduct() {
   navigate(Pages.UserProduct);
+}
+
+export function navigateToUserOrder(id) {
+  navigate(Pages.UserOrder, id);
 }
 
 export function navigate(page, urlParam = null) {

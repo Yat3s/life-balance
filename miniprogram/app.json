@@ -28,7 +28,8 @@
     "pages/appconfigwebview/appconfigwebview",
     "pages/mall/publish-item/publish-item",
     "pages/user/user-product/user-product",
-    "pages/mall/purchase/purchase"
+    "pages/mall/purchase/purchase",
+    "pages/user/user-order/user-order"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -36,9 +37,7 @@
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom"
   },
-  "requiredPrivateInfos": [
-    "chooseLocation"
-  ],
+  "requiredPrivateInfos": ["chooseLocation"],
   "sitemapLocation": "sitemap.json",
   "style": "v2",
   "useExtendedLib": {

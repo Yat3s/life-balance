@@ -1,22 +1,27 @@
 import { fetchProduct } from '../../../repository/productRepo';
 import { createOrder, updateOrder } from '../../../repository/orderRepo';
+import { getAppConfig } from '../../../repository/baseRepo';
+import { fetchUserInfo } from '../../../repository/userRepo';
+import { navigateToUserOrder } from '../../router';
+import { ORDER_STATUS } from '../../../lib/constants';
 
 Page({
   data: {
     product: null,
     deliveryType: 'pickup',
-    deliveryAddress: '',
-    phoneNumber: '',
-    contactName: '',
   },
 
   async onLoad(options) {
     if (options.id) {
       const product = (await fetchProduct(options.id)).data[0];
+      const config = await getAppConfig();
+      const userInfo = await fetchUserInfo();
       this.setData({
         product,
-        contactPhone: '4645643',
-        contactName: 'Chris Ye',
+        contactNumber: config.contactNumber ?? '4645643',
+        contactName: config.contactName ?? 'Chris Ye',
+        phoneNumber: userInfo.phoneNumber ?? '',
+        address: userInfo.address ?? '',
       });
     }
   },
@@ -31,17 +36,17 @@ Page({
     this.setData({ phoneNumber });
   },
 
-  onDeliveryAddressInput(e) {
+  onAddressInput(e) {
     this.setData({
-      deliveryAddress: e.detail.value,
+      address: e.detail.value,
     });
   },
 
   validateDeliveryInfo() {
-    const { deliveryType, deliveryAddress, phoneNumber } = this.data;
+    const { deliveryType, address, phoneNumber } = this.data;
 
     if (deliveryType === 'delivery') {
-      if (!deliveryAddress.trim()) {
+      if (!address.trim()) {
         wx.showToast({
           title: '请填写收货地址',
           icon: 'none',
@@ -66,28 +71,35 @@ Page({
       return;
     }
 
-    const { product, deliveryType, deliveryAddress, phoneNumber } = this.data;
+    const { product, deliveryType, address, phoneNumber } = this.data;
 
     try {
       const orderData = {
         deliveryType,
-        ...(deliveryType === 'delivery' && {
-          deliveryAddress,
-          contactPhone: phoneNumber,
-        }),
+        status: ORDER_STATUS.PENDING_PAYMENT,
       };
 
       const order = await createOrder(product._id, orderData);
       const { payment, orderId, totalFee } = order;
 
+      const updateOrderData = {
+        paid: totalFee,
+        ...(deliveryType === 'delivery' && {
+          address,
+          contactPhone: phoneNumber,
+          trackingNumber: '',
+        }),
+      };
+
       wx.requestPayment({
         ...payment,
-        success: () => {
-          updateOrder(orderId, totalFee);
+        success: async () => {
+          await updateOrder(orderId, updateOrderData);
           wx.showToast({
             title: '支付成功',
             icon: 'success',
           });
+          navigateToUserOrder(orderId);
         },
         fail: () => {
           wx.showToast({

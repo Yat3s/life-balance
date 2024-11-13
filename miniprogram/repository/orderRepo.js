@@ -1,19 +1,28 @@
-import { cloudCall, cloudFunctionCall } from './baseRepo';
+import { cloudFunctionCall } from './baseRepo';
 
-const COLLECT_NAME_ORDERS = 'orders';
+const COLLECTION_NAME_ORDERS = 'orders';
 const CLOUD_FUNCTION_COLLECTION = 'orderFunctions';
-const db = wx.cloud.database().collection(COLLECT_NAME_ORDERS);
+const db = wx.cloud.database().collection(COLLECTION_NAME_ORDERS);
 
-export const createOrder = (productId) => {
+export const fetchOrder = (orderId) => {
+  return db
+    .where({
+      _id: orderId,
+    })
+    .get();
+};
+
+export const createOrder = (productId, createOrderData) => {
   return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, 'createOrder', {
     productId,
+    createOrderData,
   });
 };
 
-export const updateOrder = (orderId, paid) => {
+export const updateOrder = (orderId, updateOrderData) => {
   return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, 'updateOrder', {
     orderId,
-    paid,
+    updateOrderData,
   });
 };
 

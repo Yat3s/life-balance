@@ -4,10 +4,11 @@ cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 const COLLECTION_NAME_ORDERS = 'orders';
 const COLLECTION_NAME_PRODUCTS = 'products';
+const { ORDER_STATUS } = require('../lib/constants');
 
 exports.main = async (props, context) => {
   const openid = cloud.getWXContext().OPENID;
-  const { productId } = props;
+  const { productId, createOrderData } = props;
 
   const product = (
     await db.collection(COLLECTION_NAME_PRODUCTS).doc(productId).get()
@@ -35,11 +36,13 @@ exports.main = async (props, context) => {
 
   const res = await db.collection(COLLECTION_NAME_ORDERS).add({
     data: {
+      ...createOrderData,
       totalFee: product.price,
       product: product,
       productId,
       paid: 0,
       wechatOrderId,
+      status: ORDER_STATUS.UNPAID,
       userId: openid,
       createdAt: Date.now(),
     },
