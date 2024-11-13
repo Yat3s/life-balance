@@ -1,0 +1,11 @@
+.stock-border {
+  border: 1rpx solid #ccd6ff;
+}
+
+.stock-bg {
+  background-image: linear-gradient(to right, #f7f9ff, #ffffff);
+}
+
+.stock-title {
+  color: #021a5c;
+}

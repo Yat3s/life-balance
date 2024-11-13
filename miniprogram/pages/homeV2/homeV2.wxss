@@ -1,0 +1,114 @@
+page {
+  background: white;
+  --widgetBorderRadius: 40rpx;
+  --widgetPadding: 36rpx;
+  --widgetGap: 12rpx;
+}
+
+.toolbar {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: auto;
+}
+
+.appbar {
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.banner-container,
+.banner-container-expanded {
+  border-radius: 24rpx;
+  overflow: hidden;
+  transition: max-height 2s;
+  width: 100%;
+}
+
+.banner-container {
+  max-height: 500rpx;
+}
+
+.banner-container-expanded {
+  max-height: 2000rpx;
+}
+
+.banner-copy-link-button {
+  background: #000;
+  border-radius: 40rpx;
+  color: #fff;
+  font-size: 14pt;
+  font-weight: 700;
+  padding: 12rpx 32rpx;
+  text-align: center;
+  width: 100%;
+}
+
+.banner-img {
+  width: 100%;
+}
+
+.main {
+  padding: 0 40rpx 0 40rpx;
+  height: calc(100vh);
+}
+
+.margin-left {
+  margin-left: 20rpx;
+}
+
+.margin-top {
+  margin-top: 20rpx;
+}
+
+.card-divider {
+  margin-top: 28rpx;
+}
+
+.user-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+  border: #cce0f7 solid 4rpx;
+}
+
+.widget-row {
+  margin-top: var(--widgetGap);
+}
+
+.user-name {
+  font-size: 14pt;
+  line-height: 14pt;
+  font-weight: bold;
+  color: black;
+}
+
+.user-welcome-message {
+  font-size: 11pt;
+  line-height: 11pt;
+  color: var(--textGrey);
+}
+
+.widget-section-title {
+  font-size: 10pt;
+  line-height: 10pt;
+  color: var(--textGrey);
+}
+
+.widget-icon {
+  width: 66rpx;
+  height: 66rpx;
+}
+
+.common-widget {
+  margin-top: 60rpx;
+}
+
+.flex-0dot7 {
+  flex: 0.7;
+}
