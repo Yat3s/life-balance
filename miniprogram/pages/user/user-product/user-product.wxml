@@ -22,12 +22,12 @@
     </view>
   </view>
   <!-- Product List -->
-  <view class="p-4">
+  <view class="plr mt-4">
     <block wx:if="{{activeTab === 'userProducts'}}">
       <block wx:if="{{!userProducts}}">
         <!-- Published Items Skeleton -->
         <view wx:for="{{[1,2,3,4,5]}}" wx:key="*this" class="flex bg-blue-gradient p-5 mb-4 rounded-lg">
-          <view class="w-28 h-28 skeleton-bg rounded-lg skeleton-animate"></view>
+          <view class="w-32 h-32 skeleton-bg rounded-lg skeleton-animate"></view>
           <view class="flex-1 ml-6">
             <view class="h-4 skeleton-bg rounded w-28 skeleton-animate"></view>
             <view class="mt-3 flex justify-between items-center">
@@ -49,8 +49,8 @@
       </block>
       <block wx:else>
         <block wx:for="{{userProducts}}" wx:key="_id">
-          <view bind:tap="handleOpenProductModal" data-product="{{item}}" class="flex bg-blue-gradient p-5 mb-4 rounded-lg">
-            <view wx:if="{{item.pictures && item.pictures[0]}}" class="relative w-28 h-28 rounded-lg overflow-hidden" data-index="index">
+          <view bind:tap="handleOpenProductModal" data-product="{{item}}" class="flex bg-blue-gradient p-5 py-4 mb-4 rounded-lg border-gray-light items-center">
+            <view wx:if="{{item.pictures && item.pictures[0]}}" class="relative w-32 h-32 rounded-lg overflow-hidden" data-index="index">
               <image class="w-full h-full" src="{{item.pictures[0]}}" mode="aspectFill" />
               <image wx:if="{{item.saleStatus === 'off'}}" class="w-10 h-10 absolute right-1 top-1 z-20" src="/images/ic_sold.svg" />
             </view>
@@ -76,11 +76,11 @@
                 <view wx:if="{{(!item.pictures || item.pictures.length === 0) && item.saleStatus === 'off'}}" class="w-10 h-10 absolute left-2 -bottom-1">
                   <image class="w-full h-full" src="/images/ic_sold.svg" />
                 </view>
-                <view class="px-3 py-1 border-foreground rounded-md text-xxs text-foreground" catch:tap="toggleStatus" data-id="{{item._id}}">
-                  {{item.saleStatus === 'on' ? '下架' : '重新上架'}}
-                </view>
-                <view class="px-3 py-1 border-foreground rounded-md text-xxs text-foreground" catch:tap="editProduct" data-id="{{item._id}}">
+                <view class="px-4 py-1 border-purple-light rounded-lg text-button text-xxs text-foreground" catch:tap="editProduct" data-id="{{item._id}}">
                   编辑
+                </view>
+                <view class="px-4 py-1 rounded-lg text-xxs bg-foreground text-white" catch:tap="toggleStatus" data-id="{{item._id}}">
+                  {{item.saleStatus === 'on' ? '下架' : '重新上架'}}
                 </view>
               </view>
             </view>
@@ -110,20 +110,15 @@
       </block>
       <block wx:else>
         <block wx:for="{{userOrders}}" wx:key="id">
-          <view class="flex bg-blue-gradient p-6 mb-4 rounded-lg">
+          <view class="flex bg-blue-gradient p-6 mb-4 rounded-lg items-center border-gray-light">
             <image wx:if="{{item.pictures && item.pictures[0]}}" class="w-28 h-28 rounded-lg" src="{{item.pictures[0]}}" mode="aspectFill" data-index="index" />
-            <view class="flex-1 ml-6">
+            <view class="flex-1 ml-6 flex flex-col gap-5">
               <text class="text-sm line-clamp-2 text-foreground">{{item.title}}</text>
-              <view class="mt-3 flex justify-end">
+              <view class="mt-3 flex justify-between">
+                <view class="text-status text-xs">{{item.status}}</view>
                 <view class="text-lg text-primary font-bold flex items-baseline gap-1">
                   <text class="text-xs">¥</text>
                   <text>{{item.price}}</text>
-                </view>
-              </view>
-              <view class="flex items-center justify-between mt-6 gap-4">
-                <view class="text-xs text-gray">{{item.purchaseDate}}</view>
-                <view class="px-3 py-1 border-foreground rounded-lg text-xxs text-foreground" bindtap="deleteOrder" data-id="{{item.id}}">
-                  删除订单
                 </view>
               </view>
             </view>
@@ -179,19 +174,11 @@
           <image catchtap="handleCopyContact" data-contact="{{selectedProduct.contact}}" class="w-4 h-4 ml-2" src="/images/ic_copy.svg" />
         </view>
         <view class="flex items-center justify-between gap-4">
-          <view class="flex-1 py-1dot5 border-foreground rounded-md text-sm text-foreground" catch:tap="toggleStatus" data-id="{{selectedProduct._id}}">
-            {{selectedProduct.saleStatus === 'on' ? '下架' : '重新上架'}}
-          </view>
-          <view class="flex-1 py-1dot5 border-foreground rounded-md text-sm text-foreground" catch:tap="editProduct" data-id="{{selectedProduct._id}}">
+          <view class="flex-1 py-1dot5 border-purple-light rounded-lg text-sm text-button" catch:tap="editProduct" data-id="{{selectedProduct._id}}">
             编辑
           </view>
-        </view>
-      </block>
-      <block wx:if="{{selectedProduct.type === 'official'}}">
-        <view bind:tap="handleCreateOrder" class="flex items-center justify-center bg-foreground py-2dot5 rounded-lg" hover-class="none" hover-stop-propagation="false">
-          <view class="flex items-baseline text-white gap-1">
-            <text class="text-xs" selectable="false" space="false" decode="false">¥</text>
-            <view>{{selectedProduct.price}} 购买</view>
+          <view class="flex-1 py-1dot5 bg-foreground rounded-lg text-sm text-white" catch:tap="toggleStatus" data-id="{{selectedProduct._id}}">
+            {{selectedProduct.saleStatus === 'on' ? '下架' : '重新上架'}}
           </view>
         </view>
       </block>

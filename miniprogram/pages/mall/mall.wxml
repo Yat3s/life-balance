@@ -36,7 +36,7 @@
     <swiper class="mt-4 h-36" previous-margin="60rpx" next-margin="60rpx" bindchange="onSwiperChange">
       <swiper-item wx:for="{{officialProducts}}" wx:key="_id">
         <view class="h-full mr-2" bind:tap="handleOpenProductModal" data-product="{{item}}">
-          <view class="gradient-bg rounded-lg p-4 py-5 h-full flex">
+          <view class="gradient-bg rounded-lg p-4 py-5 h-full flex border-gray-light">
             <view class="w-32 h-full flex-shrink-0">
               <image class="w-full h-full rounded-lg object-cover" src="{{item.pictures[0]}}" mode="aspectFill" />
             </view>

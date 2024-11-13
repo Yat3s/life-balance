@@ -47,3 +47,15 @@ page {
     transform: translateX(100%);
   }
 }
+
+.border-purple-light {
+  border: 1px solid #ac9cb7;
+}
+
+.text-button {
+  color: #664d77;
+}
+
+.text-status {
+  color: #abb3cb;
+}
