@@ -43,7 +43,7 @@
     <block wx:if="{{deliveryType === 'workplace'}}">
       <view class="mb-6 flex items-center justify-between">
         <text class="text-base text-foreground">工位信息</text>
-        <input class="text-right" placeholder="请填写工位号" value="{{workplaceNumber}}" placeholder-class="text-gray" bindinput="onWorkplaceNumberInput" />
+        <input class="text-right" placeholder="请填写工位号" value="{{workplace}}" placeholder-class="text-gray" bindinput="onWorkplaceInput" />
       </view>
     </block>
     <block wx:if="{{deliveryType === 'delivery'}}">

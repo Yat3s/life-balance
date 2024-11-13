@@ -9,6 +9,7 @@ Page({
   data: {
     product: null,
     deliveryType: DELIVERY_TYPE.SELF_PICKUP,
+    workplace: '',
   },
 
   async onLoad(options) {
