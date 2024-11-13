@@ -10,7 +10,7 @@
   <view bindtap="onTabSelect" class="{{currentTab === item.id ? 'tab-highlight' : 'tab'}} flex relative" data-tabid="{{item.id}}" style="width:{{currentTab === item.id ? tabWidth * 1.5 : tabWidth}}px;" wx:for="{{pages}}" wx:key="id">
     <image class="tab-icon" src="{{currentTab === item.id ? item.iconActive : item.icon}}"></image>
     <view wx:if="{{currentTab === item.id}}" class="tab-text margin-left-sm">{{item.title}}</view>
-    <view wx:if="{{item.isBeta && currentTab === item.id}}" class="text-xxxs absolute top-0 right-2 z-10 border border-solid rounded-full bg-blue-600 text-white px-1">
+    <view wx:if="{{item.isBeta && currentTab === item.id}}" class="text-beta absolute top-0 right-2 z-10 border border-solid rounded-full bg-blue-600 text-white px-1">
       Beta
     </view>
   </view>
