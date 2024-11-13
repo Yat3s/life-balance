@@ -8,7 +8,7 @@
       <view style="font-size: {{titleScale * 14}}pt; line-height: {{titleScale * 14}}pt;" class="user-name">
         Hi, {{userInfo ? userInfo.nickName : 'Friend!'}}
       </view>
-      <view style="font-size: {{titleScale * 11}}pt; line-height: {{titleScale * 11}}pt;" class="user-welcome-message margin-top-xs">
+      <view style="font-size: {{titleScale * 10}}pt; line-height: {{titleScale * 11}}pt;" class="user-welcome-message margin-top-xs">
         {{nowDateInEnglish}} - {{welcomeMessage}}
       </view>
     </view>
@@ -16,7 +16,7 @@
   <view class="mt-12">
     <stockV2></stockV2>
   </view>
-  <view class="margin-left widget-section-title common-widget">Board for 微软(中国)有限公司 - 苏州</view>
+  <view class="margin-left mt-10 widget-section-title text-sm">Board for 微软(中国)有限公司 - 苏州</view>
 
 <view class="flex flex-col gap-2 mt-4">
   <view class="flex gap-2">

@@ -95,8 +95,6 @@ page {
 }
 
 .widget-section-title {
-  font-size: 10pt;
-  line-height: 10pt;
   color: var(--textGrey);
 }
 
