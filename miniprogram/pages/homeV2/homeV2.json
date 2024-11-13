@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "stockV2": "/components/stockV2/stockV2"
+  }
+}
