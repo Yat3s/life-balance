@@ -1,1 +1,15 @@
-/* pages/user/user-order/user-order.wxss */
+page {
+  background-color: #f9f9f9;
+}
+
+.text-title {
+  color: #bdbdbd;
+}
+
+.bg-tag {
+  background-color: #ecf1ff;
+}
+
+.text-tag {
+  color: #979dd8;
+}

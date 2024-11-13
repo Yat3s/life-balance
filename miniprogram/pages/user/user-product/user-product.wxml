@@ -2,28 +2,28 @@
 <view class="min-h-screen">
   <!-- Tab Navigation -->
   <view class="flex justify-around pb-4 pt-8">
-    <view class="flex flex-col items-center relative" bindtap="switchTab" data-tab="published">
-      <view class="text-3xl font-medium mb-0dot5 {{activeTab === 'published' ? 'text-foreground' : 'text-gray'}}">
+    <view class="flex flex-col items-center relative" bindtap="switchTab" data-tab="userProducts">
+      <view class="text-3xl font-medium mb-0dot5 {{activeTab === 'userProducts' ? 'text-foreground' : 'text-gray'}}">
         {{userProducts ? userProducts.length : 0}}
       </view>
-      <view class="text-sm {{activeTab === 'published' ? 'text-foreground' : 'text-gray'}}">
+      <view class="text-sm {{activeTab === 'userProducts' ? 'text-foreground' : 'text-gray'}}">
         发布记录
       </view>
-      <view wx:if="{{activeTab === 'published'}}" class="absolute -bottom-2 w-10 h-1 bg-indigo-900 rounded-full"></view>
+      <view wx:if="{{activeTab === 'userProducts'}}" class="absolute -bottom-2 w-10 h-1 bg-indigo-900 rounded-full"></view>
     </view>
-    <view class="flex flex-col items-center relative" bindtap="switchTab" data-tab="purchases">
-      <view class="text-3xl font-medium mb-0dot5 mb-1 {{activeTab === 'purchases' ? 'text-foreground' : 'text-gray'}}">
+    <view class="flex flex-col items-center relative" bindtap="switchTab" data-tab="userOrders">
+      <view class="text-3xl font-medium mb-0dot5 mb-1 {{activeTab === 'userOrders' ? 'text-foreground' : 'text-gray'}}">
         {{userOrders ? userOrders.length : 0}}
       </view>
-      <view class="text-sm {{activeTab === 'purchases' ? 'text-foreground' : 'text-gray'}}">
+      <view class="text-sm {{activeTab === 'userOrders' ? 'text-foreground' : 'text-gray'}}">
         我的购买
       </view>
-      <view wx:if="{{activeTab === 'purchases'}}" class="absolute -bottom-2 w-10 h-1 bg-foreground rounded-full"></view>
+      <view wx:if="{{activeTab === 'userOrders'}}" class="absolute -bottom-2 w-10 h-1 bg-foreground rounded-full"></view>
     </view>
   </view>
   <!-- Product List -->
   <view class="p-4">
-    <block wx:if="{{activeTab === 'published'}}">
+    <block wx:if="{{activeTab === 'userProducts'}}">
       <block wx:if="{{!userProducts}}">
         <!-- Published Items Skeleton -->
         <view wx:for="{{[1,2,3,4,5]}}" wx:key="*this" class="flex bg-blue-gradient p-5 mb-4 rounded-lg">
@@ -88,7 +88,7 @@
         </block>
       </block>
     </block>
-    <block wx:else>
+    <block wx:if="{{activeTab === 'userOrders'}}">
       <block wx:if="{{!userOrders}}">
         <!-- Orders Skeleton -->
         <view wx:for="{{[1,2,3,4,5]}}" wx:key="*this" class="flex bg-blue-gradient p-6 mb-4 rounded-lg">

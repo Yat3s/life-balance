@@ -6,6 +6,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/user/user-order/user-order",
+          "pathName": "pages/user/user-order/user-order",
+          "query": "id=7f296b2167344b4600ffb1d6050f1aa4",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "Activity Detail",
           "pathName": "pages/activity/activitydetail/activitydetail",
           "query": "id=18ed0968617aa60a0254dacd347cdcec",

@@ -4,3 +4,9 @@ export const ORDER_STATUS = {
   DELIVERED: 'delivered',
   COMPLETED: 'completed',
 };
+
+export const DELIVERY_TYPE = {
+  SELF_PICKUP: 'self_pickup',
+  DELIVERY: 'delivery',
+  WORKPLACE: 'workplace',
+};
