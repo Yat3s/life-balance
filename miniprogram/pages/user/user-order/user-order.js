@@ -11,9 +11,13 @@ Page({
     const orderId = options.id;
 
     if (orderId) {
+      const config = await getAppConfig();
       const order = (await fetchOrder(orderId)).data[0];
 
       this.setData({
+        contactNumber: config.contactNumber,
+        contactName: config.contactName,
+        pickUpLocation: config.pickUpLocation,
         order: {
           ...order,
           contactPhone: maskPhoneNumber(order.contactPhone),

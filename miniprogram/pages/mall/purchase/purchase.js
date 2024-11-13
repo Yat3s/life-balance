@@ -3,12 +3,12 @@ import { createOrder, updateOrder } from '../../../repository/orderRepo';
 import { getAppConfig } from '../../../repository/baseRepo';
 import { fetchUserInfo } from '../../../repository/userRepo';
 import { navigateToUserOrder } from '../../router';
-import { ORDER_STATUS } from '../../../lib/constants';
+import { ORDER_STATUS, DELIVERY_TYPE } from '../../../lib/constants';
 
 Page({
   data: {
     product: null,
-    deliveryType: 'pickup',
+    deliveryType: DELIVERY_TYPE.SELF_PICKUP,
   },
 
   async onLoad(options) {
@@ -20,6 +20,7 @@ Page({
         product,
         contactNumber: config.contactNumber ?? '4645643',
         contactName: config.contactName ?? 'Chris Ye',
+        pickUpLocation: config.pickUpLocation ?? '微软大厦 5F #65',
         phoneNumber: userInfo.phoneNumber ?? '',
         address: userInfo.address ?? '',
       });
@@ -36,6 +37,12 @@ Page({
     this.setData({ phoneNumber });
   },
 
+  onWorkplaceInput(e) {
+    this.setData({
+      workplace: e.detail.value,
+    });
+  },
+
   onAddressInput(e) {
     this.setData({
       address: e.detail.value,
@@ -43,9 +50,9 @@ Page({
   },
 
   validateDeliveryInfo() {
-    const { deliveryType, address, phoneNumber } = this.data;
+    const { deliveryType, address, phoneNumber, workplace } = this.data;
 
-    if (deliveryType === 'delivery') {
+    if (deliveryType === DELIVERY_TYPE.DELIVERY) {
       if (!address.trim()) {
         wx.showToast({
           title: '请填写收货地址',
@@ -53,14 +60,27 @@ Page({
         });
         return false;
       }
+    }
 
-      if (!phoneNumber || phoneNumber.length !== 11) {
+    if (deliveryType === DELIVERY_TYPE.WORKPLACE) {
+      if (!workplace.trim()) {
         wx.showToast({
-          title: '请输入正确的手机号',
+          title: '请填写工位号',
           icon: 'none',
         });
         return false;
       }
+    }
+
+    if (
+      deliveryType !== DELIVERY_TYPE.SELF_PICKUP &&
+      (!phoneNumber || phoneNumber.length !== 11)
+    ) {
+      wx.showToast({
+        title: '请输入正确的手机号',
+        icon: 'none',
+      });
+      return false;
     }
 
     return true;
@@ -71,7 +91,8 @@ Page({
       return;
     }
 
-    const { product, deliveryType, address, phoneNumber } = this.data;
+    const { product, deliveryType, address, phoneNumber, workplace } =
+      this.data;
 
     try {
       const orderData = {
@@ -84,10 +105,14 @@ Page({
 
       const updateOrderData = {
         paid: totalFee,
-        ...(deliveryType === 'delivery' && {
+        ...(deliveryType === DELIVERY_TYPE.DELIVERY && {
           address,
           contactPhone: phoneNumber,
           trackingNumber: '',
+        }),
+        ...(deliveryType === DELIVERY_TYPE.WORKPLACE && {
+          workplace,
+          contactPhone: phoneNumber,
         }),
       };
 
