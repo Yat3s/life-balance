@@ -4,7 +4,7 @@ cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 
 const db = cloud.database();
 const _ = db.command;
-const COLLECTION_NAME_PRODUCTS = 'products';
+const COLLECTION_NAME_FLEA_MARKET_PRODUCTS = 'flea-market-products';
 
 exports.main = async (props, context) => {
   const wxContext = cloud.getWXContext();
@@ -32,7 +32,7 @@ exports.main = async (props, context) => {
     };
 
     const product = await db
-      .collection(COLLECTION_NAME_PRODUCTS)
+      .collection(COLLECTION_NAME_FLEA_MARKET_PRODUCTS)
       .where({
         _id: productId,
         userId: openid,
@@ -47,7 +47,7 @@ exports.main = async (props, context) => {
     }
 
     const result = await db
-      .collection(COLLECTION_NAME_PRODUCTS)
+      .collection(COLLECTION_NAME_FLEA_MARKET_PRODUCTS)
       .doc(productId)
       .update({
         data: dataToUpdate,
