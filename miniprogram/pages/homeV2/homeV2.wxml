@@ -19,7 +19,7 @@
   <view class="margin-left mt-10 widget-section-title text-xs">Board for 微软(中国)有限公司 - 苏州</view>
 
   <view class="flex flex-col gap-2 mt-4">
-    <view class="flex gap-2">
+    <view class="flex gap-2 items-stretch">
       <!-- Parking Space -->
       <view class="flex-1">
         <commuteV2></commuteV2>

@@ -5,12 +5,12 @@
       <view class="font-bold text-xs">Parking Space</view>
       <image class="parking-refresh-icon {{loadingParkingSpace ? 'animation-rotate' : ''}}" src="/images/ic_refresh.png"></image>
     </view>
-    <view class="margin-top pb-8 border-0 border-b border-dashed border-gray-200">
+    <view class="mt-10 pb-8 border-0 border-b border-dashed border-gray-200">
       <view class="flex items-center justify-between">
         <!-- B25 -->
         <view class="flex flex-col items-center">
           <view class="progress-container">
-            <canvas canvas-id="progressCanvasB25" style="width: 100px; height: 100px;"></canvas>
+            <canvas canvas-id="progressCanvasB25" style="width: 90px; height: 90px;"></canvas>
             <view class="progress-info">
               <view class="flex flex-col items-center">
                 <image src="/images/ic_car_parking.png" class="w-8 h-12 -mt-2" mode="widthFix" />
@@ -20,13 +20,13 @@
           </view>
           <view class="flex items-baseline">
             <view class="text-lg font-bold {{parkingSpace.b25Remaining === 0 ? 'text-gray-400' : ''}}">{{parkingSpace.b25Remaining}}</view>
-            <view class="text-xxs text-gray-400">/{{maxB25Spaces}}</view>
+            <view class="text-xs text-gray-400">/{{maxB25Spaces}}</view>
           </view>
         </view>
         <!-- Zhongmeng -->
         <view class="flex flex-col items-center">
           <view class="progress-container">
-            <canvas canvas-id="progressCanvasZhongmeng" style="width: 100px; height: 100px;"></canvas>
+            <canvas canvas-id="progressCanvasZhongmeng" style="width: 90px; height: 90px;"></canvas>
             <view class="progress-info">
               <view class="flex flex-col items-center">
                 <image src="/images/ic_car_parking.png" class="w-8 h-12 -mt-2" mode="widthFix" />
@@ -36,7 +36,7 @@
           </view>
           <view class="flex items-baseline">
             <view class="text-lg font-bold {{parkingSpace.zhongmengRemaining === 0 ? 'text-gray-400' : ''}}">{{parkingSpace.zhongmengRemaining}}</view>
-            <view class="text-xxs text-gray-400">/{{maxZhongmengSpaces}}</view>
+            <view class="text-xs text-gray-400">/{{maxZhongmengSpaces}}</view>
           </view>
         </view>
       </view>
