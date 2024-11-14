@@ -1,3 +1,5 @@
+<import src="../../components/product-card/index.wxml" />
+<import src="../../components/skeleton/index.wxml" />
 <view class="appBar" style="height: {{appBarHeight}}px;">
   <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="bg-white toolbar plr {{collapsed? 'shadow' : ''}}">
     <view style="font-size: {{titleScale * 24}}pt;" class="title">Flea Market</view>
@@ -15,23 +17,7 @@
     </view>
     <!-- Official Section -->
     <block wx:if="{{!officialProducts}}">
-      <swiper class="mt-4 h-36" previous-margin="60rpx" next-margin="60rpx">
-        <swiper-item wx:for="{{[1,2,3]}}" wx:key="*this">
-          <view class="h-full mr-2">
-            <view class="gradient-bg rounded-lg p-4 py-5 h-full flex skeleton-animate">
-              <view class="w-32 h-full flex-shrink-0 skeleton-bg rounded-lg" />
-              <view class="ml-4 flex flex-col justify-center flex-1 gap-2">
-                <view class="h-6 skeleton-bg rounded w-24" />
-                <view class="flex gap-2 mt-2">
-                  <view class="h-6 skeleton-bg rounded w-14" />
-                  <view class="h-6 skeleton-bg rounded w-14" />
-                  <view class="h-6 skeleton-bg rounded w-14" />
-                </view>
-              </view>
-            </view>
-          </view>
-        </swiper-item>
-      </swiper>
+      <template is="popular-skeleton" />
     </block>
     <block wx:else>
       <swiper class="mt-4 h-36" previous-margin="60rpx" next-margin="60rpx" bindchange="onSwiperChange">
@@ -80,11 +66,7 @@
   </share-element>
   <!-- Category Pills -->
   <block wx:if="{{!fleaMarketKeywords}}">
-    <scroll-view scroll-x="true" class="whitespace-nowrap plr mt-4">
-      <view class="inline-flex gap-7">
-        <view wx:for="{{[1,2,3,4,5]}}" wx:key="*this" class="h-5 w-14 skeleton-bg rounded-lg skeleton-animate"></view>
-      </view>
-    </scroll-view>
+    <template is="category-skeleton" />
   </block>
   <block wx:else>
     <scroll-view scroll-x="true" class="whitespace-nowrap plr mt-4">
@@ -105,90 +87,39 @@
   </block>
   <!-- Product Grid -->
   <block wx:if="{{!leftColumnProducts || !rightColumnProducts}}">
-    <view class="mt-4 px-4 flex gap-3">
-      <view class="flex-1 flex flex-col gap-3">
-        <view wx:for="{{[1,2,3]}}" wx:key="*this" class="bg-white rounded-lg p-4 border-gray-light">
-          <view class="w-full h-36 skeleton-bg rounded-lg skeleton-animate" />
-          <view class="mt-2">
-            <view class="h-4 skeleton-bg rounded w-28 mb-2 skeleton-animate" />
-            <view class="h-4 skeleton-bg rounded w-20 skeleton-animate" />
-            <view class="mt-3 flex justify-between items-center gap-2">
-              <view class="flex gap-2">
-                <view class="h-4 skeleton-bg rounded w-10 skeleton-animate" />
-                <view class="h-4 skeleton-bg rounded w-10 skeleton-animate" />
-              </view>
-              <view class="h-4 skeleton-bg rounded w-16 skeleton-animate" />
-            </view>
-          </view>
-        </view>
-      </view>
-      <view class="flex-1 flex flex-col gap-3">
-        <view class="flex-1 flex flex-col gap-3">
-          <view wx:for="{{[1,2,3]}}" wx:key="*this" class="bg-white rounded-lg p-4 border-gray-light">
-            <view class="w-full h-36 skeleton-bg rounded-lg skeleton-animate" />
-            <view class="mt-2">
-              <view class="h-4 skeleton-bg rounded w-28 mb-2 skeleton-animate" />
-              <view class="h-4 skeleton-bg rounded w-20 skeleton-animate" />
-              <view class="mt-3 flex justify-between items-center gap-2">
-                <view class="flex gap-2">
-                  <view class="h-4 skeleton-bg rounded w-10 skeleton-animate" />
-                  <view class="h-4 skeleton-bg rounded w-10 skeleton-animate" />
-                </view>
-                <view class="h-4 skeleton-bg rounded w-16 skeleton-animate" />
-              </view>
-            </view>
-          </view>
-        </view>
-      </view>
-    </view>
+    <template is="product-grid-skeleton" />
   </block>
   <block wx:else>
     <view class="mt-4 plr flex gap-3">
       <view class="flex-1 flex flex-col gap-3">
-        <view class="bg-white rounded-lg p-4 border-gray-light" wx:for="{{leftColumnProducts}}" wx:key="_id" bindtap="handleOpenProductModal" data-product="{{item}}">
-          <image class="w-full h-36 rounded-lg mb-3" src="{{item.pictures[0]}}" mode="aspectFill" wx:if="{{item.pictures && item.pictures.length > 0}}" />
-          <view class="flex items-center gap-2 mb-3" hover-class="none" hover-stop-propagation="false">
-            <image class="w-4 h-4 rounded-full" src="{{item.user.avatarUrl}}" />
-            <view class="text-xs text-gray">发布于 {{item.formattedTime}}</view>
+        <view wx:for="{{leftColumnProducts}}" wx:key="_id">
+          <view wx:if="{{!item.isInternal || (item.isInternal && userInfo.company)}}" class="bg-white rounded-lg p-4 border-gray-light" bindtap="handleOpenProductModal" data-product="{{item}}">
+            <template is="product-card" data="{{...item}}" />
           </view>
-          <text class="text-sm line-clamp-2 mb-3">{{item.title}}</text>
-          <view class="flex justify-between items-center">
-            <view class="text-base text-primary font-bold flex items-baseline gap-1">
-              <text class="text-xs">¥</text>
-              <text>{{item.price}}</text>
+          <view wx:else class="bg-white rounded-lg p-4 border-gray-light relative">
+            <view class="absolute inset-0 overlay flex items-center justify-center z-10">
+              <view class="text-center flex flex-col">
+                <image class="w-8 h-8 mx-auto mb-2" src="/images/ic_ms.png" />
+                <text class="text-sm text-foreground">仅微软员工可查看</text>
+              </view>
             </view>
-            <view class="flex gap-2">
-              <block wx:if="{{item.categories && item.categories.length > 0}}">
-                <view class="text-gray font-lesslight text-xs" wx:for="{{item.categories}}" wx:key="index">
-                  {{item}}
-                </view>
-              </block>
-              <view class="text-gray font-lesslight text-xs" wx:else>未分类</view>
-            </view>
+            <template is="product-card" data="{{...item}}" />
           </view>
         </view>
       </view>
       <view class="flex-1 flex flex-col gap-3">
-        <view class="bg-white rounded-lg p-4 border-gray-light" wx:for="{{rightColumnProducts}}" wx:key="_id" bindtap="handleOpenProductModal" data-product="{{item}}">
-          <image class="w-full h-36 rounded-lg mb-3" src="{{item.pictures[0]}}" mode="aspectFill" wx:if="{{item.pictures && item.pictures.length > 0}}" />
-          <view class="flex items-center gap-2 mb-3" hover-class="none" hover-stop-propagation="false">
-            <image class="w-4 h-4 rounded-full" src="{{item.user.avatarUrl}}" />
-            <view class="text-xs text-gray">发布于 {{item.formattedTime}}</view>
+        <view wx:for="{{rightColumnProducts}}" wx:key="_id">
+          <view wx:if="{{!item.isInternal || (item.isInternal && userInfo.company)}}" class="bg-white rounded-lg p-4 border-gray-light" bindtap="handleOpenProductModal" data-product="{{item}}">
+            <template is="product-card" data="{{...item}}" />
           </view>
-          <text class="text-sm line-clamp-2 mb-3">{{item.title}}</text>
-          <view class="flex justify-between items-center">
-            <view class="text-base text-primary font-bold flex items-baseline gap-1">
-              <text class="text-xs">¥</text>
-              <text>{{item.price}}</text>
+          <view wx:else class="bg-white rounded-lg p-4 border-gray-light relative">
+            <view class="absolute inset-0 overlay flex items-center justify-center z-10">
+              <view class="text-center flex flex-col">
+                <image class="w-8 h-8 mx-auto mb-2" src="/images/ic_ms.png" />
+                <text class="text-sm text-foreground">仅微软员工可查看</text>
+              </view>
             </view>
-            <view class="flex gap-2">
-              <block wx:if="{{item.categories && item.categories.length > 0}}">
-                <view class="text-gray font-lesslight text-xs" wx:for="{{item.categories}}" wx:key="index">
-                  {{item}}
-                </view>
-              </block>
-              <view class="text-gray font-lesslight text-xs" wx:else>未分类</view>
-            </view>
+            <template is="product-card" data="{{...item}}" />
           </view>
         </view>
       </view>
