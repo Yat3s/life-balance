@@ -2,12 +2,7 @@ import {
   navigateToBusInfo,
   navigationToAppConfigWebView,
 } from "../../pages/router";
-import {
-  fetchLastWeekParkingFullTime,
-  fetchParkingSpace,
-  recordParkingFull,
-} from "../../repository/dashboardRepo";
-import { getWeekdayIndexStr } from "../../common/util";
+import { fetchParkingSpace } from "../../repository/dashboardRepo";
 
 Component({
   options: {
@@ -16,15 +11,18 @@ Component({
   data: {
     maxB25Spaces: 508,
     maxZhongmengSpaces: 223,
-    zhongmengSpaceIndicatorWidth: "100%",
-    b25SpaceIndicatorWidth: "100%",
     loadingParkingSpace: true,
+    parkingSpace: {
+      b25Used: 0,
+      zhongmengUsed: 0,
+    },
   },
 
   lifetimes: {
     attached() {
       this.fetchParkingData();
-      this.fetchParkingSpacePredictionData();
+      this.drawProgressRing("progressCanvasB25", 100);
+      this.drawProgressRing("progressCanvasZhongmeng", 100);
     },
   },
 
@@ -48,52 +46,79 @@ Component({
       navigationToAppConfigWebView("shuttleTip");
     },
 
-    fetchParkingSpacePredictionData() {
-      fetchLastWeekParkingFullTime().then((res) => {
-        let lastParkingFullTimeStr = "";
-        let dayStrPrefix = "上周" + getWeekdayIndexStr(new Date());
-        const showParkingFullTip = res != null;
-        if (res) {
-          const lastParkingFullTime = new Date(res).hhmm();
-          lastParkingFullTimeStr = `${dayStrPrefix} B25 停满时间：${lastParkingFullTime}`;
-        } else {
-          lastParkingFullTimeStr = `${dayStrPrefix} B25 车位充足`;
-        }
+    fetchParkingData() {
+      const { maxB25Spaces, maxZhongmengSpaces } = this.data;
+      fetchParkingSpace().then((parkingSpace) => {
+        console.log("parkingSpace", parkingSpace);
+
+        const b25Used = parkingSpace.b25;
+        const zhongmengUsed = parkingSpace.zhongmeng;
+
+        // Calculate remaining spaces
+        const b25Remaining = maxB25Spaces - b25Used;
+        const zhongmengRemaining = maxZhongmengSpaces - zhongmengUsed;
+
+        // Set the remaining spaces data
         this.setData({
-          showParkingFullTip,
-          lastParkingFullTimeStr,
+          parkingSpace: {
+            b25Remaining,
+            zhongmengRemaining,
+          },
+          loadingParkingSpace: false,
         });
+
+        // Draw progress rings for both spaces
+        this.drawProgressRing(
+          "progressCanvasB25",
+          (b25Remaining / maxB25Spaces) * 100
+        );
+        this.drawProgressRing(
+          "progressCanvasZhongmeng",
+          (zhongmengRemaining / maxZhongmengSpaces) * 100
+        );
       });
     },
 
-    fetchParkingData() {
-      const { maxZhongmengSpaces, maxB25Spaces } = this.data;
-      fetchParkingSpace().then((parkingSpace) => {
-        console.log("parkingSpace", parkingSpace);
-        const zhongmengSpaceIndicatorWidth =
-          (parkingSpace.zhongmeng / maxZhongmengSpaces) * 100 + "%";
-        const b25SpaceIndicatorWidth =
-          (parkingSpace.b25 / maxB25Spaces) * 100 + "%";
+    drawProgressRing(canvasId, progress) {
+      const ctx = wx.createCanvasContext(canvasId, this);
 
-        const now = new Date();
-        if (now.getHours() >= 9 && now.getHours() <= 13) {
-          const leftSpace = parkingSpace.b25;
-          if (leftSpace <= 3) {
-            recordParkingFull(Date.now());
-          } else if (leftSpace <= 10) {
-            recordParkingFull(null, null, Date.now());
-          } else if (leftSpace <= 20) {
-            recordParkingFull(null, Date.now(), null);
-          }
-        }
+      const fullColor = "#D3D3D3";
+      const emptyColor = "#3679FF";
+      const busyColor = "#FF4D4F";
 
-        this.setData({
-          parkingSpace,
-          zhongmengSpaceIndicatorWidth,
-          b25SpaceIndicatorWidth,
-          loadingParkingSpace: false,
-        });
-      });
+      const isBusy = progress <= 10;
+
+      const radius = 40;
+      const lineWidth = 5;
+
+      // Clear canvas before drawing
+      ctx.clearRect(0, 0, 100, 100);
+
+      // Draw background circle
+      ctx.beginPath();
+      ctx.arc(50, 50, radius, 0, Math.PI * 2);
+      ctx.setLineWidth(lineWidth);
+      ctx.setStrokeStyle(progress === 100 ? emptyColor : fullColor); // Background circle color
+      ctx.setLineCap("round");
+      ctx.stroke();
+
+      // Draw progress circle with reversed start angle
+      ctx.beginPath();
+      ctx.arc(
+        50,
+        50,
+        radius,
+        Math.PI * (isBusy ? 2.25 : 0.75), // Start from the left bottom (left of the circle)
+        isBusy
+          ? Math.PI * 2 * (progress / 100) + Math.PI * (isBusy ? 2.25 : 0.75) // Busy condition (progress <= 10)
+          : -Math.PI * 2 * ((100 - progress) / 100) +
+              Math.PI * (isBusy ? 2.25 : 0.75) // Remaining spaces (progress > 10)
+      );
+      ctx.setStrokeStyle(isBusy ? busyColor : emptyColor); // Set progress circle color
+      ctx.stroke();
+
+      // Finalize drawing
+      ctx.draw();
     },
   },
 });
