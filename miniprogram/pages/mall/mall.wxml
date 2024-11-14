@@ -216,37 +216,31 @@
             未分类
           </view>
         </view>
-        <view wx:if="{{selectedProduct.type === 'secondhand'}}" class="text-gray text-xs">
-          {{selectedProduct.formattedTime}}发布
+        <view class="text-gray text-xs">{{selectedProduct.formattedTime}}发布</view>
+      </view>
+      <!-- Description -->
+      <view class="text-foreground text-sm mb-6 text-left">{{selectedProduct.description}}</view>
+      <!-- Seller Info -->
+      <view class="flex items-center justify-between gap-3 mb-4">
+        <view class="text-gray text-sm">发布人：</view>
+        <view class="flex items-center gap-3">
+          <image catch:tap="previewUserAvatar" class="w-6 h-6 rounded-full" src="{{selectedProduct.user.avatarUrl}}" mode="aspectFill" />
+          <view class="text-foreground text-sm font-medium">{{selectedProduct.user.nickName}}</view>
         </view>
       </view>
-      <block wx:if="{{selectedProduct.type === 'secondhand'}}">
-        <!-- Description -->
-        <view class="text-foreground text-sm mb-6 text-left">{{selectedProduct.description}}</view>
-        <!-- Seller Info -->
-        <view class="flex items-center justify-between gap-3 mb-4">
-          <view class="text-gray text-sm">发布人：</view>
-          <view class="flex items-center gap-3">
-            <image catch:tap="previewUserAvatar" class="w-6 h-6 rounded-full" src="{{selectedProduct.user.avatarUrl}}" mode="aspectFill" />
-            <view class="text-foreground text-sm font-medium">
-              {{selectedProduct.user.nickName}}
-            </view>
-          </view>
+      <!-- Price -->
+      <view class="flex items-center justify-between gap-3 mb-6">
+        <view class="text-gray text-sm">定价：</view>
+        <view class="flex items-baseline gap-1 text-foreground font-medium">
+          <text class="text-xs">¥</text>
+          <text>{{selectedProduct.price}}</text>
         </view>
-        <!-- Price -->
-        <view class="flex items-center justify-between gap-3 mb-6">
-          <view class="text-gray text-sm">定价：</view>
-          <view class="flex items-baseline gap-1 text-foreground font-medium">
-            <text class="text-xs">¥</text>
-            <text>{{selectedProduct.price}}</text>
-          </view>
-        </view>
-        <!-- Contact Info -->
-        <view class="flex items-center justify-center text-center py-2 bg-gray-50 rounded-lg text-foreground">
-          <text>联系：{{selectedProduct.contact}}</text>
-          <image catchtap="handleCopyContact" data-contact="{{selectedProduct.contact}}" class="w-4 h-4 ml-2" src="/images/ic_copy.svg" />
-        </view>
-      </block>
+      </view>
+      <!-- Contact Info -->
+      <view wx:if="{{!selectedProduct.isInternal || (selectedProduct.isInternal && userInfo.company)}}" class="flex items-center justify-center text-center py-2 bg-gray-50 rounded-lg text-foreground">
+        <text>联系：{{selectedProduct.contact}}</text>
+        <image catchtap="handleCopyContact" data-contact="{{selectedProduct.contact}}" class="w-4 h-4 ml-2" src="/images/ic_copy.svg" />
+      </view>
       <block wx:if="{{selectedProduct.type === 'official'}}">
         <view bind:tap="onPurchase" data-id="{{selectedProduct._id}}" class="flex items-center justify-center bg-foreground py-2dot5 rounded-lg" hover-class="none" hover-stop-propagation="false">
           <view class="flex items-baseline text-white gap-1">

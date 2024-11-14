@@ -1,6 +1,7 @@
 import { formatTimeAgo } from '../../common/util';
 import { getAppConfig } from '../../repository/baseRepo';
 import { fetchAllProducts } from '../../repository/productRepo';
+import { fetchUserInfo } from '../../repository/userRepo';
 import { navigateToPublishItem, navigateToPurchase } from '../router';
 
 const app = getApp();
@@ -63,6 +64,16 @@ Component({
         subtitleScale,
         appBarHeight,
         collapsed,
+      });
+    },
+
+    fetchUserInfo() {
+      fetchUserInfo().then((res) => {
+        if (res) {
+          this.setData({
+            userInfo: res.data,
+          });
+        }
       });
     },
 
