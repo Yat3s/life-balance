@@ -2,10 +2,10 @@ const { getDateInEnglish } = require("../../common/util");
 const { fetchUserInfo } = require("../../repository/userRepo");
 
 const app = getApp();
-const COLLAPSED_SCROLL_TOP = 90;
+const COLLAPSED_SCROLL_TOP = 60;
 const MIN_TITLE_SCALE = 0.75;
 const MIN_AVATAR_SCALE = 0.75;
-const MAX_APP_BAR_HEIGHT = 90; //px
+const MAX_APP_BAR_HEIGHT = 100; //px
 
 Component({
   options: {
@@ -16,7 +16,7 @@ Component({
     toolbarHeight: app.globalData.toolbarHeight,
     statusBarHeight: app.globalData.statusBarHeight,
     appBarHeight: MAX_APP_BAR_HEIGHT,
-    bannerExpanded: false,
+    collapsed: false,
   },
 
   lifetimes: {
