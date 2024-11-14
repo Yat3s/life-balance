@@ -1,7 +1,7 @@
 import { getAppConfig } from '../../../repository/baseRepo';
 import {
   createProduct,
-  fetchProduct,
+  fetchFleaMarketProduct,
   updateProduct,
 } from '../../../repository/productRepo';
 import { fetchUserInfo } from '../../../repository/userRepo';
@@ -29,7 +29,7 @@ Page({
       const categories = config.fleaMarketKeywords || [];
 
       if (options.id) {
-        const product = (await fetchProduct(options.id)).data[0];
+        const product = (await fetchFleaMarketProduct(options.id)).data[0];
         if (!product) {
           throw new Error('Product not found');
         }

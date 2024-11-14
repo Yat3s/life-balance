@@ -1,11 +1,22 @@
 import { cloudFunctionCall } from './baseRepo';
 
 const COLLECTION_NAME_PRODUCTS = 'products';
+const COLLECTION_NAME_FLEA_MARKET_PRODUCTS = 'flea-market-products';
 const CLOUD_FUNCTION_COLLECTION = 'productFunctions';
-const db = wx.cloud.database().collection(COLLECTION_NAME_PRODUCTS);
+const db = wx.cloud.database();
 
 export const fetchProduct = (productId) => {
   return db
+    .collection(COLLECTION_NAME_PRODUCTS)
+    .where({
+      _id: productId,
+    })
+    .get();
+};
+
+export const fetchFleaMarketProduct = (productId) => {
+  return db
+    .collection(COLLECTION_NAME_FLEA_MARKET_PRODUCTS)
     .where({
       _id: productId,
     })

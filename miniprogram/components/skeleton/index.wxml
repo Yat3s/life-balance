@@ -27,7 +27,7 @@
 <template name="product-grid-skeleton">
   <view class="mt-4 plr flex gap-3">
     <view class="flex-1 flex flex-col gap-3">
-      <view wx:for="{{[1,2,3]}}" wx:key="*this" class="bg-white rounded-lg p-4 border-gray-light">
+      <view wx:for="{{[1,2,3]}}" wx:key="*this" class="bg-white rounded-lg p-3 border-gray-light">
         <view class="w-full h-36 skeleton-bg rounded-lg skeleton-animate mb-3" />
         <view class="flex items-center gap-2 mb-3">
           <view class="w-4 h-4 rounded-full skeleton-bg skeleton-animate" />
@@ -42,7 +42,7 @@
       </view>
     </view>
     <view class="flex-1 flex flex-col gap-3">
-      <view wx:for="{{[1,2,3]}}" wx:key="*this" class="bg-white rounded-lg p-4 border-gray-light">
+      <view wx:for="{{[1,2,3]}}" wx:key="*this" class="bg-white rounded-lg p-3 border-gray-light">
         <view class="w-full h-36 skeleton-bg rounded-lg skeleton-animate mb-3" />
         <view class="flex items-center gap-2 mb-3">
           <view class="w-4 h-4 rounded-full skeleton-bg skeleton-animate" />

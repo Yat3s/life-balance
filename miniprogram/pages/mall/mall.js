@@ -38,6 +38,7 @@ Component({
   lifetimes: {
     attached() {
       this.fetchAllProducts();
+      this.fetchUserInfo();
     },
   },
 
@@ -71,7 +72,7 @@ Component({
       fetchUserInfo().then((res) => {
         if (res) {
           this.setData({
-            userInfo: res.data,
+            userInfo: res,
           });
         }
       });
