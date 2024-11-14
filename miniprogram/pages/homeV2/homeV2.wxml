@@ -1,5 +1,5 @@
 <view class="appbar" style="height: {{appBarHeight}}px;">
-  <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="toolbar plr {{collapsed? 'shadow bg-white' : ''}}" />
+  <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="toolbar plr {{collapsed? 'shadow bg-white' : ''}}"/>
 </view>
 
 <scroll-view scroll-y="true" class="main" bindscroll="onPageScrolled">
@@ -18,39 +18,39 @@
   </view>
   <view class="margin-left mt-10 widget-section-title text-sm">Board for 微软(中国)有限公司 - 苏州</view>
 
-<view class="flex flex-col gap-2 mt-4">
-  <view class="flex gap-2">
-    <!-- Parking Space -->
-    <view class="flex-1">
-      <commuteV2></commuteV2>
+  <view class="flex flex-col gap-2 mt-4">
+    <view class="flex gap-2">
+      <!-- Parking Space -->
+      <view class="flex-1">
+        <commuteV2></commuteV2>
+      </view>
+
+      <!-- Canteen -->
+      <view class="flex-0dot7">
+        <canteenV2></canteenV2>
+      </view>
     </view>
 
-    <!-- Canteen -->
-    <view class="flex-0dot7">
-      <canteenV2></canteenV2>
+    <view class="flex gap-2">
+      <!-- Latest Circle -->
+      <view class="flex-1 border border-solid border-gray-200 p-4 rounded-lg">
+        <text>Latest Circle</text>
+      </view>
+      <!-- Upcoming Activity -->
+      <view class="flex-1 border border-solid border-gray-200 p-4 rounded-lg">
+        <text>Upcoming Activity</text>
+      </view>
     </view>
-  </view>
 
-  <view class="flex gap-2">
-    <!-- Latest Circle -->
-    <view class="flex-1 border border-solid border-gray-200 p-4 rounded-lg">
-      <text>Latest Circle</text>
-    </view>
-    <!-- Upcoming Activity -->
-    <view class="flex-1 border border-solid border-gray-200 p-4 rounded-lg">
-      <text>Upcoming Activity</text>
-    </view>
-  </view>
-  
-  <view class="flex gap-2">
-    <!-- Flea Market -->
-    <view class="flex-1 border border-solid border-gray-200 p-4 rounded-lg">
-      <text>Flea Market</text>
-    </view>
-    <view class="flex-1 p-4">
+    <view class="flex gap-2">
+      <!-- Flea Market -->
+      <view class="flex-1 border border-solid border-gray-200 p-4 rounded-lg">
+        <text>Flea Market</text>
+      </view>
+      <view class="flex-1 p-4">
 
+      </view>
     </view>
   </view>
-</view>
 
 </scroll-view>
