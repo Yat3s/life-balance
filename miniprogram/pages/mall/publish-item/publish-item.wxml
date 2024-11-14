@@ -20,7 +20,7 @@
     <view class="flex items-center justify-between py-3dot5">
       <view class="flex flex-col gap-1">
         <text class="text-foreground font-medium">Internal</text>
-        <text class="text-gray-400 text-xs">开启后只有微软员工可查看您的联系方式</text>
+        <text class="text-gray-400 text-xs">开启后只有微软员工可查看</text>
       </view>
       <switch class="transform scale-75" type="switch" checked="{{isInternal}}" bindchange="onIsInternalChange" color="#1a237e" />
     </view>
