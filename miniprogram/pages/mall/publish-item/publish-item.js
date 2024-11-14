@@ -93,13 +93,7 @@ Page({
 
   onCategorySelect(e) {
     const category = e.currentTarget.dataset.category;
-    let selectedCategory = [...this.data.selectedCategory];
-
-    if (selectedCategory.includes(category)) {
-      selectedCategory = selectedCategory.filter((item) => item !== category);
-    } else {
-      selectedCategory.push(category);
-    }
+    const selectedCategory = [category];
 
     const categoriesWithSelection = this.data.categories.map((category) => ({
       name: category,
