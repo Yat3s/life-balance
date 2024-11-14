@@ -92,11 +92,11 @@ Component({
       const lineWidth = 5;
 
       // Clear canvas before drawing
-      ctx.clearRect(0, 0, 100, 100);
+      ctx.clearRect(0, 0, 90, 90);
 
       // Draw background circle
       ctx.beginPath();
-      ctx.arc(50, 50, radius, 0, Math.PI * 2);
+      ctx.arc(45, 45, radius, 0, Math.PI * 2);
       ctx.setLineWidth(lineWidth);
       ctx.setStrokeStyle(progress === 100 ? emptyColor : fullColor); // Background circle color
       ctx.setLineCap("round");
@@ -105,8 +105,8 @@ Component({
       // Draw progress circle with reversed start angle
       ctx.beginPath();
       ctx.arc(
-        50,
-        50,
+        45,
+        45,
         radius,
         Math.PI * (isBusy ? 2.25 : 0.75), // Start from the left bottom (left of the circle)
         isBusy
