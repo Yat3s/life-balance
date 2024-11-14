@@ -26,7 +26,7 @@
     </view>
     <view class="flex items-center justify-between py-3dot5 border-b border-gray-100">
       <text class="text-foreground font-medium">Contact</text>
-      <input class="w-full h-10 bg-transparent text-right" type="number" placeholder="Alias or email" placeholder-class="text-gray-300" model:value="{{contact}}" bindinput="onContactInput" />
+      <input class="w-full h-10 bg-transparent text-right" placeholder="Alias or email" placeholder-class="text-gray-300" model:value="{{contact}}" bindinput="onContactInput" />
     </view>
   </view>
   <view class="bg-white rounded-lg p-5 py-4 space-y-6">
