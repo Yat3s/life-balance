@@ -1,0 +1,23 @@
+<!-- Product card template -->
+<template name="product-card">
+  <image wx:if="{{pictures && pictures.length > 0}}" class="w-full h-36 rounded-lg mb-3" src="{{pictures[0]}}" mode="aspectFill" />
+  <view class="flex items-center gap-2 mb-3">
+    <image class="w-4 h-4 rounded-full" src="{{user.avatarUrl}}" />
+    <view class="text-xs text-gray">发布于 {{formattedTime}}</view>
+  </view>
+  <text class="text-sm line-clamp-2 mb-3">{{title}}</text>
+  <view class="flex justify-between items-center">
+    <view class="text-base text-primary font-bold flex items-baseline gap-1">
+      <text class="text-xs">¥</text>
+      <text>{{price}}</text>
+    </view>
+    <view class="flex gap-2">
+      <block wx:if="{{categories && categories.length > 0}}">
+        <view class="text-gray font-lesslight text-xs" wx:for="{{categories}}" wx:key="index">
+          {{item}}
+        </view>
+      </block>
+      <view class="text-gray font-lesslight text-xs" wx:else>未分类</view>
+    </view>
+  </view>
+</template>
