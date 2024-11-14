@@ -11,6 +11,7 @@ Page({
     activeTab: 'userProducts',
     userProducts: null,
     userOrders: null,
+    purchaseEnabled: false,
   },
 
   onLoad(options) {
