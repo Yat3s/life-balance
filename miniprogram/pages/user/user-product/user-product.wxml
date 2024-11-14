@@ -1,7 +1,7 @@
 <toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
 <view class="min-h-screen">
   <!-- Tab Navigation -->
-  <view class="flex justify-around pb-4 pt-8">
+  <view wx:if="{{purchaseEnabled}}" class="flex justify-around pb-4 pt-8">
     <view class="flex flex-col items-center relative" bindtap="switchTab" data-tab="userProducts">
       <view class="text-3xl font-medium mb-0dot5 {{activeTab === 'userProducts' ? 'text-foreground' : 'text-gray'}}">
         {{userProducts ? userProducts.length : 0}}
@@ -20,6 +20,9 @@
       </view>
       <view wx:if="{{activeTab === 'userOrders'}}" class="absolute -bottom-2 w-10 h-1 bg-foreground rounded-full"></view>
     </view>
+  </view>
+  <view class="plr pb-3 pt-8">
+    <text class="text-foreground text-2xl font-bold">Your products</text>
   </view>
   <!-- Product List -->
   <view class="plr mt-4">
