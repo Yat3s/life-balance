@@ -4,13 +4,13 @@ const { getAllData } = require('../lib/utils');
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 
-const COLLECTION_NAME_PRODUCTS = 'products';
+const COLLECTION_NAME_FLEA_MARKET_PRODUCTS = 'flea-market-products';
 const SALE_STATUS = 'on';
 
 exports.main = async (props, context) => {
   try {
     const products = await getAllData(db, {
-      collection: COLLECTION_NAME_PRODUCTS,
+      collection: COLLECTION_NAME_FLEA_MARKET_PRODUCTS,
       whereCondition: {
         saleStatus: SALE_STATUS,
       },

@@ -72,19 +72,12 @@ Component({
           const processedData = res.data.map((product) => ({
             ...product,
             formattedTime: formatTimeAgo(product.createdAt),
+            type: 'secondhand',
           }));
-
-          const officialProducts = processedData.filter(
-            (product) => product.type === 'official'
-          );
-          const secondhandProducts = processedData.filter(
-            (product) => product.type === 'secondhand'
-          );
 
           this.setData(
             {
-              officialProducts,
-              secondhandProducts,
+              secondhandProducts: processedData,
             },
             () => {
               this.filterProductsByCategory();

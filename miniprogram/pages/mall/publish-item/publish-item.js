@@ -251,7 +251,6 @@ Page({
         pictures: pictures || [],
         saleStatus: 'on',
         isInternal,
-        type: 'secondhand',
         categories: selectedCategory || [],
       };
 
