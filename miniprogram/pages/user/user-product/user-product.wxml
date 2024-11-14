@@ -50,14 +50,14 @@
       <block wx:else>
         <block wx:for="{{userProducts}}" wx:key="_id">
           <view bind:tap="handleOpenProductModal" data-product="{{item}}" class="flex bg-blue-gradient p-5 py-4 mb-4 rounded-lg border-gray-light items-center">
-            <view wx:if="{{item.pictures && item.pictures[0]}}" class="relative w-32 h-32 rounded-lg overflow-hidden" data-index="index">
+            <view wx:if="{{item.pictures && item.pictures[0]}}" class="relative w-32 h-32 rounded-lg overflow-hidden mr-6" data-index="index">
               <image class="w-full h-full" src="{{item.pictures[0]}}" mode="aspectFill" />
               <image wx:if="{{item.saleStatus === 'off'}}" class="w-10 h-10 absolute right-1 top-1 z-20" src="/images/ic_sale_off.svg" />
             </view>
-            <view class="flex-1 ml-6">
-              <text class="text-sm line-clamp-2 mb-3 {{item.saleStatus === 'off' ? 'text-sold' : 'text-foreground'}}">
+            <view class="flex-1">
+              <view class="text-sm line-clamp-2 mb-3 {{item.saleStatus === 'off' ? 'text-sold' : 'text-foreground'}}">
                 {{item.title}}
-              </text>
+              </view>
               <view class="flex justify-between items-center">
                 <view class="flex gap-2">
                   <block wx:if="{{item.categories && item.categories.length > 0}}">

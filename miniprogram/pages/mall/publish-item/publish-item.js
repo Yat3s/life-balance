@@ -11,7 +11,6 @@ const MAX_APP_BAR_HEIGHT = 150; //px
 
 Page({
   data: {
-    isInternal: true,
     toolbarHeight: app.globalData.toolbarHeight,
     statusBarHeight: app.globalData.statusBarHeight,
     appBarHeight: MAX_APP_BAR_HEIGHT,
@@ -68,6 +67,7 @@ Page({
       if (userInfo) {
         this.setData({
           userInfo,
+          isInternal: userInfo.company ? true : false,
           contact: this.data.contact || userInfo.contact,
         });
       }

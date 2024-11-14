@@ -2,7 +2,7 @@
   <view wx:if="{{productId}}" slot="backText" class="">Edit item</view>
   <view wx:else slot="backText" class="">Sell item</view>
 </toolbar>
-<view class="main mb-10">
+<view class="plr mb-10">
   <view class="bg-white rounded-lg p-5 py-4 space-y-6 mb-4 mt-8">
     <view class="flex items-center justify-between py-3dot5 border-b border-gray-100">
       <text class="text-foreground font-medium">Title</text>

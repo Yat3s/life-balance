@@ -6,7 +6,7 @@
     </view>
   </view>
 </view>
-<scroll-view class="main" scroll-y="true" bindscroll="onPageScrolled">
+<scroll-view class="main pb-24" scroll-y="true" bindscroll="onPageScrolled">
   <view style="height: 200px;"></view>
   <!-- Activities -->
   <view class="plr activity-title-container flex align-center justify-between">
