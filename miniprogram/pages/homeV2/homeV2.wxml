@@ -16,7 +16,7 @@
   <view class="mt-12">
     <stockV2></stockV2>
   </view>
-  <view class="margin-left mt-10 widget-section-title text-sm">Board for 微软(中国)有限公司 - 苏州</view>
+  <view class="margin-left mt-10 widget-section-title text-xs">Board for 微软(中国)有限公司 - 苏州</view>
 
   <view class="flex flex-col gap-2 mt-4">
     <view class="flex gap-2">
