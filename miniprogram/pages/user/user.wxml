@@ -1,14 +1,10 @@
 <view class="base-info-container">
-  <view class="flex justify-between items-center">
+  <view class="flex justify-between items-center mb-4">
     <view class="flex items-center">
       <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
       <view class="margin-left flex flex-col gap-3">
         <view class="flex item-center gap-2">
-          <view class="text-foreground font-semibold truncate w-20">{{userInfo.nickName}}</view>
-          <view wx:if="{{userInfo.company}}" class="profile-company">{{company.name}}</view>
-          <view bindtap="onSettingCompanyClick" wx:if="{{!userInfo.company}}" class="profile-company-unset mt-0dot5">
-            Verify your company
-          </view>
+          <view class="text-foreground font-semibold truncate">{{userInfo.nickName}}</view>
         </view>
         <view bindtap="onCopyId" class="flex items-center margin-top-xs">
           <view class="id-text">ID: {{userInfo.id}}</view>
@@ -17,6 +13,10 @@
       </view>
     </view>
     <image src="../../images/ic_edit.png" bindtap="onEditUserInfoClick" class="edit-info margin-top-xs"></image>
+  </view>
+  <view wx:if="{{userInfo.company}}" class="profile-company">{{company.name}}</view>
+  <view bindtap="onSettingCompanyClick" wx:if="{{!userInfo.company}}" class="profile-company-unset mt-0dot5">
+    Verify your company
   </view>
   <view class="mt-8">
     <view class="grid grid-cols-2 gap-4">
