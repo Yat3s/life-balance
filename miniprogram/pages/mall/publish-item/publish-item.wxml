@@ -20,7 +20,7 @@
         </view>
       </view>
     </view>
-    <view class="flex items-center justify-between py-3dot5">
+    <view wx:if="{{userInfo.company}}" class="flex items-center justify-between py-3dot5">
       <view class="flex flex-col gap-1">
         <text class="text-foreground font-medium">Internal</text>
         <text class="text-gray-400 text-xs">开启后只有微软员工可查看</text>
