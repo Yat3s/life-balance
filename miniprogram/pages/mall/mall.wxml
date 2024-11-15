@@ -15,25 +15,23 @@
       <view class="section-title">Popular</view>
       <view class="section-action" bind:tap="handleViewAllPopularProducts">View all</view>
     </view>
-    <!-- Official Section -->
-    <block wx:if="{{!officialProducts}}">
+    <!-- Popular Section -->
+    <block wx:if="{{!products}}">
       <template is="popular-skeleton" />
     </block>
     <block wx:else>
       <swiper class="mt-4 h-36" previous-margin="60rpx" next-margin="60rpx" bindchange="onSwiperChange">
-        <swiper-item wx:for="{{officialProducts}}" wx:key="_id">
+        <swiper-item wx:for="{{products}}" wx:key="_id">
           <view class="h-full mr-2" bind:tap="handleOpenProductModal" data-product="{{item}}">
             <view class="gradient-bg rounded-lg p-4 py-5 h-full flex border-gray-light">
               <view class="w-32 h-full flex-shrink-0">
                 <image class="w-full h-full rounded-lg object-cover" src="{{item.pictures[0]}}" mode="aspectFill" />
               </view>
               <view class="ml-4 flex flex-col justify-center flex-1 gap-2">
-                <view>
-                  <text class="text-foreground text-lg font-medium">{{item.title}}</text>
-                </view>
+                <view class="text-foreground text-lg font-medium line-clamp-2">{{item.title}}</view>
                 <view class="flex gap-2 mt-2 flex-wrap">
-                  <view wx:for="{{item.categories}}" wx:key="*this" wx:for-item="category" class="text-purpleLight text-center text-xs px-3 py-1 rounded-lg border-purple-light">
-                    {{category}}
+                  <view wx:for="{{item.tags}}" wx:key="*this" wx:for-item="tag" class="text-purpleLight text-center text-xs px-3 py-1 rounded-lg border-purple-light">
+                    {{tag}}
                   </view>
                 </view>
               </view>
@@ -42,6 +40,7 @@
         </swiper-item>
       </swiper>
     </block>
+    <view class="mb-10" />
   </block>
   <!-- Flea Market Section -->
   <view class="plr">
@@ -141,43 +140,60 @@
       <view class="text-lg text-left font-medium text-foreground mb-4">
         {{selectedProduct.title}}
       </view>
-      <!-- Category Tag -->
-      <view class="flex items-center justify-between mb-6">
-        <view class="flex gap-2">
-          <block wx:for="{{selectedProduct.categories}}" wx:key="*this">
+      <block wx:if="{{selectedProduct.type === 'secondhand'}}">
+        <!-- Category Tag -->
+        <view class="flex items-center justify-between mb-6">
+          <view class="flex gap-2">
+            <block wx:for="{{selectedProduct.categories}}" wx:key="*this">
+              <view class="bg-gray-100 px-3 py-1 rounded-lg text-xs text-gray-600">{{item}}</view>
+            </block>
+            <view class="bg-gray-100 px-3 py-1 rounded-lg text-xs text-gray-600" wx:if="{{!selectedProduct.categories || selectedProduct.categories.length === 0}}">
+              未分类
+            </view>
+          </view>
+          <view class="text-gray text-xs">{{selectedProduct.formattedTime}}发布</view>
+        </view>
+      </block>
+      <block wx:if="{{selectedProduct.type === 'popular'}}">
+        <!-- Tags -->
+        <view class="flex gap-2 mb-6">
+          <block wx:for="{{selectedProduct.tags}}" wx:key="*this">
             <view class="bg-gray-100 px-3 py-1 rounded-lg text-xs text-gray-600">{{item}}</view>
           </block>
-          <view class="bg-gray-100 px-3 py-1 rounded-lg text-xs text-gray-600" wx:if="{{!selectedProduct.categories || selectedProduct.categories.length === 0}}">
+          <view class="bg-gray-100 px-3 py-1 rounded-lg text-xs text-gray-600" wx:if="{{!selectedProduct.tags || selectedProduct.tags.length === 0}}">
             未分类
           </view>
         </view>
-        <view class="text-gray text-xs">{{selectedProduct.formattedTime}}发布</view>
-      </view>
+      </block>
       <!-- Description -->
       <view class="text-foreground text-sm mb-6 text-left">{{selectedProduct.description}}</view>
-      <!-- Seller Info -->
-      <view class="flex items-center justify-between gap-3 mb-4">
-        <view class="text-gray text-sm">发布人：</view>
-        <view class="flex items-center gap-3">
-          <image catch:tap="previewUserAvatar" class="w-6 h-6 rounded-full" src="{{selectedProduct.user.avatarUrl}}" mode="aspectFill" />
-          <view class="text-foreground text-sm font-medium">{{selectedProduct.user.nickName}}</view>
+      <block wx:if="{{selectedProduct.type === 'secondhand'}}">
+        <!-- Seller Info -->
+        <view class="flex items-center justify-between gap-3 mb-4">
+          <view class="text-gray text-sm">发布人：</view>
+          <view class="flex items-center gap-3">
+            <image catch:tap="previewUserAvatar" class="w-6 h-6 rounded-full" src="{{selectedProduct.user.avatarUrl}}" mode="aspectFill" />
+            <view class="text-foreground text-sm font-medium">
+              {{selectedProduct.user.nickName}}
+            </view>
+          </view>
         </view>
-      </view>
-      <!-- Price -->
-      <view class="flex items-center justify-between gap-3 mb-6">
-        <view class="text-gray text-sm">定价：</view>
-        <view class="flex items-baseline gap-1 text-foreground font-medium relative">
-          <text class="text-xs">¥</text>
-          <text>{{selectedProduct.price}}</text>
-          <image wx:if="{{selectedProduct.isInternal}}" class="w-3 h-3 absolute -right-3dot5 -top-0dot5" src="/images/ic_ms.png" />
+        <!-- Price -->
+        <view class="flex items-center justify-between gap-3 mb-6">
+          <view class="text-gray text-sm">定价：</view>
+          <view class="flex items-baseline gap-1 text-foreground font-medium relative">
+            <text class="text-xs">¥</text>
+            <text>{{selectedProduct.price}}</text>
+            <image wx:if="{{selectedProduct.isInternal}}" class="w-3 h-3 absolute -right-3dot5 -top-0dot5" src="/images/ic_ms.png" />
+          </view>
         </view>
-      </view>
-      <!-- Contact Info -->
-      <view wx:if="{{!selectedProduct.isInternal || (selectedProduct.isInternal && userInfo.company)}}" class="flex items-center justify-center text-center py-2 bg-gray-50 rounded-lg text-foreground">
-        <text>联系：{{selectedProduct.contact}}</text>
-        <image catchtap="handleCopyContact" data-contact="{{selectedProduct.contact}}" class="w-4 h-4 ml-2" src="/images/ic_copy.svg" />
-      </view>
-      <block wx:if="{{selectedProduct.type === 'official'}}">
+        <!-- Contact Info -->
+        <view wx:if="{{!selectedProduct.isInternal || (selectedProduct.isInternal && userInfo.company)}}" class="flex items-center justify-center text-center py-2 bg-gray-50 rounded-lg text-foreground">
+          <text>联系：{{selectedProduct.contact}}</text>
+          <image catchtap="handleCopyContact" data-contact="{{selectedProduct.contact}}" class="w-4 h-4 ml-2" src="/images/ic_copy.svg" />
+        </view>
+      </block>
+      <block wx:if="{{selectedProduct.type === 'popular'}}">
         <view bind:tap="onPurchase" data-id="{{selectedProduct._id}}" class="flex items-center justify-center bg-foreground py-2dot5 rounded-lg" hover-class="none" hover-stop-propagation="false">
           <view class="flex items-baseline text-white gap-1">
             <text class="text-xs" selectable="false" space="false" decode="false">¥</text>

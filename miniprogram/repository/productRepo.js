@@ -36,6 +36,10 @@ export const updateUserProduct = (productId, updateUserProductData) => {
   });
 };
 
+export const fetchAllProducts = () => {
+  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, 'fetchAllProducts', {});
+};
+
 export const fetchAllFleaMarketProducts = () => {
   return cloudFunctionCall(
     CLOUD_FUNCTION_COLLECTION,

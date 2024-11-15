@@ -21,7 +21,7 @@
       <view wx:if="{{activeTab === 'userOrders'}}" class="absolute -bottom-2 w-10 h-1 bg-foreground rounded-full"></view>
     </view>
   </view>
-  <view class="plr pb-3 pt-8">
+  <view wx:else class="plr pb-3 pt-8">
     <text class="text-foreground text-2xl font-bold">Your products</text>
   </view>
   <!-- Product List -->
