@@ -1,0 +1,4 @@
+
+<view>
+  <eventCard cardConfig="{{cardConfig}}" onClick="handleUpcomingActivityClick" />
+</view>

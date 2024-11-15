@@ -1,0 +1,38 @@
+<view bind:tap="onCardClick" class="border border-solid border-gray-200 p-3 rounded-lg h-38 relative">
+  <view class="px-1 flex items-center justify-between">
+    <view class="font-bold text-xs">{{cardConfig.title}}</view>
+    <view class="text-sm text-gray-400">
+      <view class="text-xxs">More</view>
+    </view>
+  </view>
+
+  <view class="relative flex flex-col items-end mt-4">
+    <view class="top-card h-22 flex flex-col justify-between p-4 pb-2 w-full rounded-lg z-10 absolute top-0 left-0">
+      <view class="text-xs card-title truncate">{{cardConfig.cardTitle}}</view>
+      
+      <!-- Conditionally render description (e.g. start date, location, etc.) -->
+      <view wx:if="{{cardConfig.showDescription}}">
+        <view class="text-xxs text-gray-400 truncate">{{cardConfig.description}}</view>
+      </view>
+
+      <!-- Conditionally render avatars and member count -->
+      <view wx:if="{{cardConfig.showAvatars}}">
+        <view class="flex items-center gap-2">
+          <view class="flex gap-1">
+            <image wx:if="{{index < 4}}" src="{{member.avatarUrl}}" wx:for="{{cardConfig.members}}" wx:key="id" wx:for-item="member" class="w-4 h-4 rounded-full"></image>
+          </view>
+          <view class="flex items-center justify-between text-xxs">
+            <view>{{cardConfig.members.length}}</view>
+            <view class="text-gray-400">/{{cardConfig.memberCount}}</view>
+          </view>
+        </view>
+      </view>
+
+      <!-- Conditionally render just member count for Circle -->
+      <view wx:if="{{cardConfig.showMemberCount}}">
+        <view class="text-xs text-gray-400">{{cardConfig.memberCount}} members</view>
+      </view>
+    </view>
+    <view class="bottom-card h-22 w-5on6 rounded-lg absolute top-2 right-2"></view>
+  </view>
+</view>

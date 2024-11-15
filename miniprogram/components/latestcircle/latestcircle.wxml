@@ -1,0 +1,3 @@
+<view>
+  <eventCard cardConfig="{{cardConfig}}" onClick="handleLatestCircleClick" />
+</view>

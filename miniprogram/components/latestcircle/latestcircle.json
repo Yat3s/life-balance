@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "eventCard": "/components/eventcard/eventcard"
+  }
+}
