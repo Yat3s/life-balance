@@ -26,7 +26,7 @@ Component({
     statusBarHeight: app.globalData.statusBarHeight,
     appBarHeight: MAX_APP_BAR_HEIGHT,
     selectedCategory: 'New',
-    popularProductsEnabled: false,
+    popularProductsEnabled: true,
     showSearchPage: false,
   },
 
@@ -164,16 +164,17 @@ Component({
     },
 
     handleProductClick(e) {
-      const { item } = e.detail;
-      if (
-        !item.isInternal ||
-        (item.isInternal && this.data.userInfo?.company)
-      ) {
-        this.setData({
-          showingModal: 'product',
-          selectedProduct: item,
-        });
+      const item = e.detail?.item || e.currentTarget.dataset.product;
+      if (!item) return;
+
+      if (item.type === 'secondhand') {
+        if (item.isInternal && !this.data.userInfo?.company) return;
       }
+
+      this.setData({
+        showingModal: 'product',
+        selectedProduct: item,
+      });
     },
 
     handleNavToPublishItemPage() {
@@ -188,7 +189,7 @@ Component({
 
     handleViewAllPopularProducts() {
       this.setData({
-        showingModal: 'official-products',
+        showingModal: 'products',
       });
     },
 

@@ -21,7 +21,7 @@
     <block wx:else>
       <swiper class="mt-4 h-36" previous-margin="60rpx" next-margin="60rpx" bindchange="onSwiperChange">
         <swiper-item wx:for="{{products}}" wx:key="_id">
-          <view class="h-full mr-2" bind:tap="handleOpenProductModal" data-product="{{item}}">
+          <view class="h-full mr-2" bind:tap="handleProductClick" data-product="{{item}}">
             <view class="gradient-bg rounded-lg p-4 py-5 h-full flex border-gray-light">
               <view class="w-32 h-full flex-shrink-0">
                 <image class="w-full h-full rounded-lg object-cover" src="{{item.pictures[0]}}" mode="aspectFill" />
@@ -179,7 +179,7 @@
     </view>
   </view>
 </view>
-<view class="cu-modal {{ showingModal === 'official-products' ? 'show' : '' }}" bindtap="hideModal">
+<view class="cu-modal {{ showingModal === 'products' ? 'show' : '' }}" bindtap="hideModal">
   <view class="cu-dialog rounded-lg bg-white" catchtap>
     <view class="p-6">
       <view class="text-foreground text-lg font-medium text-left mb-2">Popular</view>
@@ -187,8 +187,8 @@
         Choose from the carefully selected products we have prepared for you.
       </view>
       <view class="max-official-height overflow-scroll">
-        <block wx:if="{{officialProducts}}">
-          <block wx:for="{{officialProducts}}" wx:key="_id">
+        <block wx:if="{{products}}">
+          <block wx:for="{{products}}" wx:key="_id">
             <view class="h-full mb-4" bind:tap="handleOpenProductModal" data-product="{{item}}">
               <view class="gradient-bg rounded-lg p-4 py-5 h-full flex">
                 <view class="w-28 h-28 rounded-lg overflow-hidden">
