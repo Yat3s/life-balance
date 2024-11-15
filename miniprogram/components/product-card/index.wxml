@@ -6,7 +6,7 @@
     <view class="text-xs text-gray">发布于 {{formattedTime}}</view>
   </view>
   <text class="text-sm line-clamp-2 mb-3">{{title}}</text>
-  <view class="flex justify-between items-center">
+  <view class="flex justify-between items-baseline">
     <view class="text-base text-primary font-bold flex items-baseline gap-1 relative">
       <text class="text-xs">¥</text>
       <text>{{price}}</text>

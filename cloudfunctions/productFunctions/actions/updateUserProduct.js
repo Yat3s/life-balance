@@ -9,7 +9,7 @@ const COLLECTION_NAME_FLEA_MARKET_PRODUCTS = 'flea-market-products';
 exports.main = async (props, context) => {
   const wxContext = cloud.getWXContext();
   const openid = wxContext.OPENID;
-  const { productId, updateProductData } = props;
+  const { productId, updateUserProductData } = props;
 
   if (!productId) {
     return {
@@ -18,7 +18,10 @@ exports.main = async (props, context) => {
     };
   }
 
-  if (!updateProductData || Object.keys(updateProductData).length === 0) {
+  if (
+    !updateUserProductData ||
+    Object.keys(updateUserProductData).length === 0
+  ) {
     return {
       success: false,
       message: 'Update data is required',
@@ -27,7 +30,7 @@ exports.main = async (props, context) => {
 
   try {
     const dataToUpdate = {
-      ...updateProductData,
+      ...updateUserProductData,
       updatedAt: new Date().getTime(),
     };
 
