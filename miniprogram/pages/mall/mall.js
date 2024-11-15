@@ -1,6 +1,6 @@
 import { formatTimeAgo } from '../../common/util';
 import { getAppConfig } from '../../repository/baseRepo';
-import { fetchAllProducts } from '../../repository/productRepo';
+import { fetchAllFleaMarketProducts } from '../../repository/productRepo';
 import { fetchUserInfo } from '../../repository/userRepo';
 import { navigateToPublishItem, navigateToPurchase } from '../router';
 
@@ -31,13 +31,13 @@ Component({
 
   pageLifetimes: {
     show() {
-      this.fetchAllProducts();
+      this.fetchAllFleaMarketProducts();
     },
   },
 
   lifetimes: {
     attached() {
-      this.fetchAllProducts();
+      this.fetchAllFleaMarketProducts();
       this.fetchUserInfo();
     },
   },
@@ -78,8 +78,8 @@ Component({
       });
     },
 
-    fetchAllProducts() {
-      fetchAllProducts().then((res) => {
+    fetchAllFleaMarketProducts() {
+      fetchAllFleaMarketProducts().then((res) => {
         if (res) {
           const processedData = res.data.map((product) => ({
             ...product,

@@ -9,7 +9,7 @@ const COLLECTION_NAME_USERS = 'users';
 exports.main = async (props, context) => {
   const wxContext = cloud.getWXContext();
   const openid = wxContext.OPENID;
-  const { createProductData } = props;
+  const { createUserProductData } = props;
 
   try {
     const userResult = await db
@@ -20,7 +20,7 @@ exports.main = async (props, context) => {
       .get();
 
     const dataToInsert = {
-      ...createProductData,
+      ...createUserProductData,
       userId: openid,
       user: userResult.data[0],
       createdAt: new Date().getTime(),

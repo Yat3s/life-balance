@@ -23,21 +23,25 @@ export const fetchFleaMarketProduct = (productId) => {
     .get();
 };
 
-export const createProduct = (createProductData) => {
-  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, 'createProduct', {
-    createProductData,
+export const createUserProduct = (createUserProductData) => {
+  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, 'createUserProduct', {
+    createUserProductData,
   });
 };
 
-export const updateProduct = (productId, updateProductData) => {
-  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, 'updateProduct', {
+export const updateUserProduct = (productId, updateUserProductData) => {
+  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, 'updateUserProduct', {
     productId,
-    updateProductData,
+    updateUserProductData,
   });
 };
 
-export const fetchAllProducts = () => {
-  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, 'fetchAllProducts', {});
+export const fetchAllFleaMarketProducts = () => {
+  return cloudFunctionCall(
+    CLOUD_FUNCTION_COLLECTION,
+    'fetchAllFleaMarketProducts',
+    {}
+  );
 };
 
 export const fetchAllUserProducts = () => {

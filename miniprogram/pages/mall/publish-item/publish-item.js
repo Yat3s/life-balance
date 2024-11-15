@@ -1,8 +1,8 @@
 import { getAppConfig } from '../../../repository/baseRepo';
 import {
-  createProduct,
+  createUserProduct,
   fetchFleaMarketProduct,
-  updateProduct,
+  updateUserProduct,
 } from '../../../repository/productRepo';
 import { fetchUserInfo } from '../../../repository/userRepo';
 
@@ -249,13 +249,13 @@ Page({
       };
 
       if (productId) {
-        await updateProduct(productId, productData);
+        await updateUserProduct(productId, productData);
         wx.showToast({
           title: 'Update successfully!',
           icon: 'none',
         });
       } else {
-        await createProduct(productData);
+        await createUserProduct(productData);
         wx.showToast({
           title: 'Publish successfully!',
           icon: 'none',

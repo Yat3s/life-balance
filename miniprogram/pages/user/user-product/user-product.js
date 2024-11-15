@@ -2,7 +2,7 @@ import { formatTimeAgo } from '../../../common/util';
 import { fetchAllUserOrders } from '../../../repository/orderRepo';
 import {
   fetchAllUserProducts,
-  updateProduct,
+  updateUserProduct,
 } from '../../../repository/productRepo';
 import { ORDER_STATUS } from '../../../lib/constants';
 
@@ -117,11 +117,11 @@ Page({
         userProducts: products,
       });
 
-      const updateProductData = {
+      const updateUserProductData = {
         saleStatus: newStatus,
       };
 
-      updateProduct(id, updateProductData)
+      updateUserProduct(id, updateUserProductData)
         .then((res) => {
           if (res.success) {
             wx.showToast({
