@@ -11,7 +11,7 @@ const app = getApp();
 const COLLAPSED_SCROLL_TOP = 200;
 const MIN_TITLE_SCALE = 0.5;
 const MIN_SUBTITLE_SCALE = 0.9;
-const MAX_APP_BAR_HEIGHT = 200; //px
+const MAX_APP_BAR_HEIGHT = 200; // px
 
 Component({
   options: {
@@ -19,15 +19,13 @@ Component({
   },
   properties: {},
   data: {
-    officialProducts: null,
-    secondhandProducts: null,
-    leftColumnProducts: null,
-    rightColumnProducts: null,
+    products: null,
+    fleaMarketProducts: null,
     fleaMarketKeywords: null,
     toolbarHeight: app.globalData.toolbarHeight,
     statusBarHeight: app.globalData.statusBarHeight,
     appBarHeight: MAX_APP_BAR_HEIGHT,
-    selectedCategory: 'New', // Default selected category
+    selectedCategory: 'New',
     popularProductsEnabled: false,
     showSearchPage: false,
   },
@@ -94,7 +92,8 @@ Component({
 
           this.setData(
             {
-              secondhandProducts: processedData,
+              originalFleaMarketProducts: processedData,
+              fleaMarketProducts: processedData,
             },
             () => {
               this.filterProductsByCategory();
@@ -127,8 +126,8 @@ Component({
     },
 
     filterProductsByCategory() {
-      const { secondhandProducts, selectedCategory } = this.data;
-      let filteredProducts = [...secondhandProducts];
+      const { originalFleaMarketProducts, selectedCategory } = this.data;
+      let filteredProducts = [...originalFleaMarketProducts];
 
       switch (selectedCategory) {
         case 'New':
@@ -147,38 +146,13 @@ Component({
           );
       }
 
-      this.setData(
-        {
-          filteredSecondhandProducts: filteredProducts,
-        },
-        () => {
-          this.distributeProductsToColumns();
-        }
-      );
-    },
-
-    distributeProductsToColumns() {
-      const { filteredSecondhandProducts } = this.data;
-      const leftColumn = [];
-      const rightColumn = [];
-
-      filteredSecondhandProducts.forEach((product, index) => {
-        if (index % 2 === 0) {
-          leftColumn.push(product);
-        } else {
-          rightColumn.push(product);
-        }
-      });
-
       this.setData({
-        leftColumnProducts: leftColumn,
-        rightColumnProducts: rightColumn,
+        fleaMarketProducts: filteredProducts,
       });
     },
 
     handleCategorySelect(e) {
       const selectedCategory = e.currentTarget.dataset.category;
-
       this.setData(
         {
           selectedCategory,
@@ -189,6 +163,19 @@ Component({
       );
     },
 
+    handleProductClick(e) {
+      const { item } = e.detail;
+      if (
+        !item.isInternal ||
+        (item.isInternal && this.data.userInfo?.company)
+      ) {
+        this.setData({
+          showingModal: 'product',
+          selectedProduct: item,
+        });
+      }
+    },
+
     handleNavToPublishItemPage() {
       navigateToPublishItem();
     },
@@ -196,15 +183,6 @@ Component({
     hideModal() {
       this.setData({
         showingModal: null,
-      });
-    },
-
-    handleOpenProductModal(e) {
-      const product = e.currentTarget.dataset.product;
-
-      this.setData({
-        showingModal: 'product',
-        selectedProduct: product,
       });
     },
 
@@ -249,9 +227,9 @@ Component({
       this.setData(
         {
           showProductSearchContent: true,
+          fleaMarketProducts: this.data.originalFleaMarketProducts,
         },
         () => {
-          this.distributeSearchResults(this.data.secondhandProducts);
           setTimeout(() => {
             this.setData({
               searchFocus: true,
@@ -261,6 +239,48 @@ Component({
       );
     },
 
+    searchProduct(keyword) {
+      if (!keyword) {
+        this.setData({
+          fleaMarketProducts: this.data.originalFleaMarketProducts,
+        });
+        return;
+      }
+
+      const searchResults = this.data.originalFleaMarketProducts.filter(
+        (product) => {
+          if (product.title.toLowerCase().includes(keyword.toLowerCase())) {
+            return true;
+          }
+
+          if (
+            product.description?.toLowerCase().includes(keyword.toLowerCase())
+          ) {
+            return true;
+          }
+
+          if (
+            product.categories?.some((category) =>
+              category.toLowerCase().includes(keyword.toLowerCase())
+            )
+          ) {
+            return true;
+          }
+
+          const searchPrice = parseFloat(keyword);
+          if (!isNaN(searchPrice) && product.price === searchPrice) {
+            return true;
+          }
+
+          return false;
+        }
+      );
+
+      this.setData({
+        fleaMarketProducts: searchResults,
+      });
+    },
+
     onSearchChanged(e) {
       const keyword = e.detail.value;
       this.setData({
@@ -281,8 +301,12 @@ Component({
       this.setData({
         searchInput: '',
         showSearchPage: false,
-        searchResults: [],
+        fleaMarketProducts: this.data.originalFleaMarketProducts,
       });
+
+      setTimeout(() => {
+        this.filterProductsByCategory();
+      }, 300);
     },
 
     onSearchPageExit() {
@@ -291,94 +315,9 @@ Component({
       });
     },
 
-    onSearchChanged(e) {
-      const keyword = e.detail.value;
-      this.searchProduct(keyword);
-    },
-
     onSearchClicked() {
       this.setData({
         showSearchPage: true,
-      });
-    },
-
-    onProductKeyboardClicked(e) {
-      const keyword = e.currentTarget.dataset.keyword;
-      this.setData({
-        searchInput: keyword,
-      });
-      this.searchProduct(keyword);
-    },
-
-    onDismissSearchPage() {
-      this.setData({
-        searchInput: '',
-        showSearchPage: false,
-      });
-
-      setTimeout(() => {
-        const { secondhandProducts } = this.data;
-        secondhandProducts.forEach((item) => {
-          item.hide = false;
-        });
-        this.setData({
-          secondhandProducts,
-        });
-      }, 300);
-    },
-
-    searchProduct(keyword) {
-      if (!keyword) {
-        this.distributeSearchResults(this.data.secondhandProducts);
-        return;
-      }
-
-      const { secondhandProducts } = this.data;
-      const searchResults = secondhandProducts.filter((product) => {
-        if (product.title.toLowerCase().includes(keyword.toLowerCase())) {
-          return true;
-        }
-
-        if (
-          product.description?.toLowerCase().includes(keyword.toLowerCase())
-        ) {
-          return true;
-        }
-
-        if (
-          product.categories?.some((category) =>
-            category.toLowerCase().includes(keyword.toLowerCase())
-          )
-        ) {
-          return true;
-        }
-
-        const searchPrice = parseFloat(keyword);
-        if (!isNaN(searchPrice) && product.price === searchPrice) {
-          return true;
-        }
-
-        return false;
-      });
-
-      this.distributeSearchResults(searchResults);
-    },
-
-    distributeSearchResults(results) {
-      const leftColumn = [];
-      const rightColumn = [];
-
-      results.forEach((product, index) => {
-        if (index % 2 === 0) {
-          leftColumn.push(product);
-        } else {
-          rightColumn.push(product);
-        }
-      });
-
-      this.setData({
-        leftSearchResults: leftColumn,
-        rightSearchResults: rightColumn,
       });
     },
   },
