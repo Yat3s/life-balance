@@ -1,8 +1,5 @@
 {
   "component": true,
-  "usingComponents": {
-    "product-grid": "/components/product-grid/index"
-  },
-  "disableScroll": true,
-  "navigationStyle": "custom"
+  "usingComponents": {},
+  "multipleSlots": true
 }

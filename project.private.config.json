@@ -131,6 +131,5 @@
     }
   },
   "description": "Project configuration file, more information: https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
-  "projectname": "Life-Balance",
-  "libVersion": "3.5.8"
+  "projectname": "Life"
 }
