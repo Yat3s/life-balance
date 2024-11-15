@@ -53,15 +53,5 @@
     "scope.userLocation": {
       "desc": "你的位置信息将用于获取附近的活动信息"
     }
-  },
-  "renderer": "skyline",
-  "lazyCodeLoading": "requiredComponents",
-  "rendererOptions": {
-    "skyline": {
-      "defaultDisplayBlock": true,
-      "defaultContentBox": true,
-      "disableABTest": true
-    }
-  },
-  "componentFramework": "glass-easel"
+  }
 }

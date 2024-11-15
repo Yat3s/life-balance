@@ -1,30 +1,27 @@
-<block wx:if="{{items && items.length > 0}}">
-  <grid-view type="masonry" cross-axis-count="{{crossAxisCount}}" cross-axis-gap="{{crossAxisGap}}" main-axis-gap="{{mainAxisGap}}">
-    <block wx:for="{{items}}" wx:key="id">
-      <view class="product-card bg-white rounded-lg p-4 border-gray-light relative" bindtap="onItemClick" data-item="{{item}}">
-        <!-- Internal product overlay -->
+<view class="flex gap-3">
+  <view class="flex-1 flex flex-col gap-3" wx:for="{{[leftColumnProducts, rightColumnProducts]}}" wx:key="*this" wx:for-item="column">
+    <block wx:for="{{column}}" wx:key="_id">
+      <view class="relative bg-white rounded-lg p-4 border-gray-light" bindtap="handleProductClick" data-item="{{item}}">
         <view wx:if="{{item.isInternal && !company}}" class="absolute inset-0 overlay flex items-center justify-center z-10">
           <view class="text-center flex flex-col">
             <image class="w-8 h-8 mx-auto mb-2" src="/images/ic_ms.png" />
             <text class="text-sm text-foreground">仅微软员工可查看</text>
           </view>
         </view>
-        <!-- Product card content -->
         <image wx:if="{{item.pictures && item.pictures.length > 0}}" class="w-full h-36 rounded-lg mb-3" src="{{item.pictures[0]}}" mode="aspectFill" />
         <view class="flex items-center gap-2 mb-3">
-          <image class="w-4 h-4 rounded-full" src="{{item.user.avatarUrl}}" mode="aspectFill" />
+          <image class="w-4 h-4 rounded-full" src="{{item.user.avatarUrl}}" />
           <view class="text-xs text-gray">发布于 {{item.formattedTime}}</view>
         </view>
         <text class="text-sm line-clamp-2 mb-3">{{item.title}}</text>
         <view class="flex justify-between items-baseline">
-          <view class="text-base text-primary font-bold flex items-baseline gap-1 relative">
+          <view class="text-base text-primary font-bold flex items-baseline gap-1">
             <text class="text-xs">¥</text>
             <text>{{item.price}}</text>
-            <image wx:if="{{item.isInternal}}" class="w-3 h-3 absolute -right-3dot5 -top-0dot5" src="/images/ic_ms.png" />
           </view>
           <view class="flex gap-2">
             <block wx:if="{{item.categories && item.categories.length > 0}}">
-              <view class="text-gray font-lesslight text-xs" wx:for="{{utils.formatCategories(item.categories)}}" wx:key="index" wx:for-item="category">
+              <view class="text-gray font-lesslight text-xs" wx:for="{{item.categories}}" wx:key="index" wx:for-item="category">
                 {{category}}
               </view>
             </block>
@@ -33,13 +30,5 @@
         </view>
       </view>
     </block>
-  </grid-view>
-</block>
-<block wx:else>
-  <view class="flex flex-col items-center justify-center" style="height: 60vh;">
-    <view class="text-gray-500 text-center">
-      <view class="text-base mb-2">暂无相关商品</view>
-      <view class="text-sm text-gray-400">换个关键词试试看～</view>
-    </view>
   </view>
-</block>
+</view>
