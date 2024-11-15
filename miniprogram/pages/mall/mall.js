@@ -1,6 +1,9 @@
 import { formatTimeAgo } from '../../common/util';
 import { getAppConfig } from '../../repository/baseRepo';
-import { fetchAllFleaMarketProducts } from '../../repository/productRepo';
+import {
+  fetchAllFleaMarketProducts,
+  fetchAllProducts,
+} from '../../repository/productRepo';
 import { fetchUserInfo } from '../../repository/userRepo';
 import { navigateToPublishItem, navigateToPurchase } from '../router';
 
@@ -32,6 +35,7 @@ Component({
   pageLifetimes: {
     show() {
       this.fetchAllFleaMarketProducts();
+      this.fetchAllProducts();
     },
   },
 
@@ -39,6 +43,7 @@ Component({
     attached() {
       this.fetchAllFleaMarketProducts();
       this.fetchUserInfo();
+      this.fetchAllProducts();
     },
   },
 
@@ -102,6 +107,22 @@ Component({
         this.setData({
           fleaMarketKeywords: config.fleaMarketKeywords,
         });
+      });
+    },
+
+    fetchAllProducts() {
+      fetchAllProducts().then((res) => {
+        if (res) {
+          const processedData = res.data.map((product) => ({
+            ...product,
+            formattedTime: formatTimeAgo(product.createdAt),
+            type: 'popular',
+          }));
+
+          this.setData({
+            products: processedData,
+          });
+        }
       });
     },
 
