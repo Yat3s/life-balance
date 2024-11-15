@@ -1,4 +1,6 @@
 {
   "component": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "eventCard": "/components/eventcard/eventcard"
+  }
 }

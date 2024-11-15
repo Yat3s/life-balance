@@ -16,9 +16,19 @@ Component({
 
   lifetimes: {
     attached() {
-      fetchLatestWechatGroups().then((latestWechatGroups) => {
+      fetchLatestWechatGroups().then((circles) => {
         this.setData({
-          latestCircle: latestWechatGroups[0],
+          latestCircle: circles[0],
+          cardConfig: {
+            title: "Latest Circle",
+            cardTitle: circles[0].name,
+            description: circles[0].tagStr,
+            members: [],
+            memberCount: circles[0].memberCount,
+            showDescription: true,
+            showAvatars: false,
+            showMemberCount: true,
+          },
         });
       });
     },
@@ -28,7 +38,7 @@ Component({
    * Component methods
    */
   methods: {
-    onLatestCircleClick() {
+    handleLatestCircleClick() {
       wx.redirectTo({
         url: "/pages/index/index?page=connection",
       });

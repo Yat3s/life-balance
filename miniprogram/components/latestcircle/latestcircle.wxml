@@ -1,26 +1,3 @@
-<view bind:tap="onLatestCircleClick" class="border border-solid border-gray-200 p-3 rounded-lg h-38 relative">
-  <view class="px-1 flex items-center justify-between">
-    <view class="font-bold text-xs">Latest Circle</view>
-    <view class="text-sm text-gray-400">
-      <view class="text-xxs">More</view>
-    </view>
-  </view>
-
-  <view class="relative flex flex-col items-end mt-4">
-    <view class="latest-top-card h-22 flex flex-col justify-between p-4 pb-2 w-full rounded-lg z-10 absolute top-0 left-0">
-      <view class="text-xs latest-card-title truncate">
-        {{latestCircle.name}}
-      </view>
-      <view>
-        <view class="text-xxs text-gray-400">
-          {{latestCircle.tagStr}}
-        </view>
-        <view class="text-xxs text-gray-400">
-          {{latestCircle.memberCount}} members
-        </view>
-      </view>
-    </view>
-    <view class="latest-bottom-card h-22 w-5on6 rounded-lg absolute top-2 right-2">
-    </view>
-  </view>
+<view>
+  <eventCard cardConfig="{{cardConfig}}" onClick="handleLatestCircleClick" />
 </view>

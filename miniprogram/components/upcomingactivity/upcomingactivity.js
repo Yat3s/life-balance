@@ -1,4 +1,4 @@
-import { fetchLatestActivity } from "../../repository/dashboardRepo";
+import { fetchUpcomingActivity } from "../../repository/dashboardRepo";
 
 Component({
   options: {
@@ -16,9 +16,20 @@ Component({
 
   lifetimes: {
     attached() {
-      fetchLatestActivity().then((latestActivity) => {
+      fetchUpcomingActivity().then((activities) => {
         this.setData({
-          latestActivity: latestActivity[0],
+          upcomingActivity: activities[0],
+          cardConfig: {
+            title: "Upcoming Activity",
+            cardTitle: activities[0].title,
+            description:
+              activities[0].startDateStr + " - " + activities[0].location.name,
+            members: activities[0].participants,
+            memberCount: activities[0].maxParticipant,
+            showDescription: true,
+            showAvatars: true,
+            showMemberCount: false,
+          },
         });
       });
     },
@@ -28,7 +39,7 @@ Component({
    * Component methods
    */
   methods: {
-    onUpcomingActivityClick() {
+    handleUpcomingActivityClick() {
       wx.redirectTo({
         url: "/pages/index/index?page=connection",
       });

@@ -101,7 +101,7 @@ export function fetchWechatGroupCount() {
   return db.collection(COLLECTION_NAME_WECHAT_GROUPS).count();
 }
 
-export function fetchLatestActivity() {
+export function fetchUpcomingActivity() {
   return cloudCall(
     db
       .collection(COLLECTION_ACTIVITY)
