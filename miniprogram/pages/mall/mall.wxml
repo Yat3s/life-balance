@@ -1,5 +1,5 @@
-<import src="../../components/product-card/index.wxml" />
 <import src="../../components/skeleton/index.wxml" />
+<!-- App Bar -->
 <view class="appBar" style="height: {{appBarHeight}}px;">
   <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="bg-white toolbar plr {{collapsed? 'shadow' : ''}}">
     <view style="font-size: {{titleScale * 24}}pt;" class="title">Flea Market</view>
@@ -8,123 +8,77 @@
     </view>
   </view>
 </view>
+<!-- Main Content -->
 <scroll-view scroll-y="true" class="main pb-24" bindscroll="onPageScrolled">
   <view style="height: 200px;" />
+  <!-- Popular Section -->
   <block wx:if="{{popularProductsEnabled}}">
     <view class="plr flex items-center justify-between">
       <view class="section-title">Popular</view>
       <view class="section-action" bind:tap="handleViewAllPopularProducts">View all</view>
     </view>
-    <!-- Popular Section -->
-    <block wx:if="{{!products}}">
-      <template is="popular-skeleton" />
-    </block>
-    <block wx:else>
-      <swiper class="mt-4 h-36" previous-margin="60rpx" next-margin="60rpx" bindchange="onSwiperChange">
-        <swiper-item wx:for="{{products}}" wx:key="_id">
-          <view class="h-full mr-2" bind:tap="handleOpenProductModal" data-product="{{item}}">
-            <view class="gradient-bg rounded-lg p-4 py-5 h-full flex border-gray-light">
-              <view class="w-32 h-full flex-shrink-0">
-                <image class="w-full h-full rounded-lg object-cover" src="{{item.pictures[0]}}" mode="aspectFill" />
-              </view>
-              <view class="ml-4 flex flex-col justify-center flex-1 gap-2">
-                <view class="text-foreground text-lg font-medium line-clamp-2">{{item.title}}</view>
-                <view class="flex gap-2 mt-2 flex-wrap">
-                  <view wx:for="{{item.tags}}" wx:key="*this" wx:for-item="tag" class="text-purpleLight text-center text-xs px-3 py-1 rounded-lg border-purple-light">
-                    {{tag}}
-                  </view>
+    <swiper wx:if="{{products}}" class="mt-4 h-36" previous-margin="60rpx" next-margin="60rpx" bindchange="onSwiperChange">
+      <swiper-item wx:for="{{products}}" wx:key="_id">
+        <view class="h-full mr-2" bind:tap="handleOpenProductModal" data-product="{{item}}">
+          <view class="gradient-bg rounded-lg p-4 py-5 h-full flex border-gray-light">
+            <image class="w-32 h-full rounded-lg object-cover" src="{{item.pictures[0]}}" mode="aspectFill" />
+            <view class="ml-4 flex flex-col justify-center flex-1">
+              <view class="text-foreground text-lg font-medium line-clamp-2">{{item.title}}</view>
+              <view class="flex gap-2 mt-2 flex-wrap">
+                <view wx:for="{{item.tags}}" wx:key="*this" wx:for-item="tag" class="text-purpleLight text-center text-xs px-3 py-1 rounded-lg border-purple-light">
+                  {{tag}}
                 </view>
               </view>
             </view>
           </view>
-        </swiper-item>
-      </swiper>
-    </block>
-    <view class="mb-10" />
+        </view>
+      </swiper-item>
+    </swiper>
+    <template wx:else is="popular-skeleton" />
   </block>
-  <!-- Flea Market Section -->
+  <!-- Search Bar -->
   <view class="plr">
-    <view class="flex justify-end items-center">
-      <text bind:tap="handleNavToPublishItemPage" class="section-action self-end">Sell item</text>
+    <view class="flex justify-end items-center mb-2">
+      <text bind:tap="handleNavToPublishItemPage" class="section-action">Sell item</text>
     </view>
-  </view>
-  <!-- Search -->
-  <share-element duration="200" key="search-input" transform>
-    <view class="plr margin-top-sm">
-      <view bindtap="onSearchClicked" class="search-container flex align-center">
+    <!-- Keywords Preview -->
+    <share-element duration="200" key="search-input" transform>
+      <view class="search-container flex align-center" bindtap="toggleSearchInput">
         <image src="../../images/ic_search_grey.png" class="search-icon" />
-        <swiper class="search-keyword-swiper margin-left-sm" duration="500" autoplay="true" vertical="true" circular="true" interval="3000">
-          <block wx:for="{{fleaMarketKeywords}}" wx:key="*this">
-            <swiper-item class="search-keyword-swiper-item">
+        <!-- Show swiper when search is not active -->
+        <block wx:if="{{!isSearchActive}}">
+          <swiper class="search-keyword-swiper margin-left-sm" duration="500" autoplay vertical circular interval="3000">
+            <swiper-item wx:for="{{fleaMarketKeywords}}" wx:key="*this" class="search-keyword-swiper-item">
               <view>{{item}}</view>
             </swiper-item>
-          </block>
-        </swiper>
-      </view>
-    </view>
-  </share-element>
-  <!-- Category Pills -->
-  <block wx:if="{{!fleaMarketKeywords}}">
-    <template is="category-skeleton" />
-  </block>
-  <block wx:else>
-    <scroll-view scroll-x="true" class="whitespace-nowrap plr mt-4">
-      <view class="inline-flex gap-7">
-        <view class="category-item text-sm {{selectedCategory === 'New' ? 'active' : ''}}" data-category="New" bindtap="handleCategorySelect">
-          New
-        </view>
-        <view class="category-item text-sm {{selectedCategory === '微软员工专属' ? 'active' : ''}}" data-category="微软员工专属" bindtap="handleCategorySelect">
-          微软员工专属
-        </view>
-        <block wx:for="{{fleaMarketKeywords}}" wx:key="*this">
-          <view class="category-item text-sm {{selectedCategory === item ? 'active' : ''}}" data-category="{{item}}" bindtap="handleCategorySelect">
-            {{item}}
-          </view>
+          </swiper>
         </block>
+        <!-- Show input when search is active -->
+        <input wx:else class="flex-1 ml-2" placeholder="Search Products" value="{{searchInput}}" bindinput="onSearchChanged" focus="{{isSearchActive}}" bindblur="onSearchBlur" />
       </view>
-    </scroll-view>
-  </block>
-  <!-- Product Grid -->
-  <block wx:if="{{!leftColumnProducts || !rightColumnProducts}}">
-    <template is="product-grid-skeleton" />
-  </block>
-  <block wx:else>
-    <view class="mt-4 plr flex gap-3">
-      <view class="flex-1 flex flex-col gap-3">
-        <view wx:for="{{leftColumnProducts}}" wx:key="_id">
-          <view wx:if="{{!item.isInternal || (item.isInternal && userInfo.company)}}" class="bg-white rounded-lg p-4 border-gray-light" bindtap="handleOpenProductModal" data-product="{{item}}">
-            <template is="product-card" data="{{...item}}" />
-          </view>
-          <view wx:else class="bg-white rounded-lg p-4 border-gray-light relative">
-            <view class="absolute inset-0 overlay flex items-center justify-center z-10">
-              <view class="text-center flex flex-col">
-                <image class="w-8 h-8 mx-auto mb-2" src="/images/ic_ms.png" />
-                <text class="text-sm text-foreground">仅微软员工可查看</text>
-              </view>
-            </view>
-            <template is="product-card" data="{{...item}}" />
-          </view>
-        </view>
+    </share-element>
+  </view>
+  <!-- Category Selection -->
+  <scroll-view wx:if="{{!isSearchActive && fleaMarketKeywords && !searchInput}}" scroll-x class="whitespace-nowrap plr mt-4">
+    <view class="inline-flex gap-7">
+      <view class="category-item text-sm {{selectedCategory === 'New' ? 'active' : ''}}" data-category="New" bindtap="handleCategorySelect">
+        New
       </view>
-      <view class="flex-1 flex flex-col gap-3">
-        <view wx:for="{{rightColumnProducts}}" wx:key="_id">
-          <view wx:if="{{!item.isInternal || (item.isInternal && userInfo.company)}}" class="bg-white rounded-lg p-4 border-gray-light" bindtap="handleOpenProductModal" data-product="{{item}}">
-            <template is="product-card" data="{{...item}}" />
-          </view>
-          <view wx:else class="bg-white rounded-lg p-4 border-gray-light relative">
-            <view class="absolute inset-0 overlay flex items-center justify-center z-10">
-              <view class="text-center flex flex-col">
-                <image class="w-8 h-8 mx-auto mb-2" src="/images/ic_ms.png" />
-                <text class="text-sm text-foreground">仅微软员工可查看</text>
-              </view>
-            </view>
-            <template is="product-card" data="{{...item}}" />
-          </view>
-        </view>
+      <view class="category-item text-sm {{selectedCategory === '微软员工专属' ? 'active' : ''}}" data-category="微软员工专属" bindtap="handleCategorySelect">
+        微软员工专属
+      </view>
+      <view wx:for="{{fleaMarketKeywords}}" wx:key="*this" class="category-item text-sm {{selectedCategory === item ? 'active' : ''}}" data-category="{{item}}" bindtap="handleCategorySelect">
+        {{item}}
       </view>
     </view>
-  </block>
+  </scroll-view>
+  <!-- Product Grid -->
+  <view wx:if="{{leftColumnProducts && rightColumnProducts}}" class="mt-4 plr">
+    <product-grid leftColumnProducts="{{leftColumnProducts}}" rightColumnProducts="{{rightColumnProducts}}" company="{{userInfo.company}}" bind:productClick="onProductClick" />
+  </view>
+  <template wx:else is="product-grid-skeleton" />
 </scroll-view>
+<!-- Product Detail Modal -->
 <view class="cu-modal {{ showingModal === 'product' ? 'show' : '' }}" bindtap="hideModal" catchtouchmove>
   <view class="cu-dialog rounded-lg bg-white" catchtap>
     <!-- Image Carousel -->
@@ -203,6 +157,7 @@
     </view>
   </view>
 </view>
+<!-- All Popular Products Modal -->
 <view class="cu-modal {{ showingModal === 'official-products' ? 'show' : '' }}" bindtap="hideModal">
   <view class="cu-dialog rounded-lg bg-white" catchtap>
     <view class="p-6">
@@ -236,66 +191,3 @@
     </view>
   </view>
 </view>
-<!-- Flea Market Search Page -->
-<page-container bind:afterenter="onSearchPageEnter" bind:afterleave="onSearchPageExit" duration="200" position="center" show="{{showSearchPage}}">
-  <view class="search-page">
-    <text bindtap="onDismissSearchPage" class="cuIcon-close search-page-close" />
-    <view class="flex-1" />
-    <share-element duration="200" key="search-input" transform>
-      <view class="plr margin-top-sm">
-        <view class="search-container flex items-center">
-          <image src="../../images/ic_search_grey.png" class="search-icon" />
-          <view class="margin-left-xs">
-            <input focus="{{searchFocus}}" style="width: 100%;" value="{{searchInput}}" bindinput="onSearchChanged" placeholder="Search Products" />
-          </view>
-        </view>
-      </view>
-    </share-element>
-    <view wx:if="{{showProductSearchContent}}" class="animation-fade">
-      <!-- Search Keywords -->
-      <scroll-view scroll-x="true" class="margin-top-sm">
-        <view class="plr flex items-center">
-          <view bindtap="onProductKeyboardClicked" data-keyword="{{item}}" class="search-keyword margin-right-sm" wx:for="{{fleaMarketKeywords}}" wx:key="item">
-            {{item}}
-          </view>
-        </view>
-      </scroll-view>
-      <scroll-view class="search-page-list margin-top-sm" scroll-y="true">
-        <view class="flex gap-3 plr">
-          <view class="flex-1 flex flex-col gap-3">
-            <view wx:for="{{leftSearchResults}}" wx:key="_id" bindtap="handleOpenProductModal" data-product="{{item}}">
-              <view wx:if="{{!item.isInternal || (item.isInternal && userInfo.company)}}" class="bg-white rounded-lg p-4 border-gray-light" bindtap="handleOpenProductModal" data-product="{{item}}">
-                <template is="product-card" data="{{...item}}" />
-              </view>
-              <view wx:else class="bg-white rounded-lg p-4 border-gray-light relative">
-                <view class="absolute inset-0 overlay flex items-center justify-center z-10">
-                  <view class="text-center flex flex-col">
-                    <image class="w-8 h-8 mx-auto mb-2" src="/images/ic_ms.png" />
-                    <text class="text-sm text-foreground">仅微软员工可查看</text>
-                  </view>
-                </view>
-                <template is="product-card" data="{{...item}}" />
-              </view>
-            </view>
-          </view>
-          <view class="flex-1 flex flex-col gap-3">
-            <view wx:for="{{rightSearchResults}}" wx:key="_id" bindtap="handleOpenProductModal" data-product="{{item}}">
-              <view wx:if="{{!item.isInternal || (item.isInternal && userInfo.company)}}" class="bg-white rounded-lg p-4 border-gray-light" bindtap="handleOpenProductModal" data-product="{{item}}">
-                <template is="product-card" data="{{...item}}" />
-              </view>
-              <view wx:else class="bg-white rounded-lg p-4 border-gray-light relative">
-                <view class="absolute inset-0 overlay flex items-center justify-center z-10">
-                  <view class="text-center flex flex-col">
-                    <image class="w-8 h-8 mx-auto mb-2" src="/images/ic_ms.png" />
-                    <text class="text-sm text-foreground">仅微软员工可查看</text>
-                  </view>
-                </view>
-                <template is="product-card" data="{{...item}}" />
-              </view>
-            </view>
-          </view>
-        </view>
-      </scroll-view>
-    </view>
-  </view>
-</page-container>

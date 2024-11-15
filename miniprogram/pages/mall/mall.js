@@ -178,10 +178,11 @@ Component({
 
     handleCategorySelect(e) {
       const selectedCategory = e.currentTarget.dataset.category;
-
       this.setData(
         {
           selectedCategory,
+          searchInput: '',
+          isSearchActive: false,
         },
         () => {
           this.filterProductsByCategory();
@@ -199,9 +200,8 @@ Component({
       });
     },
 
-    handleOpenProductModal(e) {
-      const product = e.currentTarget.dataset.product;
-
+    onProductClick(e) {
+      const product = e.detail;
       this.setData({
         showingModal: 'product',
         selectedProduct: product,
@@ -245,130 +245,40 @@ Component({
       });
     },
 
-    onSearchPageEnter() {
-      this.setData(
-        {
-          showProductSearchContent: true,
-        },
-        () => {
-          this.distributeSearchResults(this.data.secondhandProducts);
-          setTimeout(() => {
-            this.setData({
-              searchFocus: true,
-            });
-          }, 200);
-        }
-      );
-    },
-
-    onSearchChanged(e) {
-      const keyword = e.detail.value;
+    toggleSearchInput() {
       this.setData({
-        searchInput: keyword,
+        isSearchActive: true,
       });
-      this.searchProduct(keyword);
+      this.filterProductsByCategory();
     },
 
-    onProductKeyboardClicked(e) {
-      const keyword = e.currentTarget.dataset.keyword;
-      this.setData({
-        searchInput: keyword,
-      });
-      this.searchProduct(keyword);
-    },
-
-    onDismissSearchPage() {
-      this.setData({
-        searchInput: '',
-        showSearchPage: false,
-        searchResults: [],
-      });
-    },
-
-    onSearchPageExit() {
-      this.setData({
-        showProductSearchContent: false,
-      });
-    },
-
-    onSearchChanged(e) {
-      const keyword = e.detail.value;
-      this.searchProduct(keyword);
-    },
-
-    onSearchClicked() {
-      this.setData({
-        showSearchPage: true,
-      });
-    },
-
-    onProductKeyboardClicked(e) {
-      const keyword = e.currentTarget.dataset.keyword;
-      this.setData({
-        searchInput: keyword,
-      });
-      this.searchProduct(keyword);
-    },
-
-    onDismissSearchPage() {
-      this.setData({
-        searchInput: '',
-        showSearchPage: false,
-      });
-
-      setTimeout(() => {
-        const { secondhandProducts } = this.data;
-        secondhandProducts.forEach((item) => {
-          item.hide = false;
-        });
+    onSearchBlur() {
+      if (!this.data.searchInput) {
         this.setData({
-          secondhandProducts,
+          isSearchActive: false,
         });
-      }, 300);
+      }
     },
 
-    searchProduct(keyword) {
+    onSearchChanged(e) {
+      const keyword = e.detail.value?.toLowerCase() || '';
+      this.setData({
+        searchInput: e.detail.value || '',
+      });
+
       if (!keyword) {
-        this.distributeSearchResults(this.data.secondhandProducts);
+        this.filterProductsByCategory();
         return;
       }
 
-      const { secondhandProducts } = this.data;
-      const searchResults = secondhandProducts.filter((product) => {
-        if (product.title.toLowerCase().includes(keyword.toLowerCase())) {
-          return true;
-        }
+      const { filteredSecondhandProducts } = this.data;
+      const searchResults = filteredSecondhandProducts.filter((product) =>
+        this.productMatchesSearch(product, keyword)
+      );
 
-        if (
-          product.description?.toLowerCase().includes(keyword.toLowerCase())
-        ) {
-          return true;
-        }
-
-        if (
-          product.categories?.some((category) =>
-            category.toLowerCase().includes(keyword.toLowerCase())
-          )
-        ) {
-          return true;
-        }
-
-        const searchPrice = parseFloat(keyword);
-        if (!isNaN(searchPrice) && product.price === searchPrice) {
-          return true;
-        }
-
-        return false;
-      });
-
-      this.distributeSearchResults(searchResults);
-    },
-
-    distributeSearchResults(results) {
       const leftColumn = [];
       const rightColumn = [];
-
-      results.forEach((product, index) => {
+      searchResults.forEach((product, index) => {
         if (index % 2 === 0) {
           leftColumn.push(product);
         } else {
@@ -377,8 +287,29 @@ Component({
       });
 
       this.setData({
-        leftSearchResults: leftColumn,
-        rightSearchResults: rightColumn,
+        leftColumnProducts: leftColumn,
+        rightColumnProducts: rightColumn,
+      });
+    },
+
+    productMatchesSearch(product, keyword) {
+      return (
+        product.title?.toLowerCase().includes(keyword) ||
+        product.description?.toLowerCase().includes(keyword) ||
+        product.categories?.some((category) =>
+          category.toLowerCase().includes(keyword)
+        ) ||
+        parseFloat(keyword) === product.price
+      );
+    },
+
+    onProductKeywordClicked(e) {
+      const keyword = e.currentTarget.dataset.keyword;
+      this.setData({
+        searchInput: keyword,
+      });
+      this.onSearchChanged({
+        detail: { value: keyword },
       });
     },
   },
