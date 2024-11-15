@@ -52,8 +52,8 @@
 .category-item {
   position: relative;
   padding-bottom: 10rpx;
-  color: #9f9f9f;
-  font-weight: 250;
+  color: #c4c4c4;
+  font-weight: 400;
 }
 
 .category-item.active {

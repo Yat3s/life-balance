@@ -70,13 +70,28 @@ export const formatTimeAgo = (timestamp) => {
 };
 
 export const getDateInEnglish = (date) => {
-  const options = {
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-  };
+  const d = new Date(date);
+  const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
 
-  return new Intl.DateTimeFormat("en-US", options).format(new Date(date));
+  const dayOfWeek = weekdays[d.getDay()];
+  const month = months[d.getMonth()];
+  const day = d.getDate();
+
+  return `${dayOfWeek}, ${month} ${day}`;
 };
 
 export const formatDateToMMDD = (timestamp) => {

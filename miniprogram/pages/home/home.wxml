@@ -4,11 +4,7 @@
 <scroll-view scroll-y="true" class="main" bindscroll="onPageScrolled">
   <view style="height:160px; padding-top: {{statusBarHeight + toolbarHeight}}px; margin-top: 32rpx;" class="flex justify-between">
     <view class="flex">
-      <image style="width: {{avatarScale * 80}}rpx; height: {{avatarScale * 80}}rpx;" class="user-avatar" wx:if="{{userInfo}}" src="{{userInfo.avatarUrl}}"></image>
-      <view class="user-avatar" wx:if="{{!userInfo}}">
-        <open-data type="userAvatarUrl"></open-data>
-      </view>
-      <view class="margin-left">
+      <view>
         <view style="font-size: {{titleScale * 14}}pt; line-height: {{titleScale * 14}}pt;" class="user-name">
           Hi, {{userInfo ? userInfo.nickName : 'Friend!'}}
         </view>

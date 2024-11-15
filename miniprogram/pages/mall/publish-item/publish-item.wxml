@@ -15,7 +15,7 @@
     <view class="flex justify-between gap-8 py-3dot5">
       <text class="text-foreground font-medium">Categories</text>
       <view class="flex flex-wrap gap-2dot5">
-        <view wx:for="{{categoriesWithSelection}}" wx:key="*this" bindtap="onCategorySelect" data-category="{{item.name}}" class="px-4 py-1.5 rounded-md text-sm {{item.isSelected ? 'bg-primary text-white' : 'bg-gray-100 text-gray'}}">
+        <view wx:for="{{categoriesWithSelection}}" wx:key="*this" bindtap="onCategorySelect" data-category="{{item.name}}" class="px-2 py-1.5 rounded-md text-xs {{item.isSelected ? 'bg-primary text-white' : 'bg-gray-100 text-gray'}}">
           {{item.name}}
         </view>
       </view>
@@ -34,7 +34,7 @@
   </view>
   <view class="bg-white rounded-lg p-5 py-4 space-y-6">
     <view>
-      <textarea class="w-full h-56 bg-transparent" placeholder="Please describe your product(s)" placeholder-class="text-gray-300" model:value="{{description}}" bindinput="onDescriptionInput" />
+      <textarea class="w-full h-40 bg-transparent" placeholder="Please describe your product(s)" placeholder-class="text-gray-300" model:value="{{description}}" bindinput="onDescriptionInput" />
     </view>
     <view class="space-y-2">
       <view class="grid grid-cols-3 gap-2">
