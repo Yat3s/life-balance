@@ -3,6 +3,8 @@
   "usingComponents": {
     "stockV2": "/components/stockV2/stockV2",
     "commuteV2": "/components/commuteV2/commuteV2",
-    "canteenV2": "/components/canteenV2/canteenV2"
+    "canteenV2": "/components/canteenV2/canteenV2",
+    "latestCircle": "/components/latestcircle/latestcircle",
+    "upcomingActivity": "/components/upcomingactivity/upcomingactivity"
   }
 }

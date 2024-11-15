@@ -1,4 +1,8 @@
 const { getDateInEnglish } = require("../../common/util");
+const {
+  fetchLatestActivity,
+  fetchLatestWechatGroups,
+} = require("../../repository/dashboardRepo");
 const { fetchUserInfo } = require("../../repository/userRepo");
 
 const app = getApp();

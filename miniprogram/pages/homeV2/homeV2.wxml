@@ -1,5 +1,5 @@
 <view class="appbar" style="height: {{appBarHeight}}px;">
-  <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="toolbar plr {{collapsed? 'shadow bg-white' : ''}}"/>
+  <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="toolbar plr {{collapsed? 'shadow bg-white' : ''}}" />
 </view>
 
 <scroll-view scroll-y="true" class="main" bindscroll="onPageScrolled">
@@ -33,12 +33,13 @@
 
     <view class="flex gap-2">
       <!-- Latest Circle -->
-      <view class="flex-1 border border-solid border-gray-200 p-4 rounded-lg">
-        <text>Latest Circle</text>
+      <view class="flex-1">
+        <latestCircle></latestCircle>
       </view>
+
       <!-- Upcoming Activity -->
-      <view class="flex-1 border border-solid border-gray-200 p-4 rounded-lg">
-        <text>Upcoming Activity</text>
+      <view class="flex-1">
+        <upcomingActivity></upcomingActivity>
       </view>
     </view>
 
@@ -50,6 +51,7 @@
       <view class="flex-1 p-4">
 
       </view>
+
     </view>
   </view>
 
