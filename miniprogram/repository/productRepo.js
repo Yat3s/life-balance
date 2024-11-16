@@ -36,6 +36,12 @@ export const updateUserProduct = (productId, updateUserProductData) => {
   });
 };
 
+export const updateInterestedUsers = (productId) => {
+  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, 'updateInterestedUsers', {
+    productId,
+  });
+};
+
 export const fetchAllProducts = () => {
   return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, 'fetchAllProducts', {});
 };
