@@ -3,6 +3,7 @@ const fetchAllFleaMarketProducts = require('./actions/fetchAllFleaMarketProducts
 const fetchAllProducts = require('./actions/fetchAllProducts');
 const fetchAllUserProducts = require('./actions/fetchAllUserProducts');
 const updateUserProduct = require('./actions/updateUserProduct');
+const updateInterestedUsers = require('./actions/updateInterestedUsers');
 
 exports.main = async (event, context) => {
   const props = event.data;
@@ -18,6 +19,8 @@ exports.main = async (event, context) => {
       return await fetchAllUserProducts.main(props, context);
     case 'updateUserProduct':
       return await updateUserProduct.main(props, context);
+    case 'updateInterestedUsers':
+      return await updateInterestedUsers.main(props, context);
     default:
       return {
         success: false,
