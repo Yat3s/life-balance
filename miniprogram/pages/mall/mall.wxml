@@ -19,7 +19,7 @@
     </view>
     <swiper wx:if="{{products}}" class="mt-4 h-36" previous-margin="60rpx" next-margin="60rpx" bindchange="onSwiperChange">
       <swiper-item wx:for="{{products}}" wx:key="_id">
-        <view class="h-full mr-2" bind:tap="handleOpenProductModal" data-product="{{item}}">
+        <view class="h-full mr-2" bind:tap="handleProductClick" data-product="{{item}}">
           <view class="gradient-bg rounded-lg p-4 py-5 h-full flex border-gray-light">
             <image class="w-32 h-full rounded-lg object-cover" src="{{item.pictures[0]}}" mode="aspectFill" />
             <view class="ml-4 flex flex-col justify-center flex-1">
@@ -74,7 +74,7 @@
   </scroll-view>
   <!-- Product Grid -->
   <view wx:if="{{leftColumnProducts && rightColumnProducts}}" class="mt-4 plr">
-    <product-grid leftColumnProducts="{{leftColumnProducts}}" rightColumnProducts="{{rightColumnProducts}}" company="{{userInfo.company}}" bind:productClick="onProductClick" />
+    <product-grid leftColumnProducts="{{leftColumnProducts}}" rightColumnProducts="{{rightColumnProducts}}" company="{{userInfo.company}}" bind:productClick="handleProductClick" />
   </view>
   <template wx:else is="product-grid-skeleton" />
 </scroll-view>

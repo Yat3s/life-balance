@@ -4,11 +4,14 @@ import { getAppConfig } from '../../../repository/baseRepo';
 import { fetchUserInfo } from '../../../repository/userRepo';
 import { ORDER_STATUS, DELIVERY_TYPE } from '../../../lib/constants';
 
+const PAY_SUCCESS_DURATION = 1500;
+
 Page({
   data: {
     product: null,
     deliveryType: DELIVERY_TYPE.SELF_PICKUP,
     workplace: '',
+    isProcessingPayment: false,
   },
 
   async onLoad(options) {
@@ -87,9 +90,11 @@ Page({
   },
 
   async onPaymentConfirm() {
-    if (!this.validateDeliveryInfo()) {
+    if (!this.validateDeliveryInfo() || this.data.isProcessingPayment) {
       return;
     }
+
+    this.setData({ isProcessingPayment: true });
 
     const { product, deliveryType, address, phoneNumber, workplace } =
       this.data;
@@ -119,27 +124,43 @@ Page({
       wx.requestPayment({
         ...payment,
         success: async () => {
-          await updateOrder(orderId, updateOrderData);
-          wx.showToast({
-            title: '支付成功',
-            icon: 'success',
-          });
-          wx.navigateTo({
-            url: `/pages/user/user-order/user-order?id=${orderId}&from=paySuccess`,
-          });
+          try {
+            await updateOrder(orderId, updateOrderData);
+            wx.showToast({
+              title: '支付成功',
+              icon: 'success',
+            });
+            setTimeout(() => {
+              wx.navigateTo({
+                url: `/pages/user/user-order/user-order?id=${orderId}&from=paySuccess`,
+              });
+            }, PAY_SUCCESS_DURATION);
+          } catch (error) {
+            console.error('Update order error:', error);
+            wx.showToast({
+              title: '订单状态更新失败，请联系客服',
+              icon: 'none',
+            });
+          }
         },
-        fail: () => {
+        fail: (error) => {
+          console.error('Payment failed:', error);
           wx.showToast({
             title: '支付失败，请重试',
             icon: 'none',
           });
         },
+        complete: () => {
+          this.setData({ isProcessingPayment: false });
+        },
       });
     } catch (error) {
+      console.error('Create order error:', error);
       wx.showToast({
         title: '创建订单失败，请重试',
         icon: 'none',
       });
+      this.setData({ isProcessingPayment: false });
     }
   },
 });
