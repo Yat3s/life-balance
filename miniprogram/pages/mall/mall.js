@@ -200,8 +200,8 @@ Component({
       });
     },
 
-    onProductClick(e) {
-      const product = e.detail;
+    handleProductClick(e) {
+      const product = e.currentTarget.dataset.product || e.detail;
       this.setData({
         showingModal: 'product',
         selectedProduct: product,

@@ -72,7 +72,7 @@
 </view>
 <!-- Bottom Payment Button -->
 <view class="fixed bottom-0 left-0 right-0 px-4 py-3">
-  <view class="w-full bg-foreground text-white py-3 rounded-lg text-center" bindtap="onPaymentConfirm">
-    确认支付
+  <view class="w-full {{isProcessingPayment ? 'bg-gray-400' : 'bg-foreground'}} text-white py-3 rounded-lg text-center" bindtap="onPaymentConfirm">
+    {{isProcessingPayment ? '处理中...' : '确认支付'}}
   </view>
 </view>
