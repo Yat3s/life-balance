@@ -4301,6 +4301,11 @@ video {
   height: 100vh;
 }
 
+.text-tiny {
+  font-size: 0.5rem;    /* 0.5 × 16 = 8px */
+  line-height: 0.75rem; /* 0.75 × 16 = 12px */
+}
+
 .text-xxs {
   font-size: 0.625rem;
   line-height: 1rem;

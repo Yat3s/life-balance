@@ -4,6 +4,7 @@ import {
   deleteUserProduct,
   fetchAllFleaMarketProducts,
   fetchAllProducts,
+  updateInterestedUsers,
   updateUserProduct,
 } from '../../repository/productRepo';
 import { fetchUserInfo } from '../../repository/userRepo';
@@ -25,7 +26,7 @@ Component({
   },
   properties: {},
   data: {
-    officialProducts: null,
+    popularProducts: null,
     secondhandProducts: null,
     fleaMarketKeywords: null,
     toolbarHeight: app.globalData.toolbarHeight,
@@ -122,7 +123,7 @@ Component({
           }));
 
           this.setData({
-            products: processedData,
+            popularProducts: processedData,
           });
         }
       });
@@ -147,7 +148,6 @@ Component({
       this.setData({
         fleaMarketProducts: filteredProducts,
       });
-      console.log(this.data.fleaMarketProducts);
     },
 
     handleCategorySelect(e) {
@@ -293,17 +293,26 @@ Component({
       });
     },
 
-    handleProductClick(e) {
-      const product = e.currentTarget.dataset.product || e.detail;
+    handlePopularProductClick(e) {
+      const product = e.currentTarget.dataset.product;
       this.setData({
-        showingModal: 'product',
+        showingModal: 'popular-product',
+        selectedProduct: product,
+      });
+    },
+
+    handleFleaMarketProductClick(e) {
+      const product = e.currentTarget.dataset.product;
+      console.log('🚀 ~ handleFleaMarketProductClick ~ product:', product);
+      this.setData({
+        showingModal: 'flea-market-product',
         selectedProduct: product,
       });
     },
 
     handleViewAllPopularProducts() {
       this.setData({
-        showingModal: 'official-products',
+        showingModal: 'all-popular-products',
       });
     },
 
