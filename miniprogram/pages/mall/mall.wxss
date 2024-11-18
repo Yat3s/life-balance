@@ -190,3 +190,7 @@
   text-overflow: ellipsis;
   max-width: 100rpx;
 }
+
+.text-auth {
+  color: #3785fc;
+}

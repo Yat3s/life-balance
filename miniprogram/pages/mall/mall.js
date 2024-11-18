@@ -5,7 +5,11 @@ import {
   fetchAllProducts,
 } from '../../repository/productRepo';
 import { fetchUserInfo } from '../../repository/userRepo';
-import { navigateToPublishItem, navigateToPurchase } from '../router';
+import {
+  navigateToAuth,
+  navigateToPublishItem,
+  navigateToPurchase,
+} from '../router';
 
 const app = getApp();
 const COLLAPSED_SCROLL_TOP = 200;
@@ -158,8 +162,19 @@ Component({
       );
     },
 
-    handleNavToPublishItemPage() {
+    handlePublishItem() {
+      if (!this.data.userInfo.company) {
+        wx.showToast({
+          title: '请完成认证后再发布物品',
+          icon: 'none',
+        });
+        return;
+      }
       navigateToPublishItem();
+    },
+
+    handleVerifyAuth() {
+      navigateToAuth();
     },
 
     hideModal() {
