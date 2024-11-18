@@ -5,7 +5,7 @@
     <view style="font-size: {{titleScale * 24}}pt;" class="title">Flea Market</view>
     <view style="font-size: {{subtitleScale * 12}}pt;" class="text-sm text-subtitle flex">
       Sustainable Shopping,
-      <view wx:if="{{collapsed}}" style="font-size: {{subtitleScale * 12}}pt;" class="text-sm text-subtitle">
+      <view wx:if="{{collapsed}}" style="font-size: {{subtitleScale * 12}}pt;" class="text-sm ml-0dot5 text-subtitle inline-block">
         One's Past, Another's Future
       </view>
     </view>
@@ -25,7 +25,7 @@
     </view>
     <swiper wx:if="{{products}}" class="mt-4 h-36" previous-margin="60rpx" next-margin="60rpx" bindchange="onSwiperChange">
       <swiper-item wx:for="{{products}}" wx:key="_id">
-        <view class="h-full mr-2" bind:tap="handleProductClick" data-product="{{item}}">
+        <view class="h-full mr-2" bind:tap="handlePopularProductClick" data-product="{{item}}">
           <view class="gradient-bg rounded-lg p-4 py-5 h-full flex border-gray-light">
             <image class="w-32 h-full rounded-lg object-cover" src="{{item.pictures[0]}}" mode="aspectFill" />
             <view class="ml-4 flex flex-col justify-center flex-1">
@@ -68,7 +68,7 @@
   <scroll-view wx:if="{{!isSearchActive && fleaMarketKeywords && !searchInput}}" scroll-x class="whitespace-nowrap plr mt-6">
     <view class="inline-flex gap-7">
       <view class="category-item text-sm {{selectedCategory === 'New' ? 'active' : ''}}" data-category="New" bindtap="handleCategorySelect">
-        New
+        最新
       </view>
       <view wx:for="{{fleaMarketKeywords}}" wx:key="*this" class="category-item text-sm {{selectedCategory === item ? 'active' : ''}}" data-category="{{item}}" bindtap="handleCategorySelect">
         {{item}}
@@ -85,12 +85,12 @@
   </view>
   <!-- Product List -->
   <view wx:if="{{fleaMarketProducts && userInfo.company}}" class="mt-4 plr">
-    <view wx:for="{{fleaMarketProducts}}" wx:key="_id" class="mb-4 bg-white rounded-lg shadow-sm">
+    <view wx:for="{{fleaMarketProducts}}" wx:key="_id" class="mb-4 bg-white rounded-lg">
       <!-- Product Card -->
-      <view class="p-4 border-gray-light rounded-lg bg-gradient">
+      <view class="p-4 border-gray-light rounded-lg bg-gradient" bind:tap="handleFleaMarketProductClick" data-product="{{item}}">
         <!-- Image Carousel -->
         <block wx:if="{{item.pictures && item.pictures.length > 0}}">
-          <swiper bind:tap="previewProductPicture" data-product="{{item}}" class="w-full h-80 rounded-t-lg mb-3" indicator-dots="true" indicator-color="#ECECEC" indicator-active-color="#1C1C55">
+          <swiper class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-3" catch:tap="previewProductPicture" data-product="{{item}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
             <swiper-item wx:for="{{item.pictures}}" wx:key="*this">
               <image src="{{item}}" mode="aspectFill" class="w-full h-full rounded-lg" />
             </swiper-item>
@@ -105,7 +105,7 @@
             <!-- Title -->
             <view class="text-sm truncate w-64 text-black">{{item.title}}</view>
           </view>
-          <image class="w-4 h-4 shrink-0" src="/images/ic_more.svg" data-product="{{item}}" bind:tap="onEditProduct" />
+          <image class="w-4 h-4 shrink-0" data-product="{{item}}" catch:tap="onEditProduct" src="/images/ic_more.svg" />
         </view>
         <!-- Description -->
         <view class="truncate text-xs text-desc mb-6">{{item.description}}</view>
@@ -121,12 +121,11 @@
           <view class="flex items-center gap-2dot5">
             <view class="flex flex-col items-center">
               <view class="flex items-baseline font-semibold text-black gap-1">
-                <view class="text-xs">¥</view>
-                <view class="text-base truncate-price">{{item.price}}</view>
+                <view class="truncate-price text-price">{{item.price}}</view>
               </view>
               <view class="text-xxs text-interest">{{item.interestedUsers.length || 0}} 人想要</view>
             </view>
-            <view class="flex shrink-0 items-center gap-1dot5 py-1dot5 px-2dot5 bg-blue-500 text-white rounded-full text-center" bindtap="handleBuy" data-id="{{item._id}}">
+            <view class="flex shrink-0 items-center gap-1dot5 py-1dot5 px-2dot5 bg-blue-500 text-white rounded-full text-center" catch:tap="handleFleaMarketProductClick" data-product="{{item}}">
               <image class="w-3 h-3 -mb-0dot5" src="/images/ic_comment.svg" />
               <view class="text-xxs font-medium">我{{item.type === 'sell' ? '想要' : '要卖'}}</view>
             </view>
@@ -137,6 +136,7 @@
   </view>
   <template wx:if="{{userInfo.company && !fleaMarketProducts}}" is="product-grid-skeleton" />
 </scroll-view>
+<!-- Product Operations Modal -->
 <view class="cu-modal bottom-modal {{ showingModal === 'edit-product' ? 'show' : '' }}" bindtap="hideModal">
   <view class="cu-dialog rounded-custom rounded-xl" catchtap>
     <view class="py-8 px-10">
@@ -161,8 +161,57 @@
     </view>
   </view>
 </view>
-<!-- Product Detail Modal -->
-<view class="cu-modal {{ showingModal === 'product' ? 'show' : '' }}" bindtap="hideModal" catchtouchmove>
+<!-- Flea Market Product Modal -->
+<view class="cu-modal {{ showingModal === 'flea-market-product' ? 'show' : '' }}" bindtap="hideModal" catchtouchmove>
+  <view class="cu-dialog rounded-lg bg-white" catchtap>
+    <view class="p-6">
+      <!-- User name -->
+      <view class="flex items-center gap-3dot5 mb-3">
+        <image src="{{selectedProduct.user.avatarUrl}}" class="w-8 h-8 rounded-lg" mode="aspectFill" />
+        <view class="text-left">
+          <view class="text-xs text-nickname truncate w-36">{{selectedProduct.user.nickName}}</view>
+          <view class="text-xxs text-time">{{selectedProduct.formattedTime}}发布</view>
+        </view>
+      </view>
+      <view class="mb-2 text-left">
+        <view class="{{selectedProduct.type === 'sell' ? 'bg-sell' : 'bg-buy'}} mr-2 px-1dot5 inline-block w-fit py-0dot5 rounded text-white text-xxs shrink-0">
+          {{selectedProduct.type === 'sell' ? '出售' : '求购'}}
+        </view>
+        <!-- Title -->
+        <text class="text-sm text-black">{{selectedProduct.title}}</text>
+      </view>
+      <!-- Description -->
+      <view class="text-left text-xs text-desc mb-4">{{selectedProduct.description}}</view>
+      <!-- Image Carousel -->
+      <block wx:if="{{selectedProduct.pictures && selectedProduct.pictures.length > 0}}">
+        <swiper class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-3" catch:tap="previewProductPicture" data-product="{{selectedProduct}}" indicator-dots="true" circular="true">
+          <swiper-item wx:for="{{selectedProduct.pictures}}" wx:key="*this">
+            <image src="{{item}}" mode="aspectFill" class="w-full h-full rounded-lg" />
+          </swiper-item>
+        </swiper>
+      </block>
+      <view class="flex items-center justify-between">
+        <view class="flex flex-col items-center">
+          <view class="text-custom-price text-black text-price">{{selectedProduct.price}}</view>
+          <view class="text-xxs text-interest">
+            {{selectedProduct.interestedUsers.length || 0}} 人想要
+          </view>
+        </view>
+        <view class="flex flex-col text-left">
+          <view class="text-xs font-light">发布者联系方式</view>
+          <view class="flex items-baseline gap-2">
+            <view class="text-lg text-black truncate-contact">{{selectedProduct.contact}}</view>
+            <view class="text-auth text-xs" catch:tap="handleCopyContact" data-contact="{{selectedProduct.contact}}">
+              复制
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- Popular Product Modal -->
+<view class="cu-modal {{ showingModal === 'popular-product' ? 'show' : '' }}" bindtap="hideModal" catchtouchmove>
   <view class="cu-dialog rounded-lg bg-white" catchtap>
     <!-- Image Carousel -->
     <block wx:if="{{selectedProduct.pictures && selectedProduct.pictures.length > 0}}">
@@ -177,58 +226,18 @@
       <view class="text-lg text-left font-medium text-foreground mb-4">
         {{selectedProduct.title}}
       </view>
-      <block wx:if="{{selectedProduct.type === 'secondhand'}}">
-        <!-- Category Tag -->
-        <view class="flex items-center justify-between mb-6">
-          <view class="flex gap-2">
-            <block wx:for="{{selectedProduct.categories}}" wx:key="*this">
-              <view class="bg-gray-100 px-3 py-1 rounded-lg text-xs text-gray-600">{{item}}</view>
-            </block>
-            <view class="bg-gray-100 px-3 py-1 rounded-lg text-xs text-gray-600" wx:if="{{!selectedProduct.categories || selectedProduct.categories.length === 0}}">
-              未分类
-            </view>
-          </view>
-          <view class="text-gray text-xs">{{selectedProduct.formattedTime}}发布</view>
+      <!-- Tags -->
+      <view class="flex gap-2 mb-6">
+        <block wx:for="{{selectedProduct.tags}}" wx:key="*this">
+          <view class="bg-gray-100 px-3 py-1 rounded-lg text-xs text-gray-600">{{item}}</view>
+        </block>
+        <view class="bg-gray-100 px-3 py-1 rounded-lg text-xs text-gray-600" wx:if="{{!selectedProduct.tags || selectedProduct.tags.length === 0}}">
+          未分类
         </view>
-      </block>
-      <block wx:if="{{selectedProduct.type === 'popular'}}">
-        <!-- Tags -->
-        <view class="flex gap-2 mb-6">
-          <block wx:for="{{selectedProduct.tags}}" wx:key="*this">
-            <view class="bg-gray-100 px-3 py-1 rounded-lg text-xs text-gray-600">{{item}}</view>
-          </block>
-          <view class="bg-gray-100 px-3 py-1 rounded-lg text-xs text-gray-600" wx:if="{{!selectedProduct.tags || selectedProduct.tags.length === 0}}">
-            未分类
-          </view>
-        </view>
-      </block>
+      </view>
       <!-- Description -->
       <view class="text-foreground text-sm mb-6 text-left">{{selectedProduct.description}}</view>
-      <block wx:if="{{selectedProduct.type === 'secondhand'}}">
-        <!-- Seller Info -->
-        <view class="flex items-center justify-between gap-3 mb-4">
-          <view class="text-gray text-sm">发布人：</view>
-          <view class="flex items-center gap-3">
-            <image catch:tap="previewUserAvatar" class="w-6 h-6 rounded-full" src="{{selectedProduct.user.avatarUrl}}" mode="aspectFill" />
-            <view class="text-foreground text-sm font-medium">
-              {{selectedProduct.user.nickName}}
-            </view>
-          </view>
-        </view>
-        <!-- Price -->
-        <view class="flex items-center justify-between gap-3 mb-6">
-          <view class="text-gray text-sm">定价：</view>
-          <view class="flex items-baseline gap-1 text-foreground font-medium relative">
-            <text class="text-xs">¥</text>
-            <text>{{selectedProduct.price}}</text>
-          </view>
-        </view>
-        <!-- Contact Info -->
-        <view wx:if="{{!selectedProduct.isInternal || (selectedProduct.isInternal && userInfo.company)}}" class="flex items-center justify-center text-center py-2 bg-gray-50 rounded-lg text-foreground">
-          <text>联系：{{selectedProduct.contact}}</text>
-          <image catchtap="handleCopyContact" data-contact="{{selectedProduct.contact}}" class="w-4 h-4 ml-2" src="/images/ic_copy.svg" />
-        </view>
-      </block>
+      <!-- Purchase -->
       <view bind:tap="onPurchase" data-id="{{selectedProduct._id}}" class="flex items-center justify-center bg-foreground py-2dot5 rounded-lg" hover-class="none" hover-stop-propagation="false">
         <view class="flex items-baseline text-white gap-1">
           <text class="text-xs" selectable="false" space="false" decode="false">¥</text>
@@ -239,7 +248,7 @@
   </view>
 </view>
 <!-- All Popular Products Modal -->
-<view class="cu-modal {{ showingModal === 'official-products' ? 'show' : '' }}" bindtap="hideModal">
+<view class="cu-modal {{ showingModal === 'all-popular-products' ? 'show' : '' }}" bindtap="hideModal">
   <view class="cu-dialog rounded-lg bg-white" catchtap>
     <view class="p-6">
       <view class="text-foreground text-lg font-medium text-left mb-2">Popular</view>
@@ -247,9 +256,9 @@
         Choose from the carefully selected products we have prepared for you.
       </view>
       <view class="max-official-height overflow-scroll">
-        <block wx:if="{{officialProducts}}">
-          <block wx:for="{{officialProducts}}" wx:key="_id">
-            <view class="h-full mb-4" bind:tap="handleOpenProductModal" data-product="{{item}}">
+        <block wx:if="{{popularProducts}}">
+          <block wx:for="{{popularProducts}}" wx:key="_id">
+            <view class="h-full mb-4" bind:tap="handlePopularProductClick" data-product="{{item}}">
               <view class="gradient-bg rounded-lg p-4 py-5 h-full flex">
                 <view class="w-28 h-28 rounded-lg overflow-hidden">
                   <image class="w-full h-full object-cover" src="{{item.pictures[0]}}" mode="aspectFill" />

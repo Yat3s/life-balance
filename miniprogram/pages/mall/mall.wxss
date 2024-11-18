@@ -191,6 +191,19 @@
   max-width: 100rpx;
 }
 
+.truncate-contact {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 320rpx;
+}
+
+.text-price {
+  line-height: 0.8rem;
+  font-size: 1rem;
+}
+
 .text-auth {
   color: #3785fc;
 }
@@ -200,4 +213,9 @@
   border-top-right-radius: 24rpx !important;
   border-bottom-left-radius: 0rpx !important;
   border-bottom-right-radius: 0rpx !important;
+}
+
+.text-custom-price {
+  font-family: MiSans;
+  font-weight: 700;
 }

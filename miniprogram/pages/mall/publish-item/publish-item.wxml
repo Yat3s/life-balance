@@ -45,13 +45,13 @@
     </view>
     <view class="py-2">
       <view class="flex flex-wrap gap-2">
-        <view wx:for="{{pictures}}" wx:key="*this" class="relative bg-gray-100 h-12 w-12">
+        <view wx:for="{{pictures}}" wx:key="*this" class="relative bg-gray-100 h-16 w-16">
           <image src="{{item}}" class="w-full h-full" mode="aspectFill" />
           <view class="absolute -top-1 -right-1 w-4 h-4 bg-black/50 rounded-full flex items-center justify-center" catchtap="onRemoveImage" data-index="{{index}}">
             <text class="text-white text-xs">×</text>
           </view>
         </view>
-        <view wx:if="{{!pictures || pictures.length < 9}}" class="flex items-center justify-center text-plus text-sm font-semibold w-12 h-12 z-50 bg-add-picture" bindtap="onAddImage">
+        <view wx:if="{{!pictures || pictures.length < 9}}" class="flex items-center justify-center text-plus text-sm font-semibold w-16 h-16 z-50 bg-add-picture" bindtap="onAddImage">
           ＋
         </view>
       </view>
