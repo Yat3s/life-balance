@@ -15,17 +15,16 @@ Page({
     statusBarHeight: app.globalData.statusBarHeight,
     appBarHeight: MAX_APP_BAR_HEIGHT,
     pictures: [],
-    categories: [],
-    categoriesWithSelection: [],
-    selectedCategory: [],
+    fleaMarketKeywords: [],
     userInfo: null,
     productId: null,
+    productType: 'sell',
   },
 
   async onLoad(options) {
     try {
-      const config = await getAppConfig();
-      const categories = config.fleaMarketKeywords || [];
+      const fleaMarketKeywords =
+        (await getAppConfig()).fleaMarketKeywords || [];
 
       if (options.id) {
         const product = (await fetchFleaMarketProduct(options.id)).data[0];
@@ -33,7 +32,7 @@ Page({
           throw new Error('Product not found');
         }
 
-        const categoriesWithSelection = categories.map((category) => ({
+        const categories = fleaMarketKeywords.map((category) => ({
           name: category,
           isSelected: product.categories?.includes(category) || false,
         }));
@@ -46,20 +45,21 @@ Page({
           pictures: product.pictures || [],
           isInternal: product.isInternal ?? true,
           contact: product.contact || '',
+          fleaMarketKeywords,
           categories,
-          categoriesWithSelection,
           selectedCategory: product.categories || [],
         });
       } else {
-        const categoriesWithSelection = categories.map((category) => ({
+        const categories = fleaMarketKeywords.map((category, index) => ({
           name: category,
-          isSelected: false,
+          isSelected: index === 0,
         }));
 
         this.setData({
+          fleaMarketKeywords,
           categories,
-          categoriesWithSelection,
-          selectedCategory: [],
+          selectedCategory:
+            fleaMarketKeywords.length > 0 ? [fleaMarketKeywords[0]] : [],
         });
       }
 
@@ -80,6 +80,13 @@ Page({
     }
   },
 
+  onTypeChange(e) {
+    const type = e.currentTarget.dataset.type;
+    this.setData({
+      productType: type,
+    });
+  },
+
   onTitleInput(e) {
     this.setData({ title: e.detail.value });
   },
@@ -95,19 +102,15 @@ Page({
     const category = e.currentTarget.dataset.category;
     const selectedCategory = [category];
 
-    const categoriesWithSelection = this.data.categories.map((category) => ({
+    const categories = this.data.fleaMarketKeywords.map((category) => ({
       name: category,
       isSelected: selectedCategory.includes(category),
     }));
 
     this.setData({
       selectedCategory,
-      categoriesWithSelection,
+      categories,
     });
-  },
-
-  onIsInternalChange(e) {
-    this.setData({ isInternal: e.detail.value });
   },
 
   onContactInput(e) {
@@ -209,9 +212,9 @@ Page({
       contact,
       pictures,
       description,
-      isInternal,
       selectedCategory,
       userInfo,
+      productType,
     } = this.data;
 
     if (!title) {
@@ -239,12 +242,12 @@ Page({
     try {
       const productData = {
         title,
+        type: productType,
         price: validatedPrice,
         contact: finalContact,
         description: description || '',
         pictures: pictures || [],
         saleStatus: 'on',
-        isInternal,
         categories: selectedCategory || [],
       };
 

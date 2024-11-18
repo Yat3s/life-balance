@@ -21,6 +21,7 @@ page {
   --purpleLight: #b8b8d7;
   --gray: #acacac;
   --grayLight: #e9e9e9;
+  --blueBg: #3785fc;
 }
 
 .bg-buttonBlue {
@@ -29,6 +30,10 @@ page {
 
 .bg-gray {
   background: var(--gray);
+}
+
+.bg-blueBg {
+  background-color: var(--blueBg);
 }
 
 .bg-purpleLight {
