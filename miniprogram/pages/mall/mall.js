@@ -4,7 +4,6 @@ import {
   deleteUserProduct,
   fetchAllFleaMarketProducts,
   fetchAllProducts,
-  updateInterestedUsers,
   updateUserProduct,
 } from '../../repository/productRepo';
 import { fetchUserInfo } from '../../repository/userRepo';
@@ -303,7 +302,6 @@ Component({
 
     handleFleaMarketProductClick(e) {
       const product = e.currentTarget.dataset.product;
-      console.log('🚀 ~ handleFleaMarketProductClick ~ product:', product);
       this.setData({
         showingModal: 'flea-market-product',
         selectedProduct: product,
@@ -348,51 +346,54 @@ Component({
       });
     },
 
-    toggleSearchInput() {
-      this.setData({
-        isSearchActive: true,
-      });
-      this.filterProductsByCategory();
-    },
-
-    onSearchBlur() {
-      if (!this.data.searchInput) {
-        this.setData({
-          isSearchActive: false,
-        });
-      }
-    },
-
     onSearchChanged(e) {
       const keyword = e.detail.value?.toLowerCase() || '';
       this.setData({
         searchInput: e.detail.value || '',
+        selectedCategory: null, // Reset category selection during search
       });
 
       if (!keyword) {
-        this.filterProductsByCategory();
+        this.setData(
+          {
+            selectedCategory: 'New',
+          },
+          () => {
+            this.filterProductsByCategory();
+          }
+        );
         return;
       }
 
-      const { filteredSecondhandProducts } = this.data;
-      const searchResults = filteredSecondhandProducts.filter((product) =>
+      const { secondhandProducts } = this.data;
+      const searchResults = secondhandProducts.filter((product) =>
         this.productMatchesSearch(product, keyword)
       );
 
-      const leftColumn = [];
-      const rightColumn = [];
-      searchResults.forEach((product, index) => {
-        if (index % 2 === 0) {
-          leftColumn.push(product);
-        } else {
-          rightColumn.push(product);
-        }
-      });
-
       this.setData({
-        leftColumnProducts: leftColumn,
-        rightColumnProducts: rightColumn,
+        fleaMarketProducts: searchResults,
       });
+    },
+
+    toggleSearchInput() {
+      this.setData({
+        isSearchActive: true,
+        selectedCategory: null, // Reset category when entering search
+      });
+    },
+
+    onSearchBlur() {
+      if (!this.data.searchInput) {
+        this.setData(
+          {
+            isSearchActive: false,
+            selectedCategory: 'New',
+          },
+          () => {
+            this.filterProductsByCategory();
+          }
+        );
+      }
     },
 
     productMatchesSearch(product, keyword) {
@@ -402,7 +403,7 @@ Component({
         product.categories?.some((category) =>
           category.toLowerCase().includes(keyword)
         ) ||
-        parseFloat(keyword) === product.price
+        product.price?.toString().includes(keyword)
       );
     },
 
