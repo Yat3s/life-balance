@@ -29,6 +29,12 @@ export const createUserProduct = (createUserProductData) => {
   });
 };
 
+export const deleteUserProduct = (productId) => {
+  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, 'deleteUserProduct', {
+    productId,
+  });
+};
+
 export const updateUserProduct = (productId, updateUserProductData) => {
   return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, 'updateUserProduct', {
     productId,

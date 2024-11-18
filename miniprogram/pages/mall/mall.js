@@ -1,8 +1,10 @@
 import { formatTimeAgo } from '../../common/util';
 import { getAppConfig } from '../../repository/baseRepo';
 import {
+  deleteUserProduct,
   fetchAllFleaMarketProducts,
   fetchAllProducts,
+  updateUserProduct,
 } from '../../repository/productRepo';
 import { fetchUserInfo } from '../../repository/userRepo';
 import {
@@ -171,10 +173,118 @@ Component({
         return;
       }
       navigateToPublishItem();
+      this.setData({
+        showingModal: null,
+      });
     },
 
     handleVerifyAuth() {
       navigateToAuth();
+    },
+
+    onEditProduct(e) {
+      const product = e.currentTarget.dataset.product;
+      this.setData({
+        showingModal: 'edit-product',
+        selectedProduct: product,
+      });
+    },
+
+    async handleDeleteProduct() {
+      const { selectedProduct } = this.data;
+
+      try {
+        const result = await new Promise((resolve, reject) => {
+          wx.showModal({
+            title: '确认删除',
+            content: '确定要删除这个商品吗？此操作不可恢复',
+            confirmText: '确定删除',
+            confirmColor: '#E64340',
+            cancelText: '取消',
+            success: (res) => resolve(res),
+            fail: (error) => reject(error),
+          });
+        });
+
+        if (result.confirm) {
+          wx.showLoading({
+            title: '正在删除...',
+            mask: true,
+          });
+
+          try {
+            await deleteUserProduct(selectedProduct._id);
+            wx.showToast({
+              title: '删除成功',
+              icon: 'success',
+            });
+            this.fetchAllFleaMarketProducts();
+          } catch (error) {
+            wx.showToast({
+              title: '删除失败',
+              icon: 'error',
+            });
+            console.error('删除商品失败:', error);
+          }
+        }
+      } catch (error) {
+        console.error('操作失败:', error);
+      } finally {
+        wx.hideLoading();
+        this.setData({
+          showingModal: null,
+        });
+      }
+    },
+
+    async handleTakedownProduct() {
+      const { selectedProduct } = this.data;
+
+      try {
+        const result = await new Promise((resolve, reject) => {
+          wx.showModal({
+            title: '确认下架',
+            content: '确定要下架这个商品吗？下架后可以随时重新上架',
+            confirmText: '确定下架',
+            confirmColor: '#576B95',
+            cancelText: '取消',
+            success: (res) => resolve(res),
+            fail: (error) => reject(error),
+          });
+        });
+
+        if (result.confirm) {
+          wx.showLoading({
+            title: '正在下架...',
+            mask: true,
+          });
+
+          try {
+            await updateUserProduct(selectedProduct._id, {
+              status: 'inactive',
+            });
+
+            wx.showToast({
+              title: '下架成功',
+              icon: 'success',
+            });
+            this.fetchAllFleaMarketProducts();
+          } catch (error) {
+            wx.showToast({
+              title: '下架失败',
+              icon: 'error',
+            });
+            console.error('下架商品失败:', error);
+          }
+        }
+      } catch (error) {
+        console.error('操作失败:', error);
+      } finally {
+        wx.hideLoading();
+        this.setData({
+          showingModal: null,
+        });
+      }
     },
 
     hideModal() {

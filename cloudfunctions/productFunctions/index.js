@@ -1,4 +1,5 @@
 const createUserProduct = require('./actions/createUserProduct');
+const deleteUserProduct = require('./actions/deleteUserProduct');
 const fetchAllFleaMarketProducts = require('./actions/fetchAllFleaMarketProducts');
 const fetchAllProducts = require('./actions/fetchAllProducts');
 const fetchAllUserProducts = require('./actions/fetchAllUserProducts');
@@ -11,6 +12,8 @@ exports.main = async (event, context) => {
   switch (event.action) {
     case 'createUserProduct':
       return await createUserProduct.main(props, context);
+    case 'deleteUserProduct':
+      return await deleteUserProduct.main(props, context);
     case 'fetchAllFleaMarketProducts':
       return await fetchAllFleaMarketProducts.main(props, context);
     case 'fetchAllProducts':
