@@ -172,9 +172,6 @@ Component({
         return;
       }
       navigateToPublishItem();
-      this.setData({
-        showingModal: null,
-      });
     },
 
     handleVerifyAuth() {
@@ -186,6 +183,15 @@ Component({
       this.setData({
         showingModal: 'edit-product',
         selectedProduct: product,
+      });
+    },
+
+    handlePublishSimilarItem() {
+      wx.navigateTo({
+        url: `/pages/mall/publish-item/publish-item?id=${this.data.selectedProduct._id}&from=publish-similar-item`,
+      });
+      this.setData({
+        showingModal: null,
       });
     },
 

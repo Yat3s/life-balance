@@ -141,7 +141,7 @@
   <view class="cu-dialog rounded-custom rounded-xl" catchtap>
     <view class="py-8 px-10">
       <view class="flex flex-col gap-6">
-        <view class="flex items-center gap-3" bind:tap="handlePublishItem">
+        <view class="flex items-center gap-3" bind:tap="handlePublishSimilarItem">
           <image class="w-4 h-4" src="/images/ic_publish.svg" />
           <view class="text-black text-sm">发布同款</view>
         </view>

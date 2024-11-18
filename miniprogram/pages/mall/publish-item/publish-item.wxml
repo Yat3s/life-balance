@@ -61,6 +61,8 @@
     <view class="py-2 px-10 rounded-full text-cancel border-gray text-sm" bindtap="onCancel">
       取消
     </view>
-    <view class="py-2 px-10 rounded-full bg-blueBg text-white text-sm" bindtap="onPublish">发布</view>
+    <view class="py-2 px-10 rounded-full bg-blueBg text-white text-sm" bindtap="onPublish">
+      {{productId ? '保存' : '发布'}}
+    </view>
   </view>
 </view>
