@@ -134,7 +134,7 @@
       </view>
     </view>
   </view>
-  <template wx:if="{{userInfo.company && !fleaMarketProducts}}" is="product-grid-skeleton" />
+  <template wx:if="{{userInfo.company && !fleaMarketProducts}}" is="product-list-skeleton" />
 </scroll-view>
 <!-- Product Operations Modal -->
 <view class="cu-modal bottom-modal {{ showingModal === 'edit-product' ? 'show' : '' }}" bindtap="hideModal">
