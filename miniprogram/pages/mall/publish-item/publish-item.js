@@ -23,53 +23,21 @@ Page({
 
   async onLoad(options) {
     try {
-      const fleaMarketKeywords =
-        (await getAppConfig()).fleaMarketKeywords || [];
+      const [fleaMarketKeywords, userInfo] = await Promise.all([
+        this.getFleaMarketKeywords(),
+        fetchUserInfo(),
+      ]);
 
       if (options.id) {
-        const product = (await fetchFleaMarketProduct(options.id)).data[0];
-        if (!product) {
-          throw new Error('Product not found');
-        }
-
-        const categories = fleaMarketKeywords.map((category) => ({
-          name: category,
-          isSelected: product.categories?.includes(category) || false,
-        }));
-
-        this.setData({
-          productId: options.id,
-          title: product.title || '',
-          price: product.price?.toString() || '',
-          description: product.description || '',
-          pictures: product.pictures || [],
-          isInternal: product.isInternal ?? true,
-          contact: product.contact || '',
+        const isPublishSimilar = options.from === 'publish-similar-item';
+        await this.loadProductData(
+          options.id,
           fleaMarketKeywords,
-          categories,
-          selectedCategory: product.categories || [],
-        });
-      } else {
-        const categories = fleaMarketKeywords.map((category, index) => ({
-          name: category,
-          isSelected: index === 0,
-        }));
-
-        this.setData({
-          fleaMarketKeywords,
-          categories,
-          selectedCategory:
-            fleaMarketKeywords.length > 0 ? [fleaMarketKeywords[0]] : [],
-        });
-      }
-
-      const userInfo = await fetchUserInfo();
-      if (userInfo) {
-        this.setData({
           userInfo,
-          isInternal: userInfo.company ? true : false,
-          contact: this.data.contact || userInfo.contact,
-        });
+          isPublishSimilar
+        );
+      } else {
+        await this.initializeNewProduct(fleaMarketKeywords, userInfo);
       }
     } catch (err) {
       console.error('Failed to initialize page:', err);
@@ -78,6 +46,59 @@ Page({
         icon: 'none',
       });
     }
+  },
+
+  async getFleaMarketKeywords() {
+    const config = await getAppConfig();
+    return config.fleaMarketKeywords || [];
+  },
+
+  async loadProductData(
+    productId,
+    fleaMarketKeywords,
+    userInfo,
+    isPublishSimilar
+  ) {
+    const product = (await fetchFleaMarketProduct(productId)).data[0];
+    if (!product) {
+      throw new Error('Product not found');
+    }
+
+    const categories = fleaMarketKeywords.map((category) => ({
+      name: category,
+      isSelected: product.categories?.includes(category) || false,
+    }));
+
+    this.setData({
+      productId: isPublishSimilar ? null : productId,
+      title: product.title || '',
+      price: product.price?.toString() || '',
+      description: product.description || '',
+      pictures: isPublishSimilar ? [] : product.pictures || [],
+      contact: isPublishSimilar ? userInfo?.contact : product.contact || '',
+      fleaMarketKeywords,
+      categories,
+      selectedCategory: product.categories || [],
+      productType: product.type || 'sell',
+      userInfo,
+    });
+  },
+
+  async initializeNewProduct(fleaMarketKeywords, userInfo) {
+    const categories = fleaMarketKeywords.map((category, index) => ({
+      name: category,
+      isSelected: index === 0,
+    }));
+
+    this.setData({
+      fleaMarketKeywords,
+      categories,
+      selectedCategory:
+        fleaMarketKeywords.length > 0 ? [fleaMarketKeywords[0]] : [],
+      userInfo,
+      isInternal: userInfo?.company ?? false,
+      contact: userInfo?.contact || '',
+    });
   },
 
   onTypeChange(e) {
@@ -268,10 +289,10 @@ Page({
       wx.hideLoading();
       wx.navigateBack();
     } catch (err) {
-      console.error(productId ? 'Update failed: ' : 'Publish failed: ', err);
+      console.error('Operation failed: ', err);
       wx.hideLoading();
       wx.showToast({
-        title: productId ? 'Update failed' : 'Publish failed',
+        title: 'Operation failed',
         icon: 'none',
       });
     }
