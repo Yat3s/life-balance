@@ -1,7 +1,5 @@
 {
   "component": true,
-  "usingComponents": {
-    "product-grid": "/components/product-grid/index"
-  },
+  "usingComponents": {},
   "multipleSlots": true
 }

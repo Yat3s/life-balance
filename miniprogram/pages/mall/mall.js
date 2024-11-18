@@ -21,8 +21,6 @@ Component({
   data: {
     officialProducts: null,
     secondhandProducts: null,
-    leftColumnProducts: null,
-    rightColumnProducts: null,
     fleaMarketKeywords: null,
     toolbarHeight: app.globalData.toolbarHeight,
     statusBarHeight: app.globalData.statusBarHeight,
@@ -89,7 +87,6 @@ Component({
           const processedData = res.data.map((product) => ({
             ...product,
             formattedTime: formatTimeAgo(product.createdAt),
-            type: 'secondhand',
           }));
 
           this.setData(
@@ -116,7 +113,6 @@ Component({
           const processedData = res.data.map((product) => ({
             ...product,
             formattedTime: formatTimeAgo(product.createdAt),
-            type: 'popular',
           }));
 
           this.setData({
@@ -134,11 +130,6 @@ Component({
         case 'New':
           filteredProducts.sort((a, b) => b.updatedAt - a.updatedAt);
           break;
-        case '微软员工专属':
-          filteredProducts = filteredProducts.filter(
-            (product) => product.isInternal === true
-          );
-          break;
         default:
           filteredProducts = filteredProducts.filter(
             (product) =>
@@ -147,33 +138,10 @@ Component({
           );
       }
 
-      this.setData(
-        {
-          filteredSecondhandProducts: filteredProducts,
-        },
-        () => {
-          this.distributeProductsToColumns();
-        }
-      );
-    },
-
-    distributeProductsToColumns() {
-      const { filteredSecondhandProducts } = this.data;
-      const leftColumn = [];
-      const rightColumn = [];
-
-      filteredSecondhandProducts.forEach((product, index) => {
-        if (index % 2 === 0) {
-          leftColumn.push(product);
-        } else {
-          rightColumn.push(product);
-        }
-      });
-
       this.setData({
-        leftColumnProducts: leftColumn,
-        rightColumnProducts: rightColumn,
+        fleaMarketProducts: filteredProducts,
       });
+      console.log(this.data.fleaMarketProducts);
     },
 
     handleCategorySelect(e) {
@@ -233,9 +201,10 @@ Component({
       navigateToPurchase(id);
     },
 
-    previewProductPicture() {
+    previewProductPicture(e) {
+      const product = e.currentTarget.dataset.product;
       wx.previewImage({
-        urls: this.data.selectedProduct.pictures,
+        urls: product.pictures,
       });
     },
 

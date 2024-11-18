@@ -25,11 +25,8 @@
   color: var(--primary);
 }
 
-.subtitle {
-  font-size: 12pt;
-  line-height: 12pt;
-  color: #b8b8b8;
-  margin-bottom: 20rpx;
+.text-subtitle {
+  color: #b5b5b5;
 }
 
 .section-icon {
@@ -111,7 +108,7 @@
 }
 
 .search-container {
-  background: #f9f9f9;
+  background: #eeeeee;
   border-radius: 60rpx;
   padding: 16rpx 24rpx;
   height: 70rpx;
@@ -156,4 +153,40 @@
   font-size: 11pt;
   justify-items: center;
   align-items: center;
+}
+
+.bg-gradient {
+  background: linear-gradient(180deg, #f9fcff 0.76%, #f9f9fd 100%);
+}
+
+.bg-sell {
+  background-color: #6aa0f4;
+}
+
+.bg-buy {
+  background-color: #ff8f7b;
+}
+
+.text-nickname {
+  color: #444444;
+}
+
+.text-time {
+  color: #c1c1c1;
+}
+
+.text-desc {
+  color: #b5b5b5;
+}
+
+.text-interest {
+  color: #afafaf;
+}
+
+.truncate-price {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100rpx;
 }
