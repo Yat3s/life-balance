@@ -87,7 +87,7 @@
   <view wx:if="{{fleaMarketProducts && userInfo.company}}" class="mt-4 plr">
     <view wx:for="{{fleaMarketProducts}}" wx:key="_id" class="mb-4 bg-white rounded-lg">
       <!-- Product Card -->
-      <view class="p-4 border-gray-light rounded-lg bg-gradient" bind:tap="handleFleaMarketProductClick" data-product="{{item}}">
+      <view class="p-4 border-gray-light rounded-lg bg-gradient" bind:tap="handleViewFleaMarketProduct" data-product="{{item}}">
         <!-- Image Carousel -->
         <block wx:if="{{item.pictures && item.pictures.length > 0}}">
           <swiper class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-3" catch:tap="previewProductPicture" data-product="{{item}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
@@ -125,7 +125,7 @@
               </view>
               <view class="text-xxs text-interest">{{item.interestedUsers.length || 0}} 人想要</view>
             </view>
-            <view class="flex shrink-0 items-center gap-1dot5 py-1dot5 px-2dot5 bg-blue-500 text-white rounded-full text-center" catch:tap="handleFleaMarketProductClick" data-product="{{item}}">
+            <view class="flex shrink-0 items-center gap-1dot5 py-1dot5 px-2dot5 bg-blue-500 text-white rounded-full text-center" catch:tap="handleViewFleaMarketProduct" data-product="{{item}}">
               <image class="w-3 h-3 -mb-0dot5" src="/images/ic_comment.svg" />
               <view class="text-xxs font-medium">我{{item.type === 'sell' ? '想要' : '要卖'}}</view>
             </view>
@@ -184,14 +184,14 @@
       <view class="text-left text-xs text-desc mb-4">{{selectedProduct.description}}</view>
       <!-- Image Carousel -->
       <block wx:if="{{selectedProduct.pictures && selectedProduct.pictures.length > 0}}">
-        <swiper class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-3" catch:tap="previewProductPicture" data-product="{{selectedProduct}}" indicator-dots="true" circular="true">
+        <swiper class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6" catch:tap="previewProductPicture" data-product="{{selectedProduct}}" indicator-dots="true" circular="true">
           <swiper-item wx:for="{{selectedProduct.pictures}}" wx:key="*this">
             <image src="{{item}}" mode="aspectFill" class="w-full h-full rounded-lg" />
           </swiper-item>
         </swiper>
       </block>
       <view class="flex items-center justify-between">
-        <view class="flex flex-col items-center">
+        <view class="flex flex-col text-left">
           <view class="text-custom-price text-black text-price">{{selectedProduct.price}}</view>
           <view class="text-xxs text-interest">
             {{selectedProduct.interestedUsers.length || 0}} 人想要
