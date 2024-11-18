@@ -2,12 +2,6 @@
   <view class="flex-1 flex flex-col gap-3" wx:for="{{[leftColumnProducts, rightColumnProducts]}}" wx:key="*this" wx:for-item="column">
     <block wx:for="{{column}}" wx:key="_id">
       <view class="relative bg-white rounded-lg p-4 border-gray-light" bindtap="handleProductClick" data-item="{{item}}">
-        <view wx:if="{{item.isInternal && !company}}" class="absolute inset-0 overlay flex items-center justify-center z-10">
-          <view class="text-center flex flex-col">
-            <image class="w-8 h-8 mx-auto mb-2" src="/images/ic_ms.png" />
-            <text class="text-sm text-foreground">仅微软员工可查看</text>
-          </view>
-        </view>
         <image wx:if="{{item.pictures && item.pictures.length > 0}}" class="w-full h-36 rounded-lg mb-3" src="{{item.pictures[0]}}" mode="aspectFill" />
         <view class="flex items-center gap-2 mb-3">
           <image class="w-4 h-4 rounded-full" src="{{item.user.avatarUrl}}" />
