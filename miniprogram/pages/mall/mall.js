@@ -4,6 +4,7 @@ import {
   deleteUserProduct,
   fetchAllFleaMarketProducts,
   fetchAllProducts,
+  updateInterestedUsers,
   updateUserProduct,
 } from '../../repository/productRepo';
 import { fetchUserInfo } from '../../repository/userRepo';
@@ -306,12 +307,32 @@ Component({
       });
     },
 
-    handleFleaMarketProductClick(e) {
+    async handleViewFleaMarketProduct(e) {
       const product = e.currentTarget.dataset.product;
+
       this.setData({
         showingModal: 'flea-market-product',
         selectedProduct: product,
       });
+
+      try {
+        await updateInterestedUsers(product._id);
+        const updatedProducts = await fetchAllFleaMarketProducts();
+        if (updatedProducts?.data) {
+          const processedData = updatedProducts.data.map((p) => ({
+            ...p,
+            formattedTime: formatTimeAgo(p.createdAt),
+          }));
+
+          this.setData({
+            secondhandProducts: processedData,
+            fleaMarketProducts: processedData,
+            selectedProduct: processedData.find((p) => p._id === product._id),
+          });
+        }
+      } catch (error) {
+        console.error('Failed to update product view:', error);
+      }
     },
 
     handleViewAllPopularProducts() {

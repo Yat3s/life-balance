@@ -25,7 +25,6 @@ exports.main = async (props, context) => {
       .update({
         data: {
           interestedUsers: _.addToSet(openid),
-          updatedAt: Date.now(),
         },
       });
 
