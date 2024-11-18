@@ -45,7 +45,7 @@
   <!-- Flea Market Section -->
   <view class="plr">
     <view class="flex justify-end items-center mb-2">
-      <text bind:tap="handleNavToPublishItemPage" class="section-action">发布物品</text>
+      <text bind:tap="handlePublishItem" class="section-action">发布物品</text>
     </view>
     <!-- Keywords Preview -->
     <share-element duration="200" key="search-input" transform>
@@ -75,16 +75,24 @@
       </view>
     </view>
   </scroll-view>
-  <!-- Product Grid -->
-  <view wx:if="{{fleaMarketProducts}}" class="mt-4 plr">
+  <!-- Authentication Required View -->
+  <view wx:if="{{!userInfo.company}}" class="flex-1 flex flex-col items-center justify-center" style="height: calc(100vh - 500px);">
+    <image class="w-40 h-40" src="/images/img_404.png" />
+    <view class="flex flex-col items-center">
+      <view class="text-black font-light">Oops! 该功能仅对认证用户开放</view>
+      <view class="underline text-auth" bind:tap="handleVerifyAuth">前往认证</view>
+    </view>
+  </view>
+  <!-- Product List -->
+  <view wx:if="{{fleaMarketProducts && userInfo.company}}" class="mt-4 plr">
     <view wx:for="{{fleaMarketProducts}}" wx:key="_id" class="mb-4 bg-white rounded-lg shadow-sm">
       <!-- Product Card -->
       <view class="p-4 border-gray-light rounded-lg bg-gradient">
         <!-- Image Carousel -->
         <block wx:if="{{item.pictures && item.pictures.length > 0}}">
-          <swiper bind:tap="previewProductPicture" data-product="{{item}}" class="w-full h-72 rounded-t-lg" indicator-dots="true" indicator-color="#ECECEC" indicator-active-color="#1C1C55">
+          <swiper bind:tap="previewProductPicture" data-product="{{item}}" class="w-full h-80 rounded-t-lg mb-3" indicator-dots="true" indicator-color="#ECECEC" indicator-active-color="#1C1C55">
             <swiper-item wx:for="{{item.pictures}}" wx:key="*this">
-              <image src="{{item}}" mode="aspectFill" class="w-full h-full" />
+              <image src="{{item}}" mode="aspectFill" class="w-full h-full rounded-lg" />
             </swiper-item>
           </swiper>
         </block>
@@ -97,7 +105,7 @@
           <view class="text-sm truncate text-black">{{item.title}}</view>
         </view>
         <!-- Description -->
-        <view class="truncate text-xs text-desc">{{item.description}}</view>
+        <view class="truncate text-xs text-desc mb-6">{{item.description}}</view>
         <!-- Price and User Info -->
         <view class="mt-2 flex items-center justify-between">
           <view class="flex items-center gap-2">
@@ -124,7 +132,7 @@
       </view>
     </view>
   </view>
-  <template wx:else is="product-grid-skeleton" />
+  <template wx:if="{{userInfo.company && !fleaMarketProducts}}" is="product-grid-skeleton" />
 </scroll-view>
 <!-- Product Detail Modal -->
 <view class="cu-modal {{ showingModal === 'product' ? 'show' : '' }}" bindtap="hideModal" catchtouchmove>
