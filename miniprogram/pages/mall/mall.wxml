@@ -97,12 +97,15 @@
           </swiper>
         </block>
         <!-- Content -->
-        <view class="flex items-center gap-2 mb-2">
-          <view class="{{item.type === 'sell' ? 'bg-sell' : 'bg-buy'}} px-1dot5 py-0dot5 rounded text-white text-xxs shrink-0">
-            {{item.type === 'sell' ? '出售' : '求购'}}
+        <view class="flex items-center justify-between gap-2 mb-2">
+          <view class="flex items-center gap-2">
+            <view class="{{item.type === 'sell' ? 'bg-sell' : 'bg-buy'}} px-1dot5 py-0dot5 rounded text-white text-xxs shrink-0">
+              {{item.type === 'sell' ? '出售' : '求购'}}
+            </view>
+            <!-- Title -->
+            <view class="text-sm truncate w-64 text-black">{{item.title}}</view>
           </view>
-          <!-- Title -->
-          <view class="text-sm truncate text-black">{{item.title}}</view>
+          <image class="w-4 h-4 shrink-0" src="/images/ic_more.svg" data-product="{{item}}" bind:tap="onEditProduct" />
         </view>
         <!-- Description -->
         <view class="truncate text-xs text-desc mb-6">{{item.description}}</view>
@@ -134,6 +137,30 @@
   </view>
   <template wx:if="{{userInfo.company && !fleaMarketProducts}}" is="product-grid-skeleton" />
 </scroll-view>
+<view class="cu-modal bottom-modal {{ showingModal === 'edit-product' ? 'show' : '' }}" bindtap="hideModal">
+  <view class="cu-dialog rounded-custom rounded-xl" catchtap>
+    <view class="py-8 px-10">
+      <view class="flex flex-col gap-6">
+        <view class="flex items-center gap-3" bind:tap="handlePublishItem">
+          <image class="w-4 h-4" src="/images/ic_publish.svg" />
+          <view class="text-black text-sm">发布同款</view>
+        </view>
+        <view wx:if="{{userInfo._openid === selectedProduct.userId}}" bind:tap="handleTakedownProduct" class="flex items-center gap-3">
+          <image class="w-4 h-4" src="/images/ic_sold_out.svg" />
+          <view class="text-black text-sm">下架</view>
+        </view>
+        <view wx:if="{{userInfo._openid === selectedProduct.userId}}" bind:tap="handleDeleteProduct" class="flex items-center gap-3">
+          <image class="w-4 h-4" src="/images/ic_publish.svg" />
+          <view class="text-black text-sm">删除该商品</view>
+        </view>
+        <view class="flex items-center gap-3">
+          <image class="w-4 h-4" src="/images/ic_report.svg" />
+          <view class="text-gray text-sm">Report It Now</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
 <!-- Product Detail Modal -->
 <view class="cu-modal {{ showingModal === 'product' ? 'show' : '' }}" bindtap="hideModal" catchtouchmove>
   <view class="cu-dialog rounded-lg bg-white" catchtap>

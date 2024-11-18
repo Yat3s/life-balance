@@ -194,3 +194,10 @@
 .text-auth {
   color: #3785fc;
 }
+
+.rounded-custom {
+  border-top-left-radius: 24rpx !important;
+  border-top-right-radius: 24rpx !important;
+  border-bottom-left-radius: 0rpx !important;
+  border-bottom-right-radius: 0rpx !important;
+}
