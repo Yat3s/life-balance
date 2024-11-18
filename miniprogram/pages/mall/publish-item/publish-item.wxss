@@ -7,10 +7,27 @@
   background-color: #f9f9f9;
 }
 
-switch::before {
-  content: '' !important;
+.border-gray {
+  border: 1rpx solid #e9e9e9;
 }
 
-switch::after {
-  content: '' !important;
+.text-input {
+  color: #bdbdbd;
+}
+
+.text-cancel {
+  color: #664d77;
+}
+
+.bg-add-picture {
+  background-color: #d9d9d9;
+}
+
+.text-plus {
+  color: #999;
+}
+
+.type {
+  background-color: #efefef;
+  color: #8b8b8b;
 }
