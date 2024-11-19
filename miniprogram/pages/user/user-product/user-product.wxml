@@ -29,17 +29,27 @@
     <block wx:if="{{activeTab === 'userProducts'}}">
       <block wx:if="{{!userProducts}}">
         <!-- Published Items Skeleton -->
-        <view wx:for="{{[1,2,3,4,5]}}" wx:key="*this" class="flex bg-blue-gradient p-5 py-4 mb-4 rounded-lg items-center">
-          <view class="w-32 h-32 skeleton-bg rounded-lg skeleton-animate" />
-          <view class="flex-1 ml-6">
-            <view class="h-4 skeleton-bg rounded w-28 skeleton-animate mb-3" />
+        <view wx:for="{{[1,2,3,4,5]}}" wx:key="*this" class="flex bg-blue-gradient p-5 py-4 mb-4 rounded-lg border-gray-light">
+          <view class="flex-1">
+            <!-- Title Skeleton -->
+            <view class="h-4 skeleton-bg rounded w-full skeleton-animate mb-3" />
+            <!-- Category and Price Skeleton -->
             <view class="flex justify-between items-center">
-              <view class="h-3 skeleton-bg rounded w-12 skeleton-animate" />
-              <view class="h-4 skeleton-bg rounded w-16 skeleton-animate" />
+              <view class="h-3dot5 skeleton-bg rounded w-12 skeleton-animate" />
+              <view class="h-6 skeleton-bg rounded w-16 skeleton-animate" />
             </view>
-            <view class="flex justify-end mt-6 gap-4">
-              <view class="w-12 h-5 skeleton-bg rounded-md skeleton-animate" />
-              <view class="w-12 h-5 skeleton-bg rounded-md skeleton-animate" />
+            <!-- Bottom Skeleton -->
+            <view class="flex items-center justify-between mt-6">
+              <!-- Images Skeleton -->
+              <view class="flex gap-1.5">
+                <view class="w-9 h-9 skeleton-bg rounded skeleton-animate" />
+                <view class="w-9 h-9 skeleton-bg rounded skeleton-animate" />
+              </view>
+              <view class="flex items-center gap-1.5">
+                <view class="w-12 h-6 skeleton-bg rounded-lg skeleton-animate" />
+                <view class="w-12 h-6 skeleton-bg rounded-lg skeleton-animate" />
+                <view class="w-16 h-6 skeleton-bg rounded-lg skeleton-animate" />
+              </view>
             </view>
           </view>
         </view>
