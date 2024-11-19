@@ -50,7 +50,7 @@ Page({
 
   async getFleaMarketKeywords() {
     const config = await getAppConfig();
-    return config.fleaMarketKeywords || [];
+    return config.mall.fleaMarketKeywords || [];
   },
 
   async loadProductData(
