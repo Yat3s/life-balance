@@ -61,7 +61,7 @@
         <block wx:for="{{userProducts}}" wx:key="_id">
           <view bind:tap="handleOpenProductModal" data-product="{{item}}" class="flex bg-blue-gradient p-5 py-4 mb-4 rounded-lg border-gray-light items-center">
             <view class="flex-1">
-              <view class="text-sm line-clamp-2 mb-3 {{item.saleStatus === 'off' ? 'text-sold' : 'text-foreground'}}">
+              <view class="text-sm line-clamp-2 mb-3 {{item.status === 'off' ? 'text-sold' : 'text-foreground'}}">
                 {{item.title}}
               </view>
               <view class="flex justify-between items-center">
@@ -73,7 +73,7 @@
                   </block>
                   <view class="text-custom-purple font-lesslight text-xs" wx:else>未分类</view>
                 </view>
-                <view class="text-lg font-bold flex items-baseline gap-1 {{item.saleStatus === 'off' ? 'text-sold' : 'text-foreground'}}">
+                <view class="text-lg font-bold flex items-baseline gap-1 {{item.status === 'off' ? 'text-sold' : 'text-foreground'}}">
                   <text class="text-xs">¥</text>
                   <text>{{item.price}}</text>
                 </view>
@@ -90,7 +90,7 @@
                   </view>
                 </view>
                 <view class="flex items-center gap-1dot5">
-                  <view wx:if="{{item.saleStatus === 'off'}}" class="w-10 h-10 absolute left-2 -bottom-1">
+                  <view wx:if="{{item.status === 'off'}}" class="w-10 h-10 absolute left-2 -bottom-1">
                     <image class="w-full h-full" src="/images/ic_sale_off.svg" />
                   </view>
                   <!-- Delete Product -->
@@ -102,7 +102,7 @@
                     编辑
                   </view>
                   <view class="px-4 py-1 rounded-lg text-xxs bg-foreground text-white shrink-0" catch:tap="toggleStatus" data-id="{{item._id}}">
-                    {{item.saleStatus === 'on' ? '下架' : '重新上架'}}
+                    {{item.status === 'on' ? '下架' : '重新上架'}}
                   </view>
                 </view>
               </view>
@@ -208,7 +208,7 @@
           编辑
         </view>
         <view class="flex-1 py-1dot5 bg-foreground rounded-lg text-sm text-white" catch:tap="toggleStatus" data-id="{{selectedProduct._id}}">
-          {{selectedProduct.saleStatus === 'on' ? '下架' : '重新上架'}}
+          {{selectedProduct.status === 'on' ? '下架' : '重新上架'}}
         </view>
       </view>
     </view>

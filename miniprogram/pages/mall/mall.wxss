@@ -163,7 +163,7 @@
   background-color: #6aa0f4;
 }
 
-.bg-buy {
+.bg-wanted {
   background-color: #ff8f7b;
 }
 

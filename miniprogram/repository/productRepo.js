@@ -42,8 +42,8 @@ export const updateUserProduct = (productId, updateUserProductData) => {
   });
 };
 
-export const updateInterestedUsers = (productId) => {
-  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, 'updateInterestedUsers', {
+export const updateWantedBy = (productId) => {
+  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, 'updateWantedBy', {
     productId,
   });
 };

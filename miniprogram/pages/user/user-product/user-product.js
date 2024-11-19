@@ -111,15 +111,15 @@ Page({
     const index = products.findIndex((p) => p._id === id);
 
     if (index > -1) {
-      const newStatus = products[index].saleStatus === 'on' ? 'off' : 'on';
-      products[index].saleStatus = newStatus;
+      const newStatus = products[index].status === 'on' ? 'off' : 'on';
+      products[index].status = newStatus;
 
       this.setData({
         userProducts: products,
       });
 
       const updateUserProductData = {
-        saleStatus: newStatus,
+        status: newStatus,
       };
 
       updateUserProduct(id, updateUserProductData)

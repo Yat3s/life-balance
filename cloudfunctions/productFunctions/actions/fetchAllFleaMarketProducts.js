@@ -5,14 +5,14 @@ cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 
 const COLLECTION_NAME_FLEA_MARKET_PRODUCTS = 'flea-market-products';
-const SALE_STATUS = 'on';
+const SALE_STATUS_ON = 'on';
 
 exports.main = async (props, context) => {
   try {
     const products = await getAllData(db, {
       collection: COLLECTION_NAME_FLEA_MARKET_PRODUCTS,
       whereCondition: {
-        saleStatus: SALE_STATUS,
+        status: SALE_STATUS_ON,
       },
       orderBy: {
         field: 'updatedAt',

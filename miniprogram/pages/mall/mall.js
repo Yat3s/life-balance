@@ -4,7 +4,7 @@ import {
   deleteUserProduct,
   fetchAllFleaMarketProducts,
   fetchAllProducts,
-  updateInterestedUsers,
+  updateWantedBy,
   updateUserProduct,
 } from '../../repository/productRepo';
 import { fetchUserInfo } from '../../repository/userRepo';
@@ -316,7 +316,7 @@ Component({
       });
 
       try {
-        await updateInterestedUsers(product._id);
+        await updateWantedBy(product._id);
         const updatedProducts = await fetchAllFleaMarketProducts();
         if (updatedProducts?.data) {
           const processedData = updatedProducts.data.map((p) => ({
