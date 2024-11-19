@@ -60,7 +60,7 @@
           </swiper>
         </block>
         <!-- Show input when search is active -->
-        <input wx:else class="flex-1 ml-2" placeholder="Search Products" value="{{searchInput}}" bindinput="onSearchChanged" focus="{{isSearchActive}}" bindblur="onSearchBlur" />
+        <input wx:else class="flex-1 ml-2" placeholder="搜索" placeholder-class="text-search" value="{{searchInput}}" bindinput="onSearchChanged" focus="{{isSearchActive}}" bindblur="onSearchBlur" />
       </view>
     </share-element>
   </view>
@@ -90,11 +90,18 @@
       <view class="p-4 border-gray-light rounded-lg bg-gradient" bind:tap="handleViewFleaMarketProduct" data-product="{{item}}">
         <!-- Image Carousel -->
         <block wx:if="{{item.pictures && item.pictures.length > 0}}">
-          <swiper class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-3" catch:tap="previewProductPicture" data-product="{{item}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
-            <swiper-item wx:for="{{item.pictures}}" wx:key="*this">
-              <image src="{{item}}" mode="aspectFill" class="w-full h-full rounded-lg" />
-            </swiper-item>
-          </swiper>
+          <block wx:if="{{item.pictures.length > 1}}">
+            <swiper class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-3" catch:tap="previewProductPicture" data-product="{{item}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
+              <swiper-item wx:for="{{item.pictures}}" wx:for-item="picture" wx:key="*this">
+                <image src="{{picture}}" mode="aspectFill" class="w-full h-full rounded-lg" />
+              </swiper-item>
+            </swiper>
+          </block>
+          <block wx:else>
+            <view class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-3" catch:tap="previewProductPicture" data-product="{{item}}">
+              <image src="{{item.pictures[0]}}" mode="aspectFill" class="w-full h-full rounded-lg" />
+            </view>
+          </block>
         </block>
         <!-- Content -->
         <view class="flex items-center justify-between gap-2 mb-2">
@@ -112,7 +119,7 @@
         <!-- Price and User Info -->
         <view class="mt-2 flex items-center justify-between">
           <view class="flex items-center gap-2">
-            <image src="{{item.user.avatarUrl}}" class="w-8 h-8 rounded-lg" mode="aspectFill" />
+            <image src="{{item.user.avatarUrl}}" class="w-8 h-8 rounded" mode="aspectFill" />
             <view class="text-left">
               <view class="text-xs text-nickname truncate w-36">{{item.user.nickName}}</view>
               <view class="text-xxs text-time">{{item.formattedTime}}发布</view>
@@ -155,10 +162,12 @@
           <image class="w-4 h-4" src="/images/ic_publish.svg" />
           <view class="text-black text-sm">删除该商品</view>
         </view>
-        <view class="flex items-center gap-3">
-          <image class="w-4 h-4" src="/images/ic_report.svg" />
-          <view class="text-gray text-sm">Report It Now</view>
-        </view>
+        <block wx:if="{{false}}">
+          <view class="flex items-center gap-3">
+            <image class="w-4 h-4" src="/images/ic_report.svg" />
+            <view class="text-gray text-sm">Report It Now</view>
+          </view>
+        </block>
       </view>
     </view>
   </view>
@@ -169,7 +178,7 @@
     <view class="p-6">
       <!-- User name -->
       <view class="flex items-center gap-3dot5 mb-3">
-        <image src="{{selectedProduct.user.avatarUrl}}" class="w-8 h-8 rounded-lg" mode="aspectFill" />
+        <image src="{{selectedProduct.user.avatarUrl}}" class="w-8 h-8 rounded" mode="aspectFill" />
         <view class="text-left">
           <view class="text-xs text-nickname truncate w-36">{{selectedProduct.user.nickName}}</view>
           <view class="text-xxs text-time">{{selectedProduct.formattedTime}}发布</view>
@@ -186,11 +195,18 @@
       <view class="text-left text-xs text-desc mb-4">{{selectedProduct.description}}</view>
       <!-- Image Carousel -->
       <block wx:if="{{selectedProduct.pictures && selectedProduct.pictures.length > 0}}">
-        <swiper class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6" catch:tap="previewProductPicture" data-product="{{selectedProduct}}" indicator-dots="true" circular="true">
-          <swiper-item wx:for="{{selectedProduct.pictures}}" wx:key="*this">
-            <image src="{{item}}" mode="aspectFill" class="w-full h-full rounded-lg" />
-          </swiper-item>
-        </swiper>
+        <block wx:if="{{selectedProduct.pictures.length > 1}}">
+          <swiper class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6" catch:tap="previewProductPicture" data-product="{{selectedProduct}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
+            <swiper-item wx:for="{{selectedProduct.pictures}}" wx:for-item="picture" wx:key="*this">
+              <image src="{{picture}}" mode="aspectFill" class="w-full h-full rounded-lg" />
+            </swiper-item>
+          </swiper>
+        </block>
+        <block wx:else>
+          <view class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6" catch:tap="previewProductPicture" data-product="{{selectedProduct}}">
+            <image src="{{selectedProduct.pictures[0]}}" mode="aspectFill" class="w-full h-full rounded-lg" />
+          </view>
+        </block>
       </block>
       <view class="flex items-center justify-between">
         <view class="flex flex-col text-left">
