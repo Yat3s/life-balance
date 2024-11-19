@@ -9,20 +9,20 @@ Component({
     addGlobalClass: true,
   },
   data: {
-    maxB25Spaces: 508,
-    maxZhongmengSpaces: 223,
+    parkingConfig: {
+      b25: { maxSpaces: 508 },
+      zhongmeng: { maxSpaces: 223 },
+    },
     loadingParkingSpace: true,
     parkingSpace: {
-      b25Used: 0,
-      zhongmengUsed: 0,
+      b25: { remaining: 508 },
+      zhongmeng: { remaining: 223 },
     },
   },
 
   lifetimes: {
     attached() {
       this.fetchParkingData();
-      this.drawProgressRing("progressCanvasB25", 100);
-      this.drawProgressRing("progressCanvasZhongmeng", 100);
     },
   },
 
@@ -47,78 +47,33 @@ Component({
     },
 
     fetchParkingData() {
-      const { maxB25Spaces, maxZhongmengSpaces } = this.data;
       fetchParkingSpace().then((parkingSpace) => {
         console.log("parkingSpace", parkingSpace);
 
-        const b25Used = parkingSpace.b25;
-        const zhongmengUsed = parkingSpace.zhongmeng;
+        const updatedParkingData = {};
+        Object.keys(this.data.parkingConfig).forEach((key) => {
+          const maxSpaces = this.data.parkingConfig[key].maxSpaces;
+          const remaining = parkingSpace[key];
+          const used = maxSpaces - remaining;
+          const usedPercent = Math.round((used / maxSpaces) * 100);
 
-        // Calculate remaining spaces
-        const b25Remaining = maxB25Spaces - b25Used;
-        const zhongmengRemaining = maxZhongmengSpaces - zhongmengUsed;
-
-        // Set the remaining spaces data
-        this.setData({
-          parkingSpace: {
-            b25Remaining,
-            zhongmengRemaining,
-          },
-          loadingParkingSpace: false,
+          updatedParkingData[key] = {
+            remaining,
+            used,
+            usedPercent,
+            initialColor: "#0051FF",
+            finalColor: usedPercent >= 90 ? "#FF0000" : "#0051FF",
+            progressDuration: usedPercent <= 30 ? 1 : usedPercent <= 60 ? 2 : 3,
+            colorChangeDuration:
+              usedPercent <= 30 ? 2 : usedPercent <= 60 ? 4 : 6,
+          };
         });
 
-        // Draw progress rings for both spaces
-        this.drawProgressRing(
-          "progressCanvasB25",
-          (b25Remaining / maxB25Spaces) * 100
-        );
-        this.drawProgressRing(
-          "progressCanvasZhongmeng",
-          (zhongmengRemaining / maxZhongmengSpaces) * 100
-        );
+        this.setData({
+          parkingSpace: updatedParkingData,
+          loadingParkingSpace: false,
+        });
       });
-    },
-
-    drawProgressRing(canvasId, progress) {
-      const ctx = wx.createCanvasContext(canvasId, this);
-
-      const fullColor = "#D3D3D3";
-      const emptyColor = "#3679FF";
-      const busyColor = "#FF4D4F";
-
-      const isBusy = progress <= 10;
-
-      const radius = 40;
-      const lineWidth = 5;
-
-      // Clear canvas before drawing
-      ctx.clearRect(0, 0, 90, 90);
-
-      // Draw background circle
-      ctx.beginPath();
-      ctx.arc(45, 45, radius, 0, Math.PI * 2);
-      ctx.setLineWidth(lineWidth);
-      ctx.setStrokeStyle(progress === 100 ? emptyColor : fullColor); // Background circle color
-      ctx.setLineCap("round");
-      ctx.stroke();
-
-      // Draw progress circle with reversed start angle
-      ctx.beginPath();
-      ctx.arc(
-        45,
-        45,
-        radius,
-        Math.PI * (isBusy ? 2.25 : 0.75), // Start from the left bottom (left of the circle)
-        isBusy
-          ? Math.PI * 2 * (progress / 100) + Math.PI * (isBusy ? 2.25 : 0.75) // Busy condition (progress <= 10)
-          : -Math.PI * 2 * ((100 - progress) / 100) +
-              Math.PI * (isBusy ? 2.25 : 0.75) // Remaining spaces (progress > 10)
-      );
-      ctx.setStrokeStyle(isBusy ? busyColor : emptyColor); // Set progress circle color
-      ctx.stroke();
-
-      // Finalize drawing
-      ctx.draw();
     },
   },
 });
