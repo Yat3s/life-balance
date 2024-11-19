@@ -219,3 +219,8 @@
   font-family: MiSans;
   font-weight: 700;
 }
+
+.text-search {
+  color: #bdbdbd;
+  font-size: 11pt;
+}

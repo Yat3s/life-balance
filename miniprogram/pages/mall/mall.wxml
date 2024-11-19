@@ -60,7 +60,7 @@
           </swiper>
         </block>
         <!-- Show input when search is active -->
-        <input wx:else class="flex-1 ml-2" placeholder="搜索" placeholder-class="text-search" value="{{searchInput}}" bindinput="onSearchChanged" focus="{{isSearchActive}}" bindblur="onSearchBlur" />
+        <input wx:else class="flex-1 ml-2 text-sm" placeholder="搜索" placeholder-class="text-search" value="{{searchInput}}" bindinput="onSearchChanged" focus="{{isSearchActive}}" bindblur="onSearchBlur" />
       </view>
     </share-element>
   </view>
