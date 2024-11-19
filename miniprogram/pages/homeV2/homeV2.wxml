@@ -1,6 +1,10 @@
 <view class="appbar" style="height: {{appBarHeight}}px;">
-  <view style="padding-top: {{statusBarHeight * 2}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="bg-white toolbar plr {{collapsed? 'shadow' : ''}}">
-    <view class="ml-1 flex flex-col justify-center gap-1">
+  <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="toolbar plr {{collapsed? 'shadow bg-white' : ''}}" />
+</view>
+
+<scroll-view scroll-y="true" class="main pb-24" bindscroll="onPageScrolled">
+  <view style="height:100px; padding-top: {{statusBarHeight + toolbarHeight}}px; margin-top: 32rpx;" class="flex flex-col">
+    <view class="margin-left flex flex-col gap-1">
       <view style="font-size: {{titleScale * 14}}pt; line-height: {{titleScale * 14}}pt;" class="user-name">
         Hi, {{userInfo ? userInfo.nickName : 'Friend!'}}
       </view>
@@ -8,12 +12,6 @@
         {{nowDateInEnglish}} - {{welcomeMessage}}
       </view>
     </view>
-    　
-  </view>
-</view>
-
-<scroll-view scroll-y="true" class="main pb-24" bindscroll="onPageScrolled">
-  <view style="height:100px;">
   </view>
   <view class="mt-12">
     <stockV2></stockV2>
