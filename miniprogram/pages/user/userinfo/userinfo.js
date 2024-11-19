@@ -6,6 +6,14 @@ Page({
     photos: [],
   },
 
+  onChooseAvatar(e) {
+    const { avatarUrl } = e.detail;
+    console.log('Avatar URL: ', avatarUrl);
+    this.setData({
+      avatarUrl,
+    });
+  },
+
   onBirthdayPicked(e) {
     const birthday = e.detail.value;
     this.setData({
@@ -29,9 +37,10 @@ Page({
   },
 
   onUserInfoSubmit(e) {
-    const { height, school, desc, occupation, contact, address } =
+    const { height, school, desc, occupation, contact, address, nickName } =
       e.detail.value;
-    const { birthday, hometown, photos, company, phoneNumber } = this.data;
+    const { birthday, hometown, photos, company, phoneNumber, avatarUrl } =
+      this.data;
 
     const userInfo = {};
 
@@ -44,6 +53,14 @@ Page({
       });
 
       return;
+    }
+
+    if (nickName) {
+      userInfo.nickName = nickName;
+    }
+
+    if (avatarUrl) {
+      userInfo.avatarUrl = avatarUrl;
     }
 
     if (height) {
@@ -137,6 +154,8 @@ Page({
       console.log(userInfo.photos);
 
       this.setData({
+        nickName: userInfo.nickName,
+        avatarUrl: userInfo.avatarUrl,
         company: userInfo.company,
         birthday: userInfo.birthday,
         height: userInfo.height,
