@@ -257,7 +257,7 @@ Page({
     }
 
     wx.showLoading({
-      title: productId ? 'Updating...' : 'Publishing...',
+      title: productId ? '保存中...' : '发布中...',
     });
 
     try {
@@ -268,8 +268,8 @@ Page({
         contact: finalContact,
         description: description || '',
         pictures: pictures || [],
-        saleStatus: 'on',
         categories: selectedCategory || [],
+        ...(!productId && { status: 'on' }),
       };
 
       if (productId) {

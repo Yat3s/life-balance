@@ -106,7 +106,7 @@
         <!-- Content -->
         <view class="flex items-center justify-between gap-2 mb-2">
           <view class="flex items-center gap-2">
-            <view class="{{item.type === 'sell' ? 'bg-sell' : 'bg-buy'}} px-1dot5 py-0dot5 rounded text-white text-xxs shrink-0">
+            <view class="{{item.type === 'sell' ? 'bg-sell' : 'bg-wanted'}} px-1dot5 py-0dot5 rounded text-white text-xxs shrink-0">
               {{item.type === 'sell' ? '出售' : '求购'}}
             </view>
             <!-- Title -->
@@ -185,7 +185,7 @@
         </view>
       </view>
       <view class="mb-2 text-left">
-        <view class="{{selectedProduct.type === 'sell' ? 'bg-sell' : 'bg-buy'}} mr-2 px-1dot5 inline-block w-fit py-0dot5 rounded text-white text-xxs shrink-0">
+        <view class="{{selectedProduct.type === 'sell' ? 'bg-sell' : 'bg-wanted'}} mr-2 px-1dot5 inline-block w-fit py-0dot5 rounded text-white text-xxs shrink-0">
           {{selectedProduct.type === 'sell' ? '出售' : '求购'}}
         </view>
         <!-- Title -->

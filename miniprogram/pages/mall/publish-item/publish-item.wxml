@@ -10,7 +10,7 @@
         <view bindtap="onTypeChange" data-type="sell" class="px-4 py-1dot5 rounded-l-full text-xs {{productType === 'sell' ? 'bg-blueBg text-white' : 'type'}}">
           出售
         </view>
-        <view bindtap="onTypeChange" data-type="buy" class="px-4 py-1dot5 rounded-r-full text-xs {{productType === 'buy' ? 'bg-blueBg text-white' : 'type'}}">
+        <view bindtap="onTypeChange" data-type="wanted" class="px-4 py-1dot5 rounded-r-full text-xs {{productType === 'wanted' ? 'bg-blueBg text-white' : 'type'}}">
           求购
         </view>
       </view>
