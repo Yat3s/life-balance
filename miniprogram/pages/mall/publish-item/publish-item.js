@@ -145,9 +145,9 @@ Page({
   validatePrice(price) {
     const numberPrice = Number(price);
 
-    if (isNaN(numberPrice) || numberPrice <= 0) {
+    if (isNaN(numberPrice) || numberPrice < 0) {
       wx.showToast({
-        title: 'Please enter a valid price greater than 0',
+        title: 'Please enter a valid price',
         icon: 'none',
       });
       return null;
