@@ -18,6 +18,18 @@ Component({
         price: "000.00",
         change: "0.00",
       },
+      top1: {
+        mktcap: "00.00",
+      },
+      top2: {
+        mktcap: "00.00",
+      },
+      top3: {
+        mktcap: "00.00",
+      },
+      top4: {
+        mktcap: "00.00",
+      },
     },
   },
 
