@@ -107,6 +107,9 @@ page {
   margin-top: 60rpx;
 }
 
-.flex-0dot7 {
-  flex: 0.7;
+.flex-0dot8 {
+  -webkit-box-flex: 0.8;
+  -webkit-flex: 0.8 1 0%;
+  -ms-flex: 0.8 1 0%;
+  flex: 0.8 1 0%;
 }
