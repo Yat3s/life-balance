@@ -53,8 +53,10 @@ page {
 }
 
 .main {
-  padding: 0 40rpx 0 40rpx;
-  height: calc(100vh);
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  background: white;
+  height: 100vh;
 }
 
 .margin-left {
