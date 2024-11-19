@@ -21,9 +21,9 @@ Page({
       const userInfo = await fetchUserInfo();
       this.setData({
         product,
-        contactNumber: config.contactNumber ?? '4645643',
-        contactName: config.contactName ?? 'Chris Ye',
-        pickUpLocation: config.pickUpLocation ?? '微软大厦 5F #65',
+        contactNumber: config.mall.contactNumber ?? '4645643',
+        contactName: config.mall.contactName ?? 'Chris Ye',
+        pickUpLocation: config.mall.pickUpLocation ?? '微软大厦 5F #65',
         phoneNumber: userInfo.phoneNumber ?? '',
         address: userInfo.address ?? '',
       });

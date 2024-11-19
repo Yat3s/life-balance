@@ -23,9 +23,9 @@ Page({
           orderStatus: this.getOrderStatus(order.status),
           deliveryTypeText: this.getDeliveryType(order.deliveryType),
           formattedTime: formatDate(order.paidAt),
-          contactNumber: config.contactNumber,
-          contactName: config.contactName,
-          pickUpLocation: config.pickUpLocation,
+          contactNumber: config.mall.contactNumber,
+          contactName: config.mall.contactName,
+          pickUpLocation: config.mall.pickUpLocation,
           from,
         },
       });

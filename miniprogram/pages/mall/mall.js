@@ -109,7 +109,7 @@ Component({
 
       getAppConfig().then((config) => {
         this.setData({
-          fleaMarketKeywords: config.fleaMarketKeywords,
+          fleaMarketKeywords: config.mall.fleaMarketKeywords,
         });
       });
     },
