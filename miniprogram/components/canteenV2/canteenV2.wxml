@@ -1,18 +1,20 @@
-<view bindtap="toMenuDetail" class="border border-solid border-gray-200 p-4 pb-0 rounded-lg">
-  <view class="font-bold text-xs">Canteen</view>
-  <view class="flex items-center justify-between margin-top">
-    <view class="text-sm">
-      <view class="font-bold">{{todayMenuB25.canteenName}}</view>
-      <view class="text-gray-400 text-xs">{{todayMenuB25.startDateStr}} - {{todayMenuB25.endDateStr}}</view>
-      <view class="mt-2 font-bold">{{todayMenuZhongmeng.canteenName}}</view>
-      <view class="text-gray-400 text-xs">{{todayMenuZhongmeng.startDateStr}} - {{todayMenuZhongmeng.endDateStr}}</view>
+<view bindtap="toMenuDetail" class="border border-solid border-gray-200 p-4 pb-0 rounded-lg flex flex-col justify-between">
+  <view>
+    <view class="font-bold text-xs">Canteen</view>
+    <view class="flex items-center justify-between margin-top">
+      <view class="text-sm">
+        <view class="font-bold">{{todayMenuB25.canteenName}}</view>
+        <view class="text-gray-400 text-xs">{{todayMenuB25.startDateStr}} - {{todayMenuB25.endDateStr}}</view>
+        <view class="mt-2 font-bold">{{todayMenuZhongmeng.canteenName}}</view>
+        <view class="text-gray-400 text-xs">{{todayMenuZhongmeng.startDateStr}} - {{todayMenuZhongmeng.endDateStr}}</view>
+      </view>
     </view>
-  </view>
 
-  <!-- <view class="mt-6 text-xs text-gray-400">
+    <!-- <view class="mt-6 text-xs text-gray-400">
     <view>今日共浪费了 <text class="text-tip">1,234kg</text></view>
     <view>可以换成 <text class="text-tip">56 餐</text></view>
   </view> -->
+  </view>
 
   <view class="relative bottom-0 food-bg w-full h-24">
     <image src="/images/img_steak.png" class="w-12 h-12 absolute top-5" mode="widthFix" />

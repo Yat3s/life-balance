@@ -19,15 +19,15 @@
   <view class="margin-left mt-10 widget-section-title text-xs">Board for 微软(中国)有限公司 - 苏州</view>
 
   <view class="flex flex-col gap-2 mt-4">
-    <view class="flex gap-2 items-stretch">
-      <!-- Parking Space -->
-      <view class="flex-1">
-        <commuteV2></commuteV2>
-      </view>
+<view class="flex gap-2 items-stretch">
+  <!-- Parking Space -->
+  <view class="flex-1 flex">
+    <commuteV2 class="w-full"></commuteV2>
+  </view>
 
-      <!-- Canteen -->
-      <view class="flex-0dot7">
-        <canteenV2></canteenV2>
+    <!-- Canteen -->
+    <view class="flex-0dot7 flex">
+      <canteenV2 class="w-full"></canteenV2>
       </view>
     </view>
 
@@ -41,17 +41,6 @@
       <view class="flex-1">
         <upcomingActivity></upcomingActivity>
       </view>
-    </view>
-
-    <view class="flex gap-2">
-      <!-- Flea Market -->
-      <view class="flex-1 border border-solid border-gray-200 p-4 rounded-lg">
-        <text>Flea Market</text>
-      </view>
-      <view class="flex-1 p-4">
-
-      </view>
-
     </view>
   </view>
 

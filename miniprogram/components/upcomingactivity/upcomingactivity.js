@@ -16,21 +16,35 @@ Component({
 
   lifetimes: {
     attached() {
+      let cardConfig = {
+        title: "Upcoming Activity",
+        cardTitle: "",
+        description: "",
+        members: [],
+        memberCount: 0,
+        showDescription: false,
+        showAvatars: false,
+        showMemberCount: false,
+      };
       fetchUpcomingActivity().then((activities) => {
-        this.setData({
-          upcomingActivity: activities[0],
-          cardConfig: {
-            title: "Upcoming Activity",
-            cardTitle: activities[0].title,
-            description:
-              activities[0].startDateStr + " - " + activities[0].location.name,
-            members: activities[0].participants,
-            memberCount: activities[0].maxParticipant,
-            showDescription: true,
-            showAvatars: true,
-            showMemberCount: false,
-          },
-        });
+        if (activities.length > 0) {
+          cardConfig.cardTitle = activities[0].title;
+          cardConfig.description =
+            activities[0].startDateStr + " - " + activities[0].location.name;
+          cardConfig.members = activities[0].participants;
+          cardConfig.memberCount = activities[0].maxParticipant;
+          cardConfig.showDescription = true;
+          cardConfig.showAvatars = true;
+          cardConfig.showMemberCount = false;
+          this.setData({
+            upcomingActivity: activities[0],
+            cardConfig,
+          });
+        } else {
+          this.setData({
+            cardConfig,
+          });
+        }
       });
     },
   },
