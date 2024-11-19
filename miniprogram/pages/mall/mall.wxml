@@ -66,7 +66,7 @@
   </view>
   <!-- Category Selection -->
   <scroll-view wx:if="{{fleaMarketKeywords}}" scroll-x class="whitespace-nowrap plr mt-6">
-    <view class="inline-flex gap-7">
+    <view class="inline-flex gap-5">
       <view class="category-item text-sm {{selectedCategory === 'New' ? 'active' : ''}}" data-category="New" bindtap="handleCategorySelect">
         最新
       </view>

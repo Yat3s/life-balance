@@ -41,7 +41,7 @@
   </view>
   <view class="bg-white rounded-lg p-5 py-4 space-y-6 border-gray">
     <view>
-      <textarea class="w-full h-40 text-sm" maxlength="100" placeholder="请输入您的商品，100 字以内" placeholder-class="text-input" model:value="{{description}}" bindinput="onDescriptionInput" />
+      <textarea class="w-full h-40 text-sm" maxlength="100" placeholder="请输入物品描述，100 字以内" placeholder-class="text-input" model:value="{{description}}" bindinput="onDescriptionInput" />
     </view>
     <view class="py-2">
       <view class="flex flex-wrap gap-2">

@@ -1,5 +1,16 @@
-const userRepo = require('../../repository/userRepo');
-const router = require('../router');
+import {
+  fetchUserInfo as _fetchUserInfo,
+  fetchCompany,
+} from '../../repository/userRepo';
+import {
+  navigateToUserActivity,
+  navigateToProfile,
+  navigateToUserProduct,
+  navigateToEditUserInfo,
+  navigationToContribution,
+  navigateToAdmin,
+  navigateToAuth,
+} from '../router';
 
 Component({
   options: {
@@ -12,31 +23,31 @@ Component({
 
   methods: {
     onActivityClick() {
-      router.navigateToUserActivity();
+      navigateToUserActivity();
     },
 
     onProfileClick() {
-      router.navigateToProfile(this.data.userInfo._id);
+      navigateToProfile(this.data.userInfo._id);
     },
 
     onMallClick() {
-      router.navigateToUserProduct();
+      navigateToUserProduct();
     },
 
     onEditUserInfoClick() {
-      router.navigateToEditUserInfo();
+      navigateToEditUserInfo();
     },
 
     onContributionClick() {
-      router.navigationToContribution();
+      navigationToContribution();
     },
 
     onActivityManageClick() {
-      router.navigateToAdmin();
+      navigateToAdmin();
     },
 
     onSettingCompanyClick() {
-      router.navigateToAuth();
+      navigateToAuth();
     },
 
     onSponsorClick() {
@@ -63,26 +74,32 @@ Component({
         data: userInfo.id,
       });
     },
-  },
 
-  pageLifetimes: {
-    show() {},
-  },
-
-  lifetimes: {
-    attached() {
-      userRepo.fetchUserInfo().then((userInfo) => {
+    fetchUserInfo() {
+      _fetchUserInfo().then((userInfo) => {
         userInfo.id = userInfo._openid.substring(0, 16);
         this.setData({
           userInfo,
         });
 
         if (userInfo.company) {
-          userRepo.fetchCompany(userInfo.company).then((company) => {
+          fetchCompany(userInfo.company).then((company) => {
             this.setData({ company });
           });
         }
       });
+    },
+  },
+
+  pageLifetimes: {
+    show() {
+      this.fetchUserInfo();
+    },
+  },
+
+  lifetimes: {
+    attached() {
+      this.fetchUserInfo();
     },
   },
 });

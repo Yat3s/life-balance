@@ -73,3 +73,10 @@ page {
   color: #bebec0;
   font-size: 26rpx;
 }
+
+.avatar-button {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding: 0 !important;
+  width: 2rem !important;
+}

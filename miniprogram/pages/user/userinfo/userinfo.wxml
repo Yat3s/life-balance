@@ -14,6 +14,16 @@
         <view class="name-underline" />
       </view>
       <view style="margin-top: 2rpx;" class="form-section">
+        <view class="form-section-title">Nickname</view>
+        <input placeholder="Your nickname" name="nickName" type="nickname" value="{{nickName}}" />
+      </view>
+      <view style="margin-top: 2rpx;" class="form-section">
+        <view class="form-section-title">Avatar</view>
+        <button class="w-8 h-8 avatar-button" name="avatarUrl" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+          <image class="w-8 h-8 bg-gray-200 rounded-full" src="{{avatarUrl}}"></image>
+        </button>
+      </view>
+      <view style="margin-top: 2rpx;" class="form-section">
         <view class="form-section-title">Contact</view>
         <input placeholder="Alias or email" name="contact" value="{{contact}}" />
       </view>
