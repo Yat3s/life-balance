@@ -9,11 +9,11 @@ Component({
     },
     initialColor: {
       type: String,
-      value: "#0051FF",
+      value: "#3679FF",
     },
     finalColor: {
       type: String,
-      value: "#0051FF",
+      value: "#3679FF",
     },
     progressDuration: {
       type: Number,
