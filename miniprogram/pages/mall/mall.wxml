@@ -159,7 +159,7 @@
           <view class="text-black text-sm">下架</view>
         </view>
         <view wx:if="{{userInfo._openid === selectedProduct.userId}}" bind:tap="handleDeleteProduct" class="flex items-center gap-3">
-          <image class="w-4 h-4" src="/images/ic_publish.svg" />
+          <image class="w-4 h-4" src="/images/ic_delete.svg" />
           <view class="text-black text-sm">删除该商品</view>
         </view>
         <block wx:if="{{false}}">
