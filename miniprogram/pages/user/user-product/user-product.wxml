@@ -50,10 +50,6 @@
       <block wx:else>
         <block wx:for="{{userProducts}}" wx:key="_id">
           <view bind:tap="handleOpenProductModal" data-product="{{item}}" class="flex bg-blue-gradient p-5 py-4 mb-4 rounded-lg border-gray-light items-center">
-            <view wx:if="{{item.pictures && item.pictures[0]}}" class="relative w-32 h-32 rounded-lg overflow-hidden mr-6" data-index="index">
-              <image class="w-full h-full" src="{{item.pictures[0]}}" mode="aspectFill" />
-              <image wx:if="{{item.saleStatus === 'off'}}" class="w-10 h-10 absolute right-1 top-1 z-20" src="/images/ic_sale_off.svg" />
-            </view>
             <view class="flex-1">
               <view class="text-sm line-clamp-2 mb-3 {{item.saleStatus === 'off' ? 'text-sold' : 'text-foreground'}}">
                 {{item.title}}
@@ -67,21 +63,37 @@
                   </block>
                   <view class="text-custom-purple font-lesslight text-xs" wx:else>未分类</view>
                 </view>
-                <view class="relative text-lg font-bold flex items-baseline gap-1 {{item.saleStatus === 'off' ? 'text-sold' : 'text-foreground'}}">
+                <view class="text-lg font-bold flex items-baseline gap-1 {{item.saleStatus === 'off' ? 'text-sold' : 'text-foreground'}}">
                   <text class="text-xs">¥</text>
                   <text>{{item.price}}</text>
-                  <image wx:if="{{item.isInternal}}" class="w-3 h-3 absolute -right-3dot5 -top-0dot5" src="/images/ic_ms.png" />
                 </view>
               </view>
-              <view class="flex justify-end mt-6 gap-4 relative">
-                <view wx:if="{{(!item.pictures || item.pictures.length === 0) && item.saleStatus === 'off'}}" class="w-10 h-10 absolute left-2 -bottom-1">
-                  <image class="w-full h-full" src="/images/ic_sale_off.svg" />
+              <view class="flex items-center justify-between mt-6 gap-2 relative">
+                <view class="flex gap-1dot5 items-center">
+                  <block wx:for="{{item.pictures}}" wx:key="index" wx:if="{{index < 2}}">
+                    <view class="w-9 h-9 overflow-hidden rounded">
+                      <image src="{{item}}" mode="aspectFill" class="w-full h-full object-cover" />
+                    </view>
+                  </block>
+                  <view wx:if="{{item.pictures.length > 2}}" class="text-xs">
+                    +{{item.pictures.length - 2}}
+                  </view>
                 </view>
-                <view class="px-4 py-1 border-purple-light rounded-lg text-button text-xxs text-foreground" catch:tap="editProduct" data-id="{{item._id}}">
-                  编辑
-                </view>
-                <view class="px-4 py-1 rounded-lg text-xxs bg-foreground text-white" catch:tap="toggleStatus" data-id="{{item._id}}">
-                  {{item.saleStatus === 'on' ? '下架' : '重新上架'}}
+                <view class="flex items-center gap-1dot5">
+                  <view wx:if="{{item.saleStatus === 'off'}}" class="w-10 h-10 absolute left-2 -bottom-1">
+                    <image class="w-full h-full" src="/images/ic_sale_off.svg" />
+                  </view>
+                  <!-- Delete Product -->
+                  <view class="px-4 py-1 border-purple-light rounded-lg text-button text-xxs text-foreground shrink-0" catch:tap="deleteProduct" data-id="{{item._id}}">
+                    删除
+                  </view>
+                  <!-- Edit Product -->
+                  <view class="px-4 py-1 border-purple-light rounded-lg text-button text-xxs text-foreground shrink-0" catch:tap="editProduct" data-id="{{item._id}}">
+                    编辑
+                  </view>
+                  <view class="px-4 py-1 rounded-lg text-xxs bg-foreground text-white shrink-0" catch:tap="toggleStatus" data-id="{{item._id}}">
+                    {{item.saleStatus === 'on' ? '下架' : '重新上架'}}
+                  </view>
                 </view>
               </view>
             </view>
@@ -133,11 +145,18 @@
   <view class="cu-dialog rounded-lg bg-white" catchtap>
     <!-- Image Carousel -->
     <block wx:if="{{selectedProduct.pictures && selectedProduct.pictures.length > 0}}">
-      <swiper catch:tap="previewProductPicture" class="w-full h-72 rounded-t-lg" indicator-dots="true" indicator-color="#ECECEC" indicator-active-color="#1C1C55">
-        <swiper-item wx:for="{{selectedProduct.pictures}}" wx:key="*this">
-          <image src="{{item}}" mode="aspectFill" class="w-full h-full" />
-        </swiper-item>
-      </swiper>
+      <block wx:if="{{selectedProduct.pictures.length > 1}}">
+        <swiper class="screen-swiper round-dot w-full h-72 rounded-t-lg" catch:tap="previewProductPicture" indicator-dots="true">
+          <swiper-item wx:for="{{selectedProduct.pictures}}" wx:for-item="picture" wx:key="*this">
+            <image src="{{picture}}" mode="aspectFill" class="w-full h-full rounded-lg" />
+          </swiper-item>
+        </swiper>
+      </block>
+      <block wx:else>
+        <view class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6" catch:tap="previewProductPicture">
+          <image src="{{selectedProduct.pictures[0]}}" mode="aspectFill" class="w-full h-full rounded-lg" />
+        </view>
+      </block>
     </block>
     <view class="p-6">
       <!-- Product Title -->
@@ -161,10 +180,9 @@
       <!-- Price -->
       <view class="flex items-center justify-between gap-3 mb-6">
         <view class="text-gray text-sm">定价：</view>
-        <view class="flex items-baseline gap-1 text-foreground font-medium relative">
+        <view class="flex items-baseline gap-1 text-foreground font-medium">
           <text class="text-xs">¥</text>
           <text>{{selectedProduct.price}}</text>
-          <image wx:if="{{selectedProduct.isInternal}}" class="w-3 h-3 absolute -right-3dot5 -top-0dot5" src="/images/ic_ms.png" />
         </view>
       </view>
       <!-- Contact Info -->
@@ -172,7 +190,10 @@
         <text>联系：{{selectedProduct.contact}}</text>
         <image catchtap="handleCopyContact" data-contact="{{selectedProduct.contact}}" class="w-4 h-4 ml-2" src="/images/ic_copy.svg" />
       </view>
-      <view class="flex items-center justify-between gap-4">
+      <view class="flex items-center justify-between gap-3">
+        <view class="flex-1 py-1dot5 border-purple-light rounded-lg text-sm text-button" catch:tap="deleteProduct" data-id="{{selectedProduct._id}}">
+          删除
+        </view>
         <view class="flex-1 py-1dot5 border-purple-light rounded-lg text-sm text-button" catch:tap="editProduct" data-id="{{selectedProduct._id}}">
           编辑
         </view>

@@ -1,6 +1,7 @@
 import { formatTimeAgo } from '../../../common/util';
 import { fetchAllUserOrders } from '../../../repository/orderRepo';
 import {
+  deleteUserProduct,
   fetchAllUserProducts,
   updateUserProduct,
 } from '../../../repository/productRepo';
@@ -146,6 +147,53 @@ Page({
           });
           this.fetchAllRecords();
         });
+    }
+  },
+
+  async deleteProduct(e) {
+    const id = e.currentTarget.dataset.id;
+
+    try {
+      const result = await new Promise((resolve, reject) => {
+        wx.showModal({
+          title: '确认删除',
+          content: '确定要删除这个商品吗？此操作不可恢复',
+          confirmText: '确定删除',
+          confirmColor: '#E64340',
+          cancelText: '取消',
+          success: (res) => resolve(res),
+          fail: (error) => reject(error),
+        });
+      });
+
+      if (result.confirm) {
+        wx.showLoading({
+          title: '正在删除...',
+          mask: true,
+        });
+
+        try {
+          await deleteUserProduct(id);
+          wx.showToast({
+            title: '删除成功',
+            icon: 'success',
+          });
+          this.fetchAllRecords();
+        } catch (error) {
+          wx.showToast({
+            title: '删除失败',
+            icon: 'error',
+          });
+          console.error('删除商品失败:', error);
+        }
+      }
+    } catch (error) {
+      console.error('操作失败:', error);
+    } finally {
+      wx.hideLoading();
+      this.setData({
+        showingModal: null,
+      });
     }
   },
 
