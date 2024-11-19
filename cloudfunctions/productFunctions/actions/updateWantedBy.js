@@ -24,7 +24,7 @@ exports.main = async (props, context) => {
       .doc(productId)
       .update({
         data: {
-          interestedUsers: _.addToSet(openid),
+          wantedBy: _.addToSet(openid),
         },
       });
 

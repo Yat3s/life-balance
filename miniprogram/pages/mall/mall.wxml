@@ -131,7 +131,7 @@
                 <view class="truncate-price text-price">{{item.price}}</view>
               </view>
               <view wx:if="{{userInfo._openid !== item.userId}}" class="text-xxs text-interest">
-                {{item.interestedUsers.length || 0}} 人想要
+                {{item.wantedBy.length || 0}} 人想要
               </view>
             </view>
             <view class="flex shrink-0 items-center gap-1dot5 py-1dot5 px-2dot5 text-white rounded-full text-center {{userInfo._openid === item.userId ? 'bg-gray' : 'bg-blue-500'}}" catch:tap="{{ userInfo._openid !== item.userId && handleViewFleaMarketProduct}}" data-product="{{item}}">
@@ -212,7 +212,7 @@
         <view class="flex flex-col text-left">
           <view class="text-custom-price text-black text-price">{{selectedProduct.price}}</view>
           <view wx:if="{{userInfo._openid !== selectedProduct.userId}}" class="text-xxs text-interest">
-            {{selectedProduct.interestedUsers.length || 0}} 人想要
+            {{selectedProduct.wantedBy.length || 0}} 人想要
           </view>
         </view>
         <view class="flex flex-col text-left">
