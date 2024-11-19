@@ -1,0 +1,61 @@
+@property --progress-value {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+
+@keyframes progress {
+  to {
+    --progress-value: var(--target-progress);
+  }
+}
+
+.circle-progress-container {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle-progress-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: conic-gradient(
+    #e6e6e6 calc(var(--progress-value) * 1%),
+    var(--current-color) 0%
+  );
+  transform: rotate(-180deg);
+  animation: progress var(--progress-duration) linear forwards,
+    color-change var(--color-change-duration) linear forwards;
+}
+
+@keyframes color-change {
+  from {
+    --current-color: var(--initial-color);
+  }
+  to {
+    --current-color: var(--final-color);
+  }
+}
+
+.circle-progress-mask {
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  background-color: white;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.progress-info {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 3;
+}

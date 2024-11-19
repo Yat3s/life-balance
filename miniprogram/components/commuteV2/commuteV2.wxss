@@ -125,17 +125,3 @@
 .bg-link {
   background: #f7faff;
 }
-
-.progress-container {
-  position: relative;
-  width: 90px;
-  height: 90px;
-}
-
-.progress-info {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}

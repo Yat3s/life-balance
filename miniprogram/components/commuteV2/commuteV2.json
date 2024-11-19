@@ -1,4 +1,6 @@
 {
   "component": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "progressRing": "/components/progressring/progressring"
+  }
 }
