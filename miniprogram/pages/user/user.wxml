@@ -1,7 +1,7 @@
 <view class="base-info-container">
   <view class="flex justify-between items-center mb-4">
     <view class="flex items-center">
-      <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+      <image bind:tap="handleAvatarChosen" class="avatar" src="{{ userInfo.avatarUrl }}" mode="aspectFill" />
       <view class="margin-left flex flex-col gap-3">
         <view class="flex item-center gap-2">
           <view class="text-foreground font-semibold truncate">{{userInfo.nickName}}</view>
