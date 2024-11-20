@@ -1,17 +1,15 @@
 <toolbar isBack="{{true}}" />
 <form bindsubmit="onUserInfoSubmit">
   <view class="main">
-    <view class="section-container">
+    <!-- <view class="section-container">
       <view class="name-container">
         <view class="section-title">My pictures</view>
-        <view class="name-underline" />
       </view>
       <mp-uploader binddelete="onPhotoDelete" delete="{{true}}" bindsuccess="onUploadSuccess" max-count="6" upload="{{uploadFile}}" files="{{files}}" title="" />
-    </view>
+    </view> -->
     <view class="section-container margin-top-lg">
       <view class="name-container">
         <view class="section-title">Basic information</view>
-        <view class="name-underline" />
       </view>
       <view style="margin-top: 2rpx;" class="form-section">
         <view class="form-section-title">Nickname</view>
@@ -55,7 +53,6 @@
     <view class="section-container margin-top-lg">
       <view class="name-container">
         <view class="section-title">My story</view>
-        <view class="name-underline" />
       </view>
       <view style="margin-top: 2rpx;" class="form-section">
         <textarea maxlength="300" value="{{desc}}" name="desc" class="margin-top-xs" placeholder="Your story（within 300 characters）" style="font-size: 11pt; width: 100%; min-height: 200rpx; border-radius: 12rpx; " />
@@ -64,7 +61,6 @@
     <view class="section-container margin-top-lg">
       <view class="name-container">
         <view class="section-title">Delivery information</view>
-        <view class="name-underline" />
       </view>
       <view class="desc" style="margin-top: 32rpx;">
         Information used to contact others regarding your purchase of official products and in the flea market.
