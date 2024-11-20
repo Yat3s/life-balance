@@ -1,37 +1,60 @@
 const app = getApp();
-import { getAppConfig } from '../../repository/baseRepo';
-import { fetchUserInfo } from '../../repository/userRepo';
-import { navigateToOnboarding } from '../router';
+import { getAppConfig } from "../../repository/baseRepo";
+import { fetchUserInfo } from "../../repository/userRepo";
+import { navigateToOnboarding } from "../router";
+
+const homeV2Enabled = false;
 
 Page({
   data: {
-    showingModal: '',
-    currentTab: 'board',
+    showingModal: "",
+    currentTab: "board",
     navigationBarHeight: app.globalData.navigationBarHeight, // Safe area
     selectedGenderIndex: 0,
+    homeV2Enabled,
     pages: [
       {
-        id: 'board',
-        title: 'Board',
-        icon: '../../images/ic_board.png',
-        iconActive: '../../images/ic_board_active.png',
+        id: "board",
+        title: "Board",
+        icon: "../../images/ic_board.png",
+        iconActive: "../../images/ic_board_active.png",
+        isBeta: homeV2Enabled,
+      },
+      {
+        id: "connection",
+        title: "Connection",
+        icon: "../../images/ic_connect.png",
+        iconActive: "../../images/ic_connect_active.png",
         isBeta: false,
       },
       {
-        id: 'connection',
-        title: 'Connection',
-        icon: '../../images/ic_connect.png',
-        iconActive: '../../images/ic_connect_active.png',
-        isBeta: false,
-      },
-      {
-        id: 'user',
-        title: 'User',
-        icon: '../../images/ic_user.png',
-        iconActive: '../../images/ic_user_active.png',
+        id: "user",
+        title: "User",
+        icon: "../../images/ic_user.png",
+        iconActive: "../../images/ic_user_active.png",
         isBeta: false,
       },
     ],
+  },
+
+  checkAndFetchUserInfo() {
+    const { currentTab } = this.data;
+    if (
+      !app.globalData.userInfo &&
+      (currentTab === "user" ||
+        currentTab === "mall" ||
+        currentTab === "connection")
+    ) {
+      fetchUserInfo()
+        .then((userInfo) => {
+          if (userInfo) {
+            app.globalData.userInfo = userInfo;
+          } else {
+            navigateToOnboarding();
+          }
+        })
+        .catch(() => {});
+    }
   },
 
   onTabSelect(e) {
@@ -56,16 +79,16 @@ Page({
       const pages = [...this.data.pages];
 
       const carpoolTabItem = {
-        id: 'carpool',
-        title: 'Carpool',
-        icon: '../../images/ic_carpool.png',
-        iconActive: '../../images/ic_carpool_active.png',
+        id: "carpool",
+        title: "Carpool",
+        icon: "../../images/ic_carpool.png",
+        iconActive: "../../images/ic_carpool_active.png",
       };
       const mallTabItem = {
-        id: 'mall',
-        title: 'Mall',
-        icon: '../../images/ic_mall.png',
-        iconActive: '../../images/ic_mall_active.png',
+        id: "mall",
+        title: "Mall",
+        icon: "../../images/ic_mall.png",
+        iconActive: "../../images/ic_mall_active.png",
         isBeta: true,
       };
 
@@ -77,7 +100,7 @@ Page({
       // Insert carpool tab before connection if enabled
       if (featureFlags.carpoolEnabled) {
         const connectionIndex = pages.findIndex(
-          (page) => page.id === 'connection'
+          (page) => page.id === "connection"
         );
         pages.splice(connectionIndex, 0, carpoolTabItem);
       }
@@ -120,7 +143,7 @@ Page({
   onShow() {
     if (app.globalData.pendingMessage) {
       wx.showToast({
-        icon: 'none',
+        icon: "none",
         duration: 3000,
         title: app.globalData.pendingMessage,
       });

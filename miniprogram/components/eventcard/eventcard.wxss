@@ -17,6 +17,7 @@
   height: 0.5rem;
   background-color: #c0d2eb;
   border-radius: 50%;
+  transform: scale(0.85);
 }
 
 .no-data-text {

@@ -1,8 +1,12 @@
+import { getWeekdayIndexStr } from "../../common/util";
 import {
   navigateToBusInfo,
   navigationToAppConfigWebView,
 } from "../../pages/router";
-import { fetchParkingSpace } from "../../repository/dashboardRepo";
+import {
+  fetchLastWeekParkingFullTime,
+  fetchParkingSpace,
+} from "../../repository/dashboardRepo";
 
 const EMPTY_COLOR = "#3679FF";
 const BUSY_COLOR = "#FF593B";
@@ -40,6 +44,7 @@ Component({
   lifetimes: {
     attached() {
       this.fetchParkingData();
+      this.fetchParkingSpacePredictionData();
     },
   },
 
@@ -63,6 +68,24 @@ Component({
       navigationToAppConfigWebView("shuttleTip");
     },
 
+    fetchParkingSpacePredictionData() {
+      fetchLastWeekParkingFullTime().then((res) => {
+        let lastParkingFullTimeStr = "";
+        let dayStrPrefix = "上周" + getWeekdayIndexStr(new Date());
+        const showParkingFullTip = res != null;
+        if (res) {
+          const lastParkingFullTime = new Date(res).hhmm();
+          lastParkingFullTimeStr = `${dayStrPrefix} B25 停满时间：${lastParkingFullTime}`;
+        } else {
+          lastParkingFullTimeStr = `${dayStrPrefix} B25 车位充足`;
+        }
+        this.setData({
+          showParkingFullTip,
+          lastParkingFullTimeStr,
+        });
+      });
+    },
+
     fetchParkingData() {
       fetchParkingSpace().then((parkingSpace) => {
         console.log("parkingSpace", parkingSpace);
@@ -80,9 +103,8 @@ Component({
             usedPercent,
             initialColor: EMPTY_COLOR,
             finalColor: usedPercent >= 90 ? BUSY_COLOR : EMPTY_COLOR,
-            progressDuration: usedPercent <= 30 ? 1 : usedPercent <= 60 ? 2 : 3,
-            colorChangeDuration:
-              usedPercent <= 30 ? 2 : usedPercent <= 60 ? 4 : 6,
+            progressDuration: 1,
+            colorChangeDuration: 2,
           };
         });
 

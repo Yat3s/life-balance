@@ -2,6 +2,10 @@
   color: #7f6ca7;
 }
 
+.text-date {
+  color: #bcbcbc;
+}
+
 .food-bg {
   background: radial-gradient(
     ellipse at center,
