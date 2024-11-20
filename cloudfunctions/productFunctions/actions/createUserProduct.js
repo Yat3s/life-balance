@@ -21,6 +21,7 @@ exports.main = async (props, context) => {
 
     const dataToInsert = {
       ...createUserProductData,
+      terminated: false,
       userId: openid,
       user: userResult.data[0],
       createdAt: new Date().getTime(),

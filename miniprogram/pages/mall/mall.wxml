@@ -106,11 +106,16 @@
         <!-- Content -->
         <view class="flex items-center justify-between gap-2 mb-2">
           <view class="flex items-center gap-2">
-            <view class="{{item.type === 'sell' ? 'bg-sell' : 'bg-wanted'}} px-1dot5 py-0dot5 rounded text-white text-xxs shrink-0">
+            <view wx:if="{{!item.terminated}}" class="{{item.type === 'sell' ? 'bg-sell' : 'bg-wanted'}} px-1dot5 py-0dot5 rounded text-white text-xxs shrink-0">
               {{item.type === 'sell' ? '出售' : '求购'}}
             </view>
+            <view wx:if="{{item.terminated}}" class="bg-gray px-1dot5 py-0dot5 rounded text-white text-xxs shrink-0">
+              {{item.type === 'sell' ? '已售' : '已购'}}
+            </view>
             <!-- Title -->
-            <view class="text-sm truncate w-60 text-black">{{item.title}}</view>
+            <view class="text-sm truncate w-60 text-black {{item.terminated && 'line-through'}}">
+              {{item.title}}
+            </view>
           </view>
           <image class="w-4 h-4 shrink-0" data-product="{{item}}" catch:tap="onEditProduct" src="/images/ic_more.svg" />
         </view>
@@ -134,9 +139,14 @@
                 {{item.wantedBy.length || 0}} 人想要
               </view>
             </view>
-            <view class="flex shrink-0 items-center gap-1dot5 py-1dot5 px-2dot5 text-white rounded-full text-center {{userInfo._openid === item.userId ? 'bg-gray' : 'bg-blue-500'}}" catch:tap="{{ userInfo._openid !== item.userId && handleViewFleaMarketProduct}}" data-product="{{item}}">
+            <view wx:if="{{userInfo._openid !== item.userId}}" class="flex shrink-0 items-center gap-1dot5 py-1dot5 px-2dot5 text-white rounded-full text-center bg-blue-500" catch:tap="handleViewFleaMarketProduct" data-product="{{item}}" data-action="want">
               <image class="w-3 h-3 -mb-0dot5" src="/images/ic_comment.svg" />
               <view class="text-xxs font-medium">我{{item.type === 'sell' ? '想要' : '要卖'}}</view>
+            </view>
+            <view wx:if="{{userInfo._openid === item.userId}}" class="shrink-0 py-1dot5 text-white rounded-full text-center {{item.terminated ? 'bg-gray px-4' : 'bg-blue-500 px-2dot5'}}" catch:tap="{{item.terminated ? '' : 'handleMarkProduct'}}" data-product="{{item}}">
+              <view class="text-xxs font-medium">
+                {{item.terminated ? '已' + (item.type === 'sell' ? '售' : '购') : '标记已' + (item.type === 'sell' ? '售' : '购')}}
+              </view>
             </view>
           </view>
         </view>

@@ -34,26 +34,6 @@ Page({
     ],
   },
 
-  checkAndFetchUserInfo() {
-    const { currentTab } = this.data;
-    if (
-      !app.globalData.userInfo &&
-      (currentTab === 'user' ||
-        currentTab === 'mall' ||
-        currentTab === 'connection')
-    ) {
-      fetchUserInfo()
-        .then((userInfo) => {
-          if (userInfo) {
-            app.globalData.userInfo = userInfo;
-          } else {
-            navigateToOnboarding();
-          }
-        })
-        .catch(() => {});
-    }
-  },
-
   onTabSelect(e) {
     const currentTab = e.currentTarget.dataset.tabid;
     this.setData({
@@ -114,6 +94,26 @@ Page({
         currentTab: page,
       });
       this.checkAndFetchUserInfo(); // Check and fetch user info if necessary
+    }
+  },
+
+  checkAndFetchUserInfo() {
+    const { currentTab } = this.data;
+    if (
+      !app.globalData.userInfo &&
+      (currentTab === 'user' ||
+        currentTab === 'mall' ||
+        currentTab === 'connection')
+    ) {
+      fetchUserInfo()
+        .then((userInfo) => {
+          if (userInfo) {
+            app.globalData.userInfo = userInfo;
+          } else {
+            navigateToOnboarding();
+          }
+        })
+        .catch(() => {});
     }
   },
 

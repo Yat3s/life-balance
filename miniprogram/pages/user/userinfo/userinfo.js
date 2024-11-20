@@ -8,6 +8,7 @@ const app = getApp();
 Page({
   data: {
     photos: [],
+    isNewAvatar: false,
   },
 
   onChooseAvatar(e) {
@@ -15,6 +16,7 @@ Page({
     console.log('Avatar URL: ', avatarUrl);
     this.setData({
       avatarTmpUrl: avatarUrl,
+      isNewAvatar: true,
     });
   },
 
@@ -43,8 +45,15 @@ Page({
   onUserInfoSubmit(e) {
     const { height, school, desc, occupation, contact, address, nickName } =
       e.detail.value;
-    const { birthday, hometown, photos, company, phoneNumber, avatarTmpUrl } =
-      this.data;
+    const {
+      birthday,
+      hometown,
+      photos,
+      company,
+      phoneNumber,
+      avatarTmpUrl,
+      isNewAvatar,
+    } = this.data;
 
     const userInfo = {};
 
@@ -100,26 +109,41 @@ Page({
     }
 
     wx.showLoading();
-    wx.cloud
-      .uploadFile({
-        cloudPath: `avatars/${Date.now()}-${Math.floor(
-          Math.random() * 1000
-        )}.png`,
-        filePath: avatarTmpUrl,
-      })
-      .then((res) => {
-        const avatarUrl = res.fileID;
-        console.log('Avatar URL: ', avatarUrl);
-        if (avatarUrl) {
-          userInfo.avatarUrl = avatarUrl;
-        }
-        updateUserInfo(app.globalData.userInfo._id, userInfo).then((res) => {
-          wx.hideLoading();
-          wx.navigateBack({
-            delta: 1,
-          });
+
+    const updateProfile = () => {
+      updateUserInfo(app.globalData.userInfo._id, userInfo).then(() => {
+        wx.hideLoading();
+        wx.navigateBack({
+          delta: 1,
         });
       });
+    };
+
+    if (isNewAvatar && avatarTmpUrl) {
+      wx.cloud
+        .uploadFile({
+          cloudPath: `avatars/${Date.now()}-${Math.floor(
+            Math.random() * 1000
+          )}.png`,
+          filePath: avatarTmpUrl,
+        })
+        .then((res) => {
+          userInfo.avatarUrl = res.fileID;
+          updateProfile();
+        })
+        .catch((error) => {
+          wx.hideLoading();
+          wx.showToast({
+            icon: 'none',
+            title: 'Avatar upload failed',
+          });
+        });
+    } else if (avatarTmpUrl) {
+      userInfo.avatarUrl = avatarTmpUrl;
+      updateProfile();
+    } else {
+      updateProfile();
+    }
   },
 
   uploadFile(tempFile) {
