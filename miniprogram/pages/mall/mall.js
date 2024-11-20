@@ -340,14 +340,57 @@ Component({
 
     async handleMarkProduct(e) {
       const product = e.currentTarget.dataset.product;
-      await updateUserProduct(product._id, {
-        terminated: true,
-      });
-      wx.showToast({
-        title: '标记成功',
-        icon: 'success',
-      });
-      this.fetchAllFleaMarketProducts();
+
+      try {
+        const modalText = `确定要标记为${
+          product.type === 'sell' ? '已售' : '已购'
+        }吗？此操作不可恢复`;
+
+        const result = await new Promise((resolve, reject) => {
+          wx.showModal({
+            title: '确认标记',
+            content: modalText,
+            confirmText: '确认标记',
+            confirmColor: '#E64340',
+            cancelText: '取消',
+            success: (res) => resolve(res),
+            fail: (error) => reject(error),
+          });
+        });
+
+        if (result.confirm) {
+          wx.showLoading({
+            title: '标记中...',
+            mask: true,
+          });
+
+          try {
+            await updateUserProduct(product._id, {
+              terminated: true,
+            });
+
+            wx.showToast({
+              title: '标记成功',
+              icon: 'success',
+            });
+
+            this.fetchAllFleaMarketProducts();
+          } catch (error) {
+            wx.showToast({
+              title: '标记失败',
+              icon: 'error',
+            });
+            console.error('标记商品失败:', error);
+          }
+        }
+      } catch (error) {
+        console.error('操作失败:', error);
+      } finally {
+        wx.hideLoading();
+        this.setData({
+          showingModal: null,
+        });
+      }
     },
 
     handleViewAllPopularProducts() {

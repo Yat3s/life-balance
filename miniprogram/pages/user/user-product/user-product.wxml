@@ -60,46 +60,45 @@
         <block wx:for="{{userProducts}}" wx:key="_id">
           <view bind:tap="handleOpenProductModal" data-product="{{item}}" class="flex bg-blue-gradient p-5 py-4 mb-4 rounded-lg border-gray-light items-center">
             <view class="flex-1">
-              <view class="flex items-center gap-2 mb-3">
-                <view wx:if="{{!item.terminated}}" class="{{item.type === 'sell' ? 'bg-sell' : 'bg-wanted'}} px-1dot5 py-0dot5 rounded text-white text-xxs shrink-0">
-                  {{item.type === 'sell' ? '出售' : '求购'}}
+              <view class="flex items-center justify-between relative gap-4">
+                <view wx:if="{{item.status === 'off'}}" class="w-10 h-10 absolute left-2 z-10">
+                  <image class="w-full h-full" src="/images/ic_sale_off.svg" />
                 </view>
-                <view wx:if="{{item.terminated}}" class="bg-gray px-1dot5 py-0dot5 rounded text-white text-xxs shrink-0">
-                  {{item.type === 'sell' ? '已售' : '已购'}}
-                </view>
-                <view class="text-sm line-clamp-2 {{(item.status === 'off' || item.terminated) ? 'text-sold line-through' : 'text-foreground'}}">
-                  {{item.title}}
-                </view>
-              </view>
-              <view class="flex justify-between items-center">
-                <view class="flex gap-2">
-                  <block wx:if="{{item.categories && item.categories.length > 0}}">
-                    <view class="text-custom-purple font-lesslight text-xs" wx:for="{{item.categories}}" wx:key="index">
-                      {{item}}
+                <block wx:if="{{item.pictures && item.pictures.length > 0}}">
+                  <view class="w-14 h-14 overflow-hidden rounded shrink-0">
+                    <image src="{{item.pictures[0]}}" mode="aspectFill" class="w-full h-full object-cover" />
+                  </view>
+                </block>
+                <view class="flex flex-col flex-1 gap-2">
+                  <view class="flex items-center gap-2">
+                    <view wx:if="{{!item.terminated}}" class="{{item.type === 'sell' ? 'bg-sell' : 'bg-wanted'}} px-1dot5 py-0dot5 rounded text-white text-xxs shrink-0">
+                      {{item.type === 'sell' ? '出售' : '求购'}}
                     </view>
-                  </block>
-                  <view class="text-custom-purple font-lesslight text-xs" wx:else>未分类</view>
-                </view>
-                <view class="text-lg font-bold flex items-baseline gap-1 {{item.status === 'off' ? 'text-sold' : 'text-foreground'}}">
-                  <text class="text-xs">¥</text>
-                  <text>{{item.price}}</text>
-                </view>
-              </view>
-              <view class="flex items-center justify-between mt-6 gap-2 relative">
-                <view class="flex gap-1dot5 items-center">
-                  <block wx:for="{{item.pictures}}" wx:key="index" wx:if="{{index < 2}}">
-                    <view class="w-9 h-9 overflow-hidden rounded">
-                      <image src="{{item}}" mode="aspectFill" class="w-full h-full object-cover" />
+                    <view wx:if="{{item.terminated}}" class="bg-gray px-1dot5 py-0dot5 rounded text-white text-xxs shrink-0">
+                      {{item.type === 'sell' ? '已售' : '已购'}}
                     </view>
-                  </block>
-                  <view wx:if="{{item.pictures.length > 2}}" class="text-xs">
-                    +{{item.pictures.length - 2}}
+                    <view class="text-sm line-clamp-1 {{(item.status === 'off' || item.terminated) ? 'text-sold line-through' : 'text-foreground'}}">
+                      {{item.title}}
+                    </view>
+                  </view>
+                  <view class="flex justify-between items-center">
+                    <view class="flex gap-2">
+                      <block wx:if="{{item.categories && item.categories.length > 0}}">
+                        <view class="text-custom-purple font-lesslight text-xs" wx:for="{{item.categories}}" wx:key="index">
+                          {{item}}
+                        </view>
+                      </block>
+                      <view class="text-custom-purple font-lesslight text-xs" wx:else>未分类</view>
+                    </view>
+                    <view class="text-lg font-bold flex items-baseline gap-1 {{item.status === 'off' ? 'text-sold' : 'text-foreground'}}">
+                      <text class="text-xs">¥</text>
+                      <text>{{item.price}}</text>
+                    </view>
                   </view>
                 </view>
+              </view>
+              <view class="flex items-center justify-end mt-6 gap-2 relative">
                 <view class="flex items-center gap-1dot5">
-                  <view wx:if="{{item.status === 'off'}}" class="w-10 h-10 absolute left-2 -bottom-1">
-                    <image class="w-full h-full" src="/images/ic_sale_off.svg" />
-                  </view>
                   <!-- Delete Product -->
                   <view class="px-4 py-1 border-purple-light rounded-lg text-button text-xxs text-foreground shrink-0" catch:tap="deleteProduct" data-id="{{item._id}}">
                     删除
@@ -110,6 +109,9 @@
                   </view>
                   <view class="px-4 py-1 rounded-lg text-xxs bg-foreground text-white shrink-0" catch:tap="toggleStatus" data-id="{{item._id}}">
                     {{item.status === 'on' ? '下架' : '重新上架'}}
+                  </view>
+                  <view class="px-4 py-1 rounded-lg text-xxs text-white shrink-0 {{item.terminated ? 'bg-gray' : 'bg-purple-600'}}" catch:tap="{{item.terminated ? '' : 'handleMarkProduct'}}" data-product="{{item}}">
+                    {{item.terminated ? '已' + (item.type === 'sell' ? '售' : '购') : '标记已' + (item.type === 'sell' ? '售' : '购')}}
                   </view>
                 </view>
               </view>
@@ -207,15 +209,18 @@
         <text>联系：{{selectedProduct.contact}}</text>
         <image catchtap="handleCopyContact" data-contact="{{selectedProduct.contact}}" class="w-4 h-4 ml-2" src="/images/ic_copy.svg" />
       </view>
-      <view class="flex items-center justify-between gap-3">
-        <view class="flex-1 py-1dot5 border-purple-light rounded-lg text-sm text-button" catch:tap="deleteProduct" data-id="{{selectedProduct._id}}">
+      <view class="flex items-center justify-between gap-1dot5">
+        <view class="flex-1 py-2 border-purple-light rounded-lg text-xs text-button" catch:tap="deleteProduct" data-id="{{selectedProduct._id}}">
           删除
         </view>
-        <view class="flex-1 py-1dot5 border-purple-light rounded-lg text-sm text-button" catch:tap="editProduct" data-id="{{selectedProduct._id}}">
+        <view class="flex-1 py-2 border-purple-light rounded-lg text-xs text-button" catch:tap="editProduct" data-id="{{selectedProduct._id}}">
           编辑
         </view>
-        <view class="flex-1 py-1dot5 bg-foreground rounded-lg text-sm text-white" catch:tap="toggleStatus" data-id="{{selectedProduct._id}}">
+        <view class="flex-1 py-2 bg-foreground rounded-lg text-xs text-white" catch:tap="toggleStatus" data-id="{{selectedProduct._id}}">
           {{selectedProduct.status === 'on' ? '下架' : '重新上架'}}
+        </view>
+        <view class="flex-1 py-2 rounded-lg text-xs text-white shrink-0 {{selectedProduct.terminated ? 'bg-gray' : 'bg-purple-600'}}" catch:tap="{{selectedProduct.terminated ? '' : 'handleMarkProduct'}}" data-product="{{selectedProduct}}">
+          {{selectedProduct.terminated ? '已' + (selectedProduct.type === 'sell' ? '售' : '购') : '标记已' + (selectedProduct.type === 'sell' ? '售' : '购')}}
         </view>
       </view>
     </view>
