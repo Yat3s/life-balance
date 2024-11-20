@@ -6,7 +6,7 @@
       <image class="parking-refresh-icon {{loadingParkingSpace ? 'animation-rotate' : ''}}" src="/images/ic_refresh.png"></image>
     </view>
 
-    <view class="flex items-start gap-4 mt-4">
+    <view class="mt-4 flex gap-4 items-start justify-between">
       <view class="flex items-center gap-4 justify-between">
         <!-- B25 -->
         <view class="flex flex-col gap-2 items-center">
@@ -40,7 +40,7 @@
 
       <view class="flex flex-col items-start gap-4">
         <view class="text-gray-400 text-xs">车位已满？试试以下方案：</view>
-        <view bind:tap="toShuttleTip" class="whitespace-nowrap py-1 px-2 bg-link rounded-full flex items-center text-xs text-link">
+        <view bind:tap="toShuttleTip" class="py-1 px-2 bg-link rounded-full flex items-center text-xs text-link">
           <view>
             中盟
           </view>
@@ -50,7 +50,7 @@
           </view>
         </view>
 
-        <view bind:tap="toParkingTip" class="whitespace-nowrap py-1 px-2 bg-link rounded-full flex items-center text-xs text-link">
+        <view bind:tap="toParkingTip" class="py-1 px-2 bg-link rounded-full flex items-center text-xs text-link">
           其他停车方案
         </view>
       </view>
