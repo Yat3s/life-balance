@@ -16,6 +16,7 @@ Component({
         description: "",
         members: [],
         memberCount: 0,
+        emptyTip: "",
         showDescription: true,
         showAvatars: true,
         showMemberCount: false,

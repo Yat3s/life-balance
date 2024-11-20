@@ -41,6 +41,7 @@ Component({
             cardConfig,
           });
         } else {
+          cardConfig.emptyTip = "暂无活动";
           this.setData({
             cardConfig,
           });

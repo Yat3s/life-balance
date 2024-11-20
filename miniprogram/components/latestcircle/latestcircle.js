@@ -16,20 +16,35 @@ Component({
 
   lifetimes: {
     attached() {
+      let cardConfig = {
+        title: "Latest Circle",
+        cardTitle: "",
+        description: "",
+        members: [],
+        memberCount: 0,
+        showDescription: false,
+        showAvatars: false,
+        showMemberCount: false,
+      };
       fetchLatestWechatGroups().then((circles) => {
-        this.setData({
-          latestCircle: circles[0],
-          cardConfig: {
-            title: "Latest Circle",
-            cardTitle: circles[0].name,
-            description: circles[0].tagStr,
-            members: [],
-            memberCount: circles[0].memberCount,
-            showDescription: true,
-            showAvatars: false,
-            showMemberCount: true,
-          },
-        });
+        if (circles.length > 0) {
+          cardConfig.cardTitle = circles[0].name;
+          cardConfig.description = circles[0].tagStr;
+          cardConfig.members = circles[0].members;
+          cardConfig.memberCount = circles[0].memberCount;
+          cardConfig.showDescription = true;
+          cardConfig.showAvatars = false;
+          cardConfig.showMemberCount = true;
+          this.setData({
+            latestCircle: circles[0],
+            cardConfig,
+          });
+        } else {
+          cardConfig.emptyTip = "暂无群组";
+          this.setData({
+            cardConfig,
+          });
+        }
       });
     },
   },
