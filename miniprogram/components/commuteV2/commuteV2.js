@@ -1,8 +1,12 @@
+import { getWeekdayIndexStr } from "../../common/util";
 import {
   navigateToBusInfo,
   navigationToAppConfigWebView,
 } from "../../pages/router";
-import { fetchParkingSpace } from "../../repository/dashboardRepo";
+import {
+  fetchLastWeekParkingFullTime,
+  fetchParkingSpace,
+} from "../../repository/dashboardRepo";
 
 const EMPTY_COLOR = "#3679FF";
 const BUSY_COLOR = "#FF593B";
@@ -40,6 +44,7 @@ Component({
   lifetimes: {
     attached() {
       this.fetchParkingData();
+      this.fetchParkingSpacePredictionData();
     },
   },
 
@@ -61,6 +66,24 @@ Component({
 
     toShuttleTip() {
       navigationToAppConfigWebView("shuttleTip");
+    },
+
+    fetchParkingSpacePredictionData() {
+      fetchLastWeekParkingFullTime().then((res) => {
+        let lastParkingFullTimeStr = "";
+        let dayStrPrefix = "上周" + getWeekdayIndexStr(new Date());
+        const showParkingFullTip = res != null;
+        if (res) {
+          const lastParkingFullTime = new Date(res).hhmm();
+          lastParkingFullTimeStr = `${dayStrPrefix} B25 停满时间：${lastParkingFullTime}`;
+        } else {
+          lastParkingFullTimeStr = `${dayStrPrefix} B25 车位充足`;
+        }
+        this.setData({
+          showParkingFullTip,
+          lastParkingFullTimeStr,
+        });
+      });
     },
 
     fetchParkingData() {

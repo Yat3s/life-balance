@@ -4,7 +4,7 @@
 
 <scroll-view scroll-y="true" class="main pb-24" bindscroll="onPageScrolled">
   <view style="height:100px; padding-top: {{statusBarHeight + toolbarHeight}}px; margin-top: 32rpx;" class="flex flex-col">
-    <view class="margin-left flex flex-col gap-1">
+    <view class="ml-2 flex flex-col gap-1">
       <view style="font-size: {{titleScale * 14}}pt; line-height: {{titleScale * 14}}pt;" class="user-name">
         Hi, {{userInfo ? userInfo.nickName : 'Friend!'}}
       </view>
