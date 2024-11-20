@@ -1,18 +1,13 @@
-<!--pages/meal/tablesharing/tablesharing.wxml-->
-
 <toolbar isBack="{{true}}" bgColor="bg-white" />
-
 <view class="main-container">
-  <view class="title"  wx:if="{{!fromUser}}">Share Your Seat</view>
+  <view class="title" wx:if="{{!fromUser}}">Share Your Seat</view>
   <view class="sub-title {{fromUser ? 'sub-title-margin' : ''}}">
     {{tableConfirmed ? (fromUser ? fromUser : userInfo.nickName) + " 正在这里疯狂啃饭, 快去找Ta吧！" : "请选择你的座位:"}}
   </view>
-
   <view class="table-box-container" bindtap='bindShowMsg'>
     <text class="table-box table-box-area">{{area}}</text>
     <text class="table-box table-box-index">{{index}}</text>
   </view>
-
   <view class="area-tab-container" wx:if="{{!fromUser}}">
     <text class="area-tab-box">全图</text>
     <text class="area-tab-box">A 区</text>
@@ -21,21 +16,19 @@
     <text class="area-tab-box">D 区</text>
     <text class="area-tab-box">VIP 区</text>
   </view>
-
   <scroll-view class="table-map-container" scroll-x="true" scroll-y="true" style="width: 100%" bindtap='bindShowMsg'>
     <view class="scroll-view-item_H">
       <canvas id="myCanvas" type="2d" style="width: {{ map.scaleWidth }}px;height: {{ map.scaleHeight }}px"></canvas>
     </view>
   </scroll-view>
-
   <view class="slider-view">
     <slider bindchange="scaleChange" min="0.4" max="1.5" value="{{map.scale}}" step="0.05" activeColor="#B193F0" />
   </view>
   <text class="table-date" wx:if="{{fromUser}}">Shared at {{date}}</text>
-
-  <button style="width: 600rpx;" class="button" open-type="share" wx:if="{{!fromUser && tableConfirmed}}">Share</button>
+  <button style="width: 600rpx;" class="button" open-type="share" wx:if="{{!fromUser && tableConfirmed}}">
+    Share
+  </button>
 </view>
-
 <view class="table-picker-container" wx:if="{{selecting}}">
   <picker-view class="table-picker-view" indicator-style="height: 50px;" value="{{value}}" bindchange="onTablePickerChange">
     <picker-view-column>
@@ -45,5 +38,7 @@
       <view class="table-picker-column-text" wx:for="{{tableMap[area]}}">{{item}}</view>
     </picker-view-column>
   </picker-view>
-  <button style="width: 600rpx;" class="button confirm-button" bindtap="onTableConfirmed">Confirm</button>
+  <button style="width: 600rpx;" class="button confirm-button" bindtap="onTableConfirmed">
+    Confirm
+  </button>
 </view>

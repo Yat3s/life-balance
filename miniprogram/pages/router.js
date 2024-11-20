@@ -73,7 +73,7 @@ export const Pages = {
     url: '/pages/meal/meal',
   },
   CanteenTableSharing: {
-    authRequired: false,
+    authRequired: true,
     url: '/pages/meal/tablesharing/tablesharing',
   },
   Glossary: {
