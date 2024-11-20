@@ -19,17 +19,11 @@
   <view class="margin-left mt-10 widget-section-title text-xs">Board for 微软(中国)有限公司 - 苏州</view>
 
   <view class="flex flex-col gap-2 mt-4">
-    <view class="flex gap-2 items-stretch">
-      <!-- Parking Space -->
-      <view class="flex-1 flex">
-        <commuteV2 class="w-full"></commuteV2>
-      </view>
+    <!-- Parking Space -->
+    <commuteV2 class="w-full"></commuteV2>
 
-      <!-- Canteen -->
-      <view class="flex-0dot7 flex">
-        <canteenV2 class="w-full"></canteenV2>
-      </view>
-    </view>
+    <!-- Canteen -->
+    <canteenV2 class="w-full"></canteenV2>
 
     <view class="flex gap-2">
       <!-- Latest Circle -->
