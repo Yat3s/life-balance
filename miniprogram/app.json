@@ -29,7 +29,8 @@
     "pages/mall/publish-item/publish-item",
     "pages/user/user-product/user-product",
     "pages/mall/purchase/purchase",
-    "pages/user/user-order/user-order"
+    "pages/user/user-order/user-order",
+    "pages/onboarding/onboarding"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
