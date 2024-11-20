@@ -2,17 +2,18 @@
   <!-- Parking -->
   <view bindtap="refresh">
     <view class="flex items-center justify-between">
-      <view class="font-bold text-xs">Parking Space</view>
+      <view class="font-bold text-sm">Parking Space</view>
       <image class="parking-refresh-icon {{loadingParkingSpace ? 'animation-rotate' : ''}}" src="/images/ic_refresh.png"></image>
     </view>
-    <view class="mt-10 pb-8 border-0 border-b border-dashed border-gray-200">
-      <view class="flex items-center justify-between">
+
+    <view class="flex items-start gap-4 mt-4">
+      <view class="flex items-center gap-4 justify-between">
         <!-- B25 -->
-        <view class="flex flex-col items-center">
+        <view class="flex flex-col gap-2 items-center">
           <progressRing targetProgress="{{parkingSpace.b25.usedPercent}}" initialColor="{{ parkingSpace.b25.initialColor }}" finalColor="{{ parkingSpace.b25.finalColor }}" progressDuration="{{ parkingSpace.b25.progressDuration }}" colorChangeDuration="{{ parkingSpace.b25.colorChangeDuration }}">
             <view class="flex flex-col items-center">
-              <image src="/images/ic_car_parking.png" class="w-8 h-12 -mt-2" mode="widthFix" />
-              <text class="text-xxs text-gray-400 -mt-2">B25</text>
+              <image src="/images/ic_car_parking.png" class="w-8 h-12 -mt-1" mode="widthFix" />
+              <text class="text-xs text-gray-400 -mt-1">B25</text>
             </view>
           </progressRing>
           <view class="flex items-baseline">
@@ -22,11 +23,11 @@
         </view>
 
         <!-- Zhongmeng -->
-        <view class="flex flex-col items-center">
+        <view class="flex flex-col gap-2 items-center">
           <progressRing targetProgress="{{ parkingSpace.zhongmeng.usedPercent }}" initialColor="{{ parkingSpace.zhongmeng.initialColor }}" finalColor="{{ parkingSpace.zhongmeng.finalColor }}" progressDuration="{{ parkingSpace.zhongmeng.progressDuration }}" colorChangeDuration="{{ parkingSpace.zhongmeng.colorChangeDuration }}">
             <view class="flex flex-col items-center">
-              <image src="/images/ic_car_parking.png" class="w-8 h-12 -mt-2" mode="widthFix" />
-              <text class="text-xxs text-gray-400 -mt-2">中盟</text>
+              <image src="/images/ic_car_parking.png" class="w-8 h-12 -mt-1" mode="widthFix" />
+              <text class="text-xs text-gray-400 -mt-1">中盟</text>
             </view>
           </progressRing>
           <view class="flex items-baseline">
@@ -36,22 +37,22 @@
         </view>
 
       </view>
-    </view>
 
-    <view class="margin-top-sm text-gray-400 text-xxs">车位已满？试试以下方案：</view>
-    <view class="flex gap-2 mt-1">
-      <view bind:tap="toShuttleTip" class="whitespace-nowrap py-1 px-2 bg-link rounded-full flex items-center text-xxs text-link">
-        <view>
-          中盟
+      <view class="flex flex-col items-start gap-4">
+        <view class="text-gray-400 text-xs">车位已满？试试以下方案：</view>
+        <view bind:tap="toShuttleTip" class="whitespace-nowrap py-1 px-2 bg-link rounded-full flex items-center text-xs text-link">
+          <view>
+            中盟
+          </view>
+          <image class="switch-icon " src="/images/ic_switch_blue.png"></image>
+          <view>
+            B25 接驳车
+          </view>
         </view>
-        <image class="switch-icon " src="/images/ic_switch_blue.png"></image>
-        <view>
-          B25 接驳车
-        </view>
-      </view>
 
-      <view bind:tap="toParkingTip" class="whitespace-nowrap py-1 px-2 bg-link rounded-full flex items-center text-xxs text-link">
-        其他停车方案
+        <view bind:tap="toParkingTip" class="whitespace-nowrap py-1 px-2 bg-link rounded-full flex items-center text-xs text-link">
+          其他停车方案
+        </view>
       </view>
     </view>
   </view>
