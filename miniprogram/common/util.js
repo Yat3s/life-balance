@@ -101,3 +101,7 @@ export const formatDateToMMDD = (timestamp) => {
 
   return `${month}月${day}日`;
 };
+
+export const formatNumberWithCommas = (num) => {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
