@@ -1,7 +1,7 @@
 <view bind:tap="onCardClick" class="border border-solid border-gray-200 p-3 rounded-lg h-38 relative">
   <view class="px-1 flex items-center justify-between">
     <view class="font-bold text-xs">{{cardConfig.title}}</view>
-    <view class="text-sm text-gray-400">
+    <view class="text-sm text-gray">
       <view class="text-xxs">More</view>
     </view>
   </view>
@@ -10,9 +10,7 @@
     <view class="top-card h-22 flex flex-col justify-between p-4 {{cardConfig.emptyTip ? '' : 'pb-2'}} w-full rounded-lg z-10 absolute top-0 left-0">
       <block wx:if="{{cardConfig.emptyTip}}">
         <view class="h-full w-full flex gap-1dot5 items-center justify-center text-xs text-gray-400">
-          <view class="no-data-tip-circle">
-
-          </view>
+          <view class="no-data-tip-circle"/>
           <view class="no-data-text">
             {{cardConfig.emptyTip}}
           </view>
