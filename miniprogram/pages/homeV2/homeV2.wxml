@@ -16,9 +16,9 @@
   <view class="mt-12">
     <stockV2></stockV2>
   </view>
-  <view class="margin-left mt-10 widget-section-title text-xs">Board for 微软(中国)有限公司 - 苏州</view>
+  <view class="ml-2 mt-10 widget-section-title text-xs">Board for 微软(中国)有限公司 - 苏州</view>
 
-  <view class="flex flex-col gap-2 mt-4">
+  <view class="flex flex-col gap-4 mt-2">
     <!-- Parking Space -->
     <commuteV2 class="w-full"></commuteV2>
 
