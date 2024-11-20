@@ -6,11 +6,11 @@
       <image class="w-6 h-6 {{loadingParkingSpace ? 'animation-rotate' : ''}}" src="/images/ic_refresh.png"></image>
     </view>
 
-    <view wx:if="{{lastParkingFullTimeStr}}" class="mt-2">
+    <view wx:if="{{lastParkingFullTimeStr}}" class="mt-1">
       <view class="text-xs text-gray">{{lastParkingFullTimeStr}}</view>
     </view>
 
-    <view class="mt-4 flex flex-col gap-4 items-start justify-between">
+    <view class="mt-5 flex flex-col gap-4 items-start justify-between">
       <view class="flex w-full items-center gap-1 justify-between">
         <!-- B25 -->
         <view class="flex gap-2dot5 items-center">
@@ -20,12 +20,12 @@
             </view>
           </progressRing>
           <view>
-            <view class="text-xs text-gray mb-1">
+            <view class="text-xs text-gray mb-0dot5">
               B25 - 剩余车位
             </view>
             <view class="flex items-baseline">
-              <view class="text-2xl font-bold {{parkingSpace.b25.remaining === 0 ? 'text-gray-400' : ''}}">{{parkingSpace.b25.remaining}}</view>
-              <view class="text-gray">/{{parkingConfig.b25.maxSpaces}}</view>
+              <view class="text-2dot5xl font-bold {{parkingSpace.b25.remaining === 0 ? 'text-gray-400' : ''}}">{{parkingSpace.b25.remaining}}</view>
+              <view class="text-gray text-xs">/{{parkingConfig.b25.maxSpaces}}</view>
             </view>
           </view>
         </view>
@@ -38,12 +38,12 @@
             </view>
           </progressRing>
           <view>
-            <view class="text-xs text-gray mb-1">
+            <view class="text-xs text-gray mb-0dot5">
               中盟 - 剩余车位
             </view>
             <view class="flex items-baseline">
-              <view class="text-2xl font-bold {{parkingSpace.zhongmeng.remaining === 0 ? 'text-gray-400' : ''}}">{{parkingSpace.zhongmeng.remaining}}</view>
-              <view class="text-gray">/{{parkingConfig.zhongmeng.maxSpaces}}</view>
+              <view class="text-2dot5xl font-bold {{parkingSpace.zhongmeng.remaining === 0 ? 'text-gray-400' : ''}}">{{parkingSpace.zhongmeng.remaining}}</view>
+              <view class="text-gray text-xs">/{{parkingConfig.zhongmeng.maxSpaces}}</view>
             </view>
           </view>
         </view>
@@ -52,7 +52,7 @@
 
       <block wx:if="{{showParkingFullTip}}">
         <!-- Divider -->
-        <view class="border-dashed border-0 border-b-2 border-gray-200 w-full"></view>
+        <view class="mt-1 border-dashed border-0 border-b-2 border-gray-200 w-full"></view>
 
         <!-- Parking Full Tip -->
         <view class="flex items-center gap-2">

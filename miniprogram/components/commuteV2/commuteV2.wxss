@@ -125,3 +125,8 @@
 .bg-link {
   background: #f7faff;
 }
+
+.text-2dot5xl {
+  font-size: 1.625rem;
+  line-height: 2.25rem;
+}
