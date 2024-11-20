@@ -1,6 +1,7 @@
 import {
   fetchUserInfo as _fetchUserInfo,
   fetchCompany,
+  updateUserInfo,
 } from '../../repository/userRepo';
 import {
   navigateToUserActivity,
@@ -22,6 +23,44 @@ Component({
   data: {},
 
   methods: {
+    handleAvatarChosen() {
+      const that = this;
+      wx.chooseMedia({
+        count: 1,
+        mediaType: ['image'],
+        sizeType: ['original'],
+        sourceType: ['album', 'camera'],
+        maxDuration: 30,
+        camera: 'back',
+        success(res) {
+          console.log('Success', res);
+          that.upLoadImg(res.tempFiles[0].tempFilePath);
+        },
+      });
+    },
+
+    upLoadImg(fileUrl) {
+      const that = this;
+      wx.cloud.uploadFile({
+        cloudPath: `avatars/${Date.now()}-${Math.floor(
+          Math.random() * 1000
+        )}.png`,
+        filePath: fileUrl,
+        success: (res) => {
+          const updateData = {
+            avatarUrl: res.fileID,
+          };
+
+          updateUserInfo(that.data.userInfo._id, updateData).then(() => {
+            that.setData({
+              userInfo: { ...that.data.userInfo, avatarUrl: res.fileID },
+            });
+          });
+        },
+        fail: console.error,
+      });
+    },
+
     onActivityClick() {
       navigateToUserActivity();
     },
