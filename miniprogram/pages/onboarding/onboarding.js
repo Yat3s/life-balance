@@ -29,14 +29,13 @@ Page({
   },
 
   onFormSubmit(e) {
-    const formData = e.detail.value;
-    const { nickName, agreement } = formData;
-    const { avatarTmpUrl } = this.data;
+    const { nickName } = e.detail.value;
+    const { avatarTmpUrl, isAgreed } = this.data;
 
     if (!avatarTmpUrl) {
       wx.showToast({
         icon: 'none',
-        title: 'Please set avatar',
+        title: 'Please set your avatar',
       });
       return;
     }
@@ -44,12 +43,12 @@ Page({
     if (!nickName) {
       wx.showToast({
         icon: 'none',
-        title: 'Please set nickname',
+        title: 'Please set your nickname',
       });
       return;
     }
 
-    if (!agreement || !agreement.length) {
+    if (!isAgreed) {
       wx.showToast({
         icon: 'none',
         title: 'Please agree to the terms',

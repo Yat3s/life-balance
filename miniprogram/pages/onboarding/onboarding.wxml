@@ -23,12 +23,12 @@
         </view>
         <!-- Username Section -->
         <view class="flex justify-between items-center">
-          <view class="text-section text-sm font-medium">User Name</view>
-          <input name="nickName" placeholder="Your user name" placeholder-class="text-placeholder" bindinput="onNickNameChange" class="text-right" type="nickname" value="{{nickName}}" />
+          <view class="text-section text-sm font-medium">Nickname</view>
+          <input name="nickName" placeholder="Your nickname" placeholder-class="text-placeholder" bindinput="onNickNameChange" class="text-right" type="nickname" value="{{nickName}}" />
         </view>
       </view>
       <view class="mb-5 flex">
-        <view class="w-2dot5 h-2dot5 rounded-full check-border inline-block shrink-0 mt-1 {{isAgreed ? 'bg-blue' : 'bg-transparent'}}" bindtap="onAgreementChange" />
+        <view class="w-2dot5 h-2dot5 rounded-full check-border inline-block shrink-0 mt-1 {{isAgreed ? 'bg-blue' : 'bg-transparent'}}" bind:tap="onAgreementChange" />
         <view class="text-desc text-xxs ml-1dot5">
           同意依照
           <text class="text-blue">《Life Balance》</text>
