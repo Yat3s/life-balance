@@ -1,6 +1,6 @@
 <toolbar isBack="{{true}}" bgColor="bg-white">
-  <view wx:if="{{productId}}" slot="backText" class="text-sm text-black">编辑物品</view>
-  <view wx:else slot="backText" class="text-sm text-black">发布物品</view>
+  <view wx:if="{{productId}}" slot="backText" class="text-sm">编辑物品</view>
+  <view wx:else slot="backText" class="text-sm">发布物品</view>
 </toolbar>
 <view class="plr pb-10 pt-8">
   <view class="bg-white rounded-lg p-5 py-6 py-4 mb-4 border-gray">

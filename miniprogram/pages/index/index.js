@@ -120,6 +120,26 @@ Page({
     }
   },
 
+  checkAndFetchUserInfo() {
+    const { currentTab } = this.data;
+    if (
+      !app.globalData.userInfo &&
+      (currentTab === 'user' ||
+        currentTab === 'mall' ||
+        currentTab === 'connection')
+    ) {
+      fetchUserInfo()
+        .then((userInfo) => {
+          if (userInfo) {
+            app.globalData.userInfo = userInfo;
+          } else {
+            navigateToOnboarding();
+          }
+        })
+        .catch(() => {});
+    }
+  },
+
   onShow() {
     if (app.globalData.pendingMessage) {
       wx.showToast({

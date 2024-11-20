@@ -1,3 +1,4 @@
+import { navigateToOnboarding } from '../pages/router';
 import { cloudFunctionCall } from './baseRepo';
 
 const app = getApp();
@@ -154,29 +155,7 @@ export function fetchUserInfoOrSignup() {
         }
       });
     } else {
-      wx.getUserProfile({
-        desc: '用于完善用户信息',
-      })
-        .then((res) => {
-          const registerUserInfo = res.userInfo;
-          if (registerUserInfo) {
-            signup(registerUserInfo)
-              .then((id) => {
-                this.fetchUserInfo().then((newUserInfo) => {
-                  app.globalData.userInfo = newUserInfo;
-                  resolve(newUserInfo);
-                });
-              })
-              .catch((err) => {
-                reject(err);
-              });
-          } else {
-            reject('Failed to get user profile.');
-          }
-        })
-        .catch((err) => {
-          reject(err);
-        });
+      navigateToOnboarding();
     }
   });
 }

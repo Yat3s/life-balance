@@ -59,3 +59,11 @@ page {
 .text-status {
   color: #abb3cb;
 }
+
+.bg-sell {
+  background-color: #6aa0f4;
+}
+
+.bg-wanted {
+  background-color: #ff8f7b;
+}
