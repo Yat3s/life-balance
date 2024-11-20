@@ -44,26 +44,6 @@ Page({
     ],
   },
 
-  checkAndFetchUserInfo() {
-    const { currentTab } = this.data;
-    if (
-      !app.globalData.userInfo &&
-      (currentTab === 'user' ||
-        currentTab === 'mall' ||
-        currentTab === 'connection')
-    ) {
-      fetchUserInfo()
-        .then((userInfo) => {
-          if (userInfo) {
-            app.globalData.userInfo = userInfo;
-          } else {
-            navigateToOnboarding();
-          }
-        })
-        .catch(() => {});
-    }
-  },
-
   onTabSelect(e) {
     const currentTab = e.currentTarget.dataset.tabid;
     this.setData({
@@ -133,6 +113,9 @@ Page({
           if (userInfo) {
             app.globalData.userInfo = userInfo;
           } else {
+            this.setData({
+              currentTab: 'board',
+            });
             navigateToOnboarding();
           }
         })

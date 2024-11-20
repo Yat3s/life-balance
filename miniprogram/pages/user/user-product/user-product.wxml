@@ -30,23 +30,30 @@
         <!-- Published Items Skeleton -->
         <view wx:for="{{[1,2,3,4,5]}}" wx:key="*this" class="flex bg-blue-gradient p-5 py-4 mb-4 rounded-lg border-gray-light">
           <view class="flex-1">
-            <!-- Title Skeleton -->
-            <view class="h-4 skeleton-bg rounded w-full skeleton-animate mb-3" />
-            <!-- Category and Price Skeleton -->
-            <view class="flex justify-between items-center">
-              <view class="h-3dot5 skeleton-bg rounded w-12 skeleton-animate" />
-              <view class="h-6 skeleton-bg rounded w-16 skeleton-animate" />
-            </view>
-            <!-- Bottom Skeleton -->
-            <view class="flex items-center justify-between mt-6">
-              <!-- Images Skeleton -->
-              <view class="flex gap-1.5">
-                <view class="w-9 h-9 skeleton-bg rounded skeleton-animate" />
-                <view class="w-9 h-9 skeleton-bg rounded skeleton-animate" />
+            <view class="flex items-center justify-between relative gap-4">
+              <!-- Product Image Skeleton -->
+              <view class="w-14 h-14 skeleton-bg rounded skeleton-animate shrink-0" />
+              <view class="flex flex-col flex-1 gap-3">
+                <!-- Title and Tag Skeleton -->
+                <view class="flex items-center gap-2">
+                  <view class="h-4 w-8 skeleton-bg rounded skeleton-animate" />
+                  <view class="h-4 skeleton-bg rounded w-full skeleton-animate" />
+                </view>
+                <!-- Category and Price Skeleton -->
+                <view class="flex justify-between items-center">
+                  <view class="flex gap-2">
+                    <view class="h-3dot5 skeleton-bg rounded w-12 skeleton-animate" />
+                  </view>
+                  <view class="h-6 skeleton-bg rounded w-16 skeleton-animate" />
+                </view>
               </view>
-              <view class="flex items-center gap-1.5">
+            </view>
+            <!-- Action Buttons Skeleton -->
+            <view class="flex items-center justify-end mt-6 gap-2">
+              <view class="flex items-center gap-1dot5">
                 <view class="w-12 h-6 skeleton-bg rounded-lg skeleton-animate" />
                 <view class="w-12 h-6 skeleton-bg rounded-lg skeleton-animate" />
+                <view class="w-16 h-6 skeleton-bg rounded-lg skeleton-animate" />
                 <view class="w-16 h-6 skeleton-bg rounded-lg skeleton-animate" />
               </view>
             </view>

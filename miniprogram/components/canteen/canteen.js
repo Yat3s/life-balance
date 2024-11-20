@@ -1,28 +1,19 @@
-import { navigateToFoodMenu } from "../../pages/router";
-import { fetchCanteenStatus, fetchFoodMenus } from "../../repository/dashboardRepo"
+import { navigateToFoodMenu } from '../../pages/router';
+import {
+  fetchCanteenStatus,
+  fetchFoodMenus,
+} from '../../repository/dashboardRepo';
 
-// components/canteen/canteen.js
 Component({
   options: {
-    addGlobalClass: true
+    addGlobalClass: true,
   },
-  /**
-   * 组件的属性列表
-   */
-  properties: {
-
-  },
-
-  /**
-   * 组件的初始数据
-   */
-  data: {
-
-  },
+  properties: {},
+  data: {},
 
   lifetimes: {
     attached() {
-      fetchFoodMenus('b25').then(menus => {
+      fetchFoodMenus('b25').then((menus) => {
         if (!menus || menus.length === 0) {
           return;
         }
@@ -32,10 +23,10 @@ Component({
 
         this.setData({
           todayMenuB25: todayMenu,
-        })
+        });
       });
 
-      fetchFoodMenus('zhongmeng').then(menus => {
+      fetchFoodMenus('zhongmeng').then((menus) => {
         if (!menus || menus.length === 0) {
           return;
         }
@@ -45,17 +36,14 @@ Component({
 
         this.setData({
           todayMenuZhongmeng: todayMenu,
-        })
+        });
       });
-    }
+    },
   },
 
-  /**
-   * 组件的方法列表
-   */
   methods: {
     toMenuDetail() {
       navigateToFoodMenu();
-    }
-  }
-})
+    },
+  },
+});
