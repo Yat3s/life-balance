@@ -12,8 +12,8 @@
 
 .circle-progress-container {
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 55px;
+  height: 55px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,8 +44,9 @@
 
 .circle-progress-mask {
   position: absolute;
-  width: 90%;
-  height: 90%;
+  width: 85%;
+  height: 85%;
+  top: 9.08%;
   background-color: white;
   border-radius: 50%;
   z-index: 2;
