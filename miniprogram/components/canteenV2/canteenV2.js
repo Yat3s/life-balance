@@ -1,4 +1,4 @@
-import { formatDateToMMDD, formatNumberWithCommas } from "../../common/util";
+import { formatDate, formatNumberWithCommas } from "../../common/util";
 import { navigateToFoodMenu } from "../../pages/router";
 import { fetchFoodMenus } from "../../repository/dashboardRepo";
 
@@ -33,9 +33,8 @@ Component({
         const todayMenu = menus[0];
 
         todayMenu.canteenName = "B25餐厅菜单";
-        const dates = this.extractDates(todayMenu.special);
-        todayMenu.startDateStr = dates[0];
-        todayMenu.endDateStr = dates[1];
+        todayMenu.startDateStr = formatDate(todayMenu.startDate, false);
+        todayMenu.endDateStr = formatDate(todayMenu.endDate, false);
 
         this.setData({
           todayMenuB25: todayMenu,
@@ -49,9 +48,8 @@ Component({
 
         const todayMenu = menus[0];
         todayMenu.canteenName = "中盟餐厅菜单";
-        const dates = this.extractDates(todayMenu.special);
-        todayMenu.startDateStr = dates[0];
-        todayMenu.endDateStr = dates[1];
+        todayMenu.startDateStr = formatDate(todayMenu.startDate, false);
+        todayMenu.endDateStr = formatDate(todayMenu.endDate, false);
 
         this.setData({
           todayMenuZhongmeng: todayMenu,

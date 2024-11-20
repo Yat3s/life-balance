@@ -1,4 +1,4 @@
-export const formatDate = (timestamp) => {
+export const formatDate = (timestamp, includeTime = true) => {
   var date = new Date(timestamp);
   var y = date.getFullYear();
   var m = date.getMonth() + 1;
@@ -7,11 +7,16 @@ export const formatDate = (timestamp) => {
   d = d < 10 ? "0" + d : d;
   var h = date.getHours();
   h = h < 10 ? "0" + h : h;
-  var minute = date.getMinutes();
-  var second = date.getSeconds();
-  minute = minute < 10 ? "0" + minute : minute;
-  second = second < 10 ? "0" + second : second;
-  return m + "/" + d + " " + h + ":" + minute;
+
+  if (includeTime) {
+    var minute = date.getMinutes();
+    var second = date.getSeconds();
+    minute = minute < 10 ? "0" + minute : minute;
+    second = second < 10 ? "0" + second : second;
+    return m + "/" + d + " " + h + ":" + minute;
+  }
+
+  return m + "/" + d;
 };
 
 export const calcDistance = (la1, lo1, la2, lo2) => {
