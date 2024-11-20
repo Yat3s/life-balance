@@ -1,62 +1,60 @@
-<!--miniprogram/pages/auth/auth.wxml-->
-
-
 <view class="{{step == 0? 'avatar-step-0': 'avatar-step-1'}}">
   <open-data type="userAvatarUrl"></open-data>
 </view>
-
 <!-- Step 0 -->
 <view hidden="{{step != 0}}" class="center" style="height: 100vh;">
-
   <view class="margin-top-sm text-bold text-black text-lg nickname-step-0">
-    Hi, <open-data type="userNickName"></open-data>
+    Hi,
+    <open-data type="userNickName"></open-data>
   </view>
-
   <view class="center">
-    <button bindtap="onCompanyAuth" style="width: 400rpx; margin-top: 100rpx; font-size: 10pt; font-weight: bold;" class="margin-top-lg bg-primary">Enterprise Authentication</button>
-    <view class="text-sm margin-top-sm text-grey">Please complete the authentication for safety reason</view>
+    <button bindtap="onCompanyAuth" style="width: 400rpx; margin-top: 100rpx; font-size: 10pt; font-weight: bold;" class="margin-top-lg bg-primary">
+      Enterprise Authentication
+    </button>
+    <view class="text-sm margin-top-sm text-grey">
+      Please complete the authentication for safety reason
+    </view>
   </view>
 </view>
-
 <!-- Step 1&2 -->
 <view wx:if="{{step!=0}}" class="plr" style="margin-top: 300rpx;">
   <view wx:if="{{showChooseCompany}}">
     <view class="section-title">1. Please choose your company</view>
-
     <radio-group bindchange="onCompanySelected">
       <view class="margin-top-sm flex margin-left-sm" wx:for="{{companies}}" wx:key="name">
-
         <radio value="{{item.id}}" style="scale: 0.8"></radio>
         <view class="margin-left-xs company-name">{{item.name}}</view>
       </view>
     </radio-group>
   </view>
-
   <view class="margin-top" wx:if="{{step == 2}}">
     <view class="section-title">2. Send verification code</view>
-
     <view class="margin-left">
       <view class="open-link margin-top">Open this link on your browser</view>
       <view class="verify-info-container margin-top-xs">
         <view class="verify-info">{{verifyLink}}</view>
-        <view bindtap="onCopy" data-content="{{verifyLink}}" class="copy-text margin-top-xs">Copy to clipboard</view>
+        <view bindtap="onCopy" data-content="{{verifyLink}}" class="copy-text margin-top-xs">
+          Copy to clipboard
+        </view>
       </view>
-
-      <view class="open-link margin-top">Or copy this code and send it to <text style="font-weight: bold;">zhiye@microsoft.com</text>(Teams or email)</view>
+      <view class="open-link margin-top">
+        Or copy this code and send it to
+        <text style="font-weight: bold;">zhiye@microsoft.com</text>
+        (Teams or email)
+      </view>
       <view class="verify-info-container margin-top-xs">
         <view class="verify-info">{{verifyInfo}}</view>
-        <view bindtap="onCopy" data-content="{{verifyInfo}}" class="copy-text margin-top-xs">Copy to clipboard</view>
+        <view bindtap="onCopy" data-content="{{verifyInfo}}" class="copy-text margin-top-xs">
+          Copy to clipboard
+        </view>
       </view>
     </view>
   </view>
-
   <view class="margin-top" wx:if="{{step == 2}}">
     <view class="section-title">3. Setting your contact information</view>
     <input bindinput="onContactInput" name="title" type="text" class="inp margin-top-xs margin-left" placeholder="Your Teams alias or Wechat id"></input>
   </view>
-
   <view wx:if="{{step == 2}}" class="flex justify-end margin-top-lg">
     <view bindtap="onSubmit" class="cu-btn text-bold submit-btn">Submit</view>
   </view>
-
 </view>

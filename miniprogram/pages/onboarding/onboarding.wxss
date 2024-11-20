@@ -1,0 +1,51 @@
+.text-title {
+  font-size: 1.75rem;
+  line-height: 2.15rem;
+}
+
+.text-section {
+  color: #093378;
+}
+
+.avatar-button {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding: 0 !important;
+  width: 2rem !important;
+}
+
+.text-desc {
+  color: #c4cede;
+}
+
+.text-placeholder {
+  color: #899dbd;
+}
+
+.gradient-button {
+  background: linear-gradient(90deg, #5f87ff 0%, #609efc 100%);
+}
+
+.submit-button {
+  width: 100% !important;
+}
+
+.submit-button::after {
+  border: none;
+}
+
+.check-border {
+  border: 1px solid #9ebdff;
+}
+
+.text-blue {
+  color: #6097fd;
+}
+
+.bg-blue {
+  background-color: #6097fd;
+}
+
+.h-bg {
+  height: 32rem;
+}

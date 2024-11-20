@@ -6,6 +6,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/onboarding/onboarding",
+          "pathName": "pages/onboarding/onboarding",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/user/user-order/user-order",
           "pathName": "pages/user/user-order/user-order",
           "query": "id=7f296b2167344b4600ffb1d6050f1aa4",

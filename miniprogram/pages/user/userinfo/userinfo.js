@@ -1,4 +1,8 @@
-const userRepo = require('../../../repository/userRepo');
+import {
+  updateUserInfo,
+  uploadFiles,
+  fetchUserInfoOrSignup,
+} from '../../../repository/userRepo';
 const app = getApp();
 
 Page({
@@ -10,7 +14,7 @@ Page({
     const { avatarUrl } = e.detail;
     console.log('Avatar URL: ', avatarUrl);
     this.setData({
-      avatarUrl,
+      avatarTmpUrl: avatarUrl,
     });
   },
 
@@ -39,7 +43,7 @@ Page({
   onUserInfoSubmit(e) {
     const { height, school, desc, occupation, contact, address, nickName } =
       e.detail.value;
-    const { birthday, hometown, photos, company, phoneNumber, avatarUrl } =
+    const { birthday, hometown, photos, company, phoneNumber, avatarTmpUrl } =
       this.data;
 
     const userInfo = {};
@@ -57,10 +61,6 @@ Page({
 
     if (nickName) {
       userInfo.nickName = nickName;
-    }
-
-    if (avatarUrl) {
-      userInfo.avatarUrl = avatarUrl;
     }
 
     if (height) {
@@ -100,12 +100,24 @@ Page({
     }
 
     wx.showLoading();
-    userRepo
-      .updateUserInfo(app.globalData.userInfo._id, userInfo)
+    wx.cloud
+      .uploadFile({
+        cloudPath: `avatars/${Date.now()}-${Math.floor(
+          Math.random() * 1000
+        )}.png`,
+        filePath: avatarTmpUrl,
+      })
       .then((res) => {
-        wx.hideLoading();
-        wx.navigateBack({
-          delta: 1,
+        const avatarUrl = res.fileID;
+        console.log('Avatar URL: ', avatarUrl);
+        if (avatarUrl) {
+          userInfo.avatarUrl = avatarUrl;
+        }
+        updateUserInfo(app.globalData.userInfo._id, userInfo).then((res) => {
+          wx.hideLoading();
+          wx.navigateBack({
+            delta: 1,
+          });
         });
       });
   },
@@ -114,13 +126,11 @@ Page({
     console.log(tempFile);
 
     return new Promise((resolve, reject) => {
-      userRepo
-        .uploadFiles(tempFile.tempFilePaths, 'userphotos')
-        .then((urls) => {
-          resolve({
-            urls,
-          });
+      uploadFiles(tempFile.tempFilePaths, 'userphotos').then((urls) => {
+        resolve({
+          urls,
         });
+      });
     });
   },
 
@@ -141,7 +151,7 @@ Page({
   },
 
   onLoad(options) {
-    userRepo.fetchUserInfoOrSignup().then((userInfo) => {
+    fetchUserInfoOrSignup().then((userInfo) => {
       const files = [];
       if (userInfo.photos) {
         for (const photo of userInfo.photos) {
@@ -155,7 +165,7 @@ Page({
 
       this.setData({
         nickName: userInfo.nickName,
-        avatarUrl: userInfo.avatarUrl,
+        avatarTmpUrl: userInfo.avatarUrl,
         company: userInfo.company,
         birthday: userInfo.birthday,
         height: userInfo.height,

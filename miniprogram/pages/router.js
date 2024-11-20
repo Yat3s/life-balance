@@ -104,6 +104,10 @@ export const Pages = {
     authRequired: false,
     url: '/pages/user/user-order/user-order?id=',
   },
+  Onboarding: {
+    authRequired: false,
+    url: '/pages/onboarding/onboarding',
+  },
 };
 
 export function navigationToAppConfigWebView(config) {
@@ -204,6 +208,10 @@ export function navigateToUserProduct() {
 
 export function navigateToUserOrder(id) {
   navigate(Pages.UserOrder, id);
+}
+
+export function navigateToOnboarding() {
+  navigate(Pages.Onboarding);
 }
 
 export function navigate(page, urlParam = null) {

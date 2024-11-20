@@ -1,0 +1,44 @@
+<view class="relative">
+  <image class="w-screen h-bg absolute top-0 right-0 z-0" src="/images/img_onboarding.png" />
+  <view class="h-screen flex flex-col justify-center px-10" hover-class="none" hover-stop-propagation="false">
+    <!-- Logo -->
+    <view class="relative w-28 h-28 mb-8 flex items-center justify-center">
+      <image class="w-14 h-14 z-10 relative" src="/images/img_logo.png" />
+      <view class="absolute w-28 h-28 bg-white opacity-10 rounded-full" />
+    </view>
+    <!-- Title and Subtitle -->
+    <view class="text-white text-title font-bold text-left mb-2 z-20">Join Life Balance</view>
+    <view class="text-white text-xl text-left mb-8 z-20">Where work meets life</view>
+    <!-- Form -->
+    <form bindsubmit="onFormSubmit" class="z-20">
+      <!-- Form Card -->
+      <view class="border-gray-light p-6 rounded-xl bg-white mb-12">
+        <!-- Avatar Section -->
+        <view class="flex justify-between items-center mb-6">
+          <view class="text-section text-sm font-medium">Avatar</view>
+          <button class="w-8 h-8 avatar-button bg-gray-200 rounded-full flex items-center justify-center" name="avatarUrl" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+            <image wx:if="{{avatarTmpUrl}}" class="w-8 h-8 bg-gray-200 rounded-full" src="{{avatarTmpUrl}}" />
+            <image wx:else class="w-4 h-4 rounded-full" src="/images/ic_user.svg" />
+          </button>
+        </view>
+        <!-- Username Section -->
+        <view class="flex justify-between items-center">
+          <view class="text-section text-sm font-medium">User Name</view>
+          <input name="nickName" placeholder="Your user name" placeholder-class="text-placeholder" bindinput="onNickNameChange" class="text-right" type="nickname" value="{{nickName}}" />
+        </view>
+      </view>
+      <view class="mb-5 flex">
+        <view class="w-2dot5 h-2dot5 rounded-full check-border inline-block shrink-0 mt-1 {{isAgreed ? 'bg-blue' : 'bg-transparent'}}" bindtap="onAgreementChange" />
+        <view class="text-desc text-xxs ml-1dot5">
+          同意依照
+          <text class="text-blue">《Life Balance》</text>
+          对我的个人信息进行收集和使用，我已阅读并确认已被充分理解
+        </view>
+      </view>
+      <!-- Submit Button -->
+      <button form-type="submit" class="gradient-button submit-button text-white py-3dot5 rounded-full text-center text-sm w-full">
+        Confirm
+      </button>
+    </form>
+  </view>
+</view>
