@@ -9,3 +9,35 @@
     rgba(54, 151, 255, 0) 75%
   );
 }
+
+.w-1on3dot5 {
+  width: 29%;
+}
+
+.left-13 {
+  left: 3.25rem;
+}
+
+.content-center {
+  left: calc(50% - 3.15rem);
+  transform: translateX(-50%, -50%);
+}
+
+.steak {
+  position: absolute;
+  top: 1.5rem;
+  left: 0;
+}
+
+.taco {
+  position: absolute;
+  top: 0.5rem;
+  left: 1.25rem;
+  z-index: 10;
+}
+
+.carrot {
+  position: absolute;
+  top: 1.5rem;
+  left: 3.25rem;
+}

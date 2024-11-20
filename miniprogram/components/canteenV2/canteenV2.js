@@ -1,4 +1,4 @@
-import { formatDateToMMDD } from "../../common/util";
+import { formatDateToMMDD, formatNumberWithCommas } from "../../common/util";
 import { navigateToFoodMenu } from "../../pages/router";
 import { fetchFoodMenus } from "../../repository/dashboardRepo";
 
@@ -18,6 +18,13 @@ Component({
 
   lifetimes: {
     attached() {
+      const wastedFoodWeight = 0;
+      const replaceFoodCount = 0;
+      this.setData({
+        wastedFoodWeight: formatNumberWithCommas(wastedFoodWeight),
+        replaceFoodCount: formatNumberWithCommas(replaceFoodCount),
+      });
+
       fetchFoodMenus("b25").then((menus) => {
         if (!menus || menus.length === 0) {
           return;
