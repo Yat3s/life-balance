@@ -11,3 +11,14 @@
 .bottom-card {
   background: rgba(221, 240, 255, 1);
 }
+
+.no-data-tip-circle {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #c0d2eb;
+  border-radius: 50%;
+}
+
+.no-data-text {
+  color: #5b749c;
+}
