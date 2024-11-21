@@ -12,7 +12,7 @@
         </view>
       </view>
     </view>
-    <image src="../../images/ic_edit.png" bindtap="onEditUserInfoClick" class="edit-info margin-top-xs"></image>
+    <image src="../../images/ic_edit.png" bind:tap="onEditUserInfoClick" class="edit-info margin-top-xs" />
   </view>
   <view wx:if="{{userInfo.company}}" class="profile-company">{{company.name}}</view>
   <view bindtap="onSettingCompanyClick" wx:if="{{!userInfo.company}}" class="profile-company-unset mt-0dot5">
@@ -22,19 +22,19 @@
     <view class="grid grid-cols-2 gap-4">
       <view bindtap="onProfileClick" class="flex items-center bg-buttonBlue rounded-xl p-4 gap-6">
         <view class="flex items-center justify-center w-8 h-8 bg-white rounded-full">
-          <image class="w-4 h-4" src="../../images/ic_profile.svg"></image>
+          <image class="w-4 h-4" src="../../images/ic_profile.svg" />
         </view>
         <view class="font-semibold text-foreground">Profile</view>
       </view>
       <view bindtap="onActivityClick" class="flex items-center bg-buttonBlue rounded-xl p-4 gap-6">
         <view class="flex items-center justify-center w-8 h-8 bg-white rounded-full">
-          <image class="w-4 h-4" src="../../images/ic_activity_2.png"></image>
+          <image class="w-4 h-4" src="../../images/ic_activity_2.png" />
         </view>
         <view class="font-semibold text-foreground">Activities</view>
       </view>
       <view bindtap="onMallClick" class="flex items-center bg-buttonBlue rounded-xl p-4 gap-6">
         <view class="flex items-center justify-center w-8 h-8 bg-white rounded-full">
-          <image class="w-4 h-4" src="../../images/ic_mall.svg"></image>
+          <image class="w-4 h-4" src="../../images/ic_mall.svg" />
         </view>
         <view class="font-semibold text-foreground">Mall</view>
       </view>
@@ -43,13 +43,18 @@
 </view>
 <view class="divider margin-top"></view>
 <view bindtap="onSponsorClick" class="menu-item-container ">
-  <image class="menu-item-icon" src="../../images/ic_coffee.png"></image>
+  <image class="menu-item-icon" src="../../images/ic_coffee.png" />
   <view class="menu-item-text margin-left">Buy developer a coffee</view>
 </view>
 <view class="divider"></view>
 <view bindtap="onContributionClick" class="menu-item-container ">
-  <image class="menu-item-icon" src="/images/ic_code.png"></image>
+  <image class="menu-item-icon" src="/images/ic_code.png" />
   <view class="menu-item-text margin-left">Contributions</view>
+</view>
+<view class="divider"></view>
+<view bindtap="onStarClick" class="menu-item-container ">
+  <image class="github-icon ml-1 mr-0dot5" src="/images/ic_github.svg" />
+  <view class="menu-item-text margin-left">Star on Github</view>
 </view>
 <view class="divider"></view>
 <!-- Feedback -->
@@ -83,6 +88,20 @@
     <view class="text-red text-bold">THANK YOU!</view>
     <view class="flex items-center justify-end margin-top-lg">
       <view catchtap="onDismissModal" class="cu-btn modal-btn-ok">Done</view>
+    </view>
+  </view>
+</view>
+<!-- Github -->
+<view class="cu-modal {{showingModal === 'github' ? 'show' : ''}}" bind:tap="onHideModal">
+  <view class="cu-dialog modal-main" catch:tap>
+    <view class="flex justify-between">
+      <view class="modal-title">Star on Github</view>
+    </view>
+    <view class="flex flex-col gap-6 margin-top">
+      <input class="flex-1 bg-gray-100 rounded p-2 text-sm" value="{{github}}" disabled />
+      <view bind:tap="onCopyGithubUrl" class="cu-btn bg-blue text-white w-fit self-end rounded-lg">
+        Copy
+      </view>
     </view>
   </view>
 </view>
