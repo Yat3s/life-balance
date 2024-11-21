@@ -20,7 +20,9 @@ Component({
 
   properties: {},
 
-  data: {},
+  data: {
+    github: 'https://github.com/Yat3s/life-balance',
+  },
 
   methods: {
     handleAvatarChosen() {
@@ -79,6 +81,36 @@ Component({
 
     onContributionClick() {
       navigationToContribution();
+    },
+
+    onStarClick() {
+      this.setData(
+        {
+          showingModal: 'github',
+        },
+        () => {
+          this.onCopyGithubUrl();
+        }
+      );
+    },
+
+    onCopyGithubUrl() {
+      wx.setClipboardData({
+        data: this.data.github,
+        success: () => {
+          wx.showToast({
+            title: 'Copied to clipboard',
+            icon: 'success',
+            duration: 2000,
+          });
+        },
+      });
+    },
+
+    onHideModal() {
+      this.setData({
+        showingModal: null,
+      });
     },
 
     onActivityManageClick() {

@@ -79,6 +79,11 @@
   height: 60rpx;
 }
 
+.github-icon {
+  width: 50rpx;
+  height: 50rpx;
+}
+
 .menu-item-text {
   font-weight: normal;
   font-size: 12pt;
