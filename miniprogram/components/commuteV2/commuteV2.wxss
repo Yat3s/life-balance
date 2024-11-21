@@ -130,3 +130,7 @@
   font-size: 1.625rem;
   line-height: 2.25rem;
 }
+
+.w-5dot5 {
+  width: 1.375rem;
+}
