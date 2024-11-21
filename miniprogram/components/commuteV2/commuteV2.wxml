@@ -16,10 +16,10 @@
         <view class="flex gap-2dot5 items-center">
           <progressRing targetProgress="{{parkingSpace.b25.usedPercent}}" initialColor="{{ parkingSpace.b25.initialColor }}" finalColor="{{ parkingSpace.b25.finalColor }}" progressDuration="{{ parkingSpace.b25.progressDuration }}" colorChangeDuration="{{ parkingSpace.b25.colorChangeDuration }}">
             <view class="flex flex-col items-center">
-              <image src="/images/ic_car_parking.png" class="w-6 h-auto" mode="widthFix" />
+              <image src="/images/ic_car_parking.png" class="w-5dot5 h-auto" mode="widthFix" />
             </view>
           </progressRing>
-          <view>
+          <view class="mt-1">
             <view class="text-xs text-gray mb-0dot5">
               B25 - 剩余车位
             </view>
@@ -34,10 +34,10 @@
         <view class="flex gap-2dot5 items-center">
           <progressRing targetProgress="{{ parkingSpace.zhongmeng.usedPercent }}" initialColor="{{ parkingSpace.zhongmeng.initialColor }}" finalColor="{{ parkingSpace.zhongmeng.finalColor }}" progressDuration="{{ parkingSpace.zhongmeng.progressDuration }}" colorChangeDuration="{{ parkingSpace.zhongmeng.colorChangeDuration }}">
             <view class="flex flex-col items-center">
-              <image src="/images/ic_car_parking.png" class="w-6 h-auto" mode="widthFix" />
+              <image src="/images/ic_car_parking.png" class="w-5dot5 h-auto" mode="widthFix" />
             </view>
           </progressRing>
-          <view>
+          <view class="mt-1">
             <view class="text-xs text-gray mb-0dot5">
               中盟 - 剩余车位
             </view>
