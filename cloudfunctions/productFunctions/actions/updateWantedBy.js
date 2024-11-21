@@ -19,6 +19,24 @@ exports.main = async (props, context) => {
   }
 
   try {
+    const product = await db
+      .collection(COLLECTION_NAME_FLEA_MARKET_PRODUCTS)
+      .doc(productId)
+      .get();
+
+    if (!product.data) {
+      return {
+        success: false,
+        message: 'Product not found',
+      };
+    }
+
+    // Check if the current user is the owner
+    if (product.data.userId === openid) {
+      return;
+    }
+
+    // If not the owner, proceed with adding to wantedBy
     await db
       .collection(COLLECTION_NAME_FLEA_MARKET_PRODUCTS)
       .doc(productId)
