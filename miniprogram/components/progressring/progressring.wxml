@@ -1,5 +1,5 @@
 <view class="circle-progress-container">
-  <view class="circle-progress-background progress-bar" style="--target-progress: {{ targetProgress }}; --initial-color: {{ initialColor }}; --final-color: {{ finalColor }}; --progress-duration: {{ progressDuration }}s; --color-change-duration: {{ colorChangeDuration }}s;"></view>
+  <view class="circle-progress-background progress-bar" style="{{animationStyle}} --target-progress: {{ targetProgress }}; --initial-color: {{ initialColor }}; --final-color: {{ finalColor }}; --progress-duration: {{ progressDuration }}s; --color-change-duration: {{ colorChangeDuration }}s;"></view>
   <view class="circle-progress-mask"></view>
   <view class="progress-info">
     <slot></slot>

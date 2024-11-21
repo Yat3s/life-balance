@@ -10,6 +10,15 @@
   }
 }
 
+@keyframes color-change {
+  from {
+    --current-color: var(--initial-color);
+  }
+  to {
+    --current-color: var(--final-color);
+  }
+}
+
 .circle-progress-container {
   position: relative;
   width: 50px;
@@ -29,17 +38,11 @@
     var(--current-color) 0%
   );
   transform: rotate(-180deg);
-  animation: progress var(--progress-duration) linear forwards,
-    color-change var(--color-change-duration) linear forwards;
 }
 
-@keyframes color-change {
-  from {
-    --current-color: var(--initial-color);
-  }
-  to {
-    --current-color: var(--final-color);
-  }
+.circle-progress-animation {
+  animation: progress var(--progress-duration) linear forwards,
+    color-change var(--color-change-duration) linear forwards;
 }
 
 .circle-progress-mask {

@@ -3,6 +3,15 @@ Component({
     addGlobalClass: true,
   },
   properties: {
+    isLoading: {
+      type: Boolean,
+      value: true,
+      observer(newVal) {
+        if (newVal) {
+          this.resetAnimation();
+        }
+      },
+    },
     targetProgress: {
       type: Number,
       value: 0,
@@ -22,6 +31,30 @@ Component({
     colorChangeDuration: {
       type: Number,
       value: 6,
+    },
+  },
+  data: {
+    animationStyle: "",
+  },
+  lifetimes: {
+    attached() {
+      // trigger animation when component is initialized
+      this.resetAnimation();
+    },
+  },
+  methods: {
+    resetAnimation() {
+      // clear animation style, avoid overlap
+      this.setData({
+        animationStyle: "",
+      });
+      // reset animation
+      setTimeout(() => {
+        this.setData({
+          animationStyle: `animation: progress ${this.data.progressDuration}s linear forwards, 
+                           color-change ${this.data.colorChangeDuration}s linear forwards;`,
+        });
+      }, 50);
     },
   },
 });

@@ -14,7 +14,7 @@
       <view class="flex w-full items-center gap-1 justify-between">
         <!-- B25 -->
         <view class="flex gap-2dot5 items-center">
-          <progressRing targetProgress="{{parkingSpace.b25.usedPercent}}" initialColor="{{ parkingSpace.b25.initialColor }}" finalColor="{{ parkingSpace.b25.finalColor }}" progressDuration="{{ parkingSpace.b25.progressDuration }}" colorChangeDuration="{{ parkingSpace.b25.colorChangeDuration }}">
+          <progressRing isLoading="{{loadingParkingSpace}}" targetProgress="{{parkingSpace.b25.usedPercent}}" initialColor="{{ parkingSpace.b25.initialColor }}" finalColor="{{ parkingSpace.b25.finalColor }}" progressDuration="{{ parkingSpace.b25.progressDuration }}" colorChangeDuration="{{ parkingSpace.b25.colorChangeDuration }}">
             <view class="flex flex-col items-center">
               <image src="/images/ic_car_parking.png" class="w-5dot5 h-auto" mode="widthFix" />
             </view>
@@ -32,7 +32,7 @@
 
         <!-- Zhongmeng -->
         <view class="flex gap-2dot5 items-center">
-          <progressRing targetProgress="{{ parkingSpace.zhongmeng.usedPercent }}" initialColor="{{ parkingSpace.zhongmeng.initialColor }}" finalColor="{{ parkingSpace.zhongmeng.finalColor }}" progressDuration="{{ parkingSpace.zhongmeng.progressDuration }}" colorChangeDuration="{{ parkingSpace.zhongmeng.colorChangeDuration }}">
+          <progressRing isLoading="{{loadingParkingSpace}}" targetProgress="{{ parkingSpace.zhongmeng.usedPercent }}" initialColor="{{ parkingSpace.zhongmeng.initialColor }}" finalColor="{{ parkingSpace.zhongmeng.finalColor }}" progressDuration="{{ parkingSpace.zhongmeng.progressDuration }}" colorChangeDuration="{{ parkingSpace.zhongmeng.colorChangeDuration }}">
             <view class="flex flex-col items-center">
               <image src="/images/ic_car_parking.png" class="w-5dot5 h-auto" mode="widthFix" />
             </view>
