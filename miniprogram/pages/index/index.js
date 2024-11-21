@@ -3,7 +3,7 @@ import { getAppConfig } from "../../repository/baseRepo";
 import { fetchUserInfo } from "../../repository/userRepo";
 import { navigateToOnboarding } from "../router";
 
-const homeV2Enabled = true;
+const homeV2Enabled = false;
 
 Page({
   data: {
