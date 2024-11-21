@@ -3,7 +3,7 @@ import { getAppConfig } from '../../repository/baseRepo';
 import { fetchUserInfo } from '../../repository/userRepo';
 import { navigateToOnboarding } from '../router';
 
-const homeV2Enabled = false;
+const homeV2Enabled = true;
 
 Page({
   data: {
@@ -15,7 +15,7 @@ Page({
     pages: [
       {
         id: 'board',
-        title: 'Board',
+        title: 'Home',
         icon: '../../images/ic_board.png',
         iconActive: '../../images/ic_board_active.png',
         isBeta: homeV2Enabled,

@@ -1,9 +1,9 @@
 .stock-border {
-  border: 1rpx solid #ccd6ff;
+  border: 1rpx solid #e1e5f7;
 }
 
 .stock-bg {
-  background-image: linear-gradient(to right, #f7f9ff, #ffffff);
+  background: linear-gradient(to right, #f7f9ff, #ffffff);
 }
 
 .stock-title {

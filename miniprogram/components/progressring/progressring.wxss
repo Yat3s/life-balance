@@ -47,8 +47,8 @@
 
 .circle-progress-mask {
   position: absolute;
-  width: 84%;
-  height: 84%;
+  width: 80%;
+  height: 80%;
   background-color: white;
   border-radius: 50%;
   z-index: 2;

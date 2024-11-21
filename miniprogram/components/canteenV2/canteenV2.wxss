@@ -2,6 +2,10 @@
   color: #7f6ca7;
 }
 
+.bg {
+  background: #def3ee;
+}
+
 .text-date {
   color: #bcbcbc;
 }

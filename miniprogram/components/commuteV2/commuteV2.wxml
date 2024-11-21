@@ -1,8 +1,8 @@
-<view class="border border-solid border-gray-200 p-4 rounded-lg">
+<view class="border border-solid border-gray-200 p-4 rounded-xl">
   <!-- Parking -->
   <view bindtap="refresh">
     <view class="flex items-center justify-between">
-      <view class="font-bold text-sm">Parking Space</view>
+      <view class="font-bold">通勤</view>
       <image class="w-6 h-6 {{loadingParkingSpace ? 'animation-rotate' : ''}}" src="/images/ic_refresh.png"></image>
     </view>
 

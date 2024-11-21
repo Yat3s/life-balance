@@ -17,7 +17,7 @@ Component({
   lifetimes: {
     attached() {
       let cardConfig = {
-        title: "Latest Circle",
+        title: "最新圈子",
         cardTitle: "",
         description: "",
         members: [],

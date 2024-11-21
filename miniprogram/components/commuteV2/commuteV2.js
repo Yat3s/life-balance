@@ -8,8 +8,9 @@ import {
   fetchParkingSpace,
 } from "../../repository/dashboardRepo";
 
-const EMPTY_COLOR = "#3679FF";
+const EMPTY_COLOR = "#3679EE";
 const BUSY_COLOR = "#FF593B";
+const SPIN_DURATION = 0.3
 
 Component({
   options: {
@@ -27,16 +28,12 @@ Component({
         usedPercent: 0,
         initialColor: EMPTY_COLOR,
         finalColor: EMPTY_COLOR,
-        progressDuration: 1,
-        colorChangeDuration: 2,
       },
       zhongmeng: {
         remaining: 223,
         usedPercent: 0,
         initialColor: EMPTY_COLOR,
         finalColor: EMPTY_COLOR,
-        progressDuration: 1,
-        colorChangeDuration: 2,
       },
     },
   },
@@ -103,7 +100,7 @@ Component({
             usedPercent,
             initialColor: EMPTY_COLOR,
             finalColor: usedPercent >= 90 ? BUSY_COLOR : EMPTY_COLOR,
-            progressDuration: 1,
+            progressDuration: SPIN_DURATION,
             colorChangeDuration: 1.9,
           };
         });

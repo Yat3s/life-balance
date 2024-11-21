@@ -21,8 +21,7 @@
         <!-- Title -->
         <view class="flex justify-between">
           <view class="flex align-center">
-            <image class="activity-title-icon" src="../../images/ic_comma.png"></image>
-            <view class="activity-title margin-left-xs single-line">{{item.title}}</view>
+            <view class="activity-title single-line">{{item.title}}</view>
           </view>
           <view wx:if="{{item.isActive}}" class="flex align-center">
             <view class="activity-state-active-icon"></view>

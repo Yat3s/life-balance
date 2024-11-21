@@ -1,3 +1,6 @@
+.bg {
+  background: linear-gradient(140deg, #ebeef8 0%, #FAFBFC 100%);
+}
 .commute-icon {
   width: 48rpx;
   height: 48rpx;

@@ -17,7 +17,7 @@ Component({
   lifetimes: {
     attached() {
       let cardConfig = {
-        title: "Upcoming Activity",
+        title: "最新活动",
         cardTitle: "",
         description: "",
         members: [],
@@ -41,7 +41,7 @@ Component({
             cardConfig,
           });
         } else {
-          cardConfig.emptyTip = "暂无活动";
+          cardConfig.emptyTip = "暂无进行中活动";
           this.setData({
             cardConfig,
           });

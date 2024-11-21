@@ -18,24 +18,18 @@ Component({
 
   lifetimes: {
     attached() {
-      const wastedFoodWeight = 0;
-      const replaceFoodCount = 0;
-      this.setData({
-        wastedFoodWeight: formatNumberWithCommas(wastedFoodWeight),
-        replaceFoodCount: formatNumberWithCommas(replaceFoodCount),
-      });
-
       fetchFoodMenus("b25").then((menus) => {
         if (!menus || menus.length === 0) {
           return;
         }
+        
 
         const todayMenu = menus[0];
 
+        console.log("b25", todayMenu.foodWaste);
         todayMenu.canteenName = "B25餐厅菜单";
         todayMenu.startDateStr = formatDate(todayMenu.startDate, false);
         todayMenu.endDateStr = formatDate(todayMenu.endDate, false);
-
         this.setData({
           todayMenuB25: todayMenu,
         });

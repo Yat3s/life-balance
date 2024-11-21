@@ -1,4 +1,4 @@
-<view bind:tap="onCardClick" class="border border-solid border-gray-200 p-3 rounded-lg h-38 relative">
+<view bind:tap="onCardClick" class="border border-solid border-gray-200 p-3 rounded-xl h-38 relative">
   <view class="px-1 flex items-center justify-between">
     <view class="font-bold text-xs">{{cardConfig.title}}</view>
     <view class="text-sm text-gray">
