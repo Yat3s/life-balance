@@ -1,22 +1,21 @@
 <view class="cu-modal {{show ? 'show' : ''}}" bind:tap="onClose">
-  <view class="cu-dialog rounded-xl bg-white relative" catch:tap>
-    <image class="absolute top-0 left-0 w-full h-full" src="/images/img_user_info_bg.png" />
-    <view class="p-8 py-10">
-      <view class="flex items-center justify-center gap-1 mb-4">
-        <image class="w-7 h-7" src="/images/img_smile.png" />
+  <view class="cu-dialog rounded-xl" catch:tap>
+    <view class="p-8 py-14 bg-cover bg-center bg-no-repeat" style="background-image: url('/images/img_user_info_bg.png')">
+      <view class="flex items-center justify-center gap-0dot5 mb-4">
+        <image class="w-10 h-10" src="/images/img_smile.png" />
         <text class="text-section font-semibold">设置新头像昵称</text>
       </view>
-      <view class="text-center flex flex-col items-center justify-center gap-2 text-xs font-medium mb-6">
+      <view class="text-center flex flex-col items-center justify-center gap-2 text-xs font-medium mb-7">
         <text class="text-desc">给自己一个新形象吧！</text>
         <text class="text-desc">完善信息方便体验更多互动功能哦</text>
       </view>
       <!-- Form -->
       <form bindsubmit="onFormSubmit" class="z-20">
         <!-- Form Card -->
-        <view class="border-gray-light p-6 rounded-xl bg-white mb-12">
+        <view class="border-gray-light p-6 rounded-xl bg-input mb-12">
           <!-- Avatar Section -->
           <view class="flex justify-between items-center mb-6">
-            <view class="text-section text-xs font-medium">头像</view>
+            <view class="text-section text-sm font-medium">头像</view>
             <button class="w-6 h-6 avatar-button bg-gray-200 rounded-full flex items-center justify-center" name="avatarUrl" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
               <image wx:if="{{avatarTmpUrl}}" class="w-6 h-6 bg-gray-200 rounded-full" src="{{avatarTmpUrl}}" />
               <image wx:else class="w-3 h-3 rounded-full" src="/images/ic_user.svg" />
@@ -24,8 +23,8 @@
           </view>
           <!-- Username Section -->
           <view class="flex justify-between items-center">
-            <view class="text-section text-xs font-medium">昵称</view>
-            <input name="nickName" placeholder="请输入你的昵称" placeholder-class="text-placeholder" bind:input="onNickNameChange" class="text-right text-xs" type="nickname" value="{{nickName}}" />
+            <view class="text-section text-sm font-medium">昵称</view>
+            <input name="nickName" placeholder="请输入你的昵称" placeholder-class="text-placeholder" bind:input="onNickNameChange" class="text-right text-sm" type="nickname" value="{{nickName}}" />
           </view>
         </view>
         <!-- Submit Button -->
