@@ -24,7 +24,7 @@
               B25 - 剩余车位
             </view>
             <view class="flex items-baseline">
-              <view class="text-2dot5xl font-bold {{parkingSpace.b25.remaining === 0 ? 'text-gray-400' : ''}}">{{parkingSpace.b25.remaining}}</view>
+              <view class="text-2dot5xl font-bold {{parkingSpace.b25.remaining === 0 ? 'text-gray' : ''}}">{{parkingSpace.b25.remaining}}</view>
               <view class="text-gray text-xs">/{{parkingConfig.b25.maxSpaces}}</view>
             </view>
           </view>
@@ -42,7 +42,7 @@
               中盟 - 剩余车位
             </view>
             <view class="flex items-baseline">
-              <view class="text-2dot5xl font-bold {{parkingSpace.zhongmeng.remaining === 0 ? 'text-gray-400' : ''}}">{{parkingSpace.zhongmeng.remaining}}</view>
+              <view class="text-2dot5xl font-bold {{parkingSpace.zhongmeng.remaining === 0 ? 'text-gray' : ''}}">{{parkingSpace.zhongmeng.remaining}}</view>
               <view class="text-gray text-xs">/{{parkingConfig.zhongmeng.maxSpaces}}</view>
             </view>
           </view>

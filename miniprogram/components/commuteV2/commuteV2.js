@@ -104,7 +104,7 @@ Component({
             initialColor: EMPTY_COLOR,
             finalColor: usedPercent >= 90 ? BUSY_COLOR : EMPTY_COLOR,
             progressDuration: 1,
-            colorChangeDuration: 2,
+            colorChangeDuration: 1.9,
           };
         });
 

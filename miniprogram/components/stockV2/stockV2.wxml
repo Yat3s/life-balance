@@ -1,8 +1,8 @@
 <view>
-  <view class="px-6 py-4 flex items-center justify-between gap-1 rounded-xl stock-border stock-bg">
+  <view class="p-4 flex items-center justify-between gap-1 rounded-xl stock-border stock-bg">
     <view class="flex items-center gap-0dot5">
       <view class="">
-        <view class="text-bold text-sm stock-title">微软市值第一了吗？</view>
+        <view class="text-bold text-xs stock-title">微软市值第一了吗？</view>
         <view class="flex items-baseline gap-1">
           <view class="font-bold stock-title text-sm">{{stockData.msft.price}}</view>
           <view class="text-xxs text-gray-400">{{stockData.msft.change}}%</view>
@@ -15,7 +15,7 @@
     </view>
 
     <view class="flex items-center gap-2">
-      <view class="text-xs font-bold text-gray-400">
+      <view class="text-xxs font-bold text-gray-400">
         {{stockData.top1.symbol}}({{stockData.top1.mktcap}}T)
       </view>
       <view class="text-xxs text-gray whitespace-nowrap">
