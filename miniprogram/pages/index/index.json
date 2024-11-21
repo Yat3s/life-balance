@@ -6,6 +6,7 @@
     "mall": "/pages/mall/mall",
     "connection": "/pages/connection/connection",
     "carpool": "/pages/carpool/carpool",
-    "user": "/pages/user/user"
+    "user": "/pages/user/user",
+    "user-info-modal": "/components/user-info-modal/index"
   }
 }

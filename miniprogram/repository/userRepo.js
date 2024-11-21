@@ -162,9 +162,12 @@ export function fetchUserInfoOrSignup() {
 
 export function updateUserInfo(id, userInfo) {
   return baseCollectionRequestWrapper(
-    db.collection(COLLECTION_USERS).doc(id).update({
-      data: userInfo,
-    }),
+    db
+      .collection(COLLECTION_USERS)
+      .doc(id)
+      .update({
+        data: { ...userInfo, updatedAt: Date.now() },
+      }),
     'updateUserInfo'
   );
 }

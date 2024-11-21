@@ -7,7 +7,7 @@ const homeV2Enabled = false;
 
 Page({
   data: {
-    showingModal: '',
+    showingModal: null,
     currentTab: 'board',
     navigationBarHeight: app.globalData.navigationBarHeight, // Safe area
     selectedGenderIndex: 0,
@@ -112,6 +112,10 @@ Page({
         .then((userInfo) => {
           if (userInfo) {
             app.globalData.userInfo = userInfo;
+            const needsUpdate = this.checkNeedsProfileUpdate(userInfo);
+            if (needsUpdate) {
+              this.onOpenUpdateUserInfoModal();
+            }
           } else {
             this.setData({
               currentTab: 'board',
@@ -123,6 +127,18 @@ Page({
     }
   },
 
+  checkNeedsProfileUpdate(userInfo) {
+    if (!userInfo) return false;
+    if (userInfo.updatedAt) return false;
+
+    const isDefaultAvatar = userInfo.avatarUrl?.startsWith(
+      'https://thirdwx.qlogo.cn/mmopen/vi_32/'
+    );
+    const isDefaultNickName = userInfo.nickName === '微信用户';
+
+    return isDefaultNickName || isDefaultAvatar;
+  },
+
   onShow() {
     if (app.globalData.pendingMessage) {
       wx.showToast({
@@ -132,5 +148,17 @@ Page({
       });
       app.globalData.pendingMessage = null;
     }
+  },
+
+  onOpenUpdateUserInfoModal() {
+    this.setData({
+      showingModal: 'update-userinfo',
+    });
+  },
+
+  hideModal() {
+    this.setData({
+      showingModal: null,
+    });
   },
 });
