@@ -16,14 +16,4 @@
     </view>
   </view>
 </view>
-<view class="cu-modal {{ showingModal === 'update-userinfo' ? 'show' : '' }}" bind:tap="hideModal">
-  <view class="cu-dialog rounded-lg bg-white" catchtap>
-    <view class="p-6">
-      <view class="flex item-center gap-1">
-        <image class="w-5 h-5" src="/img_smile.png" />
-        <view class="font-semibold">设置头像昵称</view>
-      </view>
-    </view>
-  </view>
-</view>
 <user-info-modal show="{{showingModal === 'update-userinfo'}}" bind:close="hideModal" />
