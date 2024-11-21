@@ -1,7 +1,7 @@
 <view class="cu-modal {{show ? 'show' : ''}}" bind:tap="onClose">
   <view class="cu-dialog rounded-xl" catch:tap>
     <view class="relative">
-      <image class="absolute top-0 left-0 w-full h-full" src="/images/img_user_info_bg.png" mode="aspectFill" />
+      <image class="absolute top-0 left-0 w-full h-full" src="/images/img_user_info_bg.png" />
       <view class="p-8 py-14 z-50 relative">
         <view class="flex items-center justify-center gap-0dot5 mb-4">
           <image class="w-10 h-10" src="/images/img_smile.png" />
