@@ -129,18 +129,14 @@ Page({
 
   checkNeedsProfileUpdate(userInfo) {
     if (!userInfo) return false;
+    if (userInfo.updatedAt) return false;
 
     const isDefaultAvatar = userInfo.avatarUrl?.startsWith(
       'https://thirdwx.qlogo.cn/mmopen/vi_32/'
     );
     const isDefaultNickName = userInfo.nickName === '微信用户';
 
-    if (isDefaultNickName || isDefaultAvatar) return true;
-
-    if (!userInfo.updatedAt) return true;
-
-    const targetDate = new Date(2024, 10, 22, 0, 0, 0).getTime();
-    return userInfo.updatedAt < targetDate;
+    return isDefaultNickName || isDefaultAvatar;
   },
 
   onShow() {
