@@ -24,3 +24,8 @@
 .text-placeholder {
   color: #899dbd;
 }
+
+.bg-input {
+  background-color: #fdfdfd;
+  z-index: 9999;
+}
