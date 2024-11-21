@@ -1,0 +1,26 @@
+.gradient-button {
+  background: linear-gradient(90deg, #5f87ff 0%, #609efc 100%);
+}
+
+.submit-button {
+  width: 100% !important;
+}
+
+.avatar-button {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding: 0 !important;
+  width: 1.5rem !important;
+}
+
+.text-section {
+  color: #041125;
+}
+
+.text-desc {
+  color: #243a5f;
+}
+
+.text-placeholder {
+  color: #899dbd;
+}
