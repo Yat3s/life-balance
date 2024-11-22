@@ -1,18 +1,18 @@
-import { navigateToOnboarding } from '../pages/router';
-import { cloudFunctionCall } from './baseRepo';
+import { navigateToOnboarding } from "../pages/router";
+import { cloudFunctionCall } from "./baseRepo";
 
 const app = getApp();
 const db = wx.cloud.database();
 const _ = db.command;
 
-const COLLECTION_USERS = 'users';
-const COLLECTION_COMPANIES = 'companies';
-const USER_FUNCTION_NAME = 'userFunctions';
+const COLLECTION_USERS = "users";
+const COLLECTION_COMPANIES = "companies";
+const USER_FUNCTION_NAME = "userFunctions";
 
 // Collections call
 export function baseCollectionRequestWrapper(
   promiseCall,
-  tag = 'Database call',
+  tag = "Database call",
   preProcess = null
 ) {
   return new Promise((resolve, reject) => {
@@ -104,13 +104,14 @@ export function unlikeActivity(activityId) {
 export function fetchUserInfo() {
   const call = baseCollectionRequestWrapper(
     db.collection(COLLECTION_USERS).get(),
-    'fetchUserInfo'
+    "fetchUserInfo"
   );
   return new Promise((resolve, reject) => {
     call
       .then((data) => {
         if (data && data.length > 0) {
           resolve(data[0]);
+          app.globalData.userInfo = data[0];
         } else {
           resolve(null);
         }
@@ -128,6 +129,7 @@ export function signup(user) {
         if (userInfo) {
           resolve(userInfo._id);
         } else {
+          user.updatedAt = Date.now();
           db.collection(COLLECTION_USERS)
             .add({
               data: user,
@@ -145,17 +147,21 @@ export function signup(user) {
 
 export function fetchUserInfoOrSignup() {
   return new Promise((resolve, reject) => {
-    if (app.globalData.userInfo) {
-      fetchUserInfo().then((user) => {
-        if (user) {
-          app.globalData.userInfo = user;
-          resolve(user);
-        } else {
-          // This shouldn't happen
-        }
-      });
+    const cachedUser = app.globalData.userInfo;
+    if (cachedUser) {
+      resolve(cachedUser);
     } else {
-      navigateToOnboarding();
+      fetchUserInfo()
+        .then((user) => {
+          if (user) {
+            resolve(user);
+          } else {
+            navigateToOnboarding();
+          }
+        })
+        .catch((err) => {
+          reject(err);
+        });
     }
   });
 }
@@ -168,13 +174,13 @@ export function updateUserInfo(id, userInfo) {
       .update({
         data: { ...userInfo, updatedAt: Date.now() },
       }),
-    'updateUserInfo'
+    "updateUserInfo"
   );
 }
 
 export function updatePhoneNumber(userId, phoneNumberCloudId) {
   return wx.cloud.callFunction({
-    name: 'updatePhoneNumber',
+    name: "updatePhoneNumber",
     data: {
       id: userId,
       phoneNumberData: wx.cloud.CloudID(phoneNumberCloudId),
@@ -187,20 +193,20 @@ export function fetchUserProfile(id) {
     id,
   };
 
-  return cloudFunctionCall(USER_FUNCTION_NAME, 'fetchUserProfile', data);
+  return cloudFunctionCall(USER_FUNCTION_NAME, "fetchUserProfile", data);
 }
 
 export function fetchCompanies() {
   return baseCollectionRequestWrapper(
     db.collection(COLLECTION_COMPANIES).get(),
-    'fetchCompanies'
+    "fetchCompanies"
   );
 }
 
 export function fetchCompany(id) {
   return baseCollectionRequestWrapper(
     db.collection(COLLECTION_COMPANIES).doc(id).get(),
-    'fetchCompany'
+    "fetchCompany"
   );
 }
 
@@ -209,7 +215,7 @@ export function uploadFiles(filePaths, folder) {
   let tasks = [];
   for (const path of filePaths) {
     console.log(path);
-    const random = Date.now() + '-' + Math.random();
+    const random = Date.now() + "-" + Math.random();
     const cloudPath = `${folder}/photo-${random}.png`;
     console.log(cloudPath);
     tasks.push(
