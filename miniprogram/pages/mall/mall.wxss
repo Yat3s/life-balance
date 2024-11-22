@@ -1,6 +1,6 @@
 .main {
   background: white;
-  height: 100vh;
+  height: 100%;
 }
 
 .toolbar {

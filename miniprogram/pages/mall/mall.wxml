@@ -84,7 +84,7 @@
     </view>
   </view>
   <!-- Product List -->
-  <view wx:if="{{fleaMarketProducts && userInfo.company}}" class="mt-4 plr">
+  <view wx:if="{{fleaMarketProducts && userInfo.company}}" class="mt-4 plr pb-2">
     <view wx:for="{{fleaMarketProducts}}" wx:key="_id" class="mb-4 bg-white rounded-lg">
       <!-- Product Card -->
       <view class="p-4 border-gray-light rounded-lg bg-gradient" bind:tap="handleViewFleaMarketProduct" data-product="{{item}}">
