@@ -1,5 +1,5 @@
 .bg {
-  background: linear-gradient(140deg, #ebeef8 0%, #FAFBFC 100%);
+  background: linear-gradient(140deg, #ebeef8 0%, #fafbfc 100%);
 }
 .commute-icon {
   width: 48rpx;
@@ -126,7 +126,6 @@
 }
 
 .bg-link {
-  background: #f7faff;
 }
 
 .text-2dot5xl {

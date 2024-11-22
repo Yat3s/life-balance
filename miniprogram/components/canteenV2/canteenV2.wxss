@@ -1,5 +1,6 @@
 .text-tip {
   color: #7f6ca7;
+  margin: 0 2rpx;
 }
 
 .bg {

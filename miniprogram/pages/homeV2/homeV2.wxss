@@ -1,8 +1,15 @@
 page {
-  background: white;
+  background: #f9f9f9;
   --widgetBorderRadius: 40rpx;
   --widgetPadding: 36rpx;
   --widgetGap: 12rpx;
+}
+
+.main {
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  background: white;
+  height: 100%;
 }
 
 .toolbar {
@@ -50,13 +57,6 @@ page {
 
 .banner-img {
   width: 100%;
-}
-
-.main {
-  padding-left: 40rpx;
-  padding-right: 40rpx;
-  background: white;
-  height: 100vh;
 }
 
 .margin-left {

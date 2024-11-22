@@ -1,7 +1,6 @@
 <view class="appbar" style="height: {{appBarHeight}}px;">
   <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="toolbar plr {{collapsed? 'shadow bg-white' : ''}}" />
 </view>
-
 <scroll-view scroll-y="true" class="main" bindscroll="onPageScrolled">
   <view style="height:100px; padding-top: {{statusBarHeight + toolbarHeight}}px; margin-top: 32rpx;" class="flex flex-col">
     <view class="ml-2 flex flex-col gap-1">
@@ -17,25 +16,20 @@
     <stockV2></stockV2>
   </view>
   <view class="ml-2 mt-9 widget-section-title text-xs">微软(中国)有限公司 - 苏州</view>
-
-  <view class="flex flex-col gap-5 mt-2">
+  <view class="flex flex-col gap-4 mt-2">
     <!-- Parking Space -->
     <commuteV2 class="w-full"></commuteV2>
-
     <!-- Canteen -->
     <canteenV2 class="w-full"></canteenV2>
-
     <view class="flex gap-2">
       <!-- Latest Circle -->
       <view class="flex-1">
         <latestCircle></latestCircle>
       </view>
-
       <!-- Upcoming Activity -->
       <view class="flex-1">
         <upcomingActivity></upcomingActivity>
       </view>
     </view>
   </view>
-
 </scroll-view>
