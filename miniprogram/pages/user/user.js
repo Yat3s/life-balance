@@ -2,7 +2,7 @@ import {
   fetchUserInfo as _fetchUserInfo,
   fetchCompany,
   updateUserInfo,
-} from '../../repository/userRepo';
+} from "../../repository/userRepo";
 import {
   navigateToUserActivity,
   navigateToProfile,
@@ -11,7 +11,7 @@ import {
   navigationToContribution,
   navigateToAdmin,
   navigateToAuth,
-} from '../router';
+} from "../router";
 
 Component({
   options: {
@@ -21,7 +21,7 @@ Component({
   properties: {},
 
   data: {
-    github: 'https://github.com/Yat3s/life-balance',
+    github: "https://github.com/Yat3s/life-balance",
   },
 
   methods: {
@@ -29,13 +29,13 @@ Component({
       const that = this;
       wx.chooseMedia({
         count: 1,
-        mediaType: ['image'],
-        sizeType: ['original'],
-        sourceType: ['album', 'camera'],
+        mediaType: ["image"],
+        sizeType: ["original"],
+        sourceType: ["album", "camera"],
         maxDuration: 30,
-        camera: 'back',
+        camera: "back",
         success(res) {
-          console.log('Success', res);
+          console.log("Success", res);
           that.upLoadImg(res.tempFiles[0].tempFilePath);
         },
       });
@@ -86,7 +86,7 @@ Component({
     onStarClick() {
       this.setData(
         {
-          showingModal: 'github',
+          showingModal: "github",
         },
         () => {
           this.onCopyGithubUrl();
@@ -99,8 +99,8 @@ Component({
         data: this.data.github,
         success: () => {
           wx.showToast({
-            title: 'Copied to clipboard',
-            icon: 'success',
+            title: "Copied to clipboard",
+            icon: "success",
             duration: 2000,
           });
         },
@@ -123,19 +123,19 @@ Component({
 
     onSponsorClick() {
       this.setData({
-        showingModal: 'sponsor',
+        showingModal: "sponsor",
       });
     },
 
     onFeedbackClick() {
       this.setData({
-        showingModal: 'feedback',
+        showingModal: "feedback",
       });
     },
 
     onDismissModal() {
       this.setData({
-        showingModal: '',
+        showingModal: "",
       });
     },
 
@@ -170,6 +170,7 @@ Component({
 
   lifetimes: {
     attached() {
+      wx.reportEvent("userpageload", {});
       this.fetchUserInfo();
     },
   },

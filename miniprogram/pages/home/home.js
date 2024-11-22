@@ -1,9 +1,9 @@
-const { dateDiff } = require('../../common/util');
-const { getAppConfig } = require('../../repository/baseRepo');
+const { dateDiff } = require("../../common/util");
+const { getAppConfig } = require("../../repository/baseRepo");
 const {
   fetchAllRoutes,
   fetchGpsLocation,
-} = require('../../repository/busRepo');
+} = require("../../repository/busRepo");
 const {
   fetchParkingSpace,
   fetchStockData,
@@ -11,9 +11,9 @@ const {
   fetchFoodMenus,
   fetchWeworkParkingBooking,
   fetchBanners,
-} = require('../../repository/dashboardRepo');
-const { msftBoost } = require('../../repository/exploreRepo');
-const { fetchUserInfo } = require('../../repository/userRepo');
+} = require("../../repository/dashboardRepo");
+const { msftBoost } = require("../../repository/exploreRepo");
+const { fetchUserInfo } = require("../../repository/userRepo");
 const {
   navigateToWechatGroup,
   navigateToActivityDetail,
@@ -24,7 +24,7 @@ const {
   navigateToBusInfo,
   navigateToWeworkParking,
   navigateToGlossary,
-} = require('../router');
+} = require("../router");
 
 const app = getApp();
 const COLLAPSED_SCROLL_TOP = 150;
@@ -46,16 +46,17 @@ Component({
 
   lifetimes: {
     attached() {
+      wx.reportEvent("homepageload", {});
       const nowHours = new Date().getHours();
-      let welcomeMessage = '';
+      let welcomeMessage = "";
       if (nowHours > 0 && nowHours < 5) {
         welcomeMessage = "It's time to sleep!";
       } else if (nowHours >= 5 && nowHours < 12) {
-        welcomeMessage = 'Good morning!';
+        welcomeMessage = "Good morning!";
       } else if (nowHours >= 12 && nowHours < 18) {
-        welcomeMessage = 'Good afternoon!';
+        welcomeMessage = "Good afternoon!";
       } else if (nowHours >= 18 && nowHours < 24) {
-        welcomeMessage = 'Good evening!';
+        welcomeMessage = "Good evening!";
       }
 
       this.setData({
@@ -110,7 +111,7 @@ Component({
         bannerExpanded: !this.data.bannerExpanded,
       });
 
-      wx.reportEvent('bannertap', {
+      wx.reportEvent("bannertap", {
         user_openid: this.data.userInfo._openid,
         toexpand: `${this.data.bannerExpanded}`,
       });
@@ -121,10 +122,10 @@ Component({
         data: this.data.banner.link,
       }),
         wx.showToast({
-          title: 'Link Copied',
+          title: "Link Copied",
         });
 
-      wx.reportEvent('bannerbuttontap', {
+      wx.reportEvent("bannerbuttontap", {
         user_openid: this.data.userInfo._openid,
       });
     },

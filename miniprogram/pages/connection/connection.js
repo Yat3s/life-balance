@@ -1,14 +1,14 @@
-import { fetchRecentActivities } from '../../repository/activityRepo';
-import { getAppConfig } from '../../repository/baseRepo';
-import { fetchWechatGroups } from '../../repository/dashboardRepo';
-import { fetchAllTeams, joinCircle } from '../../repository/exploreRepo';
-import { fetchUserInfo } from '../../repository/userRepo';
+import { fetchRecentActivities } from "../../repository/activityRepo";
+import { getAppConfig } from "../../repository/baseRepo";
+import { fetchWechatGroups } from "../../repository/dashboardRepo";
+import { fetchAllTeams, joinCircle } from "../../repository/exploreRepo";
+import { fetchUserInfo } from "../../repository/userRepo";
 import {
   navigateToActivityDetail,
   navigateToDraftActivity,
   navigateToActivityPage,
   navigateToAuth,
-} from '../router';
+} from "../router";
 
 const app = getApp();
 const COLLAPSED_SCROLL_TOP = 200;
@@ -16,7 +16,7 @@ const MIN_TITLE_SCALE = 0.5;
 const MIN_SUBTITLE_SCALE = 0.9;
 const MAX_APP_BAR_HEIGHT = 200; //px
 const ADD_CIRCLE_LINK =
-  'https://github.com/Yat3s/Life-Balance/issues/new/choose';
+  "https://github.com/Yat3s/Life-Balance/issues/new/choose";
 const MIN_DISPLAY_ACTIVITY_LENGTH = 3;
 
 Component({
@@ -45,6 +45,7 @@ Component({
 
   lifetimes: {
     attached() {
+      wx.reportEvent("connectionpageload", {});
       getAppConfig().then((config) => {
         this.setData({
           circleKeywords: config.circleKeywords,
@@ -97,7 +98,7 @@ Component({
 
           item.shrinkCode =
             item.code.substring(0, item.code.length / 2) +
-            '*'.repeat(item.code.length / 2);
+            "*".repeat(item.code.length / 2);
 
           if (item.teamOnly) {
             for (const team of teams) {
@@ -148,14 +149,14 @@ Component({
 
       if (!userInfo || !userInfo.company) {
         wx.showModal({
-          title: 'Join failed',
-          icon: 'error',
-          content: 'Please verify your company first 请先完成企业认证.',
+          title: "Join failed",
+          icon: "error",
+          content: "Please verify your company first 请先完成企业认证.",
           success(res) {
             if (res.confirm) {
               navigateToAuth();
             } else if (res.cancel) {
-              console.log('用户点击取消');
+              console.log("用户点击取消");
             }
           },
         });
@@ -165,8 +166,8 @@ Component({
 
       if (showingCircle.teamOnly && userInfo.team !== showingCircle.teamOnly) {
         wx.showModal({
-          title: 'Join failed',
-          icon: 'error',
+          title: "Join failed",
+          icon: "error",
           content: `Only members of the ${showingCircle.teamOnlyStr} team are allowed to join this group`,
           success(res) {},
         });
@@ -179,12 +180,12 @@ Component({
       });
 
       wx.showToast({
-        icon: 'none',
-        title: 'Group code copied',
+        icon: "none",
+        title: "Group code copied",
       });
 
       this.setData({
-        showingModal: 'joinSuccess',
+        showingModal: "joinSuccess",
       });
 
       if (!showingCircle.joined) {
@@ -202,8 +203,8 @@ Component({
       });
 
       wx.showToast({
-        icon: 'none',
-        title: 'Group code copied',
+        icon: "none",
+        title: "Group code copied",
       });
     },
 
@@ -216,7 +217,7 @@ Component({
       const showingCircle = e.currentTarget.dataset.circle;
       this.setData({
         showingCircle,
-        showingModal: 'circle',
+        showingModal: "circle",
       });
     },
 
@@ -236,7 +237,7 @@ Component({
 
     onDismissSearchPage() {
       this.setData({
-        searchCircleInput: '',
+        searchCircleInput: "",
         showSearchPage: false,
       });
 
@@ -256,13 +257,13 @@ Component({
       for (const circle of circles) {
         let combinedQueryText = circle.name;
         if (circle.citys) {
-          combinedQueryText += ';' + circle.citys.join(';');
+          combinedQueryText += ";" + circle.citys.join(";");
         }
         if (circle.tags) {
-          combinedQueryText += ';' + circle.tags.join(';');
+          combinedQueryText += ";" + circle.tags.join(";");
         }
         if (circle.teamOnly) {
-          combinedQueryText += ';' + circle.teamOnlyStr;
+          combinedQueryText += ";" + circle.teamOnlyStr;
         }
 
         circle.hide =
@@ -276,7 +277,7 @@ Component({
 
     onDismissModal() {
       this.setData({
-        showingModal: '',
+        showingModal: "",
       });
     },
 
@@ -285,18 +286,18 @@ Component({
         data: ADD_CIRCLE_LINK,
       });
       this.setData({
-        showingModal: '',
+        showingModal: "",
       });
     },
 
     onAddCircleClicked() {
       this.setData({
-        showingModal: 'addCircle',
+        showingModal: "addCircle",
       });
     },
 
     onCircleSearchPageEnter() {
-      console.log('onCircleSearchPageEnter');
+      console.log("onCircleSearchPageEnter");
       this.setData(
         {
           showCircleSearchContent: true,

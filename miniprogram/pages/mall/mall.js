@@ -1,18 +1,18 @@
-import { formatTimeAgo } from '../../common/util';
-import { getAppConfig } from '../../repository/baseRepo';
+import { formatTimeAgo } from "../../common/util";
+import { getAppConfig } from "../../repository/baseRepo";
 import {
   deleteUserProduct,
   fetchAllFleaMarketProducts,
   fetchAllProducts,
   updateWantedBy,
   updateUserProduct,
-} from '../../repository/productRepo';
-import { fetchUserInfo } from '../../repository/userRepo';
+} from "../../repository/productRepo";
+import { fetchUserInfo } from "../../repository/userRepo";
 import {
   navigateToAuth,
   navigateToPublishItem,
   navigateToPurchase,
-} from '../router';
+} from "../router";
 
 const app = getApp();
 const COLLAPSED_SCROLL_TOP = 200;
@@ -32,7 +32,7 @@ Component({
     toolbarHeight: app.globalData.toolbarHeight,
     statusBarHeight: app.globalData.statusBarHeight,
     appBarHeight: MAX_APP_BAR_HEIGHT,
-    selectedCategory: 'New', // Default selected category
+    selectedCategory: "New", // Default selected category
     popularProductsEnabled: false,
     showSearchPage: false,
   },
@@ -46,6 +46,7 @@ Component({
 
   lifetimes: {
     attached() {
+      wx.reportEvent("mallpageload", {});
       this.fetchAllFleaMarketProducts();
       this.fetchUserInfo();
       this.fetchAllProducts();
@@ -134,7 +135,7 @@ Component({
       let filteredProducts = [...secondhandProducts];
 
       switch (selectedCategory) {
-        case 'New':
+        case "New":
           filteredProducts.sort((a, b) => b.updatedAt - a.updatedAt);
           break;
         default:
@@ -155,7 +156,7 @@ Component({
       this.setData(
         {
           selectedCategory,
-          searchInput: '',
+          searchInput: "",
           isSearchActive: false,
         },
         () => {
@@ -167,8 +168,8 @@ Component({
     handlePublishItem() {
       if (!this.data.userInfo.company) {
         wx.showToast({
-          title: '请完成认证后再发布物品',
-          icon: 'none',
+          title: "请完成认证后再发布物品",
+          icon: "none",
         });
         return;
       }
@@ -182,7 +183,7 @@ Component({
     onEditProduct(e) {
       const product = e.currentTarget.dataset.product;
       this.setData({
-        showingModal: 'edit-product',
+        showingModal: "edit-product",
         selectedProduct: product,
       });
     },
@@ -202,11 +203,11 @@ Component({
       try {
         const result = await new Promise((resolve, reject) => {
           wx.showModal({
-            title: '确认删除',
-            content: '确定要删除这个商品吗？此操作不可恢复',
-            confirmText: '确定删除',
-            confirmColor: '#E64340',
-            cancelText: '取消',
+            title: "确认删除",
+            content: "确定要删除这个商品吗？此操作不可恢复",
+            confirmText: "确定删除",
+            confirmColor: "#E64340",
+            cancelText: "取消",
             success: (res) => resolve(res),
             fail: (error) => reject(error),
           });
@@ -214,27 +215,27 @@ Component({
 
         if (result.confirm) {
           wx.showLoading({
-            title: '正在删除...',
+            title: "正在删除...",
             mask: true,
           });
 
           try {
             await deleteUserProduct(selectedProduct._id);
             wx.showToast({
-              title: '删除成功',
-              icon: 'success',
+              title: "删除成功",
+              icon: "success",
             });
             this.fetchAllFleaMarketProducts();
           } catch (error) {
             wx.showToast({
-              title: '删除失败',
-              icon: 'error',
+              title: "删除失败",
+              icon: "error",
             });
-            console.error('删除商品失败:', error);
+            console.error("删除商品失败:", error);
           }
         }
       } catch (error) {
-        console.error('操作失败:', error);
+        console.error("操作失败:", error);
       } finally {
         wx.hideLoading();
         this.setData({
@@ -249,11 +250,11 @@ Component({
       try {
         const result = await new Promise((resolve, reject) => {
           wx.showModal({
-            title: '确认下架',
-            content: '确定要下架这个商品吗？下架后可以随时重新上架',
-            confirmText: '确定下架',
-            confirmColor: '#576B95',
-            cancelText: '取消',
+            title: "确认下架",
+            content: "确定要下架这个商品吗？下架后可以随时重新上架",
+            confirmText: "确定下架",
+            confirmColor: "#576B95",
+            cancelText: "取消",
             success: (res) => resolve(res),
             fail: (error) => reject(error),
           });
@@ -261,30 +262,30 @@ Component({
 
         if (result.confirm) {
           wx.showLoading({
-            title: '正在下架...',
+            title: "正在下架...",
             mask: true,
           });
 
           try {
             await updateUserProduct(selectedProduct._id, {
-              status: 'inactive',
+              status: "inactive",
             });
 
             wx.showToast({
-              title: '下架成功',
-              icon: 'success',
+              title: "下架成功",
+              icon: "success",
             });
             this.fetchAllFleaMarketProducts();
           } catch (error) {
             wx.showToast({
-              title: '下架失败',
-              icon: 'error',
+              title: "下架失败",
+              icon: "error",
             });
-            console.error('下架商品失败:', error);
+            console.error("下架商品失败:", error);
           }
         }
       } catch (error) {
-        console.error('操作失败:', error);
+        console.error("操作失败:", error);
       } finally {
         wx.hideLoading();
         this.setData({
@@ -302,17 +303,17 @@ Component({
     handlePopularProductClick(e) {
       const product = e.currentTarget.dataset.product;
       this.setData({
-        showingModal: 'popular-product',
+        showingModal: "popular-product",
         selectedProduct: product,
       });
     },
 
     async handleViewFleaMarketProduct(e) {
       const product = e.currentTarget.dataset.product;
-      const isWantAction = e.currentTarget.dataset.action === 'want';
+      const isWantAction = e.currentTarget.dataset.action === "want";
 
       this.setData({
-        showingModal: 'flea-market-product',
+        showingModal: "flea-market-product",
         selectedProduct: product,
       });
 
@@ -333,7 +334,7 @@ Component({
             });
           }
         } catch (error) {
-          console.error('Failed to update product view:', error);
+          console.error("Failed to update product view:", error);
         }
       }
     },
@@ -343,16 +344,16 @@ Component({
 
       try {
         const modalText = `确定要标记为${
-          product.type === 'sell' ? '已售' : '已购'
+          product.type === "sell" ? "已售" : "已购"
         }吗？此操作不可恢复`;
 
         const result = await new Promise((resolve, reject) => {
           wx.showModal({
-            title: '确认标记',
+            title: "确认标记",
             content: modalText,
-            confirmText: '确认标记',
-            confirmColor: '#E64340',
-            cancelText: '取消',
+            confirmText: "确认标记",
+            confirmColor: "#E64340",
+            cancelText: "取消",
             success: (res) => resolve(res),
             fail: (error) => reject(error),
           });
@@ -360,7 +361,7 @@ Component({
 
         if (result.confirm) {
           wx.showLoading({
-            title: '标记中...',
+            title: "标记中...",
             mask: true,
           });
 
@@ -370,21 +371,21 @@ Component({
             });
 
             wx.showToast({
-              title: '标记成功',
-              icon: 'success',
+              title: "标记成功",
+              icon: "success",
             });
 
             this.fetchAllFleaMarketProducts();
           } catch (error) {
             wx.showToast({
-              title: '标记失败',
-              icon: 'error',
+              title: "标记失败",
+              icon: "error",
             });
-            console.error('标记商品失败:', error);
+            console.error("标记商品失败:", error);
           }
         }
       } catch (error) {
-        console.error('操作失败:', error);
+        console.error("操作失败:", error);
       } finally {
         wx.hideLoading();
         this.setData({
@@ -395,7 +396,7 @@ Component({
 
     handleViewAllPopularProducts() {
       this.setData({
-        showingModal: 'all-popular-products',
+        showingModal: "all-popular-products",
       });
     },
 
@@ -405,8 +406,8 @@ Component({
         data: contact,
         success: () => {
           wx.showToast({
-            title: '已复制联系方式',
-            icon: 'success',
+            title: "已复制联系方式",
+            icon: "success",
             duration: 2000,
           });
         },
@@ -432,16 +433,16 @@ Component({
     },
 
     onSearchChanged(e) {
-      const keyword = e.detail.value?.toLowerCase() || '';
+      const keyword = e.detail.value?.toLowerCase() || "";
       this.setData({
-        searchInput: e.detail.value || '',
+        searchInput: e.detail.value || "",
         selectedCategory: null, // Reset category selection during search
       });
 
       if (!keyword) {
         this.setData(
           {
-            selectedCategory: 'New',
+            selectedCategory: "New",
           },
           () => {
             this.filterProductsByCategory();
@@ -472,7 +473,7 @@ Component({
         this.setData(
           {
             isSearchActive: false,
-            selectedCategory: 'New',
+            selectedCategory: "New",
           },
           () => {
             this.filterProductsByCategory();

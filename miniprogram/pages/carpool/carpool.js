@@ -1,19 +1,17 @@
 // pages/carpool/carpool.js
-const { navigateToPostCarpool, navigateToAuth } = require('../router');
-const { fetchAllCarpools } = require('../../repository/carpoolRepo');
-const { fetchUserInfoOrSignup } = require('../../repository/userRepo');
+const { navigateToPostCarpool, navigateToAuth } = require("../router");
+const { fetchAllCarpools } = require("../../repository/carpoolRepo");
+const { fetchUserInfoOrSignup } = require("../../repository/userRepo");
 const app = getApp();
 
 Component({
   options: {
-    addGlobalClass: true
+    addGlobalClass: true,
   },
   /**
    * 组件的属性列表
    */
-  properties: {
-
-  },
+  properties: {},
 
   /**
    * 组件的初始数据
@@ -28,13 +26,14 @@ Component({
       if (this.data.carpools) {
         this.fetchCarpools();
       }
-    }
+    },
   },
 
   lifetimes: {
     attached() {
+      wx.reportEvent("carpoolpageload", {});
       this.fetchCarpools();
-    }
+    },
   },
 
   /**
@@ -49,46 +48,52 @@ Component({
       }
 
       wx.showLoading();
-      fetchUserInfoOrSignup().then(user => {
-        wx.hideLoading();
-        if (user.company) {
-          navigateToPostCarpool();
-        } else {
-          navigateToAuth();
-        }
-      }).catch(err => {
-        wx.hideLoading();
-        wx.showToast({
-          icon: 'none',
-          title: "Can't post in anonymously",
+      fetchUserInfoOrSignup()
+        .then((user) => {
+          wx.hideLoading();
+          if (user.company) {
+            navigateToPostCarpool();
+          } else {
+            navigateToAuth();
+          }
         })
-      });
-     
+        .catch((err) => {
+          wx.hideLoading();
+          wx.showToast({
+            icon: "none",
+            title: "Can't post in anonymously",
+          });
+        });
     },
 
     fetchCarpools() {
-      fetchAllCarpools().then(carpools => {
-        this.setData({
-          carpools
-        }, this.checkContentEmpty)
-      })
+      fetchAllCarpools().then((carpools) => {
+        this.setData(
+          {
+            carpools,
+          },
+          this.checkContentEmpty
+        );
+      });
     },
 
     checkContentEmpty() {
-      wx.createSelectorQuery().in(this).select('#carpoolContainer').boundingClientRect(rect => {
-        if (!rect) {
-          return;
-        }
-        const isEmpty = rect.height <= 0;
-        const {
-          showEmptyMessage
-        } = this.data;
-        if (isEmpty != showEmptyMessage) {
-          this.setData({
-            showEmptyMessage: isEmpty
-          });
-        }
-      }).exec()
+      wx.createSelectorQuery()
+        .in(this)
+        .select("#carpoolContainer")
+        .boundingClientRect((rect) => {
+          if (!rect) {
+            return;
+          }
+          const isEmpty = rect.height <= 0;
+          const { showEmptyMessage } = this.data;
+          if (isEmpty != showEmptyMessage) {
+            this.setData({
+              showEmptyMessage: isEmpty,
+            });
+          }
+        })
+        .exec();
     },
-  }
-})
+  },
+});
