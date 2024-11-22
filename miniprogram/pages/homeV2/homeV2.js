@@ -1,9 +1,5 @@
-const {
-  getDateInEnglish
-} = require("../../common/util");
-const {
-  fetchUserInfo
-} = require("../../repository/userRepo");
+const { getDateInEnglish } = require("../../common/util");
+const { fetchUserInfo } = require("../../repository/userRepo");
 
 const app = getApp();
 const COLLAPSED_SCROLL_TOP = 60;
@@ -25,6 +21,7 @@ Component({
 
   lifetimes: {
     attached() {
+      wx.reportEvent("homev2pageload", {});
       const nowDateInEnglish = getDateInEnglish(Date.now());
       const nowHours = new Date().getHours();
       let welcomeMessage = "";
@@ -54,7 +51,7 @@ Component({
       const appBarHeight =
         MAX_APP_BAR_HEIGHT -
         (MAX_APP_BAR_HEIGHT - minAppBarHeight) *
-        (scrollTop / COLLAPSED_SCROLL_TOP);
+          (scrollTop / COLLAPSED_SCROLL_TOP);
       const collapsed = appBarHeight == minAppBarHeight;
       if (this.data.collapsed === true && collapsed === true) {
         return;
