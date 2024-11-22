@@ -6,7 +6,7 @@ Component({
     isLoading: {
       type: Boolean,
       value: true,
-      observer(newVal) {
+      observer(oldVal, newVal) {
         if (newVal) {
           this.resetAnimation();
         }
@@ -26,11 +26,11 @@ Component({
     },
     progressDuration: {
       type: Number,
-      value: 3,
+      value: 0.3,
     },
     colorChangeDuration: {
       type: Number,
-      value: 6,
+      value: 0.6,
     },
   },
   data: {

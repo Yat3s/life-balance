@@ -10,7 +10,8 @@ import {
 
 const EMPTY_COLOR = "#3679EE";
 const BUSY_COLOR = "#FF593B";
-const SPIN_DURATION = 0.3
+const SPIN_DURATION = 0.3;
+const COLOR_CHANGE_DURATION = 0.6;
 
 Component({
   options: {
@@ -101,7 +102,7 @@ Component({
             initialColor: EMPTY_COLOR,
             finalColor: usedPercent >= 90 ? BUSY_COLOR : EMPTY_COLOR,
             progressDuration: SPIN_DURATION,
-            colorChangeDuration: 1.9,
+            colorChangeDuration: COLOR_CHANGE_DURATION,
           };
         });
 
