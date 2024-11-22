@@ -59,7 +59,7 @@
 }
 
 .category-item.active::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -98,7 +98,7 @@
     rgba(255, 255, 255, 0) 100%
   );
   animation: shimmer 2s infinite;
-  content: '';
+  content: "";
 }
 
 @keyframes shimmer {
@@ -108,7 +108,7 @@
 }
 
 .search-container {
-  background: #eeeeee;
+  background: #faf7f7;
   border-radius: 60rpx;
   padding: 16rpx 24rpx;
   height: 70rpx;
