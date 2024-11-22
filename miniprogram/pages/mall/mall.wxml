@@ -135,15 +135,16 @@
               <view class="flex items-baseline font-semibold text-black gap-1">
                 <view class="truncate-price text-price">{{item.price}}</view>
               </view>
-              <view class="text-xxs text-interest">
+              <view wx:if="{{item.wantedBy.length > 0}}" class="text-xxs text-interest">
                 {{item.wantedBy.length || 0}} 人{{item.type === 'sell' ? '想要' : '要卖'}}
               </view>
             </view>
             <view wx:if="{{(userInfo._openid !== item.userId) && (!item.terminated)}}" class="flex shrink-0 items-center gap-1dot5 py-1dot5 px-2dot5 text-white rounded-full text-center bg-blue-500" catch:tap="handleViewFleaMarketProduct" data-product="{{item}}" data-action="want">
               <image class="w-3 h-3 -mb-0dot5" src="/images/ic_comment.svg" />
-              <view class="text-xxs font-medium">我{{item.type === 'sell' ? '想要' : '要卖'}}</view>
+              <view class="text-xxs font-medium">我{{item.type === 'sell' ? '想要' : '想卖'}}</view>
             </view>
-            <view wx:if="{{(userInfo._openid === item.userId) && (!item.terminated)}}" class="shrink-0 py-1dot5 text-white rounded-full text-center bg-blue-500 px-2dot5" catch:tap="handleMarkProduct" data-product="{{item}}">
+            <view wx:if="{{(userInfo._openid === item.userId) && (!item.terminated)}}" class="flex items-center gap-1 shrink-0 py-1dot5 text-white rounded-full text-center bg-green-600 px-2dot5" catch:tap="handleMarkProduct" data-product="{{item}}">
+              <image class="w-3 h-3 -mb-0dot5" src="/images/ic_check.svg" />
               <view class="text-xxs font-medium">标记已{{item.type === 'sell' ? '售' : '购'}}</view>
             </view>
           </view>
