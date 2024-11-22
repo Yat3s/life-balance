@@ -1,44 +1,44 @@
 const app = getApp();
-import { getAppConfig } from '../../repository/baseRepo';
-import { fetchUserInfo } from '../../repository/userRepo';
-import { navigateToOnboarding } from '../router';
+import { getAppConfig } from "../../repository/baseRepo";
+import { fetchUserInfo } from "../../repository/userRepo";
+import { navigateToOnboarding } from "../router";
 
-const homeV2Enabled = true;
+const homeV2Enabled = false;
 
 Page({
   data: {
     showingModal: null,
-    currentTab: 'board',
+    currentTab: "board",
     navigationBarHeight: app.globalData.navigationBarHeight, // Safe area
     selectedGenderIndex: 0,
     homeV2Enabled,
     pages: [
       {
-        id: 'board',
-        title: 'Home',
-        icon: '../../images/ic_board.png',
-        iconActive: '../../images/ic_board_active.png',
+        id: "board",
+        title: "Home",
+        icon: "../../images/ic_board.png",
+        iconActive: "../../images/ic_board_active.png",
         isBeta: homeV2Enabled,
       },
       {
-        id: 'mall',
-        title: 'Mall',
-        icon: '../../images/ic_mall.png',
-        iconActive: '../../images/ic_mall_active.png',
+        id: "mall",
+        title: "Mall",
+        icon: "../../images/ic_mall.png",
+        iconActive: "../../images/ic_mall_active.png",
         isBeta: true,
       },
       {
-        id: 'connection',
-        title: 'Connection',
-        icon: '../../images/ic_connect.png',
-        iconActive: '../../images/ic_connect_active.png',
+        id: "connection",
+        title: "Connection",
+        icon: "../../images/ic_connect.png",
+        iconActive: "../../images/ic_connect_active.png",
         isBeta: false,
       },
       {
-        id: 'user',
-        title: 'User',
-        icon: '../../images/ic_user.png',
-        iconActive: '../../images/ic_user_active.png',
+        id: "user",
+        title: "User",
+        icon: "../../images/ic_user.png",
+        iconActive: "../../images/ic_user_active.png",
         isBeta: false,
       },
     ],
@@ -73,20 +73,20 @@ Page({
 
       // Remove mall tab if explicitly disabled
       if (featureFlags.mallEnabled === false) {
-        pages = pages.filter((page) => page.id !== 'mall');
+        pages = pages.filter((page) => page.id !== "mall");
       }
 
       // Handle carpool tab
       const carpoolTabItem = {
-        id: 'carpool',
-        title: 'Carpool',
-        icon: '../../images/ic_carpool.png',
-        iconActive: '../../images/ic_carpool_active.png',
+        id: "carpool",
+        title: "Carpool",
+        icon: "../../images/ic_carpool.png",
+        iconActive: "../../images/ic_carpool_active.png",
       };
 
       if (featureFlags.carpoolEnabled) {
         const connectionIndex = pages.findIndex(
-          (page) => page.id === 'connection'
+          (page) => page.id === "connection"
         );
         pages.splice(connectionIndex, 0, carpoolTabItem);
       }
@@ -110,9 +110,9 @@ Page({
     const { currentTab } = this.data;
     if (
       !app.globalData.userInfo &&
-      (currentTab === 'user' ||
-        currentTab === 'mall' ||
-        currentTab === 'connection')
+      (currentTab === "user" ||
+        currentTab === "mall" ||
+        currentTab === "connection")
     ) {
       fetchUserInfo()
         .then((userInfo) => {
@@ -124,7 +124,7 @@ Page({
             }
           } else {
             this.setData({
-              currentTab: 'board',
+              currentTab: "board",
             });
             navigateToOnboarding();
           }
@@ -138,9 +138,9 @@ Page({
     if (userInfo.updatedAt) return false;
 
     const isDefaultAvatar = userInfo.avatarUrl?.startsWith(
-      'https://thirdwx.qlogo.cn/mmopen/vi_32/'
+      "https://thirdwx.qlogo.cn/mmopen/vi_32/"
     );
-    const isDefaultNickName = userInfo.nickName === '微信用户';
+    const isDefaultNickName = userInfo.nickName === "微信用户";
 
     return isDefaultNickName || isDefaultAvatar;
   },
@@ -148,7 +148,7 @@ Page({
   onShow() {
     if (app.globalData.pendingMessage) {
       wx.showToast({
-        icon: 'none',
+        icon: "none",
         duration: 3000,
         title: app.globalData.pendingMessage,
       });
@@ -158,7 +158,7 @@ Page({
 
   onOpenUpdateUserInfoModal() {
     this.setData({
-      showingModal: 'update-userinfo',
+      showingModal: "update-userinfo",
     });
   },
 
