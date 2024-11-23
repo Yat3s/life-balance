@@ -214,6 +214,9 @@ Component({
     },
 
     onCircleItemClicked(e) {
+      wx.reportEvent("circleitemtap", {
+        circle_name: e.currentTarget.dataset.circle.name,
+      });
       const showingCircle = e.currentTarget.dataset.circle;
       this.setData({
         showingCircle,
