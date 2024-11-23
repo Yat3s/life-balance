@@ -80,10 +80,12 @@ Component({
     },
 
     onContributionClick() {
+      wx.reportEvent("contributiontap", {});
       navigationToContribution();
     },
 
     onStarClick() {
+      wx.reportEvent("githubtap", {});
       this.setData(
         {
           showingModal: "github",
@@ -122,6 +124,7 @@ Component({
     },
 
     onSponsorClick() {
+      wx.reportEvent("sponsortap", {});
       this.setData({
         showingModal: "sponsor",
       });
