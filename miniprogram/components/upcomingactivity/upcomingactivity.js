@@ -1,3 +1,7 @@
+import {
+  navigateToActivityDetail,
+  navigateToActivityPage,
+} from "../../pages/router";
 import { fetchUpcomingActivity } from "../../repository/dashboardRepo";
 
 Component({
@@ -25,6 +29,7 @@ Component({
         showDescription: false,
         showAvatars: false,
         showMemberCount: false,
+        onEventCardClick: null,
       };
       fetchUpcomingActivity().then((activities) => {
         if (activities.length > 0) {
@@ -36,6 +41,9 @@ Component({
           cardConfig.showDescription = true;
           cardConfig.showAvatars = true;
           cardConfig.showMemberCount = false;
+          cardConfig.onEventCardClick = () => {
+            navigateToActivityDetail(activities[0]._id);
+          };
           this.setData({
             upcomingActivity: activities[0],
             cardConfig,

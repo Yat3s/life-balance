@@ -25,6 +25,7 @@ Component({
         showDescription: false,
         showAvatars: false,
         showMemberCount: false,
+        onEventCardClick: null,
       };
       fetchLatestWechatGroups().then((circles) => {
         if (circles.length > 0) {

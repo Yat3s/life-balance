@@ -20,6 +20,7 @@ Component({
         showDescription: true,
         showAvatars: true,
         showMemberCount: false,
+        onEventCardClick: () => {},
       },
     },
   },
@@ -29,6 +30,16 @@ Component({
       const onClick = this.data.onClick;
       if (typeof onClick === "function") {
         onClick();
+      } else {
+        wx.redirectTo({
+          url: "/pages/index/index?page=connection",
+        });
+      }
+    },
+    onEventClick() {
+      const onEventCardClick = this.data.cardConfig.onEventCardClick;
+      if (typeof onEventCardClick === "function") {
+        onEventCardClick();
       } else {
         wx.redirectTo({
           url: "/pages/index/index?page=connection",
