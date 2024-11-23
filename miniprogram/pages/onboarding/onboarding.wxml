@@ -28,7 +28,8 @@
         </view>
       </view>
       <view class="mb-5 flex">
-        <view class="w-2dot5 h-2dot5 rounded-full check-border inline-block shrink-0 mt-1 {{isAgreed ? 'bg-blue' : 'bg-transparent'}}" bind:tap="onAgreementChange" />
+        <image wx:if="{{isAgreed}}" class="w-3 h-3 mt-1" src="/images/ic_onboarding_checked.svg" bind:tap="onAgreementChange" />
+        <image wx:if="{{!isAgreed}}" class="w-3 h-3 mt-1" src="/images/ic_onboarding_check.svg" bind:tap="onAgreementChange" />
         <view class="text-desc text-xxs ml-1dot5">
           同意依照
           <text class="text-blue" bind:tap="openPrivacyContract">《Life Balance》</text>
