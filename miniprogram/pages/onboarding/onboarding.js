@@ -28,6 +28,17 @@ Page({
     });
   },
 
+  openPrivacyContract() {
+    wx.openPrivacyContract({
+      fail: () => {
+        wx.showToast({
+          title: '遇到错误',
+          icon: 'error',
+        });
+      },
+    });
+  },
+
   onFormSubmit(e) {
     const { nickName } = e.detail.value;
     const { avatarTmpUrl, isAgreed } = this.data;

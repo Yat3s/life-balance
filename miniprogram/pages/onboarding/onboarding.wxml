@@ -31,7 +31,7 @@
         <view class="w-2dot5 h-2dot5 rounded-full check-border inline-block shrink-0 mt-1 {{isAgreed ? 'bg-blue' : 'bg-transparent'}}" bind:tap="onAgreementChange" />
         <view class="text-desc text-xxs ml-1dot5">
           同意依照
-          <text class="text-blue">《Life Balance》</text>
+          <text class="text-blue" bind:tap="openPrivacyContract">《Life Balance》</text>
           对我的个人信息进行收集和使用，我已阅读并确认已被充分理解
         </view>
       </view>
