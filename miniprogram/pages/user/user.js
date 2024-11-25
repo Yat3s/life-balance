@@ -11,6 +11,7 @@ import {
   navigationToContribution,
   navigateToAdmin,
   navigateToAuth,
+  navigateToPendingAuthListPage,
 } from "../router";
 
 Component({
@@ -61,6 +62,10 @@ Component({
         },
         fail: console.error,
       });
+    },
+
+    onPendingAuthListClick() {
+      navigateToPendingAuthListPage();
     },
 
     onActivityClick() {
@@ -152,6 +157,7 @@ Component({
     fetchUserInfo() {
       _fetchUserInfo().then((userInfo) => {
         userInfo.id = userInfo._openid.substring(0, 16);
+        userInfo.isAdmin = userInfo.role === 1024;
         this.setData({
           userInfo,
         });

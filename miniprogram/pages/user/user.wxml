@@ -57,6 +57,11 @@
   <view class="menu-item-text margin-left">Star on Github</view>
 </view>
 <view class="divider"></view>
+  <view bind:tap="onPendingAuthListClick" wx:if="{{userInfo.isAdmin}}" class="flex items-center justify-center bg-buttonBlue p-4 gap-6">
+    <view class="font-semibold text-foreground">
+      待企业认证用户列表
+    </view>
+  </view>
 <!-- Feedback -->
 <view class="cu-modal {{showingModal === 'feedback' ? 'show' : ''}}" catchtouchmove>
   <view class="cu-dialog modal-main">

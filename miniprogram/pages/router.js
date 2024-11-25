@@ -1,112 +1,116 @@
 const app = getApp();
-const userRepo = require('../repository/userRepo');
-export const AUTH_ORIGIN_DRAFT_ACTIVITY = 'origin_draft_activity';
-export const AUTH_ORIGIN_ACTIVITY_DETAIL = 'origin_activity_detail';
+const userRepo = require("../repository/userRepo");
+export const AUTH_ORIGIN_DRAFT_ACTIVITY = "origin_draft_activity";
+export const AUTH_ORIGIN_ACTIVITY_DETAIL = "origin_activity_detail";
 
 export const Pages = {
   Auth: {
     authRequired: false,
-    url: '/pages/auth/auth?origin=',
+    url: "/pages/auth/auth?origin=",
+  },
+  PendingAuthListPage: {
+    authRequired: true,
+    url: "/pages/auth/pendingauth/pendingauth",
   },
   UserInfo: {
     authRequired: true,
-    url: '/pages/user/userinfo/userinfo',
+    url: "/pages/user/userinfo/userinfo",
   },
   ActivityDetail: {
     authRequired: false,
-    url: '/pages/activity/activitydetail/activitydetail?id=',
+    url: "/pages/activity/activitydetail/activitydetail?id=",
   },
   ActivityListPage: {
     authRequired: false,
-    url: '/pages/activity/activitypage',
+    url: "/pages/activity/activitypage",
   },
   DraftNewActivity: {
     authRequired: true,
-    url: '/pages/activity/draftactivity/draftactivity?type=new',
+    url: "/pages/activity/draftactivity/draftactivity?type=new",
   },
   EditActivity: {
     authRequired: true,
-    url: '/pages/activity/draftactivity/draftactivity?type=edit&id=',
+    url: "/pages/activity/draftactivity/draftactivity?type=edit&id=",
   },
   RepostActivity: {
     authRequired: true,
-    url: '/pages/activity/draftactivity/draftactivity?type=repost&id=',
+    url: "/pages/activity/draftactivity/draftactivity?type=repost&id=",
   },
   PostCarpool: {
     authRequired: true,
-    url: '/pages/carpool/postcarpool/postcarpool',
+    url: "/pages/carpool/postcarpool/postcarpool",
   },
   WechatGroups: {
     authRequired: true,
-    url: '/pages/home/wechatgroup/wechatgroup',
+    url: "/pages/home/wechatgroup/wechatgroup",
   },
   FoodMenu: {
     authRequired: true,
-    url: '/pages/home/foodmenu/foodmenu',
+    url: "/pages/home/foodmenu/foodmenu",
   },
   Howto: {
     authRequired: true,
-    url: '/pages/home/howto/howto',
+    url: "/pages/home/howto/howto",
   },
   HowtoDetail: {
     authRequired: true,
-    url: '/pages/home/howto/howtodetail/howtodetail?id=',
+    url: "/pages/home/howto/howtodetail/howtodetail?id=",
   },
   WeworkParking: {
     authRequired: true,
-    url: '/pages/home/weworkparking/weworkparking',
+    url: "/pages/home/weworkparking/weworkparking",
   },
   Profile: {
     authRequired: true,
-    url: '/pages/user/profile/profile?&id=',
+    url: "/pages/user/profile/profile?&id=",
   },
   UserActivity: {
     authRequired: true,
-    url: '/pages/user/useractivity/useractivity',
+    url: "/pages/user/useractivity/useractivity",
   },
   BusInfo: {
     authRequired: true,
-    url: '/pages/bus/bus',
+    url: "/pages/bus/bus",
   },
   Meal: {
     authRequired: false,
-    url: '/pages/meal/meal',
+    url: "/pages/meal/meal",
   },
   CanteenTableSharing: {
     authRequired: true,
-    url: '/pages/meal/tablesharing/tablesharing',
+    url: "/pages/meal/tablesharing/tablesharing",
   },
   Glossary: {
     authRequired: true,
-    url: '/pages/tools/glossary/glossary',
+    url: "/pages/tools/glossary/glossary",
   },
   Contribution: {
     authRequired: false,
-    url: '/pages/user/contribution/contribution',
+    url: "/pages/user/contribution/contribution",
   },
   AppConfigWebView: {
     authRequired: false,
-    url: '/pages/appconfigwebview/appconfigwebview?config=',
+    url: "/pages/appconfigwebview/appconfigwebview?config=",
   },
   PublishItem: {
     authRequired: false,
-    url: '/pages/mall/publish-item/publish-item',
+    url: "/pages/mall/publish-item/publish-item",
   },
   Purchase: {
     authRequired: false,
-    url: '/pages/mall/purchase/purchase?id=',
+    url: "/pages/mall/purchase/purchase?id=",
   },
   UserProduct: {
     authRequired: false,
-    url: '/pages/user/user-product/user-product',
+    url: "/pages/user/user-product/user-product",
   },
   UserOrder: {
     authRequired: false,
-    url: '/pages/user/user-order/user-order?id=',
+    url: "/pages/user/user-order/user-order?id=",
   },
   Onboarding: {
     authRequired: false,
-    url: '/pages/onboarding/onboarding',
+    url: "/pages/onboarding/onboarding",
   },
 };
 
@@ -152,6 +156,10 @@ export function navigateToRepostActivity(activityId) {
 
 export function navigateToAuth(origin) {
   navigate(Pages.Auth, origin);
+}
+
+export function navigateToPendingAuthListPage() {
+  navigate(Pages.PendingAuthListPage);
 }
 
 export function navigateToPostCarpool() {
@@ -235,7 +243,7 @@ export function navigate(page, urlParam = null) {
         })
         .catch((err) => {
           wx.showToast({
-            icon: 'none',
+            icon: "none",
             title: "Don't allow anonymous operation",
           });
         });
