@@ -167,4 +167,12 @@ Page({
       showingModal: null,
     });
   },
+
+  // You must define the method below, otherwise you cannot share
+  // Share to WeChat
+  onShareAppMessage() {
+    return {
+      path: "/pages/index/index?page=" + this.data.currentTab,
+    };
+  },
 });
