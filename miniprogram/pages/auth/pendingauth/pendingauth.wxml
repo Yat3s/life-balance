@@ -1,0 +1,32 @@
+<toolbar isBack="true" bgColor="bg-white"></toolbar>
+<view class="p-4 flex flex-col">
+  <scroll-view class="flex-1 pb-20" scroll-y="true">
+    <view class="flex flex-row items-center mb-2">
+      <checkbox-group bindchange="onSelectAllChange">
+        <checkbox
+          id="selectAllCheckbox"
+          checked="{{selectAllChecked}}"
+      ></checkbox>
+      </checkbox-group>
+      <view class="ml-2">ALL</view>
+    </view>
+
+    <checkbox-group bindchange="onCheckboxChange" class="flex flex-col gap-4">
+      <view wx:for="{{pendingAuthUsers}}" wx:key="_id" class="flex gap-4 items-center">
+        <view data-user-id="{{item._id}}">
+          <checkbox value="{{item._id}}" checked="{{item.checked}}"></checkbox>
+        </view>
+        <view class="flex gap-2 items-center">
+          <image src="{{item.avatarUrl}}" class="w-6 h-6 rounded-full"></image>
+          <view>{{item.nickName}}</view>
+          <view>{{item.companyName}}</view>
+        </view>
+      </view>
+    </checkbox-group>
+  </scroll-view>
+</view>
+
+<view bind:tap="onApproveBtnClick" class="fixed bottom-0 py-4 h-20 w-full z-50 bg-page">
+  <view class="approve-btn mx-4">APPROVE</view>
+</view>
+

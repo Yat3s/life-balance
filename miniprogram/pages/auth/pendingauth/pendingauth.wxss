@@ -1,0 +1,11 @@
+.approve-btn {
+  background-color: #3785fc;
+  color: white;
+  text-align: center;
+  padding: 20rpx 20rpx;
+  border-radius: 20rpx;
+}
+
+.bg-page {
+  background-color: #f8f8f8;
+}

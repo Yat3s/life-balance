@@ -8,6 +8,7 @@
     "pages/activity/draftactivity/draftactivity",
     "pages/user/userinfo/userinfo",
     "pages/auth/auth",
+    "pages/auth/pendingauth/pendingauth",
     "pages/carpool/postcarpool/postcarpool",
     "pages/webview/webview",
     "pages/home/foodmenu/foodmenu",

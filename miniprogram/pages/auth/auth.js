@@ -2,7 +2,8 @@ import {
   fetchUserInfoOrSignup,
   fetchCompanies,
   updateUserInfo,
-} from '../../repository/userRepo';
+  createEnterpriseAuth,
+} from "../../repository/userRepo";
 const app = getApp();
 
 Page({
@@ -17,14 +18,17 @@ Page({
     });
 
     wx.showToast({
-      icon: 'none',
-      title: 'Copied to clipboard',
+      icon: "none",
+      title: "Copied to clipboard",
     });
   },
 
   onCompanySelected(e) {
-    const { userInfo } = this.data;
+    const { userInfo, companies } = this.data;
     const selectedCompanyId = e.detail.value;
+    const selectDataCompanyId = companies.filter(
+      (company) => company.id === selectedCompanyId
+    )[0]._id;
     this.setData({
       step: 2,
     });
@@ -33,6 +37,7 @@ Page({
     const verifyLink = `https://teams.microsoft.com/l/chat/0/0?users=zhiye@microsoft.com&message=${verifyInfo}`;
 
     this.setData({
+      selectDataCompanyId,
       verifyInfo,
       verifyLink,
     });
@@ -60,8 +65,8 @@ Page({
 
         wx.showToast({
           duration: 1000,
-          icon: 'error',
-          title: '授权失败' + err,
+          icon: "error",
+          title: "授权失败" + err,
         });
       });
   },
@@ -82,26 +87,45 @@ Page({
   },
 
   onSubmit() {
-    const { contact, userInfo } = this.data;
+    const { contact, userInfo, selectDataCompanyId } = this.data;
     if (!contact || contact.length == 0) {
       wx.showToast({
-        icon: 'none',
-        title: 'Please setting contact information',
+        icon: "none",
+        title: "Please setting contact information",
       });
 
       return;
     }
 
-    const updateData = {
-      contact,
+    const enterpriseAuthInfo = {
+      userId: userInfo._id,
+      company: selectDataCompanyId,
+      updatedUserInfo: {
+        contact,
+      },
     };
-    updateUserInfo(userInfo._id, updateData).then((res) => {
-      app.globalData.pendingMessage =
-        'Submit success, please waiting for approval!';
-      wx.navigateBack({
-        delta: 1,
+
+    createEnterpriseAuth(enterpriseAuthInfo)
+      .then((res) => {
+        if (res.success) {
+          app.globalData.pendingMessage =
+            "Submit success, please waiting for approval!";
+          wx.navigateBack({
+            delta: 1,
+          });
+        } else {
+          wx.showToast({
+            icon: "none",
+            title: "Submit failed" + res.error,
+          });
+        }
+      })
+      .catch((err) => {
+        wx.showToast({
+          icon: "none",
+          title: "Submit failed" + err,
+        });
       });
-    });
   },
 
   onLoad(options) {

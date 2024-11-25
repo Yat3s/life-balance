@@ -196,6 +196,22 @@ export function fetchUserProfile(id) {
   return cloudFunctionCall(USER_FUNCTION_NAME, "fetchUserProfile", data);
 }
 
+export function fetchPendingAuthUsers() {
+  return cloudFunctionCall(USER_FUNCTION_NAME, "fetchPendingAuthUsers", {});
+}
+
+export function createEnterpriseAuth(enterpriseAuthInfo) {
+  return cloudFunctionCall(USER_FUNCTION_NAME, "createEnterpriseAuth", {
+    enterpriseAuthInfo,
+  });
+}
+
+export function updateEnterpriseAuth(authRequestIds) {
+  return cloudFunctionCall(USER_FUNCTION_NAME, "updateEnterpriseAuth", {
+    authRequestIds,
+  });
+}
+
 export function fetchCompanies() {
   return baseCollectionRequestWrapper(
     db.collection(COLLECTION_COMPANIES).get(),
