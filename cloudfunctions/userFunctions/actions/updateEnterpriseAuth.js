@@ -10,7 +10,7 @@ const COLLECTION_NAME_USERS = "users";
 const COLLECTION_NAME_AUTH_REQUESTS = "auth-requests";
 
 exports.main = async (props, context) => {
-  const { authRequestIds } = props; // 传入需要更新的 auth-requests 的 id 数组
+  const { authRequestIds } = props; // Input: array of auth-requests IDs to be updated
 
   if (!Array.isArray(authRequestIds) || authRequestIds.length === 0) {
     return {
@@ -22,7 +22,7 @@ exports.main = async (props, context) => {
   const transaction = await db.startTransaction();
 
   try {
-    // 批量获取待认证请求信息
+    // Batch retrieve information of pending auth requests
     const authRequestsRes = await transaction
       .collection(COLLECTION_NAME_AUTH_REQUESTS)
       .where({
@@ -39,7 +39,7 @@ exports.main = async (props, context) => {
       );
     }
 
-    // 批量更新 auth-requests 集合中的 approved 状态
+    // Batch update the approved status in the auth-requests collection
     await transaction
       .collection(COLLECTION_NAME_AUTH_REQUESTS)
       .where({
@@ -52,7 +52,7 @@ exports.main = async (props, context) => {
         },
       });
 
-    // 批量更新 users 集合中对应用户的 company 字段
+    // Batch update the company field of the corresponding users in the users collection
     const userUpdates = authRequests.map((authRequest) => ({
       _id: authRequest._id,
       data: {
@@ -70,14 +70,14 @@ exports.main = async (props, context) => {
         });
     }
 
-    // 提交事务
+    // Commit the transaction
     await transaction.commit();
 
     return {
       success: true,
     };
   } catch (error) {
-    // 事务回滚
+    // Rollback the transaction
     await transaction.rollback();
     return {
       success: false,

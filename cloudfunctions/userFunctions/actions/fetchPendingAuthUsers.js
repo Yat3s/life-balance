@@ -12,7 +12,7 @@ exports.main = async (props, context) => {
   const openid = cloud.getWXContext().OPENID;
 
   try {
-    // 获取当前登录用户的信息
+    // Get the current logged-in user's information
     const currentUser = await db
       .collection(COLLECTION_NAME_USERS)
       .where({
@@ -23,21 +23,21 @@ exports.main = async (props, context) => {
     if (currentUser.data.length === 0) {
       return {
         success: false,
-        error: "当前用户不存在",
+        error: "Current user does not exist",
       };
     }
 
     const user = currentUser.data[0];
 
-    // 检查当前用户的角色是否为 1024
+    // Check if the current user's role is 1024
     if (user.role !== 1024) {
       return {
         success: false,
-        error: "权限不足",
+        error: "Insufficient permissions",
       };
     }
 
-    // 查询待认证的用户列表，条件为 approved 为 false
+    // Query the list of users pending authentication, where approved is false
     const authRequests = await db
       .collection(COLLECTION_NAME_AUTH_REQUESTS)
       .where({
