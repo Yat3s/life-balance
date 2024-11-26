@@ -4,9 +4,7 @@ const rp = require('request-promise');
 const API_KEY = 'WEQGVELPMJ086QXP';
 const BASE_URL = 'https://www.alphavantage.co/query';
 
-cloud.init({
-  env: cloud.DYNAMIC_CURRENT_ENV,
-});
+cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 
 async function getStockQuote(symbol) {
   try {
