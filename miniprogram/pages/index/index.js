@@ -188,12 +188,17 @@ Page({
     ) {
       const mall = this.selectComponent('#mall');
       const product = mall.data.selectedProduct;
+      const titlePrefix = product.type === 'sell' ? '来捡漏啦，' : '诚求，';
+      const priceText = product.price ? `【${product.price}】` : '';
+      const shareTitle = `${titlePrefix}${priceText}${product.title}`;
+
       return {
-        title: product.title,
+        title: shareTitle,
         imageUrl: product.pictures?.[0],
         path: `/pages/index/index?page=mall&productId=${product._id}`,
       };
     }
+
     return {
       path: '/pages/index/index?page=' + this.data.currentTab,
     };
