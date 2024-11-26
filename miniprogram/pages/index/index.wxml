@@ -2,7 +2,7 @@
   <view class="content">
     <home wx:if="{{currentTab == 'board' && !homeV2Enabled}}" />
     <homeV2 wx:if="{{currentTab == 'board' && homeV2Enabled}}" />
-    <mall wx:if="{{currentTab == 'mall'}}" />
+    <mall id="mall" wx:if="{{currentTab == 'mall'}}" />
     <connection wx:if="{{currentTab == 'connection'}}" />
     <carpool wx:if="{{currentTab == 'carpool'}}" />
     <user wx:if="{{currentTab == 'user'}}" />
