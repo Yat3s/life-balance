@@ -15,7 +15,7 @@
   </view>
 </view>
 <!-- Main Content -->
-<scroll-view scroll-y="true" class="main" bindscroll="onPageScrolled">
+<scroll-view scroll-y="true" class="h-full bg-white" bind:scroll="onPageScrolled">
   <view style="height: 200px;" />
   <!-- Popular Section -->
   <block wx:if="{{popularProductsEnabled}}">
@@ -60,7 +60,7 @@
           </swiper>
         </block>
         <!-- Show input when search is active -->
-        <input wx:else class="flex-1 ml-2 text-sm" placeholder="搜索" placeholder-class="text-search" value="{{searchInput}}" bindinput="onSearchChanged" focus="{{isSearchActive}}" bindblur="onSearchBlur" />
+        <input wx:else class="flex-1 ml-2 text-sm" placeholder="搜索" placeholder-class="text-search" value="{{searchInput}}" bind:input="onSearchChanged" focus="{{isSearchActive}}" bind:blur="onSearchBlur" />
       </view>
     </share-element>
   </view>
@@ -70,7 +70,7 @@
       <view class="category-item text-sm {{selectedCategory === 'New' ? 'active' : ''}}" data-category="New" bindtap="handleCategorySelect">
         最新
       </view>
-      <view wx:for="{{fleaMarketKeywords}}" wx:key="*this" class="category-item text-sm {{selectedCategory === item ? 'active' : ''}}" data-category="{{item}}" bindtap="handleCategorySelect">
+      <view wx:for="{{fleaMarketKeywords}}" wx:key="*this" class="category-item text-sm {{selectedCategory === item ? 'active' : ''}}" data-category="{{item}}" bind:tap="handleCategorySelect">
         {{item}}
       </view>
     </view>
@@ -182,8 +182,8 @@
   </view>
 </view>
 <!-- Flea Market Product Modal -->
-<view class="cu-modal {{ showingModal === 'flea-market-product' ? 'show' : '' }}" bindtap="hideModal" catchtouchmove>
-  <view class="cu-dialog rounded-lg bg-white" catchtap>
+<view class="cu-modal {{ showingModal === 'flea-market-product' ? 'show' : '' }}" bind:tap="hideModal" catchtouchmove>
+  <view class="cu-dialog rounded-lg bg-white" catch:tap>
     <view class="p-6">
       <!-- User name -->
       <view class="flex items-center gap-3dot5 mb-3">
@@ -217,7 +217,13 @@
           </view>
         </block>
       </block>
-      <view class="flex items-center justify-between">
+      <button class="share-btn" open-type="share" data-product="{{selectedProduct}}">
+        <view class="flex items-center gap-1">
+          <text class="cuIcon-share"></text>
+          <text class="text-xs">分享给好友</text>
+        </view>
+      </button>
+      <view class="flex items-center justify-between mt-1">
         <view class="flex flex-col text-left">
           <view class="text-custom-price text-black text-price">{{selectedProduct.price}}</view>
           <view class="text-xxs text-interest">
