@@ -1,4 +1,4 @@
-import { fetchStockData } from '../../repository/dashboardRepo';
+import { fetchStockData } from "../../repository/dashboardRepo";
 
 Component({
   options: {
@@ -8,27 +8,28 @@ Component({
   properties: {},
 
   data: {
+    loadingStockData: true,
     stockData: {
       msft: {
-        price: '000.00',
-        change: '0.00',
+        price: "000.00",
+        change: "0.00",
       },
       msftTop1: false,
       top1: {
-        symbol: '--',
-        mktcap: '0.00',
+        symbol: "--",
+        mktcap: "0.00",
       },
       top2: {
-        symbol: '--',
-        mktcap: '0.00',
+        symbol: "--",
+        mktcap: "0.00",
       },
       top3: {
-        symbol: '--',
-        mktcap: '0.00',
+        symbol: "--",
+        mktcap: "0.00",
       },
       top4: {
-        symbol: '--',
-        mktcap: '0.00',
+        symbol: "--",
+        mktcap: "0.00",
       },
     },
   },
@@ -45,12 +46,12 @@ Component({
 
       try {
         // Convert market cap from billions to trillions
-        const mktCapNum = parseFloat(stock.mktcap.replace('B', ''));
+        const mktCapNum = parseFloat(stock.mktcap.replace("B", ""));
         stock.mktcap = (mktCapNum / 1000).toFixed(2);
         return stock;
       } catch (error) {
-        console.error('Error processing market cap data:', error);
-        return { ...stock, mktcap: '0.00' };
+        console.error("Error processing market cap data:", error);
+        return { ...stock, mktcap: "0.00" };
       }
     },
 
@@ -59,13 +60,13 @@ Component({
         const response = await fetchStockData();
 
         if (!response || !response.data || !response.data.stocks) {
-          throw new Error('Invalid stock data received');
+          throw new Error("Invalid stock data received");
         }
 
         const { stocks, msft } = response.data;
 
         if (stocks.length < 4) {
-          throw new Error('Insufficient stock data');
+          throw new Error("Insufficient stock data");
         }
 
         // Process top 4 stocks market cap
@@ -75,12 +76,13 @@ Component({
         const processedMsft = this.processMarketCap(msft);
 
         this.setData({
+          loadingStockData: false,
           stockData: {
             msft: {
-              price: processedMsft.price || '0.00',
-              change: processedMsft.change || '0.00',
+              price: processedMsft.price || "0.00",
+              change: processedMsft.change || "0.00",
             },
-            msftTop1: top1.symbol === 'MSFT',
+            msftTop1: top1.symbol === "MSFT",
             top1: {
               symbol: top1.symbol,
               mktcap: top1.mktcap,
@@ -100,7 +102,7 @@ Component({
           },
         });
       } catch (error) {
-        console.error('Failed to fetch stock data:', error);
+        console.error("Failed to fetch stock data:", error);
       }
     },
   },
