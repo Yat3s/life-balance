@@ -1,18 +1,18 @@
-import { proposeTerm, queryGlossary } from '../../../repository/glossaryRepo';
-import { fetchUserInfo } from '../../../repository/userRepo';
+import { proposeTerm, queryGlossary } from "../../../repository/glossaryRepo";
+import { fetchUserInfo } from "../../../repository/userRepo";
 
 Page({
   data: {
-    searchGlossaryInput: '',
+    searchGlossaryInput: "",
     glossaries: null,
-    showingModal: '',
+    showingModal: "",
     pageNumber: 1,
     pageSize: 100,
     proposeForm: {
-      termID: '',
-      name: '',
-      definition: '',
-      synonyms: '',
+      termID: "",
+      name: "",
+      definition: "",
+      synonyms: "",
     },
     scrollTop: 0,
     onReachBottomDistance: 300,
@@ -20,25 +20,25 @@ Page({
     isFinished: false,
     onEdit: false,
     newTerm: {
-      title: 'Suggest a New Term',
+      title: "Suggest a New Term",
       subTitle:
-        'Are you confused by a word, phrase, or acronym? Request that our researchers include the definition here:',
+        "Are you confused by a word, phrase, or acronym? Request that our researchers include the definition here:",
     },
     editTerm: {
-      title: 'Suggest an Edit',
+      title: "Suggest an Edit",
       subTitle:
-        'Have you noticed something is missing or inaccurate? Request that our researchers include the change here:',
+        "Have you noticed something is missing or inaccurate? Request that our researchers include the change here:",
     },
   },
 
-  resetListData(keyword = '') {
+  resetListData(keyword = "") {
     this.data.pageNumber = 1;
     this.data.glossaries = null;
     this.data.searchGlossaryInput = keyword;
     this.data.isFinished = false;
 
     let query = {
-      keyword: keyword ? keyword : '',
+      keyword: keyword ? keyword : "",
       pageNumber: this.data.pageNumber,
     };
     this.searchInput(query.keyword, query.pageNumber);
@@ -57,7 +57,7 @@ Page({
   searchInput(keyword, pageNumber) {
     this.data.isRequesting = true;
     let query = {
-      keyword: keyword ? keyword : '',
+      keyword: keyword ? keyword : "",
       pageNumber: pageNumber,
       pageSize: this.data.pageSize,
     };
@@ -90,7 +90,7 @@ Page({
   },
   onClearInputClicked() {
     this.setData({
-      searchGlossaryInput: '',
+      searchGlossaryInput: "",
     });
     this.resetListData();
   },
@@ -98,7 +98,7 @@ Page({
     this._observer = wx.createIntersectionObserver(this);
     this._observer
       .relativeToViewport({ bottom: this.data.onReachBottomDistance })
-      .observe('.glossary-suggestion', (res) => {
+      .observe(".glossary-suggestion", (res) => {
         if (
           !this.data.glossaries ||
           this.data.isRequesting ||
@@ -109,7 +109,7 @@ Page({
         let query = {
           keyword: this.data.searchGlossaryInput
             ? this.data.searchGlossaryInput
-            : '',
+            : "",
           pageNumber: this.data.pageNumber,
         };
         this.searchInput(query.keyword, query.pageNumber);
@@ -117,7 +117,7 @@ Page({
   },
   onShowModal() {
     this.setData({
-      showingModal: 'new',
+      showingModal: "new",
     });
   },
   onDismissModal() {
@@ -128,7 +128,7 @@ Page({
       termID: e.detail._id,
       name: e.detail.name,
       definition: e.detail.definition,
-      synonyms: e.detail.synonyms.join(','),
+      synonyms: e.detail.synonyms.join(","),
     };
     this.onShowModal();
     this.setData({
@@ -138,31 +138,31 @@ Page({
   },
   resetForm() {
     let newProposeForm = {
-      termID: '',
-      name: '',
-      definition: '',
-      synonyms: '',
+      termID: "",
+      name: "",
+      definition: "",
+      synonyms: "",
     };
     this.setData({
       proposeForm: newProposeForm,
       onEdit: false,
-      showingModal: '',
+      showingModal: "",
     });
   },
   formSubmit(e) {
     const { termID, proposeName, proposeDefinition, proposeSynonyms } =
       e.detail.value;
-    if (proposeName === '') {
+    if (proposeName === "") {
       wx.showToast({
-        icon: 'none',
-        title: 'name不能为空',
+        icon: "none",
+        title: "name不能为空",
       });
       return;
     }
-    if (proposeDefinition === '') {
+    if (proposeDefinition === "") {
       wx.showToast({
-        icon: 'none',
-        title: 'Definition不能为空',
+        icon: "none",
+        title: "Definition不能为空",
       });
       return;
     }
@@ -173,7 +173,7 @@ Page({
       })
       .then((e) => {
         let synonyms = proposeSynonyms
-          .split(',')
+          .split(",")
           .map((item) => item.toUpperCase())
           .filter((item) => item.length > 0);
         let data = {
@@ -186,35 +186,39 @@ Page({
           data.id = termID;
         }
         proposeTerm(data).then((res) => {
-          if (res.errMsg.includes('ok')) {
+          if (res.errMsg.includes("ok")) {
             wx.showToast({
-              icon: 'none',
-              title: '提交成功',
+              icon: "none",
+              title: "提交成功",
             });
             this.resetForm();
             this.resetListData(this.data.searchGlossaryInput);
           } else {
             wx.showToast({
-              icon: 'none',
-              title: '提交失败，请重试！',
+              icon: "none",
+              title: "提交失败，请重试！",
             });
           }
         });
       })
       .catch((err) => {
         wx.showToast({
-          icon: 'none',
-          title: '网络错误，请重试！',
+          icon: "none",
+          title: "网络错误，请重试！",
         });
       });
   },
 
   onShow() {
     let query = {
-      keyword: '',
+      keyword: "",
       pageNumber: this.data.pageNumber,
     };
     this.onListScrolled();
     this.searchInput(query.keyword, query.pageNumber);
   },
+
+  onShareAppMessage() {},
+
+  onShareTimeline() {},
 });

@@ -1,4 +1,4 @@
-import { signup } from '../../repository/userRepo';
+import { signup } from "../../repository/userRepo";
 const app = getApp();
 
 Page({
@@ -10,7 +10,7 @@ Page({
 
   onChooseAvatar(e) {
     const { avatarUrl } = e.detail;
-    console.log('Avatar URL: ', avatarUrl);
+    console.log("Avatar URL: ", avatarUrl);
     this.setData({
       avatarTmpUrl: avatarUrl,
     });
@@ -32,8 +32,8 @@ Page({
     wx.openPrivacyContract({
       fail: () => {
         wx.showToast({
-          title: '遇到错误',
-          icon: 'error',
+          title: "遇到错误",
+          icon: "error",
         });
       },
     });
@@ -45,30 +45,30 @@ Page({
 
     if (!avatarTmpUrl) {
       wx.showToast({
-        icon: 'none',
-        title: 'Please set your avatar',
+        icon: "none",
+        title: "Please set your avatar",
       });
       return;
     }
 
     if (!nickName) {
       wx.showToast({
-        icon: 'none',
-        title: 'Please set your nickname',
+        icon: "none",
+        title: "Please set your nickname",
       });
       return;
     }
 
     if (!isAgreed) {
       wx.showToast({
-        icon: 'none',
-        title: 'Please agree to the terms',
+        icon: "none",
+        title: "Please agree to the terms",
       });
       return;
     }
 
     wx.showLoading({
-      title: 'Signing up...',
+      title: "Signing up...",
     });
 
     wx.cloud
@@ -80,7 +80,7 @@ Page({
       })
       .then((res) => {
         const avatarUrl = res.fileID;
-        console.log('Avatar URL: ', avatarUrl);
+        console.log("Avatar URL: ", avatarUrl);
 
         return signup({
           avatarUrl,
@@ -98,9 +98,13 @@ Page({
       .catch((error) => {
         wx.hideLoading();
         wx.showToast({
-          title: error.message || '操作失败，请重试',
-          icon: 'error',
+          title: error.message || "操作失败，请重试",
+          icon: "error",
         });
       });
   },
+
+  onShareAppMessage() {},
+
+  onShareTimeline() {},
 });

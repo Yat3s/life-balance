@@ -1,15 +1,15 @@
-import { formatTimeAgo } from '../../../common/util';
-import { fetchAllUserOrders } from '../../../repository/orderRepo';
+import { formatTimeAgo } from "../../../common/util";
+import { fetchAllUserOrders } from "../../../repository/orderRepo";
 import {
   deleteUserProduct,
   fetchAllUserProducts,
   updateUserProduct,
-} from '../../../repository/productRepo';
-import { ORDER_STATUS } from '../../../lib/constants';
+} from "../../../repository/productRepo";
+import { ORDER_STATUS } from "../../../lib/constants";
 
 Page({
   data: {
-    activeTab: 'userProducts',
+    activeTab: "userProducts",
     userProducts: null,
     userOrders: null,
     purchaseEnabled: false,
@@ -66,10 +66,10 @@ Page({
         });
       })
       .catch((err) => {
-        console.log('Failed to fetch orders:', err);
+        console.log("Failed to fetch orders:", err);
         wx.showToast({
-          title: '获取订单失败',
-          icon: 'error',
+          title: "获取订单失败",
+          icon: "error",
         });
       });
   },
@@ -77,25 +77,25 @@ Page({
   getOrderStatus(status) {
     switch (status) {
       case ORDER_STATUS.UNPAID:
-        return '待支付';
+        return "待支付";
       case ORDER_STATUS.PENDING_DELIVERY:
-        return '待发货';
+        return "待发货";
       case ORDER_STATUS.DELIVERED:
-        return '已发货';
+        return "已发货";
       case ORDER_STATUS.COMPLETED:
-        return '已完成';
+        return "已完成";
       default:
-        return '';
+        return "";
     }
   },
 
   formatDate(timestamp) {
-    if (!timestamp) return '';
+    if (!timestamp) return "";
     const date = new Date(timestamp);
     return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
       2,
-      '0'
-    )}-${String(date.getDate()).padStart(2, '0')}`;
+      "0"
+    )}-${String(date.getDate()).padStart(2, "0")}`;
   },
 
   switchTab(e) {
@@ -111,7 +111,7 @@ Page({
     const index = products.findIndex((p) => p._id === id);
 
     if (index > -1) {
-      const newStatus = products[index].status === 'on' ? 'off' : 'on';
+      const newStatus = products[index].status === "on" ? "off" : "on";
       products[index].status = newStatus;
 
       this.setData({
@@ -126,24 +126,24 @@ Page({
         .then((res) => {
           if (res.success) {
             wx.showToast({
-              title: newStatus === 'on' ? '上架成功' : '下架成功',
-              icon: 'success',
+              title: newStatus === "on" ? "上架成功" : "下架成功",
+              icon: "success",
             });
             this.fetchAllRecords();
             this.hideModal();
           } else {
             wx.showToast({
-              title: 'Update failed',
-              icon: 'error',
+              title: "Update failed",
+              icon: "error",
             });
             this.fetchAllRecords();
           }
         })
         .catch((err) => {
-          console.error('Update failed:', err);
+          console.error("Update failed:", err);
           wx.showToast({
-            title: 'Update failed',
-            icon: 'error',
+            title: "Update failed",
+            icon: "error",
           });
           this.fetchAllRecords();
         });
@@ -155,16 +155,16 @@ Page({
 
     try {
       const modalText = `确定要标记为${
-        product.type === 'sell' ? '已售' : '已购'
+        product.type === "sell" ? "已售" : "已购"
       }吗？此操作不可恢复`;
 
       const result = await new Promise((resolve, reject) => {
         wx.showModal({
-          title: '确认标记',
+          title: "确认标记",
           content: modalText,
-          confirmText: '确认标记',
-          confirmColor: '#E64340',
-          cancelText: '取消',
+          confirmText: "确认标记",
+          confirmColor: "#E64340",
+          cancelText: "取消",
           success: (res) => resolve(res),
           fail: (error) => reject(error),
         });
@@ -172,7 +172,7 @@ Page({
 
       if (result.confirm) {
         wx.showLoading({
-          title: '标记中...',
+          title: "标记中...",
           mask: true,
         });
 
@@ -182,21 +182,21 @@ Page({
           });
 
           wx.showToast({
-            title: '标记成功',
-            icon: 'success',
+            title: "标记成功",
+            icon: "success",
           });
 
           this.fetchAllRecords();
         } catch (error) {
           wx.showToast({
-            title: '标记失败',
-            icon: 'error',
+            title: "标记失败",
+            icon: "error",
           });
-          console.error('标记商品失败:', error);
+          console.error("标记商品失败:", error);
         }
       }
     } catch (error) {
-      console.error('操作失败:', error);
+      console.error("操作失败:", error);
     } finally {
       wx.hideLoading();
       this.setData({
@@ -211,11 +211,11 @@ Page({
     try {
       const result = await new Promise((resolve, reject) => {
         wx.showModal({
-          title: '确认删除',
-          content: '确定要删除这个商品吗？此操作不可恢复',
-          confirmText: '确定删除',
-          confirmColor: '#E64340',
-          cancelText: '取消',
+          title: "确认删除",
+          content: "确定要删除这个商品吗？此操作不可恢复",
+          confirmText: "确定删除",
+          confirmColor: "#E64340",
+          cancelText: "取消",
           success: (res) => resolve(res),
           fail: (error) => reject(error),
         });
@@ -223,27 +223,27 @@ Page({
 
       if (result.confirm) {
         wx.showLoading({
-          title: '正在删除...',
+          title: "正在删除...",
           mask: true,
         });
 
         try {
           await deleteUserProduct(id);
           wx.showToast({
-            title: '删除成功',
-            icon: 'success',
+            title: "删除成功",
+            icon: "success",
           });
           this.fetchAllRecords();
         } catch (error) {
           wx.showToast({
-            title: '删除失败',
-            icon: 'error',
+            title: "删除失败",
+            icon: "error",
           });
-          console.error('删除商品失败:', error);
+          console.error("删除商品失败:", error);
         }
       }
     } catch (error) {
-      console.error('操作失败:', error);
+      console.error("操作失败:", error);
     } finally {
       wx.hideLoading();
       this.setData({
@@ -271,7 +271,7 @@ Page({
     const product = e.currentTarget.dataset.product;
 
     this.setData({
-      showingModal: 'product',
+      showingModal: "product",
       selectedProduct: product,
     });
   },
@@ -287,4 +287,8 @@ Page({
       urls: this.data.selectedProduct.pictures,
     });
   },
+
+  onShareAppMessage() {},
+
+  onShareTimeline() {},
 });

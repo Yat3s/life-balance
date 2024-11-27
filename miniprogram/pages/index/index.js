@@ -194,4 +194,9 @@ Page({
       path: "/pages/index/index?page=" + this.data.currentTab,
     };
   },
+  onShareTimeline() {
+    return {
+      query: "page=" + this.data.currentTab,
+    };
+  },
 });

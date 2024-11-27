@@ -1,8 +1,8 @@
-import { fetchProduct } from '../../../repository/productRepo';
-import { createOrder, updateOrder } from '../../../repository/orderRepo';
-import { getAppConfig } from '../../../repository/baseRepo';
-import { fetchUserInfo } from '../../../repository/userRepo';
-import { ORDER_STATUS, DELIVERY_TYPE } from '../../../lib/constants';
+import { fetchProduct } from "../../../repository/productRepo";
+import { createOrder, updateOrder } from "../../../repository/orderRepo";
+import { getAppConfig } from "../../../repository/baseRepo";
+import { fetchUserInfo } from "../../../repository/userRepo";
+import { ORDER_STATUS, DELIVERY_TYPE } from "../../../lib/constants";
 
 const PAY_SUCCESS_DURATION = 1500;
 
@@ -10,7 +10,7 @@ Page({
   data: {
     product: null,
     deliveryType: DELIVERY_TYPE.SELF_PICKUP,
-    workplace: '',
+    workplace: "",
     isProcessingPayment: false,
   },
 
@@ -21,11 +21,11 @@ Page({
       const userInfo = await fetchUserInfo();
       this.setData({
         product,
-        contactNumber: config.mall.contactNumber ?? '4645643',
-        contactName: config.mall.contactName ?? 'Chris Ye',
-        pickUpLocation: config.mall.pickUpLocation ?? '微软大厦 5F #65',
-        phoneNumber: userInfo.phoneNumber ?? '',
-        address: userInfo.address ?? '',
+        contactNumber: config.mall.contactNumber ?? "4645643",
+        contactName: config.mall.contactName ?? "Chris Ye",
+        pickUpLocation: config.mall.pickUpLocation ?? "微软大厦 5F #65",
+        phoneNumber: userInfo.phoneNumber ?? "",
+        address: userInfo.address ?? "",
       });
     }
   },
@@ -36,7 +36,7 @@ Page({
   },
 
   onPhoneNumberInput(e) {
-    const phoneNumber = e.detail.value.replace(/\D/g, '').slice(0, 11);
+    const phoneNumber = e.detail.value.replace(/\D/g, "").slice(0, 11);
     this.setData({ phoneNumber });
   },
 
@@ -58,8 +58,8 @@ Page({
     if (deliveryType === DELIVERY_TYPE.DELIVERY) {
       if (!address.trim()) {
         wx.showToast({
-          title: '请填写收货地址',
-          icon: 'none',
+          title: "请填写收货地址",
+          icon: "none",
         });
         return false;
       }
@@ -68,8 +68,8 @@ Page({
     if (deliveryType === DELIVERY_TYPE.WORKPLACE) {
       if (!workplace.trim()) {
         wx.showToast({
-          title: '请填写工位号',
-          icon: 'none',
+          title: "请填写工位号",
+          icon: "none",
         });
         return false;
       }
@@ -80,8 +80,8 @@ Page({
       (!phoneNumber || phoneNumber.length !== 11)
     ) {
       wx.showToast({
-        title: '请输入正确的手机号',
-        icon: 'none',
+        title: "请输入正确的手机号",
+        icon: "none",
       });
       return false;
     }
@@ -113,7 +113,7 @@ Page({
         ...(deliveryType === DELIVERY_TYPE.DELIVERY && {
           address,
           contactPhone: phoneNumber,
-          trackingNumber: '',
+          trackingNumber: "",
         }),
         ...(deliveryType === DELIVERY_TYPE.WORKPLACE && {
           workplace,
@@ -127,8 +127,8 @@ Page({
           try {
             await updateOrder(orderId, updateOrderData);
             wx.showToast({
-              title: '支付成功',
-              icon: 'success',
+              title: "支付成功",
+              icon: "success",
             });
             setTimeout(() => {
               wx.navigateTo({
@@ -136,18 +136,18 @@ Page({
               });
             }, PAY_SUCCESS_DURATION);
           } catch (error) {
-            console.error('Update order error:', error);
+            console.error("Update order error:", error);
             wx.showToast({
-              title: '订单状态更新失败，请联系客服',
-              icon: 'none',
+              title: "订单状态更新失败，请联系客服",
+              icon: "none",
             });
           }
         },
         fail: (error) => {
-          console.error('Payment failed:', error);
+          console.error("Payment failed:", error);
           wx.showToast({
-            title: '支付失败，请重试',
-            icon: 'none',
+            title: "支付失败，请重试",
+            icon: "none",
           });
         },
         complete: () => {
@@ -155,12 +155,16 @@ Page({
         },
       });
     } catch (error) {
-      console.error('Create order error:', error);
+      console.error("Create order error:", error);
       wx.showToast({
-        title: '创建订单失败，请重试',
-        icon: 'none',
+        title: "创建订单失败，请重试",
+        icon: "none",
       });
       this.setData({ isProcessingPayment: false });
     }
   },
+
+  onShareAppMessage() {},
+
+  onShareTimeline() {},
 });

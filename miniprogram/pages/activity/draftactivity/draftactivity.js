@@ -1,10 +1,10 @@
 // miniprogram/pages/activity/draftactivity/draftactivity.js
-const activityRepo = require('../../../repository/activityRepo');
-const userRepo = require('../../../repository/userRepo');
-const pref = require('../../../common/preference');
+const activityRepo = require("../../../repository/activityRepo");
+const userRepo = require("../../../repository/userRepo");
+const pref = require("../../../common/preference");
 const {
-  subscribeActivityNotification
-} = require('../../../repository/notificationHelper');
+  subscribeActivityNotification,
+} = require("../../../repository/notificationHelper");
 
 const app = getApp();
 const MAX_TAG_LENGTH = 12;
@@ -13,13 +13,12 @@ const MAX_TITLE_LENGTH = 30;
 const MAX_PARTICIPANT = 100;
 
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
     toolbarHeight: app.globalData.toolbarHeight,
-    statusBarHeight: app.globalData.statusBarHeight
+    statusBarHeight: app.globalData.statusBarHeight,
   },
 
   /**
@@ -28,25 +27,25 @@ Page({
   onLoad: function (options) {
     const type = options.type;
     this.setData({
-      type
-    })
+      type,
+    });
 
-    activityRepo.fetchAllActivityCategories().then(categories => {
+    activityRepo.fetchAllActivityCategories().then((categories) => {
       this.setData({
-        categories
+        categories,
       });
     });
 
-    userRepo.fetchUserInfo().then(userInfo => {
+    userRepo.fetchUserInfo().then((userInfo) => {
       this.setData({
-        userInfo
-      })
+        userInfo,
+      });
     });
 
-    if (type === 'edit' || type === 'repost') {
+    if (type === "edit" || type === "repost") {
       const id = options.id;
       wx.showLoading();
-      activityRepo.fetchActivityItem(id).then(activity => {
+      activityRepo.fetchActivityItem(id).then((activity) => {
         let startDate = new Date(activity.startDate);
         let startDateStr = startDate.yyyymmdd();
         let startTimeStr = startDate.hhmm();
@@ -54,11 +53,12 @@ Page({
         let endDate = new Date(activity.endDate);
         let endDateStr = endDate.yyyymmdd();
         let endTimeStr = endDate.hhmm();
-        const genderRequired = activity.maxParticipantFemale &&
+        const genderRequired =
+          activity.maxParticipantFemale &&
           activity.maxParticipantMale &&
-          (activity.maxParticipantFemale + activity.maxParticipantMale > 0)
+          activity.maxParticipantFemale + activity.maxParticipantMale > 0;
 
-        if (type === 'repost') {
+        if (type === "repost") {
           // Initial date picker
           const now = new Date();
           startDateStr = now.yyyymmdd();
@@ -87,14 +87,13 @@ Page({
 
         wx.hideLoading();
 
-        activityRepo.fetchCategory(activity.category).then(category => {
+        activityRepo.fetchCategory(activity.category).then((category) => {
           this.setData({
-            category
-          })
-        })
-      })
-
-    } else if (type === 'new') {
+            category,
+          });
+        });
+      });
+    } else if (type === "new") {
       // Initial date picker
       const now = new Date();
       const startDateStr = now.yyyymmdd();
@@ -107,7 +106,7 @@ Page({
         startTimeStr,
         endDateStr,
         endTimeStr,
-        detail: "[Note]"
+        detail: "[Note]",
       });
     }
   },
@@ -115,58 +114,56 @@ Page({
   back() {
     wx.navigateBack({
       delta: 1,
-    })
+    });
   },
 
   chooseLocation() {
-    wx.chooseLocation().then(res => {
+    wx.chooseLocation().then((res) => {
       this.setData({
-        location: res
+        location: res,
       });
-    })
+    });
   },
 
   onGenderSwitch(e) {
     const genderRequired = e.detail.value;
     this.setData({
-      genderRequired
-    })
+      genderRequired,
+    });
   },
 
   onClickDeleteActivity() {
-    const {
-      activityId
-    } = this.data;
+    const { activityId } = this.data;
 
     if (!activityId) {
       wx.showToast({
-        icon: 'error',
-        title: 'Failed to delete',
-      })
+        icon: "error",
+        title: "Failed to delete",
+      });
 
       return;
     }
 
     wx.showModal({
-      title: 'Delete activity',
+      title: "Delete activity",
       content: "It can't be restored if deleted",
       success(res) {
         if (res.confirm) {
-          activityRepo.deleteActivity(activityId).then(res => {
+          activityRepo.deleteActivity(activityId).then((res) => {
             wx.showToast({
-              icon: 'success',
-              title: 'Success',
+              icon: "success",
+              title: "Success",
             });
 
             wx.navigateBack({
               delta: 2,
-            })
-          })
+            });
+          });
         } else if (res.cancel) {
-          console.log('用户点击取消')
+          console.log("用户点击取消");
         }
-      }
-    })
+      },
+    });
   },
 
   onSubmit(e) {
@@ -184,22 +181,15 @@ Page({
       type,
     } = this.data;
 
-    let {
-      location
-    } = this.data;
+    let { location } = this.data;
 
-    const {
-      title,
-      detail,
-      fee,
-      locationName
-    } = value;
+    const { title, detail, fee, locationName } = value;
 
     // Location
     if (!location) {
-      location = {}
+      location = {};
     }
-    location.name = locationName
+    location.name = locationName;
 
     // Tags
     let tags = [];
@@ -210,18 +200,30 @@ Page({
     }
 
     // Participants
-    const maxParticipantMale = parseInt(genderRequired ? (value.maxParticipantMale || 50) : 0);
-    const maxParticipantFemale = parseInt(genderRequired ? (value.maxParticipantFemale || 50) : 0);
-    const maxParticipant = parseInt(genderRequired ? maxParticipantMale + maxParticipantFemale : value.maxParticipant || 100);
+    const maxParticipantMale = parseInt(
+      genderRequired ? value.maxParticipantMale || 50 : 0
+    );
+    const maxParticipantFemale = parseInt(
+      genderRequired ? value.maxParticipantFemale || 50 : 0
+    );
+    const maxParticipant = parseInt(
+      genderRequired
+        ? maxParticipantMale + maxParticipantFemale
+        : value.maxParticipant || 100
+    );
 
     // Date
-    const startDate = Date.parse((startDateStr + " " + startTimeStr).replace(/-/g, "/"));
-    const endDate = Date.parse((endDateStr + " " + endTimeStr).replace(/-/g, "/"));
+    const startDate = Date.parse(
+      (startDateStr + " " + startTimeStr).replace(/-/g, "/")
+    );
+    const endDate = Date.parse(
+      (endDateStr + " " + endTimeStr).replace(/-/g, "/")
+    );
 
     // Input check
     let sanityMessage = null;
     if (!title || !category || !locationName || !coverFileId) {
-      sanityMessage = 'Please complete the form information';
+      sanityMessage = "Please complete the form information";
     }
 
     if (tags.length > MAX_TAGS_SIZE) {
@@ -248,7 +250,7 @@ Page({
     }
 
     if (startDate > endDate) {
-      sanityMessage = 'The start date should early than end date';
+      sanityMessage = "The start date should early than end date";
     }
 
     if (title.length > MAX_TITLE_LENGTH) {
@@ -257,7 +259,7 @@ Page({
 
     if (sanityMessage) {
       wx.showToast({
-        icon: 'none',
+        icon: "none",
         title: sanityMessage,
       });
 
@@ -291,10 +293,10 @@ Page({
       tags,
 
       published: true,
-    }
+    };
 
     console.log("ActivityBody: ", activityBody);
-    if (type === 'new' || type === 'repost') {
+    if (type === "new" || type === "repost") {
       const participants = [];
       participants.push(userInfo);
       activityBody.organizer = userInfo;
@@ -304,160 +306,153 @@ Page({
       const organizerLocation = {
         city: pref.getCity(),
         latitude: pref.getLatitude(),
-        longitude: pref.getLongitude()
-      }
+        longitude: pref.getLongitude(),
+      };
       activityBody.organizerLocation = organizerLocation;
 
       wx.showLoading();
-      activityRepo.draftActivity(activityBody).then(res => {
+      activityRepo.draftActivity(activityBody).then((res) => {
         wx.hideLoading();
-        app.globalData.pendingMessage = 'Created success!'
+        app.globalData.pendingMessage = "Created success!";
         subscribeActivityNotification();
       });
-    } else if (type === 'edit') {
-      const {
-        activityId
-      } = this.data;
+    } else if (type === "edit") {
+      const { activityId } = this.data;
       wx.showModal({
-        title: 'Update Activity',
-        content: 'You are updating the activity',
+        title: "Update Activity",
+        content: "You are updating the activity",
         success(res) {
           if (res.confirm) {
             activityBody._updateTime = Date.now();
             wx.showLoading();
-            activityRepo.updateActivity(activityId, activityBody).then(res => {
-              wx.hideLoading();
-              app.globalData.pendingMessage = 'Update success!'
-              subscribeActivityNotification();
-            });
-          } else if (res.cancel) {}
-        }
-      })
+            activityRepo
+              .updateActivity(activityId, activityBody)
+              .then((res) => {
+                wx.hideLoading();
+                app.globalData.pendingMessage = "Update success!";
+                subscribeActivityNotification();
+              });
+          } else if (res.cancel) {
+          }
+        },
+      });
     }
   },
 
   uploadCover() {
     wx.chooseImage({
       count: 1,
-    }).then(res => {
+    }).then((res) => {
       wx.showLoading();
-      wx.cloud.uploadFile({
-        cloudPath: `cover-${new Date().getTime()}.png`,
-        filePath: res.tempFilePaths[0]
-      }).then(file => {
-        wx.hideLoading();
-        this.setData({
-          coverFileId: file.fileID
+      wx.cloud
+        .uploadFile({
+          cloudPath: `cover-${new Date().getTime()}.png`,
+          filePath: res.tempFilePaths[0],
         })
-      }).catch(err => {
-        wx.hideLoading();
-      })
-    })
+        .then((file) => {
+          wx.hideLoading();
+          this.setData({
+            coverFileId: file.fileID,
+          });
+        })
+        .catch((err) => {
+          wx.hideLoading();
+        });
+    });
   },
 
   uploadQrcode() {
     wx.chooseImage({
       count: 1,
-    }).then(res => {
+    }).then((res) => {
       wx.showLoading();
-      wx.cloud.uploadFile({
-        cloudPath: `qrcode-${new Date().getTime()}.png`,
-        filePath: res.tempFilePaths[0]
-      }).then(file => {
-        wx.hideLoading();
-        this.setData({
-          qrcodeFileId: file.fileID
+      wx.cloud
+        .uploadFile({
+          cloudPath: `qrcode-${new Date().getTime()}.png`,
+          filePath: res.tempFilePaths[0],
         })
-      }).catch(err => {
-        wx.hideLoading();
-      })
-    })
+        .then((file) => {
+          wx.hideLoading();
+          this.setData({
+            qrcodeFileId: file.fileID,
+          });
+        })
+        .catch((err) => {
+          wx.hideLoading();
+        });
+    });
   },
 
   onCategoryPicked(e) {
-    const {
-      categories
-    } = this.data;
+    const { categories } = this.data;
     const category = categories[e.detail.value];
     this.setData({
-      category
+      category,
     });
   },
 
   onStartDatePicked(e) {
     const startDateStr = e.detail.value;
     this.setData({
-      startDateStr
-    })
+      startDateStr,
+    });
   },
 
   onStartTimePicked(e) {
     const startTimeStr = e.detail.value;
     this.setData({
-      startTimeStr
-    })
+      startTimeStr,
+    });
   },
 
   onEndDatePicked(e) {
     const endDateStr = e.detail.value;
     this.setData({
-      endDateStr
-    })
+      endDateStr,
+    });
   },
 
   onEndTimePicked(e) {
     const endTimeStr = e.detail.value;
     this.setData({
-      endTimeStr
-    })
+      endTimeStr,
+    });
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-
-  },
+  onReady: function () {},
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-
-  },
+  onShow: function () {},
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
-
-  },
+  onHide: function () {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
-
-  },
+  onUnload: function () {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-
-  },
+  onPullDownRefresh: function () {},
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-
-  },
+  onReachBottom: function () {},
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function () {},
 
-  }
-})
+  onShareTimeline() {},
+});
