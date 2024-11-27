@@ -59,12 +59,6 @@ Page({
       statusBarHeight,
     });
 
-    fetchUserInfo().then((userInfo) => {
-      if (userInfo) {
-        app.globalData.userInfo = userInfo;
-      }
-    });
-
     getAppConfig().then((config) => {
       const { featureFlags } = config;
       let pages = [...this.data.pages];
@@ -120,27 +114,24 @@ Page({
   checkAndFetchUserInfo() {
     const { currentTab } = this.data;
     if (
-      !app.globalData.userInfo &&
-      (currentTab === "user" ||
-        currentTab === "mall" ||
-        currentTab === "connection")
+      currentTab === "user" ||
+      currentTab === "mall" ||
+      currentTab === "connection"
     ) {
-      fetchUserInfo()
-        .then((userInfo) => {
-          if (userInfo) {
-            app.globalData.userInfo = userInfo;
-            const needsUpdate = this.checkNeedsProfileUpdate(userInfo);
-            if (needsUpdate) {
-              this.onOpenUpdateUserInfoModal();
-            }
-          } else {
-            this.setData({
-              currentTab: "board",
-            });
-            navigateToOnboarding();
+      fetchUserInfo().then((userInfo) => {
+        if (userInfo) {
+          app.globalData.userInfo = userInfo;
+          const needsUpdate = this.checkNeedsProfileUpdate(userInfo);
+          if (needsUpdate) {
+            this.onOpenUpdateUserInfoModal();
           }
-        })
-        .catch(() => {});
+        } else {
+          this.setData({
+            currentTab: "board",
+          });
+          navigateToOnboarding();
+        }
+      });
     }
   },
 

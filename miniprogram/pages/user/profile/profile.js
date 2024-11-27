@@ -1,103 +1,179 @@
-const { formatDate } = require("../../../common/util");
-const {
-  fetchUserActivities,
-  fetchUserGroups,
-} = require("../../../repository/activityRepo");
-const { fetchUserProfile } = require("../../../repository/userRepo");
-const { navigateToGroupDetail, navigateToGroup } = require("../../router");
+const { fetchAllPersonalCarpools } = require('../../repository/carpoolRepo');
+const activityRepo = require('../../repository/activityRepo');
+const userRepo = require('../../repository/userRepo');
+const router = require('../router');
+const app = getApp();
 
-// pages/user/profile/profile.js
-Page({
-  /**
-   * 页面的初始数据
-   */
-  data: {},
+Component({
+  options: {
+    addGlobalClass: true,
+  },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    const id = options.id;
-    fetchUserProfile(id).then((user) => {
-      console.log(user);
-      if (user.birthday) {
-        user.age =
-          new Date().getFullYear() - parseInt(user.birthday.slice(0, 4));
-        console.log(parseInt(user.birthday.slice(0, 4)));
+  properties: {},
+
+  data: {
+    windowWidth: app.globalData.windowWidth,
+    selectedTabId: 'all',
+    organizeCount: 0,
+    showEmpty: true,
+    tabs: [
+      {
+        id: 'all',
+        name: 'All activities',
+        count: 0,
+      },
+      {
+        id: 'organizer',
+        name: 'Posted activities',
+        count: 0,
+      },
+      {
+        id: 'like',
+        name: 'Favorite activities',
+        count: 0,
+      },
+      {
+        id: 'carpool',
+        name: 'All carpools',
+        count: 0,
+      },
+    ],
+  },
+
+  methods: {
+    onSettingCompanyClick() {
+      router.navigateToAuth();
+    },
+    onTabSelected(e) {
+      const selectedTabId = e.currentTarget.dataset.id;
+      const { activities, likedActivities, carpools } = this.data;
+
+      let showEmpty = false;
+      switch (selectedTabId) {
+        case 'all':
+          showEmpty = !activities || activities.length == 0;
+          break;
+
+        case 'organizer':
+          let count = 0;
+          activities.forEach((activity) => {
+            if (activity.type == 'organizer') {
+              count++;
+            }
+          });
+          showEmpty = count == 0;
+          break;
+
+        case 'like':
+          showEmpty = !likedActivities || likedActivities.length == 0;
+          break;
+
+        case 'carpool':
+          showEmpty = !carpools || carpools.length == 0;
+          break;
       }
+
       this.setData({
-        user,
+        selectedTabId,
+        showEmpty,
       });
-    });
+    },
 
-    fetchUserActivities(id).then((activities) => {
-      console.log("fetchUserActivities", activities);
-      activities.forEach((activity) => {
-        activity.isOrganizer = activity.organizer._id === id;
-        activity.createDateStr = formatDate(activity._createTime);
+    fetchAllLikedActivities(ids) {
+      if (!ids) {
+        return;
+      }
+
+      activityRepo.fetchActivitiesByIds(ids).then((likedActivities) => {
+        this.setData({
+          likedActivities,
+        });
+
+        this.updateTabCount('like', likedActivities.length);
       });
+    },
+
+    fetchAllPersonalActivities(openid) {
+      activityRepo.fetchAllPersonalActivities().then((activities) => {
+        let organizeCount = 0;
+        activities.forEach((activity) => {
+          if (activity.organizer._openid == openid) {
+            activity.type = 'organizer';
+            organizeCount++;
+          }
+        });
+
+        this.setData({
+          activities,
+          showEmpty: activities.length == 0,
+        });
+
+        this.updateTabCount('organizer', organizeCount);
+        this.updateTabCount('all', activities.length);
+      });
+    },
+
+    onUserInfoClick(e) {
+      router.navigate(router.Pages.UserInfo);
+    },
+
+    updateTabCount(tabId, count) {
+      const { tabs } = this.data;
+      for (const tab of tabs) {
+        if (tab.id == tabId) {
+          tab.count = count;
+          break;
+        }
+      }
+
       this.setData({
-        activities,
+        tabs,
       });
-    });
+    },
   },
 
-  onGroupClick(e) {
-    navigateToGroupDetail(e.currentTarget.dataset.id);
+  pageLifetimes: {
+    show() {
+      // Update profile
+      userRepo.fetchUserInfo().then((userInfo) => {
+        if (!userInfo) {
+          return;
+        }
+
+        this.setData({
+          userInfo,
+        });
+      });
+    },
   },
 
-  onAllGroupClick(e) {
-    navigateToGroup();
+  lifetimes: {
+    attached() {
+      userRepo.fetchUserInfo().then((userInfo) => {
+        if (!userInfo) {
+          return;
+        }
+
+        this.setData({
+          userInfo,
+        });
+
+        this.fetchAllPersonalActivities(userInfo._openid);
+        this.fetchAllLikedActivities(userInfo.likes);
+
+        fetchAllPersonalCarpools().then((carpools) => {
+          this.setData({
+            carpools,
+          });
+          this.updateTabCount('carpool', carpools.length);
+        });
+
+        if (userInfo.company) {
+          userRepo.fetchCompany(userInfo.company).then((company) => {
+            this.setData({ company });
+          });
+        }
+      });
+    },
   },
-
-  onPhotoClick(e) {
-    const { user } = this.data;
-    const urls = [];
-    if (user.photos && user.photos.length > 0) {
-      urls.push(...user.photos);
-    } else {
-      urls.push(user.avatarUrl);
-    }
-
-    wx.previewImage({
-      urls,
-    });
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {},
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {},
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {},
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {},
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {},
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {},
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {},
-
-  onShareTimeline() {},
 });
