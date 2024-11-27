@@ -13,11 +13,11 @@
     <view class="flex align-center">
       <view class="section-title">Activities</view>
     </view>
-    <view bindtap="onNewActivityClicked" class="section-action">New Activity</view>
+    <view bind:tap="onNewActivityClicked" class="section-action">New Activity</view>
   </view>
   <scroll-view scroll-x="true" class="padding-top padding-bottom">
     <view class="flex">
-      <view bindtap="onActivityItemClicked" data-id="{{item._id}}" wx:for="{{activities}}" class="activity-item-active">
+      <view bind:tap="onActivityItemClicked" data-id="{{item._id}}" wx:for="{{activities}}" class="activity-item-active">
         <!-- Title -->
         <view class="flex justify-between">
           <view class="flex align-center">
@@ -53,7 +53,7 @@
         <view class="shine-grey margin-top-xs" style="width: 200rpx; height: 30rpx" />
       </view>
       <!-- More item -->
-      <view bindtap="onMoreActivitiesClicked" class="activity-item-more center">
+      <view bind:tap="onMoreActivitiesClicked" class="activity-item-more center">
         <view class="activity-item-more-title">More activities</view>
       </view>
     </view>

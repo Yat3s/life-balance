@@ -1,12 +1,12 @@
 <toolbar isBack="{{true}}" />
 <form bindsubmit="onUserInfoSubmit">
   <view class="main">
-    <!-- <view class="section-container">
+    <view class="section-container">
       <view class="name-container">
         <view class="section-title">My pictures</view>
       </view>
       <mp-uploader binddelete="onPhotoDelete" delete="{{true}}" bindsuccess="onUploadSuccess" max-count="6" upload="{{uploadFile}}" files="{{files}}" title="" />
-    </view> -->
+    </view>
     <view class="section-container margin-top-lg">
       <view class="name-container">
         <view class="section-title">Basic information</view>
@@ -27,7 +27,7 @@
       </view>
       <view style="margin-top: 2rpx;" class="form-section">
         <view class="form-section-title">Height</view>
-        <input placeholder="cm" name="height" value="{{height}}" />
+        <input type="number" placeholder="cm" name="height" value="{{height}}" />
       </view>
       <view style="margin-top: 2rpx;" class="form-section">
         <view class="form-section-title">Birthday</view>
