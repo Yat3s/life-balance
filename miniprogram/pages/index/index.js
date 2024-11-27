@@ -170,8 +170,7 @@ Page({
     });
   },
 
-  // You must define the method below, otherwise you cannot share
-  // Share to WeChat
+  // You must define the method below, otherwise you cannot share to wechat
   onShareAppMessage() {
     if (
       this.data.currentTab === "mall" &&
@@ -179,9 +178,8 @@ Page({
     ) {
       const mall = this.selectComponent("#mall");
       const product = mall.data.selectedProduct;
-      const titlePrefix = product.type === "sell" ? "来捡漏啦，" : "诚求，";
-      const priceText = product.price ? `【${product.price}】` : "";
-      const shareTitle = `${titlePrefix}${priceText}${product.title}`;
+      const titlePrefix = product.type === "sell" ? "来捡漏啦！" : "诚求！";
+      const shareTitle = `${titlePrefix}${product.title}`;
 
       return {
         title: shareTitle,
