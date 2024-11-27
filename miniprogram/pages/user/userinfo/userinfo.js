@@ -2,7 +2,7 @@ import {
   updateUserInfo,
   uploadFiles,
   fetchUserInfoOrSignup,
-} from '../../../repository/userRepo';
+} from "../../../repository/userRepo";
 const app = getApp();
 
 Page({
@@ -13,7 +13,7 @@ Page({
 
   onChooseAvatar(e) {
     const { avatarUrl } = e.detail;
-    console.log('Avatar URL: ', avatarUrl);
+    console.log("Avatar URL: ", avatarUrl);
     this.setData({
       avatarTmpUrl: avatarUrl,
       isNewAvatar: true,
@@ -31,12 +31,12 @@ Page({
     const hometown = e.detail.value;
     hometown.splice(0, 1);
     this.setData({
-      hometown: hometown.join(''),
+      hometown: hometown.join(""),
     });
   },
 
   onPhoneNumberInput(e) {
-    const phonedNumber = e.detail.value.replace(/\D/g, '');
+    const phonedNumber = e.detail.value.replace(/\D/g, "");
     this.setData({
       phoneNumber: phonedNumber,
     });
@@ -61,8 +61,8 @@ Page({
       userInfo.contact = contact;
     } else if (company) {
       wx.showToast({
-        icon: 'none',
-        title: 'You must set contact',
+        icon: "none",
+        title: "You must set contact",
       });
 
       return;
@@ -134,8 +134,8 @@ Page({
         .catch((error) => {
           wx.hideLoading();
           wx.showToast({
-            icon: 'none',
-            title: 'Avatar upload failed',
+            icon: "none",
+            title: "Avatar upload failed",
           });
         });
     } else if (avatarTmpUrl) {
@@ -150,7 +150,7 @@ Page({
     console.log(tempFile);
 
     return new Promise((resolve, reject) => {
-      uploadFiles(tempFile.tempFilePaths, 'userphotos').then((urls) => {
+      uploadFiles(tempFile.tempFilePaths, "userphotos").then((urls) => {
         resolve({
           urls,
         });
@@ -209,4 +209,8 @@ Page({
       uploadFile: this.uploadFile.bind(this),
     });
   },
+
+  onShareAppMessage: function () {},
+
+  onShareTimeline: function () {},
 });

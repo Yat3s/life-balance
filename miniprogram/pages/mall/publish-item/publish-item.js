@@ -1,10 +1,10 @@
-import { getAppConfig } from '../../../repository/baseRepo';
+import { getAppConfig } from "../../../repository/baseRepo";
 import {
   createUserProduct,
   fetchFleaMarketProduct,
   updateUserProduct,
-} from '../../../repository/productRepo';
-import { fetchUserInfo } from '../../../repository/userRepo';
+} from "../../../repository/productRepo";
+import { fetchUserInfo } from "../../../repository/userRepo";
 
 const app = getApp();
 const MAX_APP_BAR_HEIGHT = 150; //px
@@ -18,7 +18,7 @@ Page({
     fleaMarketKeywords: [],
     userInfo: null,
     productId: null,
-    productType: 'sell',
+    productType: "sell",
   },
 
   async onLoad(options) {
@@ -29,7 +29,7 @@ Page({
       ]);
 
       if (options.id) {
-        const isPublishSimilar = options.from === 'publish-similar-item';
+        const isPublishSimilar = options.from === "publish-similar-item";
         await this.loadProductData(
           options.id,
           fleaMarketKeywords,
@@ -40,10 +40,10 @@ Page({
         await this.initializeNewProduct(fleaMarketKeywords, userInfo);
       }
     } catch (err) {
-      console.error('Failed to initialize page:', err);
+      console.error("Failed to initialize page:", err);
       wx.showToast({
-        title: 'Failed to load data',
-        icon: 'none',
+        title: "Failed to load data",
+        icon: "none",
       });
     }
   },
@@ -61,7 +61,7 @@ Page({
   ) {
     const product = (await fetchFleaMarketProduct(productId)).data[0];
     if (!product) {
-      throw new Error('Product not found');
+      throw new Error("Product not found");
     }
 
     const categories = fleaMarketKeywords.map((category) => ({
@@ -71,15 +71,15 @@ Page({
 
     this.setData({
       productId: isPublishSimilar ? null : productId,
-      title: product.title || '',
-      price: product.price?.toString() || '',
-      description: product.description || '',
+      title: product.title || "",
+      price: product.price?.toString() || "",
+      description: product.description || "",
       pictures: isPublishSimilar ? [] : product.pictures || [],
-      contact: isPublishSimilar ? userInfo?.contact : product.contact || '',
+      contact: isPublishSimilar ? userInfo?.contact : product.contact || "",
       fleaMarketKeywords,
       categories,
       selectedCategory: product.categories || [],
-      productType: product.type || 'sell',
+      productType: product.type || "sell",
       userInfo,
     });
   },
@@ -97,7 +97,7 @@ Page({
         fleaMarketKeywords.length > 0 ? [fleaMarketKeywords[0]] : [],
       userInfo,
       isInternal: userInfo?.company ?? false,
-      contact: userInfo?.contact || '',
+      contact: userInfo?.contact || "",
     });
   },
 
@@ -113,8 +113,8 @@ Page({
   },
 
   onPriceInput(e) {
-    const value = e.detail.value.replace(/[^\d.]/g, '');
-    const parts = value.split('.');
+    const value = e.detail.value.replace(/[^\d.]/g, "");
+    const parts = value.split(".");
     const formatted = parts.length > 2 ? `${parts[0]}.${parts[1]}` : value;
     this.setData({ price: formatted });
   },
@@ -147,16 +147,16 @@ Page({
 
     if (isNaN(numberPrice) || numberPrice < 0) {
       wx.showToast({
-        title: 'Please enter a valid price',
-        icon: 'none',
+        title: "Please enter a valid price",
+        icon: "none",
       });
       return null;
     }
 
-    if (price.includes('.') && price.split('.')[1].length > 2) {
+    if (price.includes(".") && price.split(".")[1].length > 2) {
       wx.showToast({
-        title: 'Price can only have up to 2 decimal places',
-        icon: 'none',
+        title: "Price can only have up to 2 decimal places",
+        icon: "none",
       });
       return null;
     }
@@ -168,11 +168,11 @@ Page({
     const that = this;
     wx.chooseMedia({
       count: 9 - that.data.pictures.length,
-      mediaType: ['image'],
-      sizeType: ['original'],
-      sourceType: ['album', 'camera'],
+      mediaType: ["image"],
+      sizeType: ["original"],
+      sourceType: ["album", "camera"],
       maxDuration: 30,
-      camera: 'back',
+      camera: "back",
       success(res) {
         const tempFiles = res.tempFiles;
         that.uploadMultipleImages(tempFiles);
@@ -213,10 +213,10 @@ Page({
         });
       })
       .catch((err) => {
-        console.error('Image upload failed: ', err);
+        console.error("Image upload failed: ", err);
         wx.showToast({
-          title: 'Image upload failed',
-          icon: 'none',
+          title: "Image upload failed",
+          icon: "none",
         });
       });
   },
@@ -240,8 +240,8 @@ Page({
 
     if (!title) {
       wx.showToast({
-        title: 'Please enter a title',
-        icon: 'none',
+        title: "Please enter a title",
+        icon: "none",
       });
       return;
     }
@@ -257,7 +257,7 @@ Page({
     }
 
     wx.showLoading({
-      title: productId ? '保存中...' : '发布中...',
+      title: productId ? "保存中..." : "发布中...",
     });
 
     try {
@@ -266,35 +266,39 @@ Page({
         type: productType,
         price: validatedPrice,
         contact: finalContact,
-        description: description || '',
+        description: description || "",
         pictures: pictures || [],
         categories: selectedCategory || [],
-        ...(!productId && { status: 'on' }),
+        ...(!productId && { status: "on" }),
       };
 
       if (productId) {
         await updateUserProduct(productId, productData);
         wx.showToast({
-          title: 'Update successfully!',
-          icon: 'none',
+          title: "Update successfully!",
+          icon: "none",
         });
       } else {
         await createUserProduct(productData);
         wx.showToast({
-          title: 'Publish successfully!',
-          icon: 'none',
+          title: "Publish successfully!",
+          icon: "none",
         });
       }
 
       wx.hideLoading();
       wx.navigateBack();
     } catch (err) {
-      console.error('Operation failed: ', err);
+      console.error("Operation failed: ", err);
       wx.hideLoading();
       wx.showToast({
-        title: 'Operation failed',
-        icon: 'none',
+        title: "Operation failed",
+        icon: "none",
       });
     }
   },
+
+  onShareAppMessage() {},
+
+  onShareTimeline() {},
 });

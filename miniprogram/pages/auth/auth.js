@@ -134,4 +134,8 @@ Page({
       origin,
     });
   },
+
+  onShareAppMessage() {},
+
+  onShareTimeline() {},
 });

@@ -1,21 +1,20 @@
-const {
-  calcDistance, subscribeNotification
-} = require("../../../common/util");
+const { calcDistance, subscribeNotification } = require("../../../common/util");
 
 const { postCarpoolRequest } = require("../../../repository/carpoolRepo");
-const { subscribeCarpoolNotification } = require("../../../repository/notificationHelper");
+const {
+  subscribeCarpoolNotification,
+} = require("../../../repository/notificationHelper");
 const { fetchUserInfo } = require("../../../repository/userRepo");
 const app = getApp();
 const MAX_SEATS = 6;
 const FEE_PER_KM = 1.25;
 
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
-    paymentMethod: 'shareGas',
+    paymentMethod: "shareGas",
     seatCount: 1,
   },
 
@@ -33,12 +32,12 @@ Page({
       comment,
       userInfo,
       distance,
-      contact
+      contact,
     } = this.data;
 
     if (!locationFrom || !locationTo) {
       wx.showToast({
-        icon: 'none',
+        icon: "none",
         title: "So where are you going?",
       });
 
@@ -47,27 +46,29 @@ Page({
 
     if (locationFrom.address === locationTo.address) {
       wx.showToast({
-        icon: 'none',
+        icon: "none",
         title: "Do you plan to spin around?",
       });
 
       return;
     }
 
-    const startDate = Date.parse((startDateStr + " " + startTimeStr).replace(/-/g, "/"));
+    const startDate = Date.parse(
+      (startDateStr + " " + startTimeStr).replace(/-/g, "/")
+    );
     if (startDate <= Date.now()) {
       wx.showToast({
-        icon: 'none',
-        title: `${startTimeStr} may be too late.`
+        icon: "none",
+        title: `${startTimeStr} may be too late.`,
       });
 
       return;
     }
 
-    const fee = paymentMethod === 'shareGas' ? shareGasFee : exactFee
+    const fee = paymentMethod === "shareGas" ? shareGasFee : exactFee;
 
     const participants = [];
-    if (hostType === 'driver') {
+    if (hostType === "driver") {
       participants.push(userInfo);
     }
 
@@ -76,7 +77,7 @@ Page({
       startDate,
       locationFrom,
       locationTo,
-      seatCount: hostType === 'driver' ? seatCount + 1 : seatCount,
+      seatCount: hostType === "driver" ? seatCount + 1 : seatCount,
       hostType,
       paymentMethod,
       comment,
@@ -84,23 +85,25 @@ Page({
       contact,
       participants,
       distance,
-      host: userInfo
+      host: userInfo,
     };
 
     wx.showLoading();
-    postCarpoolRequest(carpool).then(res => {
-      app.globalData.pendingMessage = 'Post success!';
+    postCarpoolRequest(carpool)
+      .then((res) => {
+        app.globalData.pendingMessage = "Post success!";
 
-      wx.hideLoading();
-      subscribeCarpoolNotification();
-    }).catch(err => {
-      wx.hideLoading();
-      app.globalData.pendingMessage = 'Post failed!';
-      wx.showToast({
-        icon: 'error',
-        title: `Post failed, ${err}`
+        wx.hideLoading();
+        subscribeCarpoolNotification();
+      })
+      .catch((err) => {
+        wx.hideLoading();
+        app.globalData.pendingMessage = "Post failed!";
+        wx.showToast({
+          icon: "error",
+          title: `Post failed, ${err}`,
+        });
       });
-    })
   },
 
   onHostTypeSelected(e) {
@@ -109,24 +112,28 @@ Page({
   },
 
   hostTypeSelected(hostType) {
-    const seatCountTitle = hostType === 'driver' ? 'How many seats do you want to share' : 'How many seats do you want'
-    const commentTitle = hostType === 'driver' ? 'Leave message to passengers' : 'Leave message to driver'
+    const seatCountTitle =
+      hostType === "driver"
+        ? "How many seats do you want to share"
+        : "How many seats do you want";
+    const commentTitle =
+      hostType === "driver"
+        ? "Leave message to passengers"
+        : "Leave message to driver";
 
     this.setData({
       hostType,
       seatCountTitle,
-      commentTitle
+      commentTitle,
     });
   },
 
   onSeatIncrease() {
-    let {
-      seatCount
-    } = this.data;
+    let { seatCount } = this.data;
 
     if (seatCount >= MAX_SEATS) {
       wx.showToast({
-        icon: 'error',
+        icon: "error",
         title: `The max is ${MAX_SEATS}`,
       });
 
@@ -135,16 +142,14 @@ Page({
 
     seatCount++;
     this.setData({
-      seatCount
+      seatCount,
     });
 
     this.calcGasSharingFee();
   },
 
   onSeatDecrease() {
-    let {
-      seatCount
-    } = this.data;
+    let { seatCount } = this.data;
 
     if (seatCount <= 1) {
       return;
@@ -152,96 +157,99 @@ Page({
 
     seatCount--;
     this.setData({
-      seatCount
+      seatCount,
     });
 
     this.calcGasSharingFee();
   },
 
   calcGasSharingFee() {
-    let {
-      distance,
-      seatCount
-    } = this.data;
+    let { distance, seatCount } = this.data;
     distance = distance || 0;
-    const fee = parseFloat(((FEE_PER_KM * distance) / (seatCount + 1)).toFixed(2));
-    const shareGasEstimatePriceStr = `¥${fee} CNY/Seat (${distance}km * ${FEE_PER_KM} / ${seatCount + 1} seats)`;
+    const fee = parseFloat(
+      ((FEE_PER_KM * distance) / (seatCount + 1)).toFixed(2)
+    );
+    const shareGasEstimatePriceStr = `¥${fee} CNY/Seat (${distance}km * ${FEE_PER_KM} / ${
+      seatCount + 1
+    } seats)`;
     this.setData({
       shareGasEstimatePriceStr,
       shareGasFee: fee,
-    })
+    });
   },
 
   onChooseLocation(e) {
     const type = e.currentTarget.dataset.type;
-    wx.chooseLocation().then(res => {
+    wx.chooseLocation().then((res) => {
       if (!res.name && !res.address) {
         return;
       }
-      if (type == 'from') {
+      if (type == "from") {
         this.setData({
-          locationFrom: res
+          locationFrom: res,
         });
       } else {
         this.setData({
-          locationTo: res
+          locationTo: res,
         });
       }
 
       // Calc distance
-      const {
-        locationFrom,
-        locationTo
-      } = this.data;
+      const { locationFrom, locationTo } = this.data;
 
       if (locationFrom && locationTo) {
-        const distance = calcDistance(locationFrom.latitude, locationFrom.longitude, locationTo.latitude, locationTo.longitude);
+        const distance = calcDistance(
+          locationFrom.latitude,
+          locationFrom.longitude,
+          locationTo.latitude,
+          locationTo.longitude
+        );
         this.setData({
-          distance
+          distance,
         });
         this.calcGasSharingFee();
       }
-    })
+    });
   },
 
   onStartDatePicked(e) {
     const startDateStr = e.detail.value;
     this.setData({
-      startDateStr
-    })
+      startDateStr,
+    });
   },
 
   onStartTimePicked(e) {
     const startTimeStr = e.detail.value;
     this.setData({
-      startTimeStr
-    })
+      startTimeStr,
+    });
   },
 
   onChoosePaymentMethod(e) {
     const paymentMethod = e.currentTarget.dataset.method;
     this.setData({
-      paymentMethod
+      paymentMethod,
     });
   },
 
   onExactlyPriceInput(e) {
     const exactFee = parseFloat(parseFloat(e.detail.value || 0).toFixed(2));
     this.setData({
-      exactFee
-    })
+      exactFee,
+    });
   },
 
   onComment(e) {
     this.setData({
-      comment: e.detail.value
-    })
+      comment: e.detail.value,
+    });
   },
 
   onContactInput(e) {
     this.setData({
-      contact: e.detail.value
-    })
+      contact: e.detail.value,
+    });
   },
 
   /**
@@ -258,62 +266,50 @@ Page({
       startDateStr,
       startTimeStr,
     });
-    this.hostTypeSelected('driver');
+    this.hostTypeSelected("driver");
     this.calcGasSharingFee();
 
-    fetchUserInfo().then(userInfo => {
+    fetchUserInfo().then((userInfo) => {
       this.setData({
-        userInfo
-      })
-    })
+        userInfo,
+      });
+    });
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-
-  },
+  onReady: function () {},
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-
-  },
+  onShow: function () {},
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
-
-  },
+  onHide: function () {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
-
-  },
+  onUnload: function () {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-
-  },
+  onPullDownRefresh: function () {},
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-
-  },
+  onReachBottom: function () {},
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function () {},
 
-  }
-})
+  onShareTimeline: function () {},
+});

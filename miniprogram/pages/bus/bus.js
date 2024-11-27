@@ -1,18 +1,12 @@
-import {
-  getAppConfig
-} from "../../repository/baseRepo";
-import {
-  fetchAllRoutes,
-  fetchGpsLocation
-} from "../../repository/busRepo"
+import { getAppConfig } from "../../repository/baseRepo";
+import { fetchAllRoutes, fetchGpsLocation } from "../../repository/busRepo";
 
 const app = getApp();
 const FETCH_GPS_INTERVAL = 4000;
 
-const SITE_ID = "c9172ca4-94d8-600c-162d-429c84522021"
+const SITE_ID = "c9172ca4-94d8-600c-162d-429c84522021";
 // pages/bus/bus.js
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -30,14 +24,14 @@ Please come to Reception to collect the shuttle card if you need to take the shu
 Due to the station parking time limitation, our shuttle will leave bus stop immediately. To avoid missing the bus, please make sure to arrive at least 5 minutes ahead.
 
 4.班车前挡风玻璃处将放置苏州微软标志以便大家辨认。
-For your convenience, we will set Microsoft logo at shuttle bus front glass.`
+For your convenience, we will set Microsoft logo at shuttle bus front glass.`,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    getAppConfig().then(appConfig => {
+    getAppConfig().then((appConfig) => {
       // const nowDate = new Date().toISOString().substring(0, 10).replaceAll("-", "/");
 
       // const startTimeStr1 = appConfig.features.shuttleBus.startTime1;
@@ -59,17 +53,16 @@ For your convenience, we will set Microsoft logo at shuttle bus front glass.`
 
       this.setData({
         gpsAvailable,
-        shuttleBusTip: appConfig.shuttleBusTip
-      })
+        shuttleBusTip: appConfig.shuttleBusTip,
+      });
 
-
-      fetchAllRoutes(SITE_ID).then(routes => {
+      fetchAllRoutes(SITE_ID).then((routes) => {
         console.log(routes);
 
         // Sort by sequence
         routes.sort((a, b) => {
-          return a.sequence - b.sequence
-        })
+          return a.sequence - b.sequence;
+        });
 
         for (const route of routes) {
           if (!route.stations || route.stations.length == 0) {
@@ -103,11 +96,11 @@ For your convenience, we will set Microsoft logo at shuttle bus front glass.`
         });
 
         if (gpsAvailable) {
-          this.getGpsLocationFirstLoad()
+          this.getGpsLocationFirstLoad();
         }
         this.updateStationMarkers(true);
         this.startGetGpsLocationWorker(selectedRoute.id);
-      })
+      });
     });
   },
 
@@ -116,26 +109,30 @@ For your convenience, we will set Microsoft logo at shuttle bus front glass.`
       selectedRoute,
       selectedStationIndex,
       showMakerTitle,
-      busRealTimeLocation
+      busRealTimeLocation,
     } = this.data;
     const markers = [];
     const includePoints = [];
     const selectedStation = selectedRoute.stations[selectedStationIndex];
     for (const station of selectedRoute.stations) {
-      const display = showMakerTitle ? 'ALWAYS' : selectedStation.id == station.id ? 'ALWAYS' : 'BYCLICK';
+      const display = showMakerTitle
+        ? "ALWAYS"
+        : selectedStation.id == station.id
+        ? "ALWAYS"
+        : "BYCLICK";
       markers.push({
         id: station.position,
         latitude: station.latitude,
         longitude: station.longitude,
         callout: {
           content: station.nameCh,
-          color: '#ffffff',
-          bgColor: '#5f85e6',
+          color: "#ffffff",
+          bgColor: "#5f85e6",
           fontSize: 10,
           borderRadius: 4,
           padding: 8,
           display,
-        }
+        },
       });
 
       includePoints.push({
@@ -153,67 +150,64 @@ For your convenience, we will set Microsoft logo at shuttle bus front glass.`
         height: 30,
         callout: {
           content: busRealTimeLocation.plateNum,
-          color: '#000000',
-          bgColor: '#f1f1f1',
+          color: "#000000",
+          bgColor: "#f1f1f1",
           fontSize: 11,
           borderRadius: 4,
           padding: 8,
           display: "ALWAYS",
         },
-        iconPath: "../../images/ic_bus_marker.png"
+        iconPath: "../../images/ic_bus_marker.png",
       });
     }
 
     const polyLines = [];
     polyLines.push({
       points: includePoints,
-      color: '#4989c4',
-      width: 2
-    })
+      color: "#4989c4",
+      width: 2,
+    });
     this.setData({
       markers,
-      polyLines
+      polyLines,
     });
 
     if (updateIncludePoints) {
       this.setData({
-        includePoints
+        includePoints,
       });
     }
   },
 
   onSearchButtonClicked(e) {
     this.setData({
-      showingModal: 'search'
+      showingModal: "search",
     });
   },
 
   onDismissModal() {
     this.setData({
-      showingModal: ''
+      showingModal: "",
     });
   },
 
   onSearchItemClicked(e) {
-    this.onDismissModal()
+    this.onDismissModal();
 
     const searchResult = e.currentTarget.dataset.result;
-    this.routeSelect(searchResult.routeIndex, searchResult.stationIndex, true)
+    this.routeSelect(searchResult.routeIndex, searchResult.stationIndex, true);
 
     this.setData({
       searchResults: [],
-      searchText: ""
-    })
+      searchText: "",
+    });
   },
 
   onSearchTextChanged(e) {
     const text = e.detail.value.toLowerCase();
-    const {
-      routes
-    } = this.data;
-    const searchResults = []
+    const { routes } = this.data;
+    const searchResults = [];
     for (const [routeIndex, route] of routes.entries()) {
-
       // Search by route name
       const routeName = route.nameCh + route.nameEn;
       if (routeName.search(text) != -1) {
@@ -222,7 +216,7 @@ For your convenience, we will set Microsoft logo at shuttle bus front glass.`
           routeIndex,
           stationIndex: 0,
           hint: "",
-        })
+        });
       } else {
         // Search by station name
         for (const [stationIndex, station] of route.stations.entries()) {
@@ -233,7 +227,7 @@ For your convenience, we will set Microsoft logo at shuttle bus front glass.`
               routeIndex,
               stationIndex,
               hint: stationName,
-            })
+            });
             break;
           }
         }
@@ -242,16 +236,13 @@ For your convenience, we will set Microsoft logo at shuttle bus front glass.`
 
     this.setData({
       searchResults,
-      searchText: text
-    })
+      searchText: text,
+    });
   },
 
   onMapMarkerClicked(e) {
     const markerId = e.markerId;
-    let {
-      selectedRoute,
-      selectedStationIndex
-    } = this.data;
+    let { selectedRoute, selectedStationIndex } = this.data;
     for (let [index, station] of selectedRoute.stations.entries()) {
       if (station.position === markerId) {
         selectedStationIndex = index;
@@ -273,38 +264,33 @@ For your convenience, we will set Microsoft logo at shuttle bus front glass.`
     console.log(e);
     const showMakerTitle = e.detail.value;
     this.setData({
-      showMakerTitle
+      showMakerTitle,
     });
 
     this.updateStationMarkers(false);
   },
 
   getGpsLocationFirstLoad() {
-    let {
-      routes
-    } = this.data;
+    let { routes } = this.data;
     const allRequests = [];
     for (const route of routes) {
       allRequests.push(fetchGpsLocation(route.id));
     }
-    let routeIdx = 0
-    Promise.allSettled(allRequests).then(results => {
+    let routeIdx = 0;
+    Promise.allSettled(allRequests).then((results) => {
       results.forEach((result) => {
-        routes[routeIdx].gps = result.value
+        routes[routeIdx].gps = result.value;
         routeIdx++;
       });
 
       this.setData({
-        routes
-      })
-    })
+        routes,
+      });
+    });
   },
 
   startGetGpsLocationWorker(routeId) {
-    const {
-      lastIntervalId,
-      gpsAvailable
-    } = this.data;
+    const { lastIntervalId, gpsAvailable } = this.data;
 
     if (!gpsAvailable) {
       return;
@@ -321,26 +307,30 @@ For your convenience, we will set Microsoft logo at shuttle bus front glass.`
     }, FETCH_GPS_INTERVAL);
 
     this.setData({
-      lastIntervalId: intervalId
-    })
+      lastIntervalId: intervalId,
+    });
   },
 
   getGpsLocation(routeId) {
-    fetchGpsLocation(routeId).then(res => {
+    fetchGpsLocation(routeId).then((res) => {
       console.log(routeId, res);
-      const busRealTimeLocation = res.data ? res.data : null
+      const busRealTimeLocation = res.data ? res.data : null;
       this.setData({
-        busRealTimeLocation
+        busRealTimeLocation,
       });
 
       this.updateStationMarkers(false);
-    })
+    });
   },
 
-  routeSelect(selectedRouteIndex, selectedStationIndex, needScrollToRoute = false) {
+  routeSelect(
+    selectedRouteIndex,
+    selectedStationIndex,
+    needScrollToRoute = false
+  ) {
     const selectedRoute = this.data.routes[selectedRouteIndex];
     const selectedStation = selectedRoute.stations[selectedStationIndex];
-    let scrollToRouteId = ''
+    let scrollToRouteId = "";
     if (needScrollToRoute) {
       scrollToRouteId = selectedRoute.id;
     }
@@ -354,11 +344,11 @@ For your convenience, we will set Microsoft logo at shuttle bus front glass.`
       selectedStationIndex,
       scrollToStationId,
       selectedStationLatitude,
-      selectedStationLongitude
+      selectedStationLongitude,
     });
 
     this.updateStationMarkers(true);
-    this.startGetGpsLocationWorker(selectedRoute.id)
+    this.startGetGpsLocationWorker(selectedRoute.id);
   },
 
   onRouteSelected(e) {
@@ -369,15 +359,13 @@ For your convenience, we will set Microsoft logo at shuttle bus front glass.`
   onStationClicked(e) {
     const selectedStationIndex = e.currentTarget.dataset.index;
 
-    const {
-      selectedRoute
-    } = this.data;
+    const { selectedRoute } = this.data;
     const selectedStation = selectedRoute.stations[selectedStationIndex];
     const selectedStationLatitude = selectedStation.latitude;
     const selectedStationLongitude = selectedStation.longitude;
     this.setData({
       selectedStationIndex,
-      scrollToStationId: '',
+      scrollToStationId: "",
       selectedStationLatitude,
       selectedStationLongitude,
     });
@@ -388,31 +376,23 @@ For your convenience, we will set Microsoft logo at shuttle bus front glass.`
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady() {
-
-  },
+  onReady() {},
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow() {
-
-  },
+  onShow() {},
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide() {
-
-  },
+  onHide() {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-    const {
-      lastIntervalId
-    } = this.data;
+    const { lastIntervalId } = this.data;
     if (lastIntervalId) {
       clearInterval(lastIntervalId);
     }
@@ -421,21 +401,17 @@ For your convenience, we will set Microsoft logo at shuttle bus front glass.`
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh() {
-
-  },
+  onPullDownRefresh() {},
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom() {
-
-  },
+  onReachBottom() {},
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage() {
+  onShareAppMessage() {},
 
-  }
-})
+  onShareTimeline() {},
+});

@@ -2,73 +2,58 @@ import { adminQuery, adminUpdate } from "../../repository/glossaryRepo";
 
 // pages/gloassaryAdmin/gloassaryAdmin.js
 Page({
-
   /**
    * Page initial data
    */
-  data: {
-
-  },
+  data: {},
 
   /**
    * Lifecycle function--Called when page load
    */
-  onLoad(options) {
-
-  },
+  onLoad(options) {},
 
   /**
    * Lifecycle function--Called when page is initially rendered
    */
-  onReady() {
-
-  },
+  onReady() {},
 
   /**
    * Lifecycle function--Called when page show
    */
   onShow() {
     const term_id = "";
-    adminQuery().then(res => {
+    adminQuery().then((res) => {
       console.log(res);
-    })
-    adminUpdate(term_id).then(res => {
+    });
+    adminUpdate(term_id).then((res) => {
       console.log(res);
-    })
+    });
   },
 
   /**
    * Lifecycle function--Called when page hide
    */
-  onHide() {
-
-  },
+  onHide() {},
 
   /**
    * Lifecycle function--Called when page unload
    */
-  onUnload() {
-
-  },
+  onUnload() {},
 
   /**
    * Page event handler function--Called when user drop down
    */
-  onPullDownRefresh() {
-
-  },
+  onPullDownRefresh() {},
 
   /**
    * Called when page reach bottom
    */
-  onReachBottom() {
-
-  },
+  onReachBottom() {},
 
   /**
    * Called when user click on the top right corner to share
    */
-  onShareAppMessage() {
+  onShareAppMessage() {},
 
-  }
-})
+  onShareTimeline() {},
+});

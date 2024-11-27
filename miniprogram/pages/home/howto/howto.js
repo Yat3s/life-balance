@@ -1,27 +1,19 @@
-import {
-  fetchFaq
-} from "../../../repository/dashboardRepo"
+import { fetchFaq } from "../../../repository/dashboardRepo";
 import { fetchUserInfoOrSignup } from "../../../repository/userRepo";
-import {
-  navigateToAuth,
-  navigateToHowToDeatil
-} from "../../router";
+import { navigateToAuth, navigateToHowToDeatil } from "../../router";
 
 const app = getApp();
 
 // pages/home/howto/howto.js
 Page({
-
   /**
    * 页面的初始数据
    */
-  data: {
-
-  },
+  data: {},
 
   onItemClick(e) {
     const id = e.currentTarget.dataset.id;
-    
+
     const userInfo = app.globalData.userInfo;
     if (userInfo && userInfo.company) {
       navigateToHowToDeatil(id);
@@ -29,27 +21,27 @@ Page({
     }
 
     wx.showLoading();
-    fetchUserInfoOrSignup().then(user => {
-      wx.hideLoading();
-      if (user.company) {
-        navigateToHowToDeatil(id);
-      } else {
-        navigateToAuth();
-      }
-    }).catch(err => {
-      wx.hideLoading();
-      wx.showToast({
-        icon: 'none',
-        title: "Can't view in anonymously",
+    fetchUserInfoOrSignup()
+      .then((user) => {
+        wx.hideLoading();
+        if (user.company) {
+          navigateToHowToDeatil(id);
+        } else {
+          navigateToAuth();
+        }
       })
-    });
+      .catch((err) => {
+        wx.hideLoading();
+        wx.showToast({
+          icon: "none",
+          title: "Can't view in anonymously",
+        });
+      });
   },
 
   onSearchQas(e) {
     const word = e.detail.value.toLowerCase();
-    const {
-      qas
-    } = this.data;
+    const { qas } = this.data;
     for (const qa of qas) {
       const title = qa.title.toLowerCase();
       const tagStr = qa.tags.join(" ").toLowerCase();
@@ -57,8 +49,8 @@ Page({
     }
 
     this.setData({
-      qas
-    })
+      qas,
+    });
   },
 
   /**
@@ -66,65 +58,53 @@ Page({
    */
   onLoad: function (options) {
     wx.showLoading({
-      title: 'Loading',
+      title: "Loading",
     });
-    fetchFaq().then(qas => {
+    fetchFaq().then((qas) => {
       wx.hideLoading();
       for (const qa of qas) {
         qa.show = true;
       }
       this.setData({
-        qas
-      })
-    })
+        qas,
+      });
+    });
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-
-  },
+  onReady: function () {},
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-
-  },
+  onShow: function () {},
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
-
-  },
+  onHide: function () {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
-
-  },
+  onUnload: function () {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-
-  },
+  onPullDownRefresh: function () {},
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-
-  },
+  onReachBottom: function () {},
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function () {},
 
-  }
-})
+  onShareTimeline: function () {},
+});

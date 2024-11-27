@@ -1,7 +1,7 @@
-import { DELIVERY_TYPE, ORDER_STATUS } from '../../../lib/constants';
-import { formatDate, maskPhoneNumber } from '../../../lib/utils';
-import { getAppConfig } from '../../../repository/baseRepo';
-import { fetchOrder } from '../../../repository/orderRepo';
+import { DELIVERY_TYPE, ORDER_STATUS } from "../../../lib/constants";
+import { formatDate, maskPhoneNumber } from "../../../lib/utils";
+import { getAppConfig } from "../../../repository/baseRepo";
+import { fetchOrder } from "../../../repository/orderRepo";
 
 Page({
   data: {
@@ -19,7 +19,7 @@ Page({
           ...order,
           contactPhone: order.contactPhone
             ? maskPhoneNumber(order.contactPhone)
-            : '',
+            : "",
           orderStatus: this.getOrderStatus(order.status),
           deliveryTypeText: this.getDeliveryType(order.deliveryType),
           formattedTime: formatDate(order.paidAt),
@@ -35,40 +35,43 @@ Page({
   getDeliveryType(type) {
     switch (type) {
       case DELIVERY_TYPE.DELIVERY:
-        return '快递配送';
+        return "快递配送";
       case DELIVERY_TYPE.SELF_PICKUP:
-        return '自提';
+        return "自提";
       case DELIVERY_TYPE.WORKPLACE:
-        return '送至工位';
+        return "送至工位";
       default:
-        return '';
+        return "";
     }
   },
 
   getOrderStatus(status) {
     switch (status) {
       case ORDER_STATUS.UNPAID:
-        return '待支付';
+        return "待支付";
       case ORDER_STATUS.PENDING_DELIVERY:
-        return '待发货';
+        return "待发货";
       case ORDER_STATUS.DELIVERED:
-        return '已发货';
+        return "已发货";
       case ORDER_STATUS.COMPLETED:
-        return '已完成';
+        return "已完成";
       default:
-        return '';
+        return "";
     }
   },
 
   navigateToHome() {
     wx.reLaunch({
-      url: '/pages/index/index',
+      url: "/pages/index/index",
     });
   },
 
   navigateToOrders() {
     wx.navigateTo({
-      url: '/pages/user/user-product/user-product?tab=userOrders',
+      url: "/pages/user/user-product/user-product?tab=userOrders",
     });
   },
+  onShareAppMessage() {},
+
+  onShareTimeline() {},
 });

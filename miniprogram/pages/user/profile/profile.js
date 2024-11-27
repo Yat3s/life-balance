@@ -1,48 +1,45 @@
 const { formatDate } = require("../../../common/util");
 const {
-  fetchUserActivities, fetchUserGroups
+  fetchUserActivities,
+  fetchUserGroups,
 } = require("../../../repository/activityRepo");
-const {
-  fetchUserProfile
-} = require("../../../repository/userRepo");
+const { fetchUserProfile } = require("../../../repository/userRepo");
 const { navigateToGroupDetail, navigateToGroup } = require("../../router");
 
 // pages/user/profile/profile.js
 Page({
-
   /**
    * 页面的初始数据
    */
-  data: {
-
-  },
+  data: {},
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     const id = options.id;
-    fetchUserProfile(id).then(user => {
+    fetchUserProfile(id).then((user) => {
       console.log(user);
       if (user.birthday) {
-        user.age = ((new Date()).getFullYear()) - parseInt(user.birthday.slice(0, 4));
+        user.age =
+          new Date().getFullYear() - parseInt(user.birthday.slice(0, 4));
         console.log(parseInt(user.birthday.slice(0, 4)));
       }
       this.setData({
-        user
+        user,
       });
     });
 
-    fetchUserActivities(id).then(activities => {
+    fetchUserActivities(id).then((activities) => {
       console.log("fetchUserActivities", activities);
-      activities.forEach(activity => {
+      activities.forEach((activity) => {
         activity.isOrganizer = activity.organizer._id === id;
-        activity.createDateStr = formatDate(activity._createTime)
+        activity.createDateStr = formatDate(activity._createTime);
       });
       this.setData({
-        activities
-      })
-    })
+        activities,
+      });
+    });
   },
 
   onGroupClick(e) {
@@ -63,56 +60,44 @@ Page({
     }
 
     wx.previewImage({
-      urls
-    })
+      urls,
+    });
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-
-  },
+  onReady: function () {},
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-
-  },
+  onShow: function () {},
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
-
-  },
+  onHide: function () {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
-
-  },
+  onUnload: function () {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-
-  },
+  onPullDownRefresh: function () {},
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-
-  },
+  onReachBottom: function () {},
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage() {},
 
-  }
-})
+  onShareTimeline() {},
+});
