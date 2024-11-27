@@ -182,16 +182,26 @@
   </view>
 </view>
 <!-- Flea Market Product Modal -->
-<view class="cu-modal {{ showingModal === 'flea-market-product' ? 'show' : '' }}" bind:tap="hideModal" catchtouchmove>
+<view class="cu-modal {{ userInfo.company && showingModal === 'flea-market-product' ? 'show' : '' }}" bind:tap="hideModal" catchtouchmove>
   <view class="cu-dialog rounded-lg bg-white" catch:tap>
     <view class="p-6">
-      <!-- User name -->
-      <view class="flex items-center gap-3dot5 mb-3">
-        <image src="{{selectedProduct.user.avatarUrl}}" class="w-8 h-8 rounded" mode="aspectFill" />
-        <view class="text-left">
-          <view class="text-xs text-nickname truncate w-36">{{selectedProduct.user.nickName}}</view>
-          <view class="text-xxs text-time">{{selectedProduct.formattedTime}}发布</view>
+      <view class="flex justify-between mb-3">
+        <!-- User name -->
+        <view class="flex items-center gap-3dot5">
+          <image src="{{selectedProduct.user.avatarUrl}}" class="w-8 h-8 rounded" mode="aspectFill" />
+          <view class="text-left">
+            <view class="text-xs text-nickname truncate w-36">
+              {{selectedProduct.user.nickName}}
+            </view>
+            <view class="text-xxs text-time">{{selectedProduct.formattedTime}}发布</view>
+          </view>
         </view>
+        <button class="share-btn" open-type="share" data-product="{{selectedProduct}}">
+          <view class="flex items-center gap-1">
+            <image class="w-3 h-3 mb-0dot5" src="/images/ic_share.svg" />
+            <text class="text-xs">分享给好友</text>
+          </view>
+        </button>
       </view>
       <view class="mb-2 text-left">
         <view class="{{selectedProduct.type === 'sell' ? 'bg-sell' : 'bg-wanted'}} mr-2 px-1dot5 inline-block w-fit py-0dot5 rounded text-white text-xxs shrink-0">
@@ -217,12 +227,6 @@
           </view>
         </block>
       </block>
-      <button class="share-btn" open-type="share" data-product="{{selectedProduct}}">
-        <view class="flex items-center gap-1">
-          <text class="cuIcon-share"></text>
-          <text class="text-xs">分享给好友</text>
-        </view>
-      </button>
       <view class="flex items-center justify-between mt-1">
         <view class="flex flex-col text-left">
           <view class="text-custom-price text-black text-price">{{selectedProduct.price}}</view>
