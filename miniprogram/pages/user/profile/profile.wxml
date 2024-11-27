@@ -1,98 +1,109 @@
-<toolbar isBack="{{true}}"></toolbar>
-<view class="main">
-  <!-- About -->
-  <view class="about-container">
-    <view class="name-container">
-      <view class="about-name">{{user.nickName}}</view>
+<toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
+<view class="pt-0 pb-10 plr">
+  <block wx:if="{{user.photos && user.photos.length > 0}}">
+    <block wx:if="{{user.photos.length > 1}}">
+      <swiper class="screen-swiper round-dot w-full h-72 mb-4" bind:tap="onPhotoClick" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
+        <swiper-item wx:for="{{user.photos}}" wx:for-item="photo" wx:key="*this">
+          <image src="{{photo}}" mode="aspectFill" class="w-full h-full rounded-lg" />
+        </swiper-item>
+      </swiper>
+    </block>
+    <block wx:else>
+      <view class="w-full h-72 mb-4" bind:tap="onPhotoClick">
+        <image src="{{user.photos[0]}}" mode="aspectFill" class="w-full h-full rounded-lg" />
+      </view>
+    </block>
+  </block>
+  <block wx:else>
+    <image src="{{user.avatarUrl}}" bind:tap="onPhotoClick" mode="aspectFill" class="w-full h-72 mb-4 rounded-lg" />
+  </block>
+  <!-- Nick Name -->
+  <view class="text-center flex items-center justify-center flex-col mb-8">
+    <view class="text-2xl font-medium">{{user.nickName}}</view>
+    <view wx:if="{{user.company}}" class="flex items-center text-gray-info text-xs mt-1">
+      <image class="w-4 h-4 mr-1" src="/images/ic_ms.png" />
+      <text>{{company.name}}</text>
     </view>
-    <view class="about-section-title margin-top-lg">About me</view>
-    <view style="flex-wrap: wrap;" class="flex align-center">
-      <view class="about-tag margin-right-sm margin-bottom-xs" wx:if="{{user.age}}">
-        {{user.age}} 岁
+  </view>
+  <!-- User Info -->
+  <view class="mb-8">
+    <view class="font-semibold text-sm text-black mb-2">关于我</view>
+    <view wx:if="{{hasUserInfo}}" class="flex flex-wrap gap-2">
+      <view wx:if="{{user.height}}" class="flex items-center border-gray-light rounded-full px-4 py-1 gap-2 bg-info">
+        <text class="text-xs">👤</text>
+        <text class="text-sm text-info">{{user.height}}</text>
       </view>
-      <view class="about-tag margin-right-sm margin-bottom-xs" wx:if="{{user.height}}">
-        {{user.height}} cm
+      <view wx:if="{{user.weight}}" class="flex items-center border-gray-light rounded-full px-4 py-1 gap-2 bg-info">
+        <text class="text-xs">👤</text>
+        <text class="text-sm text-info">{{user.weight}}</text>
       </view>
-      <view class="about-tag margin-right-sm margin-bottom-xs" wx:if="{{user.hometown}}">
-        家乡 · {{user.hometown}}
+      <view wx:if="{{user.school}}" class="flex items-center border-gray-light rounded-full px-4 py-1 gap-2 bg-info">
+        <text class="text-xs">🏫</text>
+        <text class="text-sm text-info">{{user.school}}</text>
       </view>
-      <view class="about-tag margin-right-sm margin-bottom-xs" wx:if="{{user.school}}">
-        {{user.school}}
+      <view wx:if="{{user.occupation}}" class="flex items-center border-gray-light rounded-full px-4 py-1 gap-2 bg-info">
+        <text class="text-xs">💼</text>
+        <text class="text-sm text-info">{{user.occupation}}</text>
       </view>
-      <view class="about-tag margin-right-sm margin-bottom-xs" wx:if="{{user.occupation}}">
-        {{user.occupation}}
+      <view wx:if="{{user.age}}" class="flex items-center border-gray-light rounded-full px-4 py-1 gap-2 bg-info">
+        <text class="text-xs">🎂</text>
+        <text class="text-sm text-info">{{user.age}} 岁</text>
       </view>
     </view>
-    <view class="about-section-title margin-top-lg">My story</view>
-    <view class="about-description margin-top-xs">{{user.desc || 'Nothing here'}}</view>
-    <!-- Pictures -->
-    <!-- <view class="about-section-title margin-top-lg">My Pictures</view>
-    <view class="flex margin-top-xs">
-      <image bindtap="onPhotoClick" wx:if="{{!user.photos || user.photos.length == 0}}" class="about-photo" src="{{user.avatarUrl}}"></image>
-      <image bindtap="onPhotoClick" wx:for="{{user.photos}}" wx:key="item" mode="aspectFill" class="about-photo margin-right" src="{{item}}"></image>
-    </view> -->
+    <view wx:else class="text-xs text-gray-info">神秘人一枚，暂时没添加任何标签～</view>
   </view>
   <!-- Groups -->
-  <!-- <view class="group-container margin-top-lg">
-
-    <view class="flex align-center justify-between">
-      <view class="name-container">
-        <view class="section-title">{{user.nickName}}的圈子</view>
-        <view class="name-underline"></view>
+  <view class="mb-8">
+    <view class="font-semibold text-sm text-black mb-2">加入的群组</view>
+    <view class="text-xs text-gray-info" wx:if="{{!groups || groups.length == 0}}">暂未加入过群组</view>
+    <scroll-view scroll-x="{{true}}">
+      <view class="flex items-center gap-2">
+        <view wx:for="{{groups}}" wx:key="_id">
+          <view class="circle-item">
+            <view class="flex justify-between">
+              <image lazy-load="true" src="{{item.coverPic}}" mode="aspectFill" wx:if="{{item.coverPic}}" class="circle-cover-pic"></image>
+              <view wx:if="{{!item.coverPic}}" class="circle-logo-bg center">
+                <image lazy-load="true" class="circle-logo" src="{{item.icon}}"></image>
+              </view>
+            </view>
+            <view class="margin-top text-black font-semibold text-sm single-line">
+              {{item.name}}
+            </view>
+            <view class="margin-top circle-team-only">
+              {{item.teamOnly ? item.teamOnlyStr + " Only" : ''}}
+            </view>
+            <view class="margin-top-sm circle-tag single-line">{{item.tagStr}}</view>
+            <view class="margin-top-sm circle-member">{{item.memberCount}}+ members</view>
+          </view>
+        </view>
       </view>
-
-      <view class="group-all" bindtap="onAllGroupClick">查看全部圈子</view>
-    </view>
-
-    <view class="empty-message margin-top" wx:if="{{!groups || groups.length == 0}}">
-      还未加入任何圈子
-    </view>
-
-    <view class="flex align-center margin-top-sm">
-      <view bindtap="onGroupClick" data-id="{{item._id}}" wx:for="{{groups}}" wx:key="_id" class="margin-right">
-        <image src="{{item.picture}}" mode="aspectFill" class="group-picture"></image>
-        <view class="group-name">{{item.name}}</view>
-        <view class="group-desc margin-top-xs">{{item.city}} · {{item.members.length}}位成员</view>
-      </view>
-    </view>
-  </view> -->
+    </scroll-view>
+  </view>
   <!-- Activities -->
-  <view class="activity-container margin-top-lg">
-    <view class="name-container">
-      <view class="section-title">{{user.nickName}}'s activities</view>
+  <view class="mb-8">
+    <view class="font-semibold text-sm text-black mb-2">参与的活动</view>
+    <view class="text-xs text-gray-info" wx:if="{{!activities || activities.length == 0}}">
+      暂未参与过任何活动
     </view>
-    <view class="empty-message margin-top" wx:if="{{!activities || activities.length == 0}}">
-      Nothing here
-    </view>
-    <view class="margin-top-lg">
-      <view wx:for="{{activities}}" wx:key="_id" class="margin-bottom">
-        <view wx:if="{{item.isOrganizer}}" class="flex align-center">
-          <view class="activity-timeline-container">
-            <view class="activity-timeline-point-organizer"></view>
+    <scroll-view scroll-x="{{true}}">
+      <view class="flex items-center gap-2">
+        <view bind:tap="onActivityItemClicked" data-id="{{item._id}}" wx:for="{{activities}}" class="bg-custom-blue rounded-lg p-4 activity-item shrink-0 border-gray-light">
+          <!-- Title -->
+          <view class="flex items-center">
+            <view class="text-sm font-semibold text-black single-line">{{item.title}}</view>
           </view>
-          <view class="activity-event-title margin-left-xs">
-            Posted this activity at
-            <text class="text-black">{{item.createDateStr}}</text>
-          </view>
-        </view>
-        <view wx:if="{{!item.isOrganizer}}" class="flex align-center">
-          <view class="activity-timeline-container">
-            <view class="activity-timeline-point-participant"></view>
-          </view>
-          <view class="activity-event-title">
-            Join this activity at
-            <text class="text-black">{{item.createDateStr}}</text>
-          </view>
-        </view>
-        <view class="flex margin-top-xs">
-          <view class="activity-timeline-container">
-            <view class="activity-timeline-line"></view>
-          </view>
-          <view class="margin-left-xs" style="width: 100%;">
-            <activityItem activity="{{item}}"></activityItem>
+          <!-- Info -->
+          <view class="activity-info margin-top-sm text-xs single-line">
+            {{item.startDateStr}} {{item.location.name}}
           </view>
         </view>
       </view>
-    </view>
+    </scroll-view>
+  </view>
+  <!-- Story -->
+  <view>
+    <view class="font-semibold text-sm text-black mb-2">想说的话</view>
+    <view wx:if="{{user.desc}}" class="text-xs text-gray">{{user.desc}}</view>
+    <view wx:else class="text-xs text-gray">貌似没有什么想说的</view>
   </view>
 </view>

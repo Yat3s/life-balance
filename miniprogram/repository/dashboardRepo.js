@@ -1,14 +1,14 @@
-import { fetchAllPublishedActivities } from "./activityRepo";
+import { fetchAllPublishedActivities } from './activityRepo';
 
-const util = require("../common/util");
-const { cloudCall, cloudFunctionCall } = require("./baseRepo");
-const FUNCTION_NAME = "dashboardFunctions";
-const COLLECTION_NAME_BUILDING2 = "building2";
-const COLLECTION_NAME_FOOD_MENU_B25 = "foodmenu";
-const COLLECTION_NAME_FOOD_MENU_ZM = "foodmenu-zhongmeng";
-const COLLECTION_NAME_WECHAT_GROUPS = "wechatgroups";
-const COLLECTION_ACTIVITY = "activities";
-const COLLECTION_NAME_FAQ = "faq";
+const util = require('../common/util');
+const { cloudCall, cloudFunctionCall } = require('./baseRepo');
+const FUNCTION_NAME = 'dashboardFunctions';
+const COLLECTION_NAME_BUILDING2 = 'building2';
+const COLLECTION_NAME_FOOD_MENU_B25 = 'foodmenu';
+const COLLECTION_NAME_FOOD_MENU_ZM = 'foodmenu-zhongmeng';
+const COLLECTION_NAME_WECHAT_GROUPS = 'wechatgroups';
+const COLLECTION_ACTIVITY = 'activities';
+const COLLECTION_NAME_FAQ = 'faq';
 
 const db = wx.cloud.database();
 const _ = db.command;
@@ -18,18 +18,18 @@ const preProcessWechatGroups = (groups) => {
     return b._createTime - a._createTime;
   });
   for (const group of groups) {
-    let tagStr = "";
+    let tagStr = '';
     if (group.citys) {
-      tagStr += group.citys.join(" / ");
+      tagStr += group.citys.join(' / ');
     }
     if (group.tags) {
       if (tagStr) {
-        tagStr += " / ";
+        tagStr += ' / ';
       }
-      tagStr += group.tags.join(" / ");
+      tagStr += group.tags.join(' / ');
     }
     group.tagStr = tagStr;
-    group.cityStr = group.citys ? group.citys.join("/") : "";
+    group.cityStr = group.citys ? group.citys.join('/') : '';
   }
 };
 
@@ -40,7 +40,7 @@ const preProcessFaq = (qas) => {
 };
 
 function processQa(qa) {
-  qa.siteStr = qa.sites.join("/");
+  qa.siteStr = qa.sites.join('/');
 }
 
 const preProcessMenuData = (menus) => {
@@ -69,21 +69,21 @@ const preProcessStartDate = (data) => {
 };
 
 export function fetchParkingSpace() {
-  return cloudFunctionCall(FUNCTION_NAME, "fetchParkingSpace");
+  return cloudFunctionCall(FUNCTION_NAME, 'fetchParkingSpace');
 }
 
 export function fetchStockData() {
-  return cloudFunctionCall(FUNCTION_NAME, "fetchStockData");
+  return cloudFunctionCall(FUNCTION_NAME, 'fetchStockData');
 }
 
 export function fetchLatestWechatGroups() {
   return cloudCall(
     db
       .collection(COLLECTION_NAME_WECHAT_GROUPS)
-      .orderBy("_createTime", "desc")
+      .orderBy('_createTime', 'desc')
       .limit(1)
       .get(),
-    "fetchLatestWechatGroups",
+    'fetchLatestWechatGroups',
     preProcessWechatGroups
   );
 }
@@ -91,8 +91,20 @@ export function fetchLatestWechatGroups() {
 export function fetchWechatGroups() {
   return cloudFunctionCall(
     FUNCTION_NAME,
-    "fetchWechatGroups",
+    'fetchWechatGroups',
     null,
+    preProcessWechatGroups
+  );
+}
+
+export function fetchUserWechatGroups(id) {
+  const data = {
+    id,
+  };
+  return cloudFunctionCall(
+    FUNCTION_NAME,
+    'fetchUserWechatGroups',
+    data,
     preProcessWechatGroups
   );
 }
@@ -108,16 +120,16 @@ export function fetchUpcomingActivity() {
       .where({
         endDate: _.gt(Date.now()),
       })
-      .orderBy("endDate", "desc")
+      .orderBy('endDate', 'desc')
       .limit(1)
       .get(),
-    "fetchLatestActivity",
+    'fetchLatestActivity',
     preProcessStartDate
   );
 }
 
 export function fetchFaq() {
-  return cloudFunctionCall(FUNCTION_NAME, "fetchFaq", null, preProcessFaq);
+  return cloudFunctionCall(FUNCTION_NAME, 'fetchFaq', null, preProcessFaq);
 }
 
 export function fetchFaqCount() {
@@ -128,10 +140,10 @@ export function fetchFaqItem(id) {
   const data = {
     id,
   };
-  cloudFunctionCall(FUNCTION_NAME, "faqPv", data);
+  cloudFunctionCall(FUNCTION_NAME, 'faqPv', data);
   return cloudCall(
     db.collection(COLLECTION_NAME_FAQ).doc(id).get(),
-    "fetchFaqItem",
+    'fetchFaqItem',
     processQa
   );
 }
@@ -140,18 +152,18 @@ export function fetchBuilding2Progress() {
   return cloudCall(
     db
       .collection(COLLECTION_NAME_BUILDING2)
-      .orderBy("_createTime", "desc")
+      .orderBy('_createTime', 'desc')
       .get(),
-    "fetchBuilding2Progress"
+    'fetchBuilding2Progress'
   );
 }
 
-export function fetchFoodMenus(site = "b25") {
+export function fetchFoodMenus(site = 'b25') {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
   switch (site) {
-    case "b25": {
+    case 'b25': {
       return cloudCall(
         db
           .collection(COLLECTION_NAME_FOOD_MENU_B25)
@@ -159,12 +171,12 @@ export function fetchFoodMenus(site = "b25") {
             endDate: _.gte(today.getTime()),
           })
           .get(),
-        "fetchFoodMenusB25",
+        'fetchFoodMenusB25',
         preProcessMenuData
       );
     }
 
-    case "zhongmeng": {
+    case 'zhongmeng': {
       return cloudCall(
         db
           .collection(COLLECTION_NAME_FOOD_MENU_ZM)
@@ -172,7 +184,7 @@ export function fetchFoodMenus(site = "b25") {
             endDate: _.gte(today.getTime()),
           })
           .get(),
-        "fetchFoodMenusZhongmeng",
+        'fetchFoodMenusZhongmeng',
         preProcessMenuData
       );
     }
@@ -220,7 +232,7 @@ export function fetchTheMostPopularActivity() {
 }
 
 export function fetchWeworkParkingBooking() {
-  return cloudFunctionCall(FUNCTION_NAME, "fetchWeworkParkingBooking");
+  return cloudFunctionCall(FUNCTION_NAME, 'fetchWeworkParkingBooking');
 }
 
 export function signupWeworkParkingBooking(id, user) {
@@ -228,30 +240,30 @@ export function signupWeworkParkingBooking(id, user) {
     id,
     user,
   };
-  return cloudFunctionCall(FUNCTION_NAME, "signupWeworkParkingBooking", data);
+  return cloudFunctionCall(FUNCTION_NAME, 'signupWeworkParkingBooking', data);
 }
 
 export function cancelWeworkParkingBooking(id) {
   const data = {
     id,
   };
-  return cloudFunctionCall(FUNCTION_NAME, "cancelWeworkParkingBooking", data);
+  return cloudFunctionCall(FUNCTION_NAME, 'cancelWeworkParkingBooking', data);
 }
 
 export function fetchBanners() {
   return cloudCall(
     db
-      .collection("banners")
+      .collection('banners')
       .where({
         expireDate: _.gte(Date.now()),
       })
       .get(),
-    "fetchBanners"
+    'fetchBanners'
   );
 }
 
 export function fetchCanteenStatus() {
-  return cloudFunctionCall(FUNCTION_NAME, "fetchCanteenStatus");
+  return cloudFunctionCall(FUNCTION_NAME, 'fetchCanteenStatus');
 }
 
 export function fetchParkingSpacePrediction() {
@@ -263,18 +275,18 @@ export function fetchParkingSpacePrediction() {
   return new Promise((reslove, reject) => {
     cloudCall(
       db
-        .collection("parking-full")
+        .collection('parking-full')
         .where({
           date: _.gte(oneWeekAgoTimestamp),
         })
         .get(),
-      "fetchParkingSpacePrediction"
+      'fetchParkingSpacePrediction'
     ).then((res) => {
       if (!res || res.length == 0) {
         reslove(null);
       }
 
-      console.log("fetchParkingSpacePrediction", res);
+      console.log('fetchParkingSpacePrediction', res);
 
       let dayCount = 0;
       let theDayFullOneWeekAgo = res[0].full;
@@ -313,7 +325,7 @@ export function fetchParkingSpacePrediction() {
       }
 
       console.log(
-        "fetchParkingSpacePrediction test",
+        'fetchParkingSpacePrediction test',
         `${dayCount}, ${new Date(
           theDayFullOneWeekAgo
         ).toISOString()}, ${new Date(theDayFullBeforeToday).toISOString()}`
@@ -337,12 +349,12 @@ export function fetchLastParkingFullTime() {
   return new Promise((resolve, reject) => {
     cloudCall(
       db
-        .collection("parking-full")
+        .collection('parking-full')
         .where({
           date: _.gte(lastParkingFullDate.getTime()),
         })
         .get(),
-      "fetchLastParkingFullTime"
+      'fetchLastParkingFullTime'
     ).then((res) => {
       if (!res || res.length === 0) {
         resolve(null);
@@ -365,12 +377,12 @@ export function fetchLastWeekParkingFullTime() {
   return new Promise((resolve, reject) => {
     cloudCall(
       db
-        .collection("parking-full")
+        .collection('parking-full')
         .where({
           date: _.gte(lastWeekParkingFullDate.getTime()),
         })
         .get(),
-      "fetchLastWeekParkingFullTime"
+      'fetchLastWeekParkingFullTime'
     ).then((res) => {
       if (!res || res.length === 0) {
         resolve(null);
@@ -389,18 +401,18 @@ export function recordParkingFull(full = null, left20 = null, left10 = null) {
   const todayTimestamp = today.getTime();
   cloudCall(
     db
-      .collection("parking-full")
+      .collection('parking-full')
       .where({
         date: todayTimestamp,
       })
       .get(),
-    "FetchTodayParkingFull"
+    'FetchTodayParkingFull'
   ).then((res) => {
-    console.log("FetchTodayParkingFull", res);
+    console.log('FetchTodayParkingFull', res);
     if (res == null || res.length == 0) {
       // Create a record
       cloudCall(
-        db.collection("parking-full").add({
+        db.collection('parking-full').add({
           data: {
             date: todayTimestamp,
             full,
@@ -408,7 +420,7 @@ export function recordParkingFull(full = null, left20 = null, left10 = null) {
             left_20: left20,
           },
         }),
-        "RecordTodayParkingFull"
+        'RecordTodayParkingFull'
       );
     } else {
       const parkingFull = res[0];
@@ -427,9 +439,9 @@ export function recordParkingFull(full = null, left20 = null, left10 = null) {
         return;
       }
 
-      console.log("record", data + ", " + parkingFull._id);
+      console.log('record', data + ', ' + parkingFull._id);
 
-      cloudFunctionCall(FUNCTION_NAME, "recordParkingFull", {
+      cloudFunctionCall(FUNCTION_NAME, 'recordParkingFull', {
         id: parkingFull._id,
         data,
       });

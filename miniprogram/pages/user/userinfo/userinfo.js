@@ -55,57 +55,37 @@ Page({
       isNewAvatar,
     } = this.data;
 
-    const userInfo = {};
+    if (!nickName || nickName.trim() === '') {
+      wx.showToast({
+        icon: 'none',
+        title: 'You must set nickname',
+      });
+      return;
+    }
 
-    if (contact) {
-      userInfo.contact = contact;
-    } else if (company) {
+    const userInfo = {
+      nickName: nickName,
+      height: height || '',
+      school: school || '',
+      desc: desc || '',
+      occupation: occupation || '',
+      contact: contact || '',
+      address: address || '',
+      birthday: birthday || '',
+      hometown: hometown || '',
+      phoneNumber: phoneNumber || '',
+    };
+
+    if (!userInfo.contact && company) {
       wx.showToast({
         icon: 'none',
         title: 'You must set contact',
       });
-
       return;
-    }
-
-    if (nickName) {
-      userInfo.nickName = nickName;
-    }
-
-    if (height) {
-      userInfo.height = height;
-    }
-
-    if (school) {
-      userInfo.school = school;
-    }
-
-    if (birthday) {
-      userInfo.birthday = birthday;
-    }
-
-    if (hometown) {
-      userInfo.hometown = hometown;
-    }
-
-    if (desc) {
-      userInfo.desc = desc;
-    }
-
-    if (occupation) {
-      userInfo.occupation = occupation;
     }
 
     if (photos) {
       userInfo.photos = photos;
-    }
-
-    if (phoneNumber) {
-      userInfo.phoneNumber = phoneNumber;
-    }
-
-    if (address) {
-      userInfo.address = address;
     }
 
     wx.showLoading();
