@@ -1,64 +1,83 @@
 <view class="base-info-container">
-  <view class="flex justify-between items-center mb-4">
+  <view class="flex justify-between items-center">
     <view class="flex items-center">
-      <image bind:tap="onProfileClick" class="avatar" src="{{ userInfo.avatarUrl }}" mode="aspectFill" />
-      <view class="margin-left flex flex-col gap-3">
-        <view class="flex item-center gap-2">
+      <image bind:tap="onProfileClick" class="avatar rounded-full w-14 h-14" src="{{ userInfo.avatarUrl }}" mode="aspectFill" />
+      <view class="ml-4 flex flex-col gap-3">
+        <view class="flex item-center gap-1">
           <view class="text-foreground font-semibold truncate">{{userInfo.nickName}}</view>
+          <view wx:if="{{userInfo.company}}" class="profile-company">{{company.name}}</view>
+          <view bind:tap="onSettingCompanyClick" wx:if="{{!userInfo.company}}" class="profile-company-unset">
+            Verify Your Company
+          </view>
         </view>
-        <view bind:tap="onCopyId" class="flex items-center margin-top-xs">
+        <view bind:tap="onCopyId" class="flex items-center mt-0dot5">
           <view class="id-text">ID: {{userInfo.id}}</view>
           <view class="id-copy margin-left-sm">copy</view>
         </view>
       </view>
     </view>
-    <image src="../../images/ic_edit.png" bind:tap="onEditUserInfoClick" class="edit-info margin-top-xs" />
+    <image src="../../images/ic_user_edit.svg" bind:tap="onEditUserInfoClick" class="w-6 h-6" />
   </view>
-  <view wx:if="{{userInfo.company}}" class="profile-company">{{company.name}}</view>
-  <view bind:tap="onSettingCompanyClick" wx:if="{{!userInfo.company}}" class="profile-company-unset mt-0dot5">
-    Verify your company
-  </view>
-  <view class="mt-8">
-    <view class="grid grid-cols-2 gap-4">
-      <view bind:tap="onProfileClick" class="flex items-center bg-buttonBlue rounded-xl p-4 gap-6">
-        <view class="flex items-center justify-center w-8 h-8 bg-white rounded-full">
-          <image class="w-4 h-4" src="../../images/ic_profile.svg" />
+
+  <view class="mt-10 bg-white rounded-2xl">
+    <view class="flex flex-col">
+      <view bind:tap="onProfileClick" class="flex items-center justify-between px-6 py-4">
+        <view class="flex items-center gap-4">
+          <view class="flex items-center justify-center bg-white rounded-full">
+            <image class="w-5 h-5" src="../../images/ic_user_profile.svg" />
+          </view>
+          <view class="text-title">我的资料卡</view>
         </view>
-        <view class="font-semibold text-foreground">Profile</view>
+        <image class="w-4 h-4" src="../../images/ic_arrow_right.svg" />
       </view>
-      <view bind:tap="onActivityClick" class="flex items-center bg-buttonBlue rounded-xl p-4 gap-6">
-        <view class="flex items-center justify-center w-8 h-8 bg-white rounded-full">
-          <image class="w-4 h-4" src="../../images/ic_activity_2.png" />
+      <view bind:tap="onActivityClick" class="flex items-center justify-between px-6 py-4 gap-6">
+        <view class="flex items-center gap-4">
+          <view class="flex items-center justify-center bg-white rounded-full">
+            <image class="w-5 h-5" src="../../images/ic_user_activity.svg" />
+          </view>
+          <view class="text-title">活动</view>
         </view>
-        <view class="font-semibold text-foreground">Activities</view>
+        <image class="w-4 h-4" src="../../images/ic_arrow_right.svg" />
       </view>
-      <view bind:tap="onMallClick" class="flex items-center bg-buttonBlue rounded-xl p-4 gap-6">
-        <view class="flex items-center justify-center w-8 h-8 bg-white rounded-full">
-          <image class="w-4 h-4" src="../../images/ic_mall.svg" />
+      <view bind:tap="onMallClick" class="flex items-center justify-between px-6 py-4 gap-6">
+        <view class="flex items-center gap-4">
+          <view class="flex items-center justify-center bg-white rounded-full">
+            <image class="w-5 h-5" src="../../images/ic_user_mall.svg" />
+          </view>
+          <view class="text-title">跳蚤市场</view>
         </view>
-        <view class="font-semibold text-foreground">Mall</view>
+        <image class="w-4 h-4" src="../../images/ic_arrow_right.svg" />
       </view>
     </view>
   </view>
+
+  <view class="mt-8 bg-white rounded-2xl">
+    <view bind:tap="onSponsorClick" class="flex items-center justify-between px-6 py-4">
+      <view class="flex items-center gap-4">
+        <image class="w-5 h-5" src="../../images/ic_user_sponsor.svg" />
+        <view class="text-title">请开发者喝杯咖啡</view>
+      </view>
+      <image class="w-4 h-4" src="../../images/ic_arrow_right.svg" />
+    </view>
+    <view bind:tap="onContributionClick" class="flex items-center justify-between px-6 py-4">
+      <view class="flex items-center gap-4">
+        <image class="w-5 h-5" src="/images/ic_user_contribution.svg" />
+        <view class="text-title">贡献者</view>
+      </view>
+      <image class="w-4 h-4" src="../../images/ic_arrow_right.svg" />
+    </view>
+    <view bind:tap="onStarClick" class="flex items-center justify-between px-6 py-4">
+      <view class="flex items-center gap-4">
+        <image class="w-5 h-5" src="/images/ic_user_github.svg" />
+        <view class="text-title">Star on Github</view>
+      </view>
+      <image class="w-4 h-4" src="../../images/ic_arrow_right.svg" />
+    </view>
+  </view>
 </view>
-<view class="divider margin-top"></view>
-<view bind:tap="onSponsorClick" class="menu-item-container ">
-  <image class="menu-item-icon" src="../../images/ic_coffee.png" />
-  <view class="menu-item-text margin-left">Buy developer a coffee</view>
-</view>
-<view class="divider"></view>
-<view bind:tap="onContributionClick" class="menu-item-container ">
-  <image class="menu-item-icon" src="/images/ic_code.png" />
-  <view class="menu-item-text margin-left">Contributions</view>
-</view>
-<view class="divider"></view>
-<view bind:tap="onStarClick" class="menu-item-container ">
-  <image class="github-icon ml-1 mr-0dot5" src="/images/ic_github.svg" />
-  <view class="menu-item-text margin-left">Star on Github</view>
-</view>
-<view class="divider"></view>
+<!-- Pending Auth List (admin) -->
 <view bind:tap="onPendingAuthListClick" wx:if="{{userInfo.isAdmin}}" class="flex items-center justify-center bg-buttonBlue p-4 gap-6">
-  <view class="font-semibold text-foreground">待企业认证用户列表</view>
+  <view class="font-semibold text-title">待企业认证用户列表</view>
 </view>
 <!-- Feedback -->
 <view class="cu-modal {{showingModal === 'feedback' ? 'show' : ''}}" catchtouchmove>
