@@ -3,7 +3,6 @@
     "pages/index/index",
     "pages/activity/activity",
     "pages/socialcircle/socialcircle",
-    "pages/user/profile",
     "pages/activity/activitydetail/activitydetail",
     "pages/activity/draftactivity/draftactivity",
     "pages/user/userinfo/userinfo",
