@@ -112,6 +112,10 @@ export const Pages = {
     authRequired: false,
     url: "/pages/onboarding/onboarding",
   },
+  AddCircle: {
+    authRequired: true,
+    url: "/pages/circle/addcircle/addcircle",
+  },
 };
 
 export function navigationToAppConfigWebView(config) {
@@ -220,6 +224,10 @@ export function navigateToUserOrder(id) {
 
 export function navigateToOnboarding() {
   navigate(Pages.Onboarding);
+}
+
+export function navigateToAddCircle() {
+  navigate(Pages.AddCircle);
 }
 
 export function navigate(page, urlParam = null) {

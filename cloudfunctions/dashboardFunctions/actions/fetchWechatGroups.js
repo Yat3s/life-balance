@@ -1,4 +1,3 @@
-
 // const cloud = require('wx-server-sdk');
 // const COLLECTION_NAME_WECHAT_GROUPS = "wechatgroups";
 
@@ -18,7 +17,6 @@
 //   return circles;
 // }
 
-
 const cloud = require("wx-server-sdk");
 
 cloud.init({
@@ -37,7 +35,10 @@ exports.main = async (data, context) => {
     const promise = db
       .collection(COLLECTION_NAME)
       .field({
-        participants: false
+        participants: false,
+      })
+      .where({
+        code: db.command.neq(""),
       })
       .skip(i * MAX_LIMIT)
       .limit(MAX_LIMIT)
@@ -45,10 +46,10 @@ exports.main = async (data, context) => {
     tasks.push(promise);
   }
   const allResult = await Promise.all(tasks);
-  let list = []
-  allResult.forEach(result => {
+  let list = [];
+  allResult.forEach((result) => {
     list = list.concat(result.data);
-  })
+  });
 
   return list;
 };

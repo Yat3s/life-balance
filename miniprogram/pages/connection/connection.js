@@ -8,6 +8,7 @@ import {
   navigateToDraftActivity,
   navigateToActivityPage,
   navigateToAuth,
+  navigateToAddCircle,
 } from "../router";
 
 const app = getApp();
@@ -294,9 +295,7 @@ Component({
     },
 
     onAddCircleClicked() {
-      this.setData({
-        showingModal: "addCircle",
-      });
+      navigateToAddCircle();
     },
 
     onCircleSearchPageEnter() {
