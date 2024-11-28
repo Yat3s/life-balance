@@ -251,3 +251,7 @@
 .share-btn text {
   white-space: nowrap;
 }
+
+.text-more {
+  color: #d5a6a6;
+}
