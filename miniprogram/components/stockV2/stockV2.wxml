@@ -2,14 +2,25 @@
   <!-- Loading State -->
   <view class="absolute inset-0 flex items-center justify-center rounded-xl stock-border stock-bg fade-in-out" hidden="{{!loadingStockData}}">
     <image src="/images/ic_emoji_no.png" class="w-8 h-8 rotate-animation mr-3"></image>
-    <view class="text-xs text-gray mr-1">微软市今天值第一了吗？</view>
+    <view class="text-xs text-gray mr-1 text-loading">
+      <span>微</span>
+      <span>软</span>
+      <span>市</span>
+      <span>值</span>
+      <span>今</span>
+      <span>天</span>
+      <span>第</span>
+      <span>一</span>
+      <span>了</span>
+      <span>吗</span>
+      <span>？</span>
+    </view>
     <view class="dots">
       <view class="dot"></view>
       <view class="dot"></view>
       <view class="dot"></view>
     </view>
   </view>
-
   <!-- Loaded Content -->
   <view class="absolute inset-0 p-4 flex items-center justify-between gap-1 rounded-xl stock-border stock-bg fade-in-out" hidden="{{loadingStockData}}">
     <view class="flex items-center gap-0dot5">
