@@ -7,15 +7,15 @@
     </view>
 
     <view class="text-xl text-title text-bold mt-8">
-      请先完成企业认证
+      企业员工认证
     </view>
-    <view class="text-sm text-subtitle mt-4">
+    <view class="text-sm mt-2 text-gray-400">
       为保证信息安全，请先完成企业认证
     </view>
   </view>
 
   <view class="mt-8 px-10 w-full">
-    <button bindtap="onCompanyAuth" class="cu-btn text-bold submit-btn rounded-full">
+    <button bindtap="onCompanyAuth" class="cu-btn text-bold submit-btn h-12 rounded-full">
       开始认证
     </button>
   </view>
@@ -34,12 +34,12 @@
       </view>
       <!-- Step 1 -->
       <view hidden="{{step != 1}}" class="w-full flex flex-col items-center justify-center">
-        <view class="section-title text-xl text-bold my-12">请选择你的公司</view>
+        <view class="section-title text-xl text-bold my-12">请选择您的公司</view>
         <view class="flex flex-col items-center gap-6">
           <view class="flex w-full" wx:for="{{companies}}" wx:key="name" bindtap="onCompanySelected" data-company-id="{{item.id}}">
             <view class="flex items-center justify-center bg-company border border-solid border-company rounded-lg w-full px-5 py-3dot5">
-              <image src="../../images/ic_msft.svg" class="w-4 h-4 rounded-full" />
-              <view class="margin-left-xs company-name text-company">{{item.name}}</view>
+              <image src="../../images/ic_msft.svg" class="w-6 h-6 rounded-full" />
+              <view class="margin-left-xs company-name text-company text-bold">{{item.name}}</view>
             </view>
           </view>
         </view>
@@ -74,9 +74,8 @@
           <view class="flex items-start gap-2">
             <image src="../../images/ic_email.svg" class="w-7 h-7 -mt-1" />
             <view class="text-sm text-info">
-              复制以下代码并发送至
+              以下内容用邮件发送至
               <text class="text-bold">zhiye@microsoft.com</text>
-              (Teams 或 邮箱)
             </view>
           </view>
           <view class="w-full h-32 flex flex-col items-start justify-between text-sm text-link mt-2 bg-verify-link border border-solid border-verify-link rounded-lg p-3">

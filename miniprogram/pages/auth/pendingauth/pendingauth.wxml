@@ -3,10 +3,7 @@
   <scroll-view class="flex-1 pb-20" scroll-y="true">
     <view class="flex flex-row items-center mb-2">
       <checkbox-group bindchange="onSelectAllChange">
-        <checkbox
-          id="selectAllCheckbox"
-          checked="{{selectAllChecked}}"
-      ></checkbox>
+        <checkbox id="selectAllCheckbox" checked="{{selectAllChecked}}"></checkbox>
       </checkbox-group>
       <view class="ml-2">ALL</view>
     </view>
@@ -16,10 +13,13 @@
         <view data-user-id="{{item._id}}">
           <checkbox value="{{item._id}}" checked="{{item.checked}}"></checkbox>
         </view>
-        <view class="flex gap-2 items-center">
-          <image src="{{item.avatarUrl}}" class="w-6 h-6 rounded-full"></image>
-          <view>{{item.nickName}}</view>
-          <view>{{item.companyName}}</view>
+        <view class="flex gap-4 items-center">
+          <image src="{{item.avatarUrl}}" class="w-12 h-12 rounded-full"></image>
+          <view>
+            <view class="text-bold">{{item.nickName}}</view>
+            <view class="text-sm text-gray-500">{{item.companyName}}</view>
+            <view class="text-sm text-gray-500">{{item._openid}}</view>
+          </view>
         </view>
       </view>
     </checkbox-group>
@@ -29,4 +29,3 @@
 <view bind:tap="onApproveBtnClick" class="fixed bottom-0 py-4 h-20 w-full z-50 bg-page">
   <view class="approve-btn mx-4">APPROVE</view>
 </view>
-

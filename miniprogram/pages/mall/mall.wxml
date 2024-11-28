@@ -87,7 +87,7 @@
   <view wx:if="{{fleaMarketProducts && userInfo.company}}" class="mt-4 plr pb-2">
     <view wx:for="{{fleaMarketProducts}}" wx:key="_id" class="mb-4 bg-white rounded-lg">
       <!-- Product Card -->
-      <view class="p-4 border-gray-light rounded-lg bg-gradient" bind:tap="handleViewFleaMarketProduct" data-product="{{item}}">
+      <view class="p-4 border-gray-light rounded-lg bg-gradient relative overflow-hidden" bind:tap="handleViewFleaMarketProduct" data-product="{{item}}">
         <view class="flex items-center justify-between gap-2 mb-2">
           <!-- Title -->
           <view class="flex items-center gap-2">
@@ -105,7 +105,7 @@
           <!-- Actions -->
           <view class="flex items-center gap-3">
             <button class="share-btn" open-type="share" data-product="{{item}}">
-              <image class="w-3 h-3 mb-0dot5" src="/images/share.svg" />
+              <image class="w-4 h-4 mb-0dot5" src="/images/share.svg" />
             </button>
             <image class="w-4 h-4 shrink-0" data-product="{{item}}" catch:tap="onEditProduct" src="/images/ic_more.svg" />
           </view>
@@ -151,6 +151,8 @@
             </view>
           </view>
         </view>
+        <!-- Sold mask -->
+        <view wx:if="{{item.terminated}}" class="absolute top-0 left-0 h-full w-full bg-white opacity-70"></view>
       </view>
     </view>
   </view>

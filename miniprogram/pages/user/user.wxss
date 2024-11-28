@@ -1,6 +1,7 @@
-.base-info-container {
+.main {
   background: #f8f8f8;
   padding: 200rpx 48rpx 48rpx 48rpx;
+  height: 100vh;
 }
 
 .avatar {
@@ -150,4 +151,5 @@
 
 .text-title {
   color: #364655;
+  font-weight: bold;
 }

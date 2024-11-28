@@ -53,7 +53,7 @@
     <view wx:else class="text-xs text-gray-info">神秘人一枚，暂时没添加任何标签～</view>
   </view>
   <!-- Groups -->
-  <view class="mb-8">
+  <!-- <view class="mb-8">
     <view class="font-semibold text-sm text-black mb-2">加入的群组</view>
     <view class="text-xs text-gray-info" wx:if="{{!groups || groups.length == 0}}">暂未加入过群组</view>
     <scroll-view scroll-x="{{true}}">
@@ -78,7 +78,7 @@
         </view>
       </view>
     </scroll-view>
-  </view>
+  </view> -->
   <!-- Activities -->
   <view class="mb-8">
     <view class="font-semibold text-sm text-black mb-2">参与的活动</view>

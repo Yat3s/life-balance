@@ -2,7 +2,7 @@
   <!-- Loading State -->
   <view class="absolute inset-0 flex items-center justify-center rounded-xl stock-border stock-bg fade-in-out" hidden="{{!loadingStockData}}">
     <image src="/images/ic_emoji_no.png" class="w-8 h-8 rotate-animation mr-3"></image>
-    <view class="text-xs text-gray mr-1 text-loading">
+    <view class="text-sm text-gray mr-1 text-loading">
       <span>微</span>
       <span>软</span>
       <span>市</span>

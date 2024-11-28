@@ -40,11 +40,13 @@ exports.main = async (props, context) => {
     // Check if a record already exists in auth-requests collection
     const authRequestRes = await transaction
       .collection(COLLECTION_NAME_AUTH_REQUESTS)
-      .doc(enterpriseAuthInfo.userId)
+      .where({
+        _id: userInfo._id,
+      })
       .get();
 
     // If no record exists, add a copy of user info to auth-requests collection
-    if (!authRequestRes.data) {
+    if (!authRequestRes.data || authRequestRes.data.length === 0) {
       await transaction.collection(COLLECTION_NAME_AUTH_REQUESTS).add({
         data: {
           _id: userInfo._id,

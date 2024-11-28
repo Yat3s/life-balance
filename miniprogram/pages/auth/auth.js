@@ -1,8 +1,7 @@
 import {
-  fetchUserInfoOrSignup,
-  fetchCompanies,
-  updateUserInfo,
   createEnterpriseAuth,
+  fetchCompanies,
+  fetchUserInfoOrSignup,
 } from "../../repository/userRepo";
 const app = getApp();
 
@@ -26,14 +25,19 @@ Page({
   },
 
   onBackStep() {
-    const { step } = this.data;
+    const {
+      step
+    } = this.data;
     this.setData({
       step: step - 1,
     });
   },
 
   onCompanySelected(e) {
-    const { userInfo, companies } = this.data;
+    const {
+      userInfo,
+      companies
+    } = this.data;
     const selectedCompanyId = e.currentTarget.dataset.companyId;
     const selectDataCompanyId = companies.filter(
       (company) => company.id === selectedCompanyId
@@ -88,7 +92,10 @@ Page({
     });
   },
   onSubmit() {
-    const { userInfo, selectDataCompanyId } = this.data;
+    const {
+      userInfo,
+      selectDataCompanyId
+    } = this.data;
 
     const enterpriseAuthInfo = {
       userId: userInfo._id,
@@ -100,16 +107,13 @@ Page({
         if (res.success) {
           app.globalData.pendingMessage =
             "Submit success, please waiting for approval!";
-          wx.navigateBack({
-            delta: 1,
-          });
         } else {
-          console.error(res.error);
-          wx.showToast({
-            icon: "none",
-            title: "Submit failed, " + res.message + "!",
-          });
+          app.globalData.pendingMessage =
+            "Submit failed, " + res.message + "!";
         }
+        wx.navigateBack({
+          delta: 1,
+        });
       })
       .catch((err) => {
         console.error(err);

@@ -29,7 +29,7 @@
     <view wx:for="{{[1,2,3,4]}}" wx:key="*this" class="mb-4 bg-white rounded-lg">
       <view class="p-4 border-gray-light rounded-lg">
         <!-- Image Skeleton -->
-        <view class="w-full h-80 skeleton-bg rounded-lg skeleton-animate mb-3" />
+        <view class="w-full h-24 skeleton-bg rounded-lg skeleton-animate mb-3" />
         <!-- Title Area Skeleton -->
         <view class="flex items-center justify-between gap-2 mb-2">
           <view class="flex items-center gap-2">

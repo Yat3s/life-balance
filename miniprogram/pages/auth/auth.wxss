@@ -36,7 +36,7 @@
 }
 
 .company-name {
-  font-size: 10pt;
+  font-size: 12pt;
 }
 
 .verify-info-container {
@@ -86,10 +86,6 @@
 
 .text-title {
   color: #3b4054;
-}
-
-.text-subtitle {
-  color: #61677d;
 }
 
 .text-info {

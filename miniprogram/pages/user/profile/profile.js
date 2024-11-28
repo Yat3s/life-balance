@@ -1,6 +1,5 @@
 const { formatDate } = require("../../../common/util");
 const { fetchUserActivities } = require("../../../repository/activityRepo");
-const { fetchUserWechatGroups } = require("../../../repository/dashboardRepo");
 const {
   fetchUserProfile,
   fetchCompany,
@@ -48,12 +47,6 @@ Page({
       });
       this.setData({
         activities,
-      });
-    });
-
-    fetchUserWechatGroups(id).then((groups) => {
-      this.setData({
-        groups,
       });
     });
   },
