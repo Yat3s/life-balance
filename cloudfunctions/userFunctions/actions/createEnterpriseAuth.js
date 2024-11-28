@@ -37,18 +37,32 @@ exports.main = async (props, context) => {
         },
       });
 
-    // add a copy of user info to auth-requests collection
-    await transaction.collection(COLLECTION_NAME_AUTH_REQUESTS).add({
-      data: {
-        _id: userInfo._id,
-        _openid: userInfo._openid,
-        nickName: userInfo.nickName,
-        avatarUrl: userInfo.avatarUrl,
-        approved: false,
-        company: enterpriseAuthInfo.company,
-        _createTime: new Date().getTime(),
-      },
-    });
+    // Check if a record already exists in auth-requests collection
+    const authRequestRes = await transaction
+      .collection(COLLECTION_NAME_AUTH_REQUESTS)
+      .doc(enterpriseAuthInfo.userId)
+      .get();
+
+    // If no record exists, add a copy of user info to auth-requests collection
+    if (!authRequestRes.data) {
+      await transaction.collection(COLLECTION_NAME_AUTH_REQUESTS).add({
+        data: {
+          _id: userInfo._id,
+          _openid: userInfo._openid,
+          nickName: userInfo.nickName,
+          avatarUrl: userInfo.avatarUrl,
+          approved: false,
+          company: enterpriseAuthInfo.company,
+          _createTime: new Date().getTime(),
+        },
+      });
+    } else {
+      return {
+        success: false,
+        message: "auth request already exists",
+        error: "auth request already exists",
+      };
+    }
 
     // commit transaction
     await transaction.commit();
@@ -61,6 +75,7 @@ exports.main = async (props, context) => {
     await transaction.rollback();
     return {
       success: false,
+      message: "failed to create auth request",
       error: error.message,
     };
   }
