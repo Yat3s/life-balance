@@ -39,11 +39,6 @@
   font-size: 10pt;
 }
 
-.open-link {
-  font-size: 10pt;
-  color: black;
-}
-
 .verify-info-container {
   padding: 24rpx;
   border-radius: 8rpx;
@@ -58,8 +53,7 @@
 }
 
 .copy-text {
-  color: grey;
-  font-size: 9pt;
+  color: #b4bccb;
 }
 
 .input-placeholder {
@@ -71,8 +65,96 @@
   border-bottom: 4rpx solid rgb(140, 196, 253);
 }
 
+.back-btn {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  margin: 0 !important;
+  width: 100% !important;
+  border: 1rpx solid #dfdfdf !important;
+  background: white !important;
+  color: #3b4054 !important;
+}
+
 .submit-btn {
-  border-radius: 12rpx;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  margin: 0 !important;
+  width: 100% !important;
   background: #0165fe !important;
   color: white !important;
+}
+
+.text-title {
+  color: #3b4054;
+}
+
+.text-subtitle {
+  color: #61677d;
+}
+
+.text-info {
+  color: #5f769d;
+}
+
+.text-link {
+  color: #3b4054;
+}
+
+.pt-1on2 {
+  padding-top: 50%;
+}
+
+.pt-1on4 {
+  padding-top: 25%;
+}
+
+.pb-1on4 {
+  padding-bottom: 25%;
+}
+
+.bg-company {
+  background-color: #f6f9ff;
+}
+
+.bg-verify-link {
+  background-color: #f6f9ff;
+}
+
+.text-company {
+  color: #5f769d;
+}
+
+.border-company {
+  border-color: #d1dcec;
+}
+
+.border-verify-link {
+  border-color: #d1dcec;
+}
+
+.bg-step-indicator {
+  background-color: #d6dfff;
+}
+
+.bg-step-active {
+  background-color: #3461fd;
+}
+
+.copy-text-container {
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
+
+.w-5dot5 {
+  width: 1.375rem;
+}
+
+.h-5dot5 {
+  height: 1.375rem;
+}
+
+.px-1on7 {
+  padding-left: 14.285714%;
+  padding-right: 14.285714%;
 }

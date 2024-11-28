@@ -1,60 +1,95 @@
-<view class="{{step == 0? 'avatar-step-0': 'avatar-step-1'}}">
-  <open-data type="userAvatarUrl"></open-data>
-</view>
 <!-- Step 0 -->
-<view hidden="{{step != 0}}" class="center" style="height: 100vh;">
-  <view class="margin-top-sm text-bold text-black text-lg nickname-step-0">
-    Hi,
-    <open-data type="userNickName"></open-data>
-  </view>
-  <view class="center">
-    <button bindtap="onCompanyAuth" style="width: 400rpx; margin-top: 100rpx; font-size: 10pt; font-weight: bold;" class="margin-top-lg bg-primary">
-      Enterprise Authentication
-    </button>
-    <view class="text-sm margin-top-sm text-grey">
-      Please complete the authentication for safety reason
+<view hidden="{{step != 0}}" class="flex flex-col items-center justify-between h-screen pt-1on2 pb-1on4 bg-white">
+  <view class="flex flex-col items-center justify-center">
+    <image src="../../images/ic_auth.svg" class="w-22 h-22" />
+
+    <view class="text-xl text-title text-bold mt-8">
+      请先完成企业认证
     </view>
+    <view class="text-sm text-subtitle mt-4">
+      为保证信息安全，请先完成企业认证
+    </view>
+  </view>
+
+  <view class="mt-8 px-10 w-full">
+    <button bindtap="onCompanyAuth" class="cu-btn text-bold submit-btn rounded-full">
+      开始认证
+    </button>
   </view>
 </view>
 <!-- Step 1&2 -->
-<view wx:if="{{step!=0}}" class="plr" style="margin-top: 300rpx;">
-  <view wx:if="{{showChooseCompany}}">
-    <view class="section-title">1. Please choose your company</view>
-    <radio-group bindchange="onCompanySelected">
-      <view class="margin-top-sm flex margin-left-sm" wx:for="{{companies}}" wx:key="name">
-        <radio value="{{item.id}}" style="scale: 0.8"></radio>
-        <view class="margin-left-xs company-name">{{item.name}}</view>
+<view wx:if="{{step!=0}}">
+  <toolbar isBack="{{true}}" bgColor="bg-white">
+    <view slot="backText" class="text-sm">企业认证</view>
+  </toolbar>
+  <scroll-view class="bg-white" scroll-y="true">
+    <view class="px-10 flex flex-col items-center pt-1on4" style="height: calc(100vh - {{toolbarHeight + statusBarHeight}}px);">
+      <!-- Step Indicator -->
+      <view class="flex items-center justify-center gap-2">
+        <view class="w-8 h-1 bg-step-indicator rounded-full {{step == 1? 'bg-step-active': ''}}"></view>
+        <view class="w-8 h-1 bg-step-indicator rounded-full {{step == 2? 'bg-step-active': ''}}"></view>
       </view>
-    </radio-group>
-  </view>
-  <view class="margin-top" wx:if="{{step == 2}}">
-    <view class="section-title">2. Send verification code</view>
-    <view class="margin-left">
-      <view class="open-link margin-top">Open this link on your browser</view>
-      <view class="verify-info-container margin-top-xs">
-        <view class="verify-info">{{verifyLink}}</view>
-        <view bindtap="onCopy" data-content="{{verifyLink}}" class="copy-text margin-top-xs">
-          Copy to clipboard
+      <!-- Step 1 -->
+      <view hidden="{{step != 1}}" class="w-full flex flex-col items-center justify-center">
+        <view class="section-title text-xl text-bold my-12">请选择你的公司</view>
+        <view class="flex flex-col items-center gap-6">
+          <view class="flex w-full" wx:for="{{companies}}" wx:key="name" bindtap="onCompanySelected" data-company-id="{{item.id}}">
+            <view class="flex items-center justify-center bg-company border border-solid border-company rounded-lg w-full px-5 py-3dot5">
+              <image src="../../images/ic_msft.svg" class="w-4 h-4 rounded-full" />
+              <view class="margin-left-xs company-name text-company">{{item.name}}</view>
+            </view>
+          </view>
         </view>
       </view>
-      <view class="open-link margin-top">
-        Or copy this code and send it to
-        <text style="font-weight: bold;">zhiye@microsoft.com</text>
-        (Teams or email)
-      </view>
-      <view class="verify-info-container margin-top-xs">
-        <view class="verify-info">{{verifyInfo}}</view>
-        <view bindtap="onCopy" data-content="{{verifyInfo}}" class="copy-text margin-top-xs">
-          Copy to clipboard
+      <!-- Step 2 -->
+      <view hidden="{{step != 2}}" class="w-full flex flex-col items-center justify-center">
+        <view class="my-12 flex flex-col items-center">
+          <view class="section-title text-xl text-bold">发送验证码</view>
+          <view class="text-sm text-info mt-2">
+            请选择以下<text class="text-bold">任意一种</text>方式完成验证
+          </view>
         </view>
+
+        <view class="flex flex-col items-start w-full">
+          <view class="flex items-center gap-2">
+            <image src="../../images/ic_link.svg" class="w-5dot5 h-5dot5" />
+            <view class="text-sm text-info">
+              在你的浏览器中打开以下链接
+            </view>
+          </view>
+          <view class="w-full h-32 flex flex-col items-start justify-between text-sm text-link mt-2 bg-verify-link border border-solid border-verify-link rounded-lg p-3">
+            <view class="w-full copy-text-container">
+              {{verifyLink}}
+            </view>
+            <view bindtap="onCopy" data-content="{{verifyLink}}" class="w-full text-right copy-text text-xs margin-top-xs">
+              复制到剪贴板
+            </view>
+          </view>
+        </view>
+
+        <view class="mt-8 flex flex-col items-start w-full">
+          <view class="flex items-start gap-2">
+            <image src="../../images/ic_email.svg" class="w-7 h-7 -mt-1" />
+            <view class="text-sm text-info">
+              复制以下代码并发送至
+              <text class="text-bold">zhiye@microsoft.com</text>
+              (Teams 或 邮箱)
+            </view>
+          </view>
+          <view class="w-full h-32 flex flex-col items-start justify-between text-sm text-link mt-2 bg-verify-link border border-solid border-verify-link rounded-lg p-3">
+            <view class="w-full copy-text-container">
+              {{verifyInfo}}
+            </view>
+            <view bindtap="onCopy" data-content="{{verifyLink}}" class="w-full text-right copy-text text-xs margin-top-xs">
+              复制到剪贴板
+            </view>
+          </view>
+        </view>
+      </view>
+      <view hidden="{{step != 2}}" class="mt-12 pb-4 flex gap-4 justify-between w-full">
+        <view bindtap="onBackStep" class="cu-btn text-bold back-btn rounded-full">上一步</view>
+        <view bindtap="onSubmit" class="cu-btn text-bold submit-btn rounded-full">提交</view>
       </view>
     </view>
-  </view>
-  <view class="margin-top" wx:if="{{step == 2}}">
-    <view class="section-title">3. Setting your contact information</view>
-    <input bindinput="onContactInput" name="title" type="text" class="inp margin-top-xs margin-left" placeholder="Your Teams alias or Wechat id"></input>
-  </view>
-  <view wx:if="{{step == 2}}" class="flex justify-end margin-top-lg">
-    <view bindtap="onSubmit" class="cu-btn text-bold submit-btn">Submit</view>
-  </view>
+  </scroll-view>
 </view>

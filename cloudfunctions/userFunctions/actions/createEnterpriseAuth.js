@@ -32,7 +32,6 @@ exports.main = async (props, context) => {
       .doc(enterpriseAuthInfo.userId)
       .update({
         data: {
-          ...enterpriseAuthInfo.updatedUserInfo,
           // Here you can add any fields you want to update in the users table
           _updateTime: new Date().getTime(),
         },
@@ -45,7 +44,6 @@ exports.main = async (props, context) => {
         _openid: userInfo._openid,
         nickName: userInfo.nickName,
         avatarUrl: userInfo.avatarUrl,
-        contact: enterpriseAuthInfo.updatedUserInfo.contact,
         approved: false,
         company: enterpriseAuthInfo.company,
         _createTime: new Date().getTime(),

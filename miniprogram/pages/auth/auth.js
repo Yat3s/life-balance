@@ -9,6 +9,8 @@ const app = getApp();
 Page({
   data: {
     step: 0,
+    toolbarHeight: app.globalData.toolbarHeight,
+    statusBarHeight: app.globalData.statusBarHeight,
   },
 
   onCopy(e) {
@@ -23,9 +25,16 @@ Page({
     });
   },
 
+  onBackStep() {
+    const { step } = this.data;
+    this.setData({
+      step: step - 1,
+    });
+  },
+
   onCompanySelected(e) {
     const { userInfo, companies } = this.data;
-    const selectedCompanyId = e.detail.value;
+    const selectedCompanyId = e.currentTarget.dataset.companyId;
     const selectDataCompanyId = companies.filter(
       (company) => company.id === selectedCompanyId
     )[0]._id;
@@ -78,31 +87,12 @@ Page({
       });
     });
   },
-
-  onContactInput(e) {
-    const contact = e.detail.value;
-    this.setData({
-      contact,
-    });
-  },
-
   onSubmit() {
-    const { contact, userInfo, selectDataCompanyId } = this.data;
-    if (!contact || contact.length == 0) {
-      wx.showToast({
-        icon: "none",
-        title: "Please setting contact information",
-      });
-
-      return;
-    }
+    const { userInfo, selectDataCompanyId } = this.data;
 
     const enterpriseAuthInfo = {
       userId: userInfo._id,
       company: selectDataCompanyId,
-      updatedUserInfo: {
-        contact,
-      },
     };
 
     createEnterpriseAuth(enterpriseAuthInfo)
@@ -116,14 +106,15 @@ Page({
         } else {
           wx.showToast({
             icon: "none",
-            title: "Submit failed" + res.error,
+            title: "Submit failed!",
           });
         }
       })
       .catch((err) => {
+        console.error(err);
         wx.showToast({
           icon: "none",
-          title: "Submit failed" + err,
+          title: "Submit failed!",
         });
       });
   },
