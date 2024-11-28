@@ -16,6 +16,7 @@
     "pages/home/howto/howtodetail/howtodetail",
     "pages/home/weworkparking/weworkparking",
     "pages/user/user",
+    "pages/user/profile/profile",
     "pages/user/useractivity/useractivity",
     "pages/bus/bus",
     "pages/connection/connection",
