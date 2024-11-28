@@ -144,9 +144,9 @@
 
 @keyframes text-loading {
   0% {
-    opacity: 1;
+    color: #b2caa7; 
   }
   100% {
-    opacity: 0.3;
+    color: #a59aca; 
   }
 }
