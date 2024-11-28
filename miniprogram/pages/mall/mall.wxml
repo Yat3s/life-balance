@@ -88,23 +88,8 @@
     <view wx:for="{{fleaMarketProducts}}" wx:key="_id" class="mb-4 bg-white rounded-lg">
       <!-- Product Card -->
       <view class="p-4 border-gray-light rounded-lg bg-gradient" bind:tap="handleViewFleaMarketProduct" data-product="{{item}}">
-        <!-- Image Carousel -->
-        <block wx:if="{{item.pictures && item.pictures.length > 0}}">
-          <block wx:if="{{item.pictures.length > 1}}">
-            <swiper class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-3" catch:tap="previewProductPicture" data-product="{{item}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
-              <swiper-item wx:for="{{item.pictures}}" wx:for-item="picture" wx:key="*this">
-                <image src="{{picture}}" mode="aspectFill" class="w-full h-full rounded-lg" />
-              </swiper-item>
-            </swiper>
-          </block>
-          <block wx:else>
-            <view class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-3" catch:tap="previewProductPicture" data-product="{{item}}">
-              <image src="{{item.pictures[0]}}" mode="aspectFill" class="w-full h-full rounded-lg" />
-            </view>
-          </block>
-        </block>
-        <!-- Content -->
         <view class="flex items-center justify-between gap-2 mb-2">
+          <!-- Title -->
           <view class="flex items-center gap-2">
             <view wx:if="{{!item.terminated}}" class="{{item.type === 'sell' ? 'bg-sell' : 'bg-wanted'}} px-1dot5 py-0dot5 rounded text-white text-xxs shrink-0">
               {{item.type === 'sell' ? '出售' : '求购'}}
@@ -117,12 +102,29 @@
               {{item.title}}
             </view>
           </view>
-          <image class="w-4 h-4 shrink-0" data-product="{{item}}" catch:tap="onEditProduct" src="/images/ic_more.svg" />
+          <!-- Actions -->
+          <view class="flex items-center gap-3">
+            <button class="share-btn" open-type="share" data-product="{{item}}">
+              <image class="w-3 h-3 mb-0dot5" src="/images/share.svg" />
+            </button>
+            <image class="w-4 h-4 shrink-0" data-product="{{item}}" catch:tap="onEditProduct" src="/images/ic_more.svg" />
+          </view>
         </view>
         <!-- Description -->
-        <view class="truncate text-xs text-desc mb-6">{{item.description}}</view>
+        <view class="truncate text-xs text-desc mb-2 font-light">{{item.description}}</view>
+        <!-- Pictures -->
+        <block wx:if="{{item.pictures && item.pictures.length > 0}}">
+          <view class="flex gap-2 mb-2">
+            <block wx:for="{{item.pictures}}" wx:for-item="pic" wx:key="index">
+              <image wx:if="{{index < 3}}" src="{{pic}}" class="w-12 h-12 rounded-sm" mode="aspectFill" />
+            </block>
+            <view wx:if="{{item.pictures.length > 3}}" class="flex items-end text-more text-xxs self-baseline">
+              +{{item.pictures.length - 3}}
+            </view>
+          </view>
+        </block>
         <!-- Price and User Info -->
-        <view class="mt-2 flex items-center justify-between">
+        <view class="mt-8 flex items-center justify-between">
           <view class="flex items-center gap-2">
             <image src="{{item.user.avatarUrl}}" class="w-8 h-8 rounded" mode="aspectFill" />
             <view class="text-left">
