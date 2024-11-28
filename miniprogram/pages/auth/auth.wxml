@@ -1,7 +1,10 @@
 <!-- Step 0 -->
 <view hidden="{{step != 0}}" class="flex flex-col items-center justify-between h-screen pt-1on2 pb-1on4 bg-white">
   <view class="flex flex-col items-center justify-center">
-    <image src="../../images/ic_auth.svg" class="w-22 h-22" />
+    <!-- Company Logo -->
+    <view class="flex items-center justify-center bg-company rounded-full w-22 h-22">
+      <image src="../../images/ic_msft.svg" class="w-16 h-16 ml-0dot5" />
+    </view>
 
     <view class="text-xl text-title text-bold mt-8">
       请先完成企业认证
