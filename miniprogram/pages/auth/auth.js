@@ -104,9 +104,10 @@ Page({
             delta: 1,
           });
         } else {
+          console.error(res.error);
           wx.showToast({
             icon: "none",
-            title: "Submit failed!",
+            title: "Submit failed, " + res.message + "!",
           });
         }
       })
