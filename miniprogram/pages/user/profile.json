@@ -1,7 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "activityitem": "../../components/activityitem/activityitem",
-    "carpoolitem": "../../components/carpoolitem/carpoolitem"
-  }
-}

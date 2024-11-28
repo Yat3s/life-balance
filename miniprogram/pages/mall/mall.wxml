@@ -77,7 +77,7 @@
   </scroll-view>
   <!-- Authentication Required View -->
   <view wx:if="{{!userInfo.company}}" class="flex-1 flex flex-col items-center justify-center" style="height: calc(100vh - 500px);">
-    <image class="w-40 h-40" src="/images/img_404.png" />
+    <image class="w-40 h-40" lazy-load="{{true}}" src="/images/img_404.png" />
     <view class="flex flex-col items-center">
       <view class="text-black font-light">Oops! 该功能仅对认证用户开放</view>
       <view class="underline text-auth" bind:tap="handleVerifyAuth">前往认证</view>
@@ -116,9 +116,9 @@
         <block wx:if="{{item.pictures && item.pictures.length > 0}}">
           <view class="flex gap-2 mb-2">
             <block wx:for="{{item.pictures}}" wx:for-item="pic" wx:key="index">
-              <image wx:if="{{index < 3}}" src="{{pic}}" class="w-12 h-12 rounded-sm" mode="aspectFill" />
+              <image wx:if="{{index < 3}}" src="{{pic}}" class="w-20 h-20 bg-gray-200" lazy-load="{{true}}" mode="aspectFill" />
             </block>
-            <view wx:if="{{item.pictures.length > 3}}" class="flex items-end text-more text-xxs self-baseline">
+            <view wx:if="{{item.pictures.length > 3}}" class="flex items-end text-more text-sm self-baseline">
               +{{item.pictures.length - 3}}
             </view>
           </view>
@@ -126,7 +126,7 @@
         <!-- Price and User Info -->
         <view class="mt-8 flex items-center justify-between">
           <view class="flex items-center gap-2">
-            <image src="{{item.user.avatarUrl}}" class="w-8 h-8 rounded" mode="aspectFill" />
+            <image src="{{item.user.avatarUrl}}" class="w-8 h-8 rounded" mode="aspectFill" lazy-load="{{true}}" />
             <view class="text-left">
               <view class="text-xs text-nickname truncate w-36">{{item.user.nickName}}</view>
               <view class="text-xxs text-time">{{item.formattedTime}}发布</view>
@@ -190,7 +190,7 @@
       <view class="flex justify-between mb-3">
         <!-- User name -->
         <view class="flex items-center gap-3dot5">
-          <image src="{{selectedProduct.user.avatarUrl}}" class="w-8 h-8 rounded" mode="aspectFill" />
+          <image src="{{selectedProduct.user.avatarUrl}}" class="w-8 h-8 rounded" mode="aspectFill" lazy-load="{{true}}" />
           <view class="text-left">
             <view class="text-xs text-nickname truncate w-36">
               {{selectedProduct.user.nickName}}
@@ -219,13 +219,13 @@
         <block wx:if="{{selectedProduct.pictures.length > 1}}">
           <swiper class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6" catch:tap="previewProductPicture" data-product="{{selectedProduct}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
             <swiper-item wx:for="{{selectedProduct.pictures}}" wx:for-item="picture" wx:key="*this">
-              <image src="{{picture}}" mode="aspectFill" class="w-full h-full rounded-lg" />
+              <image src="{{picture}}" mode="aspectFill" class="w-full h-full rounded-lg" lazy-load="{{true}}" />
             </swiper-item>
           </swiper>
         </block>
         <block wx:else>
           <view class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6" catch:tap="previewProductPicture" data-product="{{selectedProduct}}">
-            <image src="{{selectedProduct.pictures[0]}}" mode="aspectFill" class="w-full h-full rounded-lg" />
+            <image src="{{selectedProduct.pictures[0]}}" mode="aspectFill" class="w-full h-full rounded-lg" lazy-load="{{true}}" />
           </view>
         </block>
       </block>
@@ -256,7 +256,7 @@
     <block wx:if="{{selectedProduct.pictures && selectedProduct.pictures.length > 0}}">
       <swiper catch:tap="previewProductPicture" data-product="{{selectedProduct}}" class="w-full h-72 rounded-t-lg" indicator-dots="true" indicator-color="#ECECEC" indicator-active-color="#1C1C55">
         <swiper-item wx:for="{{selectedProduct.pictures}}" wx:key="*this">
-          <image src="{{item}}" mode="aspectFill" class="w-full h-full" />
+          <image src="{{item}}" mode="aspectFill" class="w-full h-full" lazy-load="{{true}}" />
         </swiper-item>
       </swiper>
     </block>
@@ -300,7 +300,7 @@
             <view class="h-full mb-4" bind:tap="handlePopularProductClick" data-product="{{item}}">
               <view class="gradient-bg rounded-lg p-4 py-5 h-full flex">
                 <view class="w-28 h-28 rounded-lg overflow-hidden">
-                  <image class="w-full h-full object-cover" src="{{item.pictures[0]}}" mode="aspectFill" />
+                  <image class="w-full h-full object-cover" src="{{item.pictures[0]}}" mode="aspectFill" lazy-load="{{true}}" />
                 </view>
                 <view class="ml-4 flex flex-col justify-center flex-1 gap-2 text-left">
                   <view>
