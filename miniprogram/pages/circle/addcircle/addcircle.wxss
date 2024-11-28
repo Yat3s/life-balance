@@ -1,0 +1,23 @@
+.border-gray {
+  border: 1rpx solid #e9e9e9;
+}
+
+.text-cancel {
+  color: #664d77;
+}
+
+.text-input {
+  color: #bdbdbd;
+}
+
+.text-tip {
+  color: #c93716;
+}
+
+.bg-upload {
+  background-color: #ededed;
+}
+
+.border-cancel {
+  border-color: #ac9cb7;
+}

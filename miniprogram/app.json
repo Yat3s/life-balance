@@ -31,7 +31,8 @@
     "pages/user/user-product/user-product",
     "pages/mall/purchase/purchase",
     "pages/user/user-order/user-order",
-    "pages/onboarding/onboarding"
+    "pages/onboarding/onboarding",
+    "pages/circle/addcircle/addcircle"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -39,7 +40,9 @@
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom"
   },
-  "requiredPrivateInfos": ["chooseLocation"],
+  "requiredPrivateInfos": [
+    "chooseLocation"
+  ],
   "sitemapLocation": "sitemap.json",
   "style": "v2",
   "useExtendedLib": {
