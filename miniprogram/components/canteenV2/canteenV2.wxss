@@ -48,5 +48,5 @@
 .carrot {
   position: absolute;
   top: 1.5rem;
-  left: 3.25rem;
+  left: 3.05rem;
 }

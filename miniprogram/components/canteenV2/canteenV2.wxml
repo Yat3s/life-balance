@@ -29,8 +29,8 @@
         </view>
       </view>
     </view>
-    <view class="absolute right-0 top-0 food-bg w-1on3dot5 h-24 flex items-center justify-center {{todayMenuB25.foodWaste !== undefined ? '' : '-mt-6'}}">
-      <view class="w-full h-full content-center">
+    <view class="absolute right-0 top-0 food-bg w-1on3dot5 h-22 flex items-center justify-center {{todayMenuB25.foodWaste !== undefined ? '' : '-mt-6'}}">
+      <view class="relative w-full h-full content-center">
         <image src="/images/img_steak.png" class="w-12 steak" mode="widthFix" />
         <image src="/images/img_taco.png" class="w-12 taco" mode="widthFix" />
         <image src="/images/img_carrot.png" class="w-12 carrot" mode="widthFix" />
