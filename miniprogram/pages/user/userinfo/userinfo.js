@@ -8,15 +8,37 @@ const app = getApp();
 Page({
   data: {
     photos: [],
-    isNewAvatar: false,
   },
 
-  onChooseAvatar(e) {
-    const { avatarUrl } = e.detail;
-    console.log("Avatar URL: ", avatarUrl);
-    this.setData({
-      avatarTmpUrl: avatarUrl,
-      isNewAvatar: true,
+  handleAvatarChosen() {
+    const that = this;
+    wx.chooseMedia({
+      count: 1,
+      mediaType: ["image"],
+      sizeType: ["original"],
+      sourceType: ["album", "camera"],
+      maxDuration: 30,
+      camera: "back",
+      success(res) {
+        console.log("Success", res);
+        that.upLoadImg(res.tempFiles[0].tempFilePath);
+      },
+    });
+  },
+
+  upLoadImg(fileUrl) {
+    const that = this;
+    wx.cloud.uploadFile({
+      cloudPath: `avatars/${Date.now()}-${Math.floor(
+        Math.random() * 1000
+      )}.png`,
+      filePath: fileUrl,
+      success: (res) => {
+        that.setData({
+          avatarUrl: res.fileID,
+        });
+      },
+      fail: console.error,
     });
   },
 
@@ -45,35 +67,29 @@ Page({
   onUserInfoSubmit(e) {
     const { height, school, desc, occupation, contact, address, nickName } =
       e.detail.value;
-    const {
-      birthday,
-      hometown,
-      photos,
-      company,
-      phoneNumber,
-      avatarTmpUrl,
-      isNewAvatar,
-    } = this.data;
+    const { birthday, hometown, photos, company, phoneNumber, avatarUrl } =
+      this.data;
 
-    if (!nickName || nickName.trim() === '') {
+    if (!nickName || nickName.trim() === "") {
       wx.showToast({
-        icon: 'none',
-        title: 'You must set nickname',
+        icon: "none",
+        title: "You must set nickname",
       });
       return;
     }
 
     const userInfo = {
       nickName: nickName,
-      height: height || '',
-      school: school || '',
-      desc: desc || '',
-      occupation: occupation || '',
-      contact: contact || '',
-      address: address || '',
-      birthday: birthday || '',
-      hometown: hometown || '',
-      phoneNumber: phoneNumber || '',
+      height: height || "",
+      school: school || "",
+      desc: desc || "",
+      occupation: occupation || "",
+      contact: contact || "",
+      address: address || "",
+      birthday: birthday || "",
+      hometown: hometown || "",
+      phoneNumber: phoneNumber || "",
+      avatarUrl: avatarUrl || "",
     };
 
     if (!userInfo.contact && company) {
@@ -99,31 +115,7 @@ Page({
       });
     };
 
-    if (isNewAvatar && avatarTmpUrl) {
-      wx.cloud
-        .uploadFile({
-          cloudPath: `avatars/${Date.now()}-${Math.floor(
-            Math.random() * 1000
-          )}.png`,
-          filePath: avatarTmpUrl,
-        })
-        .then((res) => {
-          userInfo.avatarUrl = res.fileID;
-          updateProfile();
-        })
-        .catch((error) => {
-          wx.hideLoading();
-          wx.showToast({
-            icon: "none",
-            title: "Avatar upload failed",
-          });
-        });
-    } else if (avatarTmpUrl) {
-      userInfo.avatarUrl = avatarTmpUrl;
-      updateProfile();
-    } else {
-      updateProfile();
-    }
+    updateProfile();
   },
 
   uploadFile(tempFile) {
@@ -165,11 +157,9 @@ Page({
         }
       }
 
-      console.log(userInfo.photos);
-
       this.setData({
         nickName: userInfo.nickName,
-        avatarTmpUrl: userInfo.avatarUrl,
+        avatarUrl: userInfo.avatarUrl,
         company: userInfo.company,
         birthday: userInfo.birthday,
         height: userInfo.height,
@@ -190,7 +180,7 @@ Page({
     });
   },
 
-  onShareAppMessage: function () {},
+  onShareAppMessage() {},
 
-  onShareTimeline: function () {},
+  onShareTimeline() {},
 });
