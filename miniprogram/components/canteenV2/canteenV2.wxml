@@ -4,11 +4,11 @@
     <view class="flex justify-between {{todayMenuB25.foodWaste !== undefined ? 'items-start' : 'items-center mt-2'}}">
       <view class="mt-1 flex flex-col gap-4">
         <view wx:if="{{todayMenuB25.foodWaste !== undefined }}" class="text-xs text-gray">
-          上周共浪费
+          上周浪费
           <text class="text-tip">{{todayMenuB25.foodWaste}} kg</text>
-          食物，约
+          食物(~
           <text class="text-tip">{{todayMenuB25.equivalentMeal}} 份</text>
-          等量餐食
+          餐食)
         </view>
         <view class="flex gap-2 items-center justify-between {{todayMenuB25.foodWaste !== undefined ? '' : '-mt-6'}}">
           <view class="flex flex-1 gap-4 items-center">
