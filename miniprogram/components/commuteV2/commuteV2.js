@@ -70,7 +70,6 @@ Component({
       fetchLastWeekParkingFullTime().then((res) => {
         let lastParkingFullTimeStr = "";
         let dayStrPrefix = "上周" + getWeekdayIndexStr(new Date());
-        const showParkingFullTip = res != null;
         if (res) {
           const lastParkingFullTime = new Date(res).hhmm();
           lastParkingFullTimeStr = `${dayStrPrefix} B25 停满时间：${lastParkingFullTime}`;
@@ -78,7 +77,6 @@ Component({
           lastParkingFullTimeStr = `${dayStrPrefix} B25 车位充足`;
         }
         this.setData({
-          showParkingFullTip,
           lastParkingFullTimeStr,
         });
       });

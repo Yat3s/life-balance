@@ -68,6 +68,14 @@
       </view>
       <image class="w-4 h-4" src="../../images/ic_arrow_right.svg" />
     </view>
+
+    <view bind:tap="onFeedbackClick" class="flex items-center justify-between px-6 py-6">
+      <view class="flex items-center gap-4">
+        <image class="w-5 h-5" src="/images/ic_feedback.svg" />
+        <view class="text-title">Feedback & Help</view>
+      </view>
+      <image class="w-4 h-4" src="../../images/ic_arrow_right.svg" />
+    </view>
     <!-- Pending Auth List (admin) -->
     <view bind:tap="onPendingAuthListClick" class="flex items-center justify-between px-6 py-6">
       <view class="flex items-center gap-4">
@@ -79,26 +87,23 @@
   </view>
 </view>
 <!-- Feedback -->
-<view class="cu-modal {{showingModal === 'feedback' ? 'show' : ''}}" catchtouchmove>
+<view class="cu-modal {{showingModal === 'feedback' ? 'show' : ''}}" bind:tap="onHideModal">
   <view class="cu-dialog modal-main">
     <view class="flex justify-between">
       <view class="modal-title">Feedback & Help</view>
     </view>
-    <view class="feedback-text margin-top">Join MS Life group to send your feedback:</view>
-    <view class="text-black">
-      Adding Coconut and send
-      <text class="text-bold text-black">msglife</text>
-      to her
+    <view class="text-gray-500 mt-2">
+      I’d love to hear your suggestions or feedback. Feel free to get in touch with me anytime.
     </view>
-    <image show-menu-by-longpress="true" class="coconut-contact margin-top-sm" src="../../images/img_coconut.png" />
-    <view class="text-grey">Long press to scan</view>
+    <image show-menu-by-longpress="true" class="w-64 h-64 margin-top-sm" src="/images/qrcode_chris.png" />
+    <view class="text-grey">Long press to add my Wechat Or ping me(Chris Ye) on Teams</view>
     <view class="flex items-center justify-end margin-top-lg">
       <view catchtap="onDismissModal" class="cu-btn modal-btn-ok">Done</view>
     </view>
   </view>
 </view>
 <!-- Sponsor -->
-<view class="cu-modal {{showingModal === 'sponsor' ? 'show' : ''}}" catchtouchmove>
+<view class="cu-modal {{showingModal === 'sponsor' ? 'show' : ''}}" bind:tap="onHideModal">
   <view class="cu-dialog modal-main">
     <view class="flex justify-between">
       <view class="modal-title">Sponsor</view>

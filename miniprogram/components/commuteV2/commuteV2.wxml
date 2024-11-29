@@ -45,7 +45,7 @@
           </view>
         </view>
       </view>
-      <block wx:if="{{showParkingFullTip}}">
+      <block>
         <!-- Divider -->
         <view class="mt-1 border-dashed border-0 border-b-2 border-gray-200 w-full"></view>
         <!-- Parking Full Tip -->
