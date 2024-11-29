@@ -326,7 +326,7 @@ Component({
         showingModal: "flea-market-product",
         selectedProduct: {
           ...product,
-          canViewContact, // 添加这个状态到 selectedProduct
+          canViewContact,
         },
       });
 
