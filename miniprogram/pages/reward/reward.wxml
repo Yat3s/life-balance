@@ -4,7 +4,7 @@
 <view class="flex flex-col items-center plr">
   <!-- Profile -->
   <view class="w-12 h-12 rounded-full overflow-hidden mb-2 mt-8">
-    <image class="w-full h-full" src="cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/cloudbase-cms/upload/2024-11-15/Yat3s.png" />
+    <image class="w-full h-full bg-gray-200" src="cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/cloudbase-cms/upload/2024-11-15/Yat3s.png" lazy-load="{{true}}" />
   </view>
   <view class="text-sm">Tip Chris</view>
   <!-- Amount Input -->
@@ -15,7 +15,7 @@
     </view>
   </block>
   <block wx:else>
-    <view class="my-4 text-4xl text-black flex items-center">
+    <view class="my-4 text-4xl text-black flex items-center gap-1">
       <view class="text-sm inline-block">¥</view>
       <view>{{amount}}.00</view>
     </view>

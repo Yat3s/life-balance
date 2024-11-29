@@ -108,22 +108,18 @@
       <view class="modal-title">Sponsor</view>
     </view>
     <view class="text-black margin-top">Buy developer a cup of coffee if you like this app!</view>
-    <block wx:if="{{isAndroid && rewardEnabled}}">
+    <block wx:if="{{rewardEnabled}}">
       <view class="flex flex-col items-center w-full margin-top">
-        <!-- Profile -->
-        <view class="w-12 h-12 rounded-full overflow-hidden mb-1">
-          <image class="w-full h-full" src="cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/cloudbase-cms/upload/2024-11-15/Yat3s.png" />
-        </view>
-        <view class="text-black mb-4">Chris</view>
         <view class="text-xs text-gray text-center">Reward amount</view>
         <view class="grid grid-cols-3 gap-3 w-full margin-top">
-          <view wx:for="{{amounts}}" wx:key="value" data-amount="{{item.value}}" bind:tap="onSelectAmount" class="text-center p-3 rounded-lg {{selectedAmount === item.value ? 'bg-yellow-400 text-black' : 'border border-solid border-yellow-400 text-yellow-400'}}">
+          <view wx:for="{{amounts}}" wx:key="value" data-amount="{{item.value}}" bind:tap="onSelectAmount" class="text-center p-1 rounded-lg {{selectedAmount === item.value ? 'bg-yellow-400 text-black' : 'border border-solid border-yellow-400 text-yellow-400'}}">
             {{item.label}}
           </view>
+          <view bind:tap="onOtherAmountClick" class="text-center p-1 rounded-lg border border-solid border-yellow-400 text-yellow-400">
+            Other
+          </view>
         </view>
-        <view bind:tap="onOtherAmountClick" class="text-blue-400 margin-top text-xs">
-          Other Amount
-        </view>
+        <view class="margin-top">Sponsors</view>
       </view>
     </block>
     <block wx:else>

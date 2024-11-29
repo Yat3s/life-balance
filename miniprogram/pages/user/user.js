@@ -29,7 +29,6 @@ Component({
       { value: 36, label: "36 CNY" },
       { value: 66, label: "66 CNY" },
       { value: 88, label: "88 CNY" },
-      { value: 200, label: "200 CNY" },
     ],
   },
 
@@ -204,13 +203,6 @@ Component({
     attached() {
       wx.reportEvent("userpageload", {});
       this.fetchUserInfo();
-      wx.getSystemInfo({
-        success: (res) => {
-          this.setData({
-            isAndroid: res.platform === "android",
-          });
-        },
-      });
       getAppConfig().then((config) => {
         const { featureFlags } = config;
         this.setData({

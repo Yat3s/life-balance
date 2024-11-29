@@ -1,4 +1,5 @@
-import { createReward, updateReward } from "../../repository/rewardRepo";
+import { createOrder, createSponsor } from "../../repository/sponsorRepo";
+import { fetchUserInfo } from "../../repository/userRepo";
 
 const PAY_SUCCESS_DURATION = 1500;
 
@@ -15,6 +16,12 @@ Page({
 
   onLoad(options) {
     const { amount, type } = options;
+
+    fetchUserInfo().then((res) => {
+      this.setData({
+        userInfo: res,
+      });
+    });
 
     this.setData({
       amount: amount || 0,
@@ -60,8 +67,6 @@ Page({
   },
 
   async onReward() {
-    if (this.data.isProcessingPayment) return;
-
     const amount = Number(this.data.amount);
     if (!amount || amount <= 0) {
       wx.showToast({
@@ -75,28 +80,31 @@ Page({
     this.startLoadingAnimation();
 
     try {
-      const reward = await createReward(amount);
-      const { payment, rewardId, totalFee } = reward;
+      const order = await createOrder(amount);
+      const { payment, orderId, totalFee } = order;
 
-      const updateRewardData = {
+      const createSponsorData = {
         paid: totalFee,
         message: this.data.message,
+        orderId,
+        user: this.data.userInfo,
       };
 
       wx.requestPayment({
         ...payment,
         success: async () => {
           try {
-            await updateReward(rewardId, updateRewardData);
+            await createSponsor(createSponsorData);
             wx.showToast({
               title: "Payment successful",
               icon: "success",
             });
+
             setTimeout(() => {
               wx.navigateBack();
             }, PAY_SUCCESS_DURATION);
           } catch (error) {
-            console.error("Update order error:", error);
+            console.error("Failed to create sponsor record", error);
             wx.showToast({
               title: "Failed to update order status, please contact support",
               icon: "none",
@@ -104,7 +112,7 @@ Page({
           }
         },
         fail: (error) => {
-          console.error("Payment failed:", error);
+          console.error("Payment failed", error);
           wx.showToast({
             title: "Payment failed, please try again",
             icon: "none",
@@ -116,7 +124,7 @@ Page({
         },
       });
     } catch (error) {
-      console.error("Create order error:", error);
+      console.error("Failed to create order", error);
       wx.showToast({
         title: "Failed to create order, please try again",
         icon: "none",
