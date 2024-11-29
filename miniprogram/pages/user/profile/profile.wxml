@@ -1,21 +1,22 @@
 <toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
-<view class="pt-0 pb-10 plr">
-  <block wx:if="{{user.photos && user.photos.length > 0}}">
-    <block wx:if="{{user.photos.length > 1}}">
+<view class="pb-10 plr">
+  <!-- Photos Swiper -->
+  <block wx:if="{{combinedPhotos && combinedPhotos.length > 0}}">
+    <block wx:if="{{combinedPhotos.length > 1}}">
       <swiper class="screen-swiper round-dot w-full h-72 mb-4" bind:tap="onPhotoClick" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
-        <swiper-item wx:for="{{user.photos}}" wx:for-item="photo" wx:key="*this">
-          <image src="{{photo}}" mode="aspectFill" class="w-full h-full rounded-lg" />
+        <swiper-item wx:for="{{combinedPhotos}}" wx:for-item="photo" wx:key="*this">
+          <image src="{{photo}}" mode="aspectFill" class="w-full h-full rounded-lg bg-gray-200" lazy-load="{{true}}" data-photo="{{photo}}" />
         </swiper-item>
       </swiper>
     </block>
     <block wx:else>
       <view class="w-full h-72 mb-4" bind:tap="onPhotoClick">
-        <image src="{{user.photos[0]}}" mode="aspectFill" class="w-full h-full rounded-lg" />
+        <image src="{{combinedPhotos[0]}}" mode="aspectFill" class="w-full h-full rounded-lg" data-photo="{{combinedPhotos[0]}}" />
       </view>
     </block>
   </block>
   <block wx:else>
-    <image src="{{user.avatarUrl}}" bind:tap="onPhotoClick" mode="aspectFill" class="w-full h-72 mb-4 rounded-lg" />
+    <view class="w-full h-72 mb-4 skeleton-bg skeleton-animate rounded-lg" />
   </block>
   <!-- Nick Name -->
   <view class="text-center flex items-center justify-center flex-col mb-8">
@@ -31,11 +32,11 @@
     <view wx:if="{{hasUserInfo}}" class="flex flex-wrap gap-2">
       <view wx:if="{{user.height}}" class="flex items-center border-gray-light rounded-full px-4 py-1 gap-2 bg-info">
         <text class="text-xs">👤</text>
-        <text class="text-sm text-info">{{user.height}}</text>
+        <text class="text-sm text-info">{{user.height}} cm</text>
       </view>
       <view wx:if="{{user.weight}}" class="flex items-center border-gray-light rounded-full px-4 py-1 gap-2 bg-info">
         <text class="text-xs">👤</text>
-        <text class="text-sm text-info">{{user.weight}}</text>
+        <text class="text-sm text-info">{{user.weight}} kg</text>
       </view>
       <view wx:if="{{user.school}}" class="flex items-center border-gray-light rounded-full px-4 py-1 gap-2 bg-info">
         <text class="text-xs">🏫</text>

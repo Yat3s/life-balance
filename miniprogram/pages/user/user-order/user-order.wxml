@@ -4,7 +4,7 @@
     <text class="text-xl font-bold text-foreground">支付成功</text>
   </view>
   <view class="bg-white p-4 mb-4 flex items-center rounded-lg">
-    <image wx:if="{{order.product.pictures && order.product.pictures[0]}}" class="w-24 h-24 rounded-lg object-cover mr-3" src="{{order.product.pictures[0]}}" mode="aspectFill" />
+    <image wx:if="{{order.product.pictures && order.product.pictures[0]}}" class="w-24 h-24 rounded-lg object-cover mr-3" src="{{order.product.pictures[0]}}" mode="aspectFill" lazy-load="{{true}}" />
     <view class="flex-1 flex flex-col">
       <text class="text-foreground text-sm mb-2 block line-clamp-2">{{order.product.title}}</text>
       <view class="text-tag bg-tag text-xs rounded-lg py-1dot5 px-3 self-end">
