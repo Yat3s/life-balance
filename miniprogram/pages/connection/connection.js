@@ -33,6 +33,7 @@ Component({
     titleScale: 1.0,
     appBarHeight: MAX_APP_BAR_HEIGHT,
     collapsed: false,
+    selectedCategory: null,
   },
 
   pageLifetimes: {
@@ -48,8 +49,13 @@ Component({
     attached() {
       wx.reportEvent("connectionpageload", {});
       getAppConfig().then((config) => {
+        const circleCategories = config.circleCategories.map((category) => ({
+          ...category,
+          selected: false,
+        }));
         this.setData({
           circleKeywords: config.circleKeywords,
+          circleCategories,
         });
       });
 
@@ -226,8 +232,21 @@ Component({
     },
 
     onCircleSearchClicked() {
+      const { circles, circleCategories } = this.data;
+
+      // Reset circles and categories
+      circles.forEach((item) => {
+        item.hide = false;
+      });
+      circleCategories.forEach((item) => {
+        item.selected = false;
+      });
+
       this.setData({
         showSearchPage: true,
+        selectedCategory: null,
+        circles,
+        circleCategories,
       });
     },
 
@@ -323,6 +342,53 @@ Component({
     onCircleSearchPageExit() {
       this.setData({
         showCircleSearchContent: false,
+      });
+    },
+
+    onCategoryTap(e) {
+      const { index } = e.currentTarget.dataset;
+      const { circleCategories, selectedCategory } = this.data;
+
+      let newSelectedCategory = null;
+      if (selectedCategory === index) {
+        newSelectedCategory = null;
+      } else {
+        newSelectedCategory = index;
+      }
+
+      const updatedCategories = circleCategories.map((category, i) => ({
+        ...category,
+        selected: i === newSelectedCategory,
+      }));
+
+      this.setData(
+        {
+          circleCategories: updatedCategories,
+          selectedCategory: newSelectedCategory,
+        },
+        this.filterCircles
+      );
+    },
+
+    filterCircles() {
+      const { circles, circleCategories, selectedCategory } = this.data;
+      const selectedCategoryName =
+        selectedCategory !== null
+          ? circleCategories[selectedCategory].name
+          : null;
+
+      const updatedCircles = circles.map((circle) => {
+        const shouldHide =
+          selectedCategoryName &&
+          !(
+            circle.tags &&
+            circle.tags.some((tag) => tag === selectedCategoryName)
+          );
+        return { ...circle, hide: shouldHide };
+      });
+
+      this.setData({
+        circles: updatedCircles,
       });
     },
 
