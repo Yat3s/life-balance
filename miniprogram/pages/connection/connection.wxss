@@ -1,6 +1,5 @@
 /* pages/explore/explore.wxss */
 
-
 .main {
   background: white;
   height: 100%;
@@ -49,7 +48,7 @@
 .section-action {
   font-size: 10pt;
   font-weight: bold;
-  color: #3785FC;
+  color: #3785fc;
 }
 
 .activity-item-active,
@@ -105,7 +104,7 @@
   width: 16rpx;
   height: 16rpx;
   border-radius: 50%;
-  background: #D7C893;
+  background: #d7c893;
 }
 
 .activity-state-active-text {
@@ -254,7 +253,11 @@
   height: 200rpx;
   border-radius: 12rpx;
   background: rgb(255, 235, 224);
-  background: linear-gradient(42deg, rgba(255, 235, 224, 1) 0%, rgba(220, 222, 244, 1) 100%);
+  background: linear-gradient(
+    42deg,
+    rgba(255, 235, 224, 1) 0%,
+    rgba(220, 222, 244, 1) 100%
+  );
 }
 
 .circle-detail-cover-pic {
@@ -292,7 +295,7 @@
   font-size: 11pt;
   line-height: 11pt;
   font-weight: bold;
-  color: #150E3E;
+  color: #150e3e;
 }
 
 .circle-detail-member {
@@ -313,7 +316,7 @@
   border-radius: 16rpx;
   width: 100%;
   height: 90rpx;
-  background: #B193F0;
+  background: #b193f0;
 }
 
 .circle-detail-team-only {
@@ -327,6 +330,16 @@
   color: var(--textGrey);
 }
 
+.circle-category-item {
+  color: #98aede;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.circle-category-item-selected {
+  color: #1c1c55;
+  background-color: #eef3fd;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
 
 .step-title {
   color: #6d6d6d;
@@ -370,16 +383,15 @@
   border-left: 10rpx solid rebeccapurple;
   padding: 12rpx 24rpx;
   background: #f1f1f1;
-  
 }
 
 .modal-code-text {
   font-size: 14pt;
-  color: #150E3E;
+  color: #150e3e;
   font-weight: bold;
 }
 
 .modal-code-copy {
   font-size: 10pt;
-  color: #3785FC;
+  color: #3785fc;
 }

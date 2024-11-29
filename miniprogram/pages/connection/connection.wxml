@@ -80,9 +80,24 @@
       </view>
     </view>
   </share-element>
+  <!-- Circle Categories -->
+<view class="plr margin-top-lg">
+  <view class="grid grid-cols-4 gap-3">
+    <view 
+      wx:for="{{circleCategories}}" 
+      wx:key="id" 
+      class="py-1 px-2 rounded-md flex items-center justify-center gap-1dot5 {{item.selected ? 'circle-category-item-selected' : 'circle-category-item'}}"
+      bindtap="onCategoryTap" 
+      data-index="{{index}}"
+    >
+      <image src="{{item.icon}}" class="w-4 h-4" />
+      <view>{{item.name}}</view>
+    </view>
+  </view>
+</view>
   <!-- Circle Items -->
-  <view class="grid grid-cols-2 margin-top-sm circle-list-container">
-    <view bindtap="onCircleItemClicked" data-circle="{{item}}" class="circle-item-frame" wx:for="{{circles}}" wx:key="id">
+  <view class="grid grid-cols-2 margin-top-lg circle-list-container">
+    <view bindtap="onCircleItemClicked" data-circle="{{item}}" class="circle-item-frame" wx:for="{{circles}}" wx:key="id" wx:if="{{!item.hide}}">
       <circleitem circle="{{item}}" />
     </view>
     <!-- Shimmer layout -->
