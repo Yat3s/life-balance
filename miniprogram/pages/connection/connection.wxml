@@ -90,8 +90,8 @@
       bindtap="onCategoryTap" 
       data-index="{{index}}"
     >
-      <!-- emoji -->
-      <view>{{item.icon}}</view>
+      <!-- app-assets/circle-categories -->
+      <image wx:if="{{item.icon}}" src="{{item.icon}}" class="w-4 h-4" />
       <view>{{item.name}}</view>
     </view>
   </view>
