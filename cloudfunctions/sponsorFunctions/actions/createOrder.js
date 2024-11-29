@@ -1,7 +1,5 @@
 const cloud = require("wx-server-sdk");
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
-const db = cloud.database();
-const COLLECTION_NAME_REWARDS = "rewards";
 
 exports.main = async (props, context) => {
   const openid = cloud.getWXContext().OPENID;
@@ -13,7 +11,7 @@ exports.main = async (props, context) => {
 
   const wechatOrderId = generateOrderNo();
   const createOrderResponse = await cloud.cloudPay.unifiedOrder({
-    body: `安得科技-Buy develop a coffee`,
+    body: `安德科技-Buy developer a coffee`,
     outTradeNo: wechatOrderId,
     spbillCreateIp: "123.12.12.123",
     subMchId: "1638480210",
@@ -26,19 +24,9 @@ exports.main = async (props, context) => {
     openid,
   });
 
-  const res = await db.collection(COLLECTION_NAME_REWARDS).add({
-    data: {
-      userId: openid,
-      amount: amount,
-      createdAt: Date.now(),
-      orderId: wechatOrderId,
-      paymentStatus: "PENDING",
-    },
-  });
-
   return {
     ...createOrderResponse,
-    rewardId: res._id,
+    orderId: wechatOrderId,
     totalFee: amount,
   };
 };

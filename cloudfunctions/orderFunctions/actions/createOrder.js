@@ -19,7 +19,7 @@ exports.main = async (props, context) => {
   }
 
   const wechatOrderId = generateOrderNo();
-  const productTitle = `安得科技-${product.title}`;
+  const productTitle = `安德科技-${product.title}`;
   const createOrderResponse = await cloud.cloudPay.unifiedOrder({
     body: productTitle,
     outTradeNo: wechatOrderId,
