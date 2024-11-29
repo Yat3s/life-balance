@@ -317,9 +317,17 @@ Component({
       const product = e.currentTarget.dataset.product;
       const isWantAction = e.currentTarget.dataset.action === "want";
 
+      const canViewContact =
+        product.userId === this.data.userInfo._openid ||
+        (product.wantedBy &&
+          product.wantedBy.indexOf(this.data.userInfo._openid) > -1);
+
       this.setData({
         showingModal: "flea-market-product",
-        selectedProduct: product,
+        selectedProduct: {
+          ...product,
+          canViewContact, // 添加这个状态到 selectedProduct
+        },
       });
 
       if (isWantAction) {
@@ -330,6 +338,10 @@ Component({
             const processedData = updatedProducts.data.map((p) => ({
               ...p,
               formattedTime: formatTimeAgo(p.createdAt),
+              canViewContact:
+                p.userId === this.data.userInfo._openid ||
+                (p.wantedBy &&
+                  p.wantedBy.indexOf(this.data.userInfo._openid) > -1),
             }));
 
             this.setData({
