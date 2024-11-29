@@ -195,8 +195,23 @@ Component({
 
     fetchAllSponsors() {
       _fetchAllSponsors().then((res) => {
+        const userLatestDonations = new Map();
+
+        res.data.forEach((sponsor) => {
+          const existingDonation = userLatestDonations.get(sponsor.userId);
+
+          // If this user hasn't been seen yet or if this donation is more recent
+          if (!existingDonation || sponsor.paidAt > existingDonation.paidAt) {
+            userLatestDonations.set(sponsor.userId, sponsor);
+          }
+        });
+
+        const uniqueSponsors = Array.from(userLatestDonations.values()).sort(
+          (a, b) => b.paidAt - a.paidAt
+        );
+
         this.setData({
-          sponsors: res.data,
+          sponsors: uniqueSponsors,
         });
       });
     },
