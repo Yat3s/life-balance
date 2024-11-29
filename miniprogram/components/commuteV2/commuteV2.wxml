@@ -1,14 +1,7 @@
 <view class="border border-solid border-gray-200 p-4 rounded-xl">
   <!-- Parking -->
   <view bindtap="refresh">
-    <view class="flex items-center justify-between">
-      <view class="font-bold">通勤</view>
-      <image class="w-6 h-6 {{loadingParkingSpace ? 'animation-rotate' : ''}}" src="/images/ic_refresh.png"></image>
-    </view>
-    <view wx:if="{{lastParkingFullTimeStr}}" class="mt-1">
-      <view class="text-xs text-gray">{{lastParkingFullTimeStr}}</view>
-    </view>
-    <view class="mt-5 flex flex-col gap-4 items-start justify-between">
+    <view class="flex flex-col gap-4 items-start justify-between">
       <view class="flex w-full items-center gap-1 justify-between">
         <!-- B25 -->
         <view class="flex gap-2dot5 items-center">
@@ -44,6 +37,10 @@
             </view>
           </view>
         </view>
+      </view>
+
+      <view wx:if="{{lastParkingFullTimeStr}}" class="flex items-center justify-between">
+        <view class="text-xs text-gray">{{lastParkingFullTimeStr}}</view>
       </view>
       <block>
         <!-- Divider -->

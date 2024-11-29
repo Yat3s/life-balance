@@ -1,15 +1,8 @@
 <view bindtap="toMenuDetail" class="border border-solid border-gray-200 p-4 pr-0 rounded-xl flex flex-col justify-between">
   <view class="relative">
-    <view class="font-bold">食堂</view>
     <view class="flex justify-between {{todayMenuB25.foodWaste !== undefined ? 'items-start' : 'items-center mt-2'}}">
       <view class="mt-1 flex flex-col gap-4">
-        <view wx:if="{{todayMenuB25.foodWaste !== undefined }}" class="text-xs text-gray">
-          上周浪费
-          <text class="text-tip">{{todayMenuB25.foodWaste}} kg</text>
-          食物(~
-          <text class="text-tip">{{todayMenuB25.equivalentMeal}} 份</text>
-          餐食)
-        </view>
+
         <view class="flex gap-2 items-center justify-between {{todayMenuB25.foodWaste !== undefined ? '' : '-mt-6'}}">
           <view class="flex flex-1 gap-4 items-center">
             <view>
@@ -26,13 +19,21 @@
             </view>
           </view>
         </view>
+
+        <view wx:if="{{todayMenuB25.foodWaste !== undefined }}" class="text-xs text-gray">
+          上周浪费
+          <text class="text-tip">{{todayMenuB25.foodWaste}} kg</text>
+          食物(~
+          <text class="text-tip">{{todayMenuB25.equivalentMeal}} 份</text>
+          餐食)
+        </view>
       </view>
     </view>
-    <view class="absolute right-0 top-2 food-bg w-1on3dot5 h-24 flex items-center justify-center {{todayMenuB25.foodWaste !== undefined ? '' : '-mt-6'}}">
+    <view class="absolute right-0 top-0 food-bg w-1on3dot5 h-24 flex items-center justify-center {{todayMenuB25.foodWaste !== undefined ? '' : '-mt-6'}}">
       <view class="w-full h-full content-center">
-        <image src="/images/img_steak.png" class="w-12 h-12 steak" mode="widthFix" />
-        <image src="/images/img_taco.png" class="w-14 h-14 taco" mode="widthFix" />
-        <image src="/images/img_carrot.png" class="w-12 h-12 carrot" mode="widthFix" />
+        <image src="/images/img_steak.png" class="w-12 steak" mode="widthFix" />
+        <image src="/images/img_taco.png" class="w-12 taco" mode="widthFix" />
+        <image src="/images/img_carrot.png" class="w-12 carrot" mode="widthFix" />
       </view>
     </view>
   </view>
