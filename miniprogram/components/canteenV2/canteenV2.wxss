@@ -35,18 +35,18 @@
 .steak {
   position: absolute;
   top: 1.5rem;
-  left: 0;
+  left: 0.25rem;
 }
 
 .taco {
   position: absolute;
-  top: 0.5rem;
-  left: 1.25rem;
+  top: 0.6rem;
+  left: 1.5rem;
   z-index: 10;
 }
 
 .carrot {
   position: absolute;
   top: 1.5rem;
-  left: 3.05rem;
+  left: 3.25rem;
 }
