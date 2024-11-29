@@ -16,7 +16,7 @@
     <stockV2></stockV2>
   </view>
   <view class="ml-2 mt-9 widget-section-title text-xs">微软(中国)有限公司 - 苏州</view>
-  <view class="flex flex-col gap-4 mt-2">
+  <view class="flex flex-col gap-4 mt-2 pb-4">
     <!-- Parking Space -->
     <commuteV2 class="w-full"></commuteV2>
     <!-- Canteen -->
