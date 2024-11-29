@@ -90,7 +90,8 @@
       bindtap="onCategoryTap" 
       data-index="{{index}}"
     >
-      <image src="{{item.icon}}" class="w-4 h-4" />
+      <!-- emoji -->
+      <view>{{item.icon}}</view>
       <view>{{item.name}}</view>
     </view>
   </view>
