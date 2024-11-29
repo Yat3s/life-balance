@@ -11,6 +11,28 @@ const _ = db.command;
 const COLLECTION_NAME_FLEA_MARKET_PRODUCTS = "flea-market-products";
 const COLLECTION_NAME_USERS = "users";
 const SALE_STATUS_ON = "on";
+const USER_BATCH_SIZE = 100; // WeChat database batch size limit
+
+async function batchFetchUsers(db, userIds) {
+  const batchTimes = Math.ceil(userIds.length / USER_BATCH_SIZE);
+  const tasks = [];
+
+  for (let i = 0; i < batchTimes; i++) {
+    const start = i * USER_BATCH_SIZE;
+    const batchUserIds = userIds.slice(start, start + USER_BATCH_SIZE);
+
+    const promise = db
+      .collection(COLLECTION_NAME_USERS)
+      .where({
+        _openid: _.in(batchUserIds),
+      })
+      .get();
+    tasks.push(promise);
+  }
+
+  const userResults = await Promise.all(tasks);
+  return userResults.reduce((acc, cur) => acc.concat(cur.data), []);
+}
 
 exports.main = async (props, context) => {
   try {
@@ -27,16 +49,9 @@ exports.main = async (props, context) => {
 
     // Extract unique userIds
     const userIds = [...new Set(products.map((product) => product.userId))];
+    const userList = await batchFetchUsers(db, userIds);
 
-    // Batch fetch user information
-    const userList = await db
-      .collection(COLLECTION_NAME_USERS)
-      .where({
-        _openid: _.in(userIds),
-      })
-      .get()
-      .then((res) => res.data);
-
+    // Create user mapping for quick lookup
     const userMap = userList.reduce((acc, user) => {
       acc[user._openid] = user;
       return acc;
