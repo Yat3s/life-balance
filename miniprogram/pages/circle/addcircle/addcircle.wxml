@@ -4,30 +4,32 @@
 <view class="plr pb-10 pt-8">
   <view class="bg-white rounded-lg p-5 py-6 py-4 mb-4 border-gray">
     <view class="flex items-center gap-5 pb-5">
-      <view class="font-semibold text-primary text-sm shrink-0">圈子名称</view>
+      <view class="font-semibold text-black text-sm shrink-0">圈子名称</view>
       <input class="text-sm w-full text-right" placeholder="10个字以内" placeholder-class="text-input font-normal" maxlength="10" model:value="{{name}}" bindinput="onNameInput" />
     </view>
     <view class="flex items-center justify-between gap-5 pb-5">
-      <view class="font-semibold text-primary text-sm shrink-0">标签</view>
+      <view class="font-semibold text-black text-sm shrink-0">标签</view>
       <input class="text-sm w-full text-right" placeholder="多个标签用逗号分割" placeholder-class="text-input font-normal" maxlength="100" model:value="{{tagsInput}}" bindinput="onTagsInput" />
     </view>
     <view class="flex items-center gap-5 pb-5">
-      <view class="font-semibold text-primary text-sm shrink-0">城市</view>
+      <view class="font-semibold text-black text-sm shrink-0">城市</view>
       <input class="text-sm w-full text-right" placeholder="多个城市用逗号分割（选填）" placeholder-class="text-input font-normal" maxlength="100" model:value="{{cityInput}}" bindinput="onCityInput" />
     </view>
-    <view bindtap="uploadCover" class="flex items-center w-full bg-upload rounded-md h-32">
+    <view bindtap="uploadCover" class="relative flex items-center w-full aspect-ratio-2-1 bg-upload rounded-md">
       <view wx:if="{{!coverFileId}}" class="flex flex-col justify-center gap-1 w-full text-center">
         <view class="text-sm text-gray">点击上传一张封面图</view>
         <view class="text-xs text-gray">
           推荐尺寸：600*300
         </view>
       </view>
-      <view wx:else class="relative bg-gray-100 h-32 w-full">
-        <image src="{{coverFileId}}" class="w-full h-full" mode="aspectFill" />
-        <view class="absolute -top-1 -right-1 w-4 h-4 bg-gray rounded-full flex items-center justify-center" catchtap="onRemoveImage">
-          <text class="text-white text-xs">×</text>
-        </view>
+      <block wx:else>
+        <view class="overflow-hidden bg-upload w-full h-full rounded-md">
+          <image src="{{coverFileId}}" class="w-full h-full" mode="aspectFill" />
       </view>
+      <view class="absolute -top-1 -right-1 w-4 h-4 bg-gray rounded-full flex items-center justify-center" catchtap="onRemoveImage">
+        <text class="text-white text-xs">×</text>
+        </view>
+      </block>
     </view>
   </view>
   <view class="bg-white rounded-lg p-5 py-6 py-4 mb-4 border-gray">
@@ -39,10 +41,10 @@
     </view>
   </view>
   <view class="flex gap-4 justify-end mt-6">
-    <view class="py-2 px-10 rounded-full text-cancel border-solid border-cancel border-px text-sm" bindtap="onCancel">
+    <view class="py-2 px-10 rounded-full text-cancel border-gray text-sm" bindtap="onCancel">
       取消
     </view>
-    <view class="py-2 px-10 rounded-full bg-primary text-white text-sm" bindtap="onSubmit">
+    <view class="py-2 px-10 rounded-full bg-blueBg text-white text-sm" bindtap="onSubmit">
       提交
     </view>
   </view>
@@ -58,10 +60,10 @@
       </view>
     </view>
     <view class="flex gap-4 justify-center mt-6 mb-4">
-      <view class="py-2 px-10 rounded-full text-cancel border-solid border-cancel border-px text-sm" bindtap="onDismissModal">
+      <view class="py-2 px-10 rounded-full text-cancel border-gray text-sm" bindtap="onDismissModal">
         取消
       </view>
-      <view class="py-2 px-10 rounded-full bg-primary text-white text-sm" bindtap="onAddCircle">
+      <view class="py-2 px-10 rounded-full bg-blueBg text-white text-sm" bindtap="onAddCircle">
         提交
       </view>
     </view>
