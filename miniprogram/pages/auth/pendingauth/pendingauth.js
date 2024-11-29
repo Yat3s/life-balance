@@ -3,22 +3,15 @@ import {
   fetchPendingAuthUsers,
   updateEnterpriseAuth,
 } from "../../../repository/userRepo";
-
-const app = getApp();
+import { navigateToProfile } from "../../router";
 
 Page({
-  /**
-   * Page initial data
-   */
   data: {
     pendingAuthUsers: [],
     selectedUserIds: [],
     selectAllChecked: false,
   },
 
-  /**
-   * Lifecycle function--Called when page load
-   */
   onLoad() {
     this.initializeData();
   },
@@ -125,5 +118,10 @@ Page({
           title: "Approval failed: " + err,
         });
       });
+  },
+
+  onAvatarClick(e) {
+    const userId = e.currentTarget.dataset.id;
+    navigateToProfile(userId);
   },
 });

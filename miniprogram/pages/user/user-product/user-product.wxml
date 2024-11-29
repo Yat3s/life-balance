@@ -73,7 +73,7 @@
                 </view>
                 <block wx:if="{{item.pictures && item.pictures.length > 0}}">
                   <view class="w-14 h-14 overflow-hidden rounded shrink-0">
-                    <image src="{{item.pictures[0]}}" mode="aspectFill" class="w-full h-full object-cover" />
+                    <image src="{{item.pictures[0]}}" mode="aspectFill" class="w-full h-full object-cover" lazy-load="{{true}}" />
                   </view>
                 </block>
                 <view class="flex flex-col flex-1 gap-2">
@@ -150,7 +150,7 @@
       <block wx:else>
         <block wx:for="{{userOrders}}" wx:key="id">
           <view class="flex bg-blue-gradient p-6 mb-4 rounded-lg items-center border-gray-light" bind:tap="viewOrder" data-id="{{item.id}}">
-            <image wx:if="{{item.pictures && item.pictures[0]}}" class="w-28 h-28 rounded-lg" src="{{item.pictures[0]}}" mode="aspectFill" data-index="index" />
+            <image wx:if="{{item.pictures && item.pictures[0]}}" class="w-28 h-28 rounded-lg" src="{{item.pictures[0]}}" mode="aspectFill" data-index="index" lazy-load="{{true}}" />
             <view class="flex-1 ml-6 flex flex-col gap-5">
               <text class="text-sm line-clamp-2 text-foreground">{{item.title}}</text>
               <view class="mt-3 flex justify-between">
@@ -174,13 +174,13 @@
       <block wx:if="{{selectedProduct.pictures.length > 1}}">
         <swiper class="screen-swiper round-dot w-full h-72 rounded-t-lg" catch:tap="previewProductPicture" indicator-dots="true">
           <swiper-item wx:for="{{selectedProduct.pictures}}" wx:for-item="picture" wx:key="*this">
-            <image src="{{picture}}" mode="aspectFill" class="w-full h-full rounded-lg" />
+            <image src="{{picture}}" mode="aspectFill" class="w-full h-full rounded-lg" lazy-load="{{true}}" />
           </swiper-item>
         </swiper>
       </block>
       <block wx:else>
         <view class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6" catch:tap="previewProductPicture">
-          <image src="{{selectedProduct.pictures[0]}}" mode="aspectFill" class="w-full h-full rounded-lg" />
+          <image src="{{selectedProduct.pictures[0]}}" mode="aspectFill" class="w-full h-full rounded-lg" lazy-load="{{true}}" />
         </view>
       </block>
     </block>

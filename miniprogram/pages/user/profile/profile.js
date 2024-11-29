@@ -33,9 +33,16 @@ Page({
         user.occupation ||
         user.age
       );
+
+      // Combine avatar and photos
+      const combinedPhotos = user.photos
+        ? [user.avatarUrl, ...user.photos]
+        : [user.avatarUrl];
+
       this.setData({
         user,
         hasUserInfo,
+        combinedPhotos,
       });
     });
 
@@ -53,7 +60,8 @@ Page({
 
   onPhotoClick(e) {
     wx.previewImage({
-      urls,
+      urls: this.data.combinedPhotos,
+      current: e.currentTarget.dataset.photo,
     });
   },
 
