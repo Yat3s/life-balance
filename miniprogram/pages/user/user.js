@@ -14,6 +14,7 @@ import {
   navigateToPendingAuthListPage,
 } from "../router";
 import { getAppConfig } from "../../repository/baseRepo";
+import { fetchAllSponsors as _fetchAllSponsors } from "../../repository/sponsorRepo";
 
 Component({
   options: {
@@ -191,6 +192,19 @@ Component({
       });
       this.onHideModal();
     },
+
+    fetchAllSponsors() {
+      _fetchAllSponsors().then((res) => {
+        this.setData({
+          sponsors: res.data,
+        });
+      });
+    },
+
+    onAvatarClick(e) {
+      const userId = e.currentTarget.dataset.id;
+      navigateToProfile(userId);
+    },
   },
 
   pageLifetimes: {
@@ -209,6 +223,7 @@ Component({
           rewardEnabled: featureFlags.rewardEnabled,
         });
       });
+      this.fetchAllSponsors();
     },
   },
 });

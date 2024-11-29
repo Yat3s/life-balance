@@ -119,7 +119,15 @@
             Other
           </view>
         </view>
-        <view class="margin-top">Sponsors</view>
+        <view class="margin-top-lg text-gray-600 text-xs">
+          Our Amazing Sponsors
+          <text class="text-red-900 text-xs">♡</text>
+        </view>
+        <view class="flex flex-wrap w-full margin-top-sm ml-1dot5">
+          <block wx:for="{{sponsors}}" wx:key="_id">
+            <image bind:tap="onAvatarClick" class="w-6 h-6 rounded-full -ml-1dot5 bg-gray-200 border-gray-light" src="{{item.user.avatarUrl}}" data-id="{{item.user._id}}" mode="aspectFill" lazy-load="{{true}}" />
+          </block>
+        </view>
       </view>
     </block>
     <block wx:else>
