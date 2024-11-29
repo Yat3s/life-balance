@@ -1,5 +1,5 @@
 <view bindtap="toMenuDetail" class="border border-solid border-gray-200 p-4 pr-0 rounded-xl flex flex-col justify-between">
-  <view class="relative">
+  <view wx:if="{{todayMenuB25}}" class="relative">
     <view class="flex justify-between {{todayMenuB25.foodWaste !== undefined ? 'items-start' : 'items-center mt-2'}}">
       <view class="mt-1 flex flex-col gap-4">
 
@@ -36,5 +36,9 @@
         <image src="/images/img_carrot.png" class="w-12 carrot" mode="widthFix" />
       </view>
     </view>
+  </view>
+
+  <view wx:if="{{!todayMenuB25}}">
+    <view class="shine w-72 h-20"></view>
   </view>
 </view>

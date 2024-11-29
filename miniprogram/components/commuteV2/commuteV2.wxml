@@ -38,9 +38,11 @@
           </view>
         </view>
       </view>
-
       <view wx:if="{{lastParkingFullTimeStr}}" class="flex items-center justify-between">
         <view class="text-xs text-gray">{{lastParkingFullTimeStr}}</view>
+      </view>
+      <view wx:if="{{!lastParkingFullTimeStr}}">
+        <view class="shine w-40 h-4"></view>
       </view>
       <block>
         <!-- Divider -->
