@@ -98,16 +98,16 @@
               {{item.type === 'sell' ? '已售' : '已购'}}
             </view>
             <!-- Title -->
-            <view class="text-sm truncate w-60 text-black {{item.terminated && 'line-through'}}">
+            <view class="text-sm truncate w-52 text-black {{item.terminated && 'line-through'}}">
               {{item.title}}
             </view>
           </view>
           <!-- Actions -->
-          <view class="flex items-center gap-3">
+          <view class="flex items-center gap-3 shrink-0">
             <button class="share-btn" open-type="share" data-product="{{item}}">
               <image class="w-4 h-4 mb-0dot5" src="/images/share.svg" />
             </button>
-            <image class="w-4 h-4 shrink-0" data-product="{{item}}" catch:tap="onEditProduct" src="/images/ic_more.svg" />
+            <image class="w-4 h-4" data-product="{{item}}" catch:tap="onEditProduct" src="/images/ic_more.svg" />
           </view>
         </view>
         <!-- Description -->
