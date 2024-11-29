@@ -1,0 +1,16 @@
+page {
+  background-color: #f5f5f5;
+}
+
+.loading-rotate {
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

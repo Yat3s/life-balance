@@ -13,16 +13,24 @@ import {
   navigateToAuth,
   navigateToPendingAuthListPage,
 } from "../router";
+import { getAppConfig } from "../../repository/baseRepo";
 
 Component({
   options: {
     addGlobalClass: true,
   },
-
   properties: {},
-
   data: {
     github: "https://github.com/Yat3s/life-balance",
+    isProcessingPayment: false,
+    amounts: [
+      { value: 6, label: "6 CNY" },
+      { value: 16, label: "16 CNY" },
+      { value: 36, label: "36 CNY" },
+      { value: 66, label: "66 CNY" },
+      { value: 88, label: "88 CNY" },
+      { value: 200, label: "200 CNY" },
+    ],
   },
 
   methods: {
@@ -169,6 +177,21 @@ Component({
         }
       });
     },
+
+    onSelectAmount(e) {
+      const amount = e.currentTarget.dataset.amount;
+      wx.navigateTo({
+        url: `/pages/reward/reward?amount=${amount}`,
+      });
+      this.onHideModal();
+    },
+
+    onOtherAmountClick() {
+      wx.navigateTo({
+        url: "/pages/reward/reward?type=otherAmount",
+      });
+      this.onHideModal();
+    },
   },
 
   pageLifetimes: {
@@ -181,6 +204,19 @@ Component({
     attached() {
       wx.reportEvent("userpageload", {});
       this.fetchUserInfo();
+      wx.getSystemInfo({
+        success: (res) => {
+          this.setData({
+            isAndroid: res.platform === "android",
+          });
+        },
+      });
+      getAppConfig().then((config) => {
+        const { featureFlags } = config;
+        this.setData({
+          rewardEnabled: featureFlags.rewardEnabled,
+        });
+      });
     },
   },
 });
