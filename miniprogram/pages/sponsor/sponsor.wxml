@@ -1,12 +1,12 @@
 <toolbar isBack="{{true}}">
-  <view slot="backText" class="text-sm">Reward</view>
+  <view slot="backText" class="text-sm">Sponsor</view>
 </toolbar>
 <view class="flex flex-col items-center plr">
   <!-- Profile -->
   <view class="w-12 h-12 rounded-full overflow-hidden mb-2 mt-8">
     <image class="w-full h-full bg-gray-200" src="cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/cloudbase-cms/upload/2024-11-15/Yat3s.png" lazy-load="{{true}}" />
   </view>
-  <view class="text-sm">Tip Chris</view>
+  <view class="text-sm">Chris Ye</view>
   <!-- Amount Input -->
   <block wx:if="{{isOtherAmount}}">
     <view class="flex items-center justify-end mb-4 gap-2 bg-white w-full text-right p-4 rounded-lg mt-8">
@@ -22,11 +22,11 @@
   </block>
   <!-- Message Input -->
   <textarea class="rounded-lg mb-8 bg-white p-4 w-full" placeholder="Leave a message" placeholder-class="text-gray" value="{{message}}" bind:input="onMessageInput" />
-  <!-- Reward Button -->
-  <button class="w-full rounded-lg py-3 {{amount > 0 ? 'bg-yellow-500 text-white' : 'bg-gray-200 text-gray'}} {{isProcessingPayment && 'opacity-60'}} flex items-center justify-center" disabled="{{!amount || amount <= 0}}" bind:tap="onReward">
+  <!-- Sponsor Button -->
+  <button class="w-full rounded-lg py-3 {{amount > 0 ? 'bg-yellow-500 text-white' : 'bg-gray-200 text-gray'}} {{isProcessingPayment && 'opacity-60'}} flex items-center justify-center" disabled="{{!amount || amount <= 0}}" bind:tap="onSponsor">
     <view class="flex items-center">
       <loading wx:if="{{isProcessingPayment}}" class="mr-2" type="spinner" size="20" color="{{amount > 0 ? '#ffffff' : '#999999'}}" />
-      <text>{{isProcessingPayment ? 'Processing' + loadingDots : 'Reward'}}</text>
+      <text>{{isProcessingPayment ? 'Processing' + loadingDots : 'Sponsor'}}</text>
     </view>
   </button>
 </view>

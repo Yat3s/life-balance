@@ -1,20 +1,20 @@
+import { getAppConfig } from "../../repository/baseRepo";
+import { fetchAllSponsors as _fetchAllSponsors } from "../../repository/sponsorRepo";
 import {
   fetchUserInfo as _fetchUserInfo,
   fetchCompany,
   updateUserInfo,
 } from "../../repository/userRepo";
 import {
-  navigateToUserActivity,
-  navigateToProfile,
-  navigateToUserProduct,
-  navigateToEditUserInfo,
-  navigationToContribution,
   navigateToAdmin,
   navigateToAuth,
+  navigateToEditUserInfo,
   navigateToPendingAuthListPage,
+  navigateToProfile,
+  navigateToUserActivity,
+  navigateToUserProduct,
+  navigationToContribution,
 } from "../router";
-import { getAppConfig } from "../../repository/baseRepo";
-import { fetchAllSponsors as _fetchAllSponsors } from "../../repository/sponsorRepo";
 
 Component({
   options: {
@@ -25,11 +25,11 @@ Component({
     github: "https://github.com/Yat3s/life-balance",
     isProcessingPayment: false,
     amounts: [
-      { value: 6, label: "6 CNY" },
-      { value: 16, label: "16 CNY" },
-      { value: 36, label: "36 CNY" },
-      { value: 66, label: "66 CNY" },
-      { value: 88, label: "88 CNY" },
+      { value: 6, label: "❤️ 6 CNY" },
+      { value: 16, label: "☕️ 16 CNY" },
+      { value: 36, label: "🚗 36 CNY" },
+      { value: 66, label: "✈️ 66 CNY" },
+      { value: 88, label: "🚀 88 CNY" },
     ],
   },
 
@@ -181,14 +181,14 @@ Component({
     onSelectAmount(e) {
       const amount = e.currentTarget.dataset.amount;
       wx.navigateTo({
-        url: `/pages/reward/reward?amount=${amount}`,
+        url: `/pages/sponsor/sponsor?amount=${amount}`,
       });
       this.onHideModal();
     },
 
     onOtherAmountClick() {
       wx.navigateTo({
-        url: "/pages/reward/reward?type=otherAmount",
+        url: "/pages/sponsor/sponsor?type=otherAmount",
       });
       this.onHideModal();
     },
@@ -235,7 +235,7 @@ Component({
       getAppConfig().then((config) => {
         const { featureFlags } = config;
         this.setData({
-          rewardEnabled: featureFlags.rewardEnabled,
+          sponsorPayEnabled: featureFlags.sponsorPay,
         });
       });
       this.fetchAllSponsors();

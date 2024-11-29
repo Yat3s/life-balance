@@ -32,7 +32,7 @@
     "pages/user/user-order/user-order",
     "pages/onboarding/onboarding",
     "pages/circle/addcircle/addcircle",
-    "pages/reward/reward"
+    "pages/sponsor/sponsor"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -40,9 +40,7 @@
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom"
   },
-  "requiredPrivateInfos": [
-    "chooseLocation"
-  ],
+  "requiredPrivateInfos": ["chooseLocation"],
   "sitemapLocation": "sitemap.json",
   "style": "v2",
   "useExtendedLib": {

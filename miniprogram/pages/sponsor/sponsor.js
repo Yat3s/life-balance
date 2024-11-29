@@ -66,7 +66,7 @@ Page({
     }
   },
 
-  async onReward() {
+  async onSponsor() {
     const amount = Number(this.data.amount);
     if (!amount || amount <= 0) {
       wx.showToast({
@@ -96,7 +96,7 @@ Page({
           try {
             await createSponsor(createSponsorData);
             wx.showToast({
-              title: "Payment successful",
+              title: "Thank you for your support!",
               icon: "success",
             });
 
