@@ -17,8 +17,8 @@
       </view>
       <view style="margin-top: 2rpx;" class="form-section">
         <view class="form-section-title">Avatar</view>
-        <button class="w-8 h-8 avatar-button" name="avatarUrl" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
-          <image class="w-8 h-8 bg-gray-200 rounded-full" src="{{avatarTmpUrl}}" mode="aspectFill" lazy-load="{{true}}" />
+        <button class="w-8 h-8 avatar-button" name="avatarUrl" bind:tap="handleAvatarChosen">
+          <image class="w-8 h-8 bg-gray-200 rounded-full" src="{{avatarUrl}}" mode="aspectFill" lazy-load="{{true}}" />
         </button>
       </view>
       <view style="margin-top: 2rpx;" class="form-section">
