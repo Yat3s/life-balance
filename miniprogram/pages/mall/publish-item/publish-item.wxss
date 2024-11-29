@@ -8,7 +8,7 @@
 }
 
 .border-gray {
-  border: 1rpx solid #e9e9e9;
+  border: 1rpx solid #dfdfdf;
 }
 
 .text-input {
@@ -16,7 +16,7 @@
 }
 
 .text-cancel {
-  color: #664d77;
+  color: #3b4054;
 }
 
 .bg-add-picture {
