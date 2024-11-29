@@ -126,7 +126,7 @@
         <!-- Price and User Info -->
         <view class="mt-8 flex items-center justify-between">
           <view class="flex items-center gap-2">
-            <image catch:tap="onAvatarClick" data-id="{{item.user._id}}" src="{{item.user.avatarUrl}}" class="w-8 h-8 rounded" mode="aspectFill" lazy-load="{{true}}" />
+            <image catch:tap="onAvatarClick" data-id="{{item.user._id}}" src="{{item.user.avatarUrl}}" class="w-8 h-8 rounded bg-gray-200" mode="aspectFill" lazy-load="{{true}}" />
             <view class="text-left">
               <view class="text-xs text-nickname truncate w-36">{{item.user.nickName}}</view>
               <view class="text-xxs text-time">{{item.formattedTime}}发布</view>
