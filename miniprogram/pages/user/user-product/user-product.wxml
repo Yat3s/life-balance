@@ -69,7 +69,7 @@
             <view class="flex-1">
               <view class="flex items-center justify-between relative gap-4">
                 <view wx:if="{{item.status === 'off'}}" class="w-10 h-10 absolute left-2 z-10">
-                  <image class="w-full h-full" src="/images/ic_sale_off.svg" />
+                  <image class="w-full h-full" src="/images/ic_sale_off.png" />
                 </view>
                 <block wx:if="{{item.pictures && item.pictures.length > 0}}">
                   <view class="w-14 h-14 overflow-hidden rounded shrink-0">
