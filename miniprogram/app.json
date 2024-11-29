@@ -31,7 +31,8 @@
     "pages/mall/purchase/purchase",
     "pages/user/user-order/user-order",
     "pages/onboarding/onboarding",
-    "pages/circle/addcircle/addcircle"
+    "pages/circle/addcircle/addcircle",
+    "pages/reward/reward"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

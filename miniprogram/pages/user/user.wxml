@@ -68,7 +68,6 @@
       </view>
       <image class="w-4 h-4" src="../../images/ic_arrow_right.svg" />
     </view>
-
     <view bind:tap="onFeedbackClick" class="flex items-center justify-between px-6 py-6">
       <view class="flex items-center gap-4">
         <image class="w-5 h-5" src="/images/ic_feedback.svg" />
@@ -104,17 +103,37 @@
 </view>
 <!-- Sponsor -->
 <view class="cu-modal {{showingModal === 'sponsor' ? 'show' : ''}}" bind:tap="onHideModal">
-  <view class="cu-dialog modal-main">
+  <view class="cu-dialog modal-main" catch:tap>
     <view class="flex justify-between">
       <view class="modal-title">Sponsor</view>
     </view>
     <view class="text-black margin-top">Buy developer a cup of coffee if you like this app!</view>
-    <image mode="heightFix" show-menu-by-longpress="true" class="pay margin-top-sm" src="../../images/img_praise.png" />
-    <view class="text-grey">Long press to save QR code</view>
-    <view class="text-red text-bold">THANK YOU!</view>
-    <view class="flex items-center justify-end margin-top-lg">
-      <view catchtap="onDismissModal" class="cu-btn modal-btn-ok">Done</view>
-    </view>
+    <block wx:if="{{isAndroid && rewardEnabled}}">
+      <view class="flex flex-col items-center w-full margin-top">
+        <!-- Profile -->
+        <view class="w-12 h-12 rounded-full overflow-hidden mb-1">
+          <image class="w-full h-full" src="cloud://life-6go5gey72a61a773.6c69-life-6go5gey72a61a773-1259260883/cloudbase-cms/upload/2024-11-15/Yat3s.png" />
+        </view>
+        <view class="text-black mb-4">Chris</view>
+        <view class="text-xs text-gray text-center">Reward amount</view>
+        <view class="grid grid-cols-3 gap-3 w-full margin-top">
+          <view wx:for="{{amounts}}" wx:key="value" data-amount="{{item.value}}" bind:tap="onSelectAmount" class="text-center p-3 rounded-lg {{selectedAmount === item.value ? 'bg-yellow-400 text-black' : 'border border-solid border-yellow-400 text-yellow-400'}}">
+            {{item.label}}
+          </view>
+        </view>
+        <view bind:tap="onOtherAmountClick" class="text-blue-400 margin-top text-xs">
+          Other Amount
+        </view>
+      </view>
+    </block>
+    <block wx:else>
+      <image mode="heightFix" show-menu-by-longpress="true" class="pay margin-top-sm" src="../../images/img_praise.png" />
+      <view class="text-grey">Long press to save QR code</view>
+      <view class="text-red text-bold">THANK YOU!</view>
+      <view class="flex items-center justify-end margin-top-lg">
+        <view catch:tap="onDismissModal" class="cu-btn modal-btn-ok">Done</view>
+      </view>
+    </block>
   </view>
 </view>
 <!-- Github -->
