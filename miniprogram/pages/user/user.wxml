@@ -130,7 +130,9 @@
                 <view class="text-xs text-gray-500">
                   {{item.anonymous ? 'Anonymous' : item.user.nickName}}
                 </view>
-                <view class="mt-1 text-sm bg-gray-100 rounded-lg px-2 py-1">{{item.message}}</view>
+                <view class="mt-1 text-sm bg-gray-100 rounded-lg px-2 py-1">
+                  {{item.message ? item.message : "[No message]"}}
+                </view>
               </view>
             </view>
           </block>
