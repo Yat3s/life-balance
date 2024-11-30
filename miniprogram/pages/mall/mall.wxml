@@ -75,14 +75,6 @@
       </view>
     </view>
   </scroll-view>
-  <!-- Authentication Required View -->
-  <view wx:if="{{!userInfo.company}}" class="flex-1 flex flex-col items-center justify-center" style="height: calc(100vh - 500px);">
-    <image class="w-40 h-40" lazy-load="{{true}}" src="/images/img_404.png" />
-    <view class="flex flex-col items-center">
-      <view class="text-black font-light">Oops! 该功能仅对认证用户开放</view>
-      <view class="underline text-auth" bind:tap="handleVerifyAuth">前往认证</view>
-    </view>
-  </view>
   <!-- Product List -->
   <view wx:if="{{fleaMarketProducts && userInfo.company}}" class="mt-4 plr pb-2">
     <view wx:for="{{fleaMarketProducts}}" wx:key="_id" class="mb-4 bg-white rounded-lg">
@@ -156,7 +148,15 @@
       </view>
     </view>
   </view>
-  <template wx:if="{{userInfo.company && !fleaMarketProducts}}" is="product-list-skeleton" />
+  <template wx:if="{{!fleaMarketProducts}}" is="product-list-skeleton" />
+  <!-- Authentication Required View -->
+  <view wx:if="{{!userInfo.company}}" class="flex-1 flex flex-col items-center justify-center" style="height: calc(100vh - 500px);">
+    <image class="w-40 h-40" lazy-load="{{true}}" src="/images/img_404.png" />
+    <view class="flex flex-col items-center">
+      <view class="text-black font-light">Oops! 该功能仅对认证用户开放</view>
+      <view class="underline text-auth" bind:tap="handleVerifyAuth">前往认证</view>
+    </view>
+  </view>
 </scroll-view>
 <!-- Product Operations Modal -->
 <view class="cu-modal bottom-modal {{ showingModal === 'edit-product' ? 'show' : '' }}" bind:tap="hideModal">
