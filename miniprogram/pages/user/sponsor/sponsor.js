@@ -1,5 +1,6 @@
-import { createOrder, createSponsor } from "../../repository/sponsorRepo";
-import { fetchUserInfo } from "../../repository/userRepo";
+import { createOrder, createSponsor } from "../../../repository/sponsorRepo";
+import { fetchUserInfo } from "../../../repository/userRepo";
+const app = getApp();
 
 const PAY_SUCCESS_DURATION = 1500;
 
@@ -95,10 +96,7 @@ Page({
         success: async () => {
           try {
             await createSponsor(createSponsorData);
-            wx.showToast({
-              title: "Thank you for your support!",
-              icon: "success",
-            });
+            app.globalData.pendingMessage = "Thank you for your support!";
 
             setTimeout(() => {
               wx.navigateBack();

@@ -112,10 +112,10 @@
       <view class="flex flex-col w-full margin-top">
         <view class="text-xs text-gray text-center">Sponsor amount</view>
         <view class="grid grid-cols-3 gap-3 w-full margin-top">
-          <view wx:for="{{amounts}}" wx:key="value" data-amount="{{item.value}}" bind:tap="onSelectAmount" class="text-center p-1 rounded-lg {{selectedAmount === item.value ? 'bg-yellow-400 text-black' : 'border border-solid border-yellow-400 text-yellow-400'}}">
+          <view wx:for="{{amounts}}" wx:key="value" data-amount="{{item.value}}" bind:tap="onSelectAmount" class="text-center p-1 rounded-lg border-4 border-solid border-blue-400 text-blue-500">
             {{item.label}}
           </view>
-          <view bind:tap="onOtherAmountClick" class="text-center p-1 rounded-lg border border-solid border-yellow-400 text-yellow-400">
+          <view bind:tap="onOtherAmountClick" class="text-center p-1 rounded-lg border-4 border-solid border-blue-400 text-blue-500">
             Other
           </view>
         </view>

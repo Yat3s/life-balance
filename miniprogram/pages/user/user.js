@@ -181,14 +181,14 @@ Component({
     onSelectAmount(e) {
       const amount = e.currentTarget.dataset.amount;
       wx.navigateTo({
-        url: `/pages/sponsor/sponsor?amount=${amount}`,
+        url: `/pages/user/sponsor/sponsor?amount=${amount}`,
       });
       this.onHideModal();
     },
 
     onOtherAmountClick() {
       wx.navigateTo({
-        url: "/pages/sponsor/sponsor?type=otherAmount",
+        url: "/pages/user/sponsor/sponsor?type=otherAmount",
       });
       this.onHideModal();
     },

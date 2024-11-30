@@ -32,7 +32,7 @@
     "pages/user/user-order/user-order",
     "pages/onboarding/onboarding",
     "pages/circle/addcircle/addcircle",
-    "pages/sponsor/sponsor"
+    "pages/user/sponsor/sponsor"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
