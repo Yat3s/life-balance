@@ -107,11 +107,10 @@
     <view class="flex justify-between">
       <view class="modal-title">Sponsor</view>
     </view>
-    <view class="text-black mt-2">Buy developer a cup of coffee if you like this app!</view>
+    <view class="text-black mt-2">您的支持是我更新的最大动力 ❤️</view>
     <block wx:if="{{sponsorPayEnabled}}">
       <view class="flex flex-col w-full margin-top">
-        <view class="text-xs text-gray text-center">Sponsor amount</view>
-        <view class="grid grid-cols-3 gap-3 w-full margin-top">
+        <view class="grid grid-cols-3 gap-3 w-full mt-2">
           <view wx:for="{{amounts}}" wx:key="value" data-amount="{{item.value}}" bind:tap="onSelectAmount" class="text-center p-1 rounded-lg border-4 border-solid border-blue-400 text-blue-500">
             {{item.label}}
           </view>
@@ -120,14 +119,20 @@
           </view>
         </view>
         <view class="margin-top-lg text-gray-600 text-sm">
-          Sponsors ❤️
+          Sponsors ❤️ ({{sponsors.length}})
           <text class="text-red-900 text-xs"></text>
         </view>
-        <view class="flex flex-wrap w-full margin-top-sm ml-1dot5">
+        <scroll-view class="max-h-60" scroll-y="true">
           <block wx:for="{{sponsors}}" wx:key="_id">
-            <image bind:tap="onAvatarClick" class="w-8 h-8 rounded-full -ml-1dot5 bg-gray-200 border-gray-light" src="{{item.user.avatarUrl}}" data-id="{{item.user._id}}" mode="aspectFill" lazy-load="{{true}}" />
+            <view class="flex items-center gap-2 mt-3">
+              <image bind:tap="onAvatarClick" class="shrink-0 w-10 h-10 rounded-full bg-gray-200 border-gray-light" src="{{item.user.avatarUrl}}" data-id="{{item.user._id}}" mode="aspectFill" lazy-load="{{true}}" />
+              <view>
+                <view class="text-xs text-gray-500">{{item.user.nickName}}</view>
+                <view class="mt-1 text-sm bg-gray-100 rounded-lg px-2 py-1">{{item.message}}</view>
+              </view>
+            </view>
           </block>
-        </view>
+        </scroll-view>
       </view>
     </block>
     <block wx:else>
