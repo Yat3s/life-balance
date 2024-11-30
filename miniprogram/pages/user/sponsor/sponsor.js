@@ -6,6 +6,7 @@ const PAY_SUCCESS_DURATION = 1500;
 
 Page({
   data: {
+    anonymous: false,
     amount: 0,
     isOtherAmount: false,
     message: "",
@@ -67,6 +68,10 @@ Page({
     }
   },
 
+  onAnonymousChange(e) {
+    this.setData({ anonymous: e.detail.value });
+  },
+
   async onSponsor() {
     const amount = Number(this.data.amount);
     if (!amount || amount <= 0) {
@@ -83,11 +88,13 @@ Page({
     try {
       const order = await createOrder(amount);
       const { payment, orderId, totalFee } = order;
+      const { anonymous } = this.data;
 
       const createSponsorData = {
         paid: totalFee,
         message: this.data.message,
         orderId,
+        anonymous,
         user: this.data.userInfo,
       };
 

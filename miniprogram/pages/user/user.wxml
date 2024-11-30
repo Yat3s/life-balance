@@ -122,12 +122,14 @@
           Sponsors ❤️ ({{sponsors.length}})
           <text class="text-red-900 text-xs"></text>
         </view>
-        <scroll-view class="max-h-60" scroll-y="true">
+        <scroll-view class="sponsor-list-height" scroll-y="true">
           <block wx:for="{{sponsors}}" wx:key="_id">
             <view class="flex items-center gap-2 mt-3">
-              <image bind:tap="onAvatarClick" class="shrink-0 w-10 h-10 rounded-full bg-gray-200 border-gray-light" src="{{item.user.avatarUrl}}" data-id="{{item.user._id}}" mode="aspectFill" lazy-load="{{true}}" />
+              <image bind:tap="onAvatarClick" class="shrink-0 w-10 h-10 rounded-full bg-gray-200 border-gray-light" src="{{item.anonymous ? null : item.user.avatarUrl}}" data-id="{{item.user._id}}" mode="aspectFill" lazy-load="{{true}}" />
               <view>
-                <view class="text-xs text-gray-500">{{item.user.nickName}}</view>
+                <view class="text-xs text-gray-500">
+                  {{item.anonymous ? 'Anonymous' : item.user.nickName}}
+                </view>
                 <view class="mt-1 text-sm bg-gray-100 rounded-lg px-2 py-1">{{item.message}}</view>
               </view>
             </view>

@@ -153,3 +153,7 @@
   color: #364655;
   font-weight: bold;
 }
+
+.sponsor-list-height {
+  max-height: 13rem;
+}

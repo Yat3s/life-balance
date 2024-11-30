@@ -198,11 +198,13 @@ Component({
         const userLatestDonations = new Map();
 
         res.data.forEach((sponsor) => {
-          const existingDonation = userLatestDonations.get(sponsor.userId);
+          const existingDonation = userLatestDonations.get(
+            sponsor.user._openid
+          );
 
           // If this user hasn't been seen yet or if this donation is more recent
           if (!existingDonation || sponsor.paidAt > existingDonation.paidAt) {
-            userLatestDonations.set(sponsor.userId, sponsor);
+            userLatestDonations.set(sponsor.user._openid, sponsor);
           }
         });
 
