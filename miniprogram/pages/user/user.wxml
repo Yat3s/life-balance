@@ -75,11 +75,11 @@
       </view>
       <image class="w-4 h-4" src="../../images/ic_arrow_right.svg" />
     </view>
-    <!-- Pending Auth List (admin) -->
+    <!-- Admin page -->
     <view bind:tap="onPendingAuthListClick" class="flex items-center justify-between px-6 py-6">
       <view class="flex items-center gap-4">
         <image class="w-5 h-5" src="/images/ic_user_github.svg" />
-        <view class="text-title">Pending auth requests</view>
+        <view class="text-title">Admin Consloe</view>
       </view>
       <image class="w-4 h-4" src="../../images/ic_arrow_right.svg" />
     </view>
