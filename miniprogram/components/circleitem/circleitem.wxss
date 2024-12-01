@@ -17,8 +17,7 @@
 }
 
 .circle-cover-pic {
-  width: 180rpx;
-  height: 90rpx;
+  height: 160rpx;
   border-radius: 12rpx;
 }
 
