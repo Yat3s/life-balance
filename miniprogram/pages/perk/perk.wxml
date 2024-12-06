@@ -1,0 +1,61 @@
+<view class="appbar" style="height: {{appBarHeight}}px;">
+  <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="toolbar plr {{collapsed? 'shadow' : ''}}">
+    <view style="font-size: {{titleScale * 24}}pt;" class="title">Perks</view>
+    <view style="font-size: {{subtitleScale * 12}}pt;" class="subtitle">
+      Staff Partner Discounts
+    </view>
+  </view>
+</view>
+<scroll-view class="h-full" scroll-y="true" bindscroll="onPageScrolled">
+  <view style="height: 150px;"></view>
+  <view class="plr">
+    <!-- Partner Merchant List -->
+    <view class="flex flex-col gap-4">
+      <!-- Partner Merchant Item -->
+      <view wx:for="{{partnerMerchants}}" wx:key="id" bindtap="onPartnerMerchantItemTap" data-partner-merchant="{{item}}" class="flex flex-col p-6 pb-4 bg-white rounded-lg">
+        <view class="flex items-center gap-4">
+          <image src="/images/perk/perk-1.png" class="w-12 h-8 bg-gray-200 rounded-md" />
+          <view class="text-black font-semibold text-xl">
+            {{item.name}}
+          </view>
+        </view>
+        <view class="mt-4 text-gray text-xs">
+          {{item.location.address}}
+        </view>
+        <view class="mt-8 flex items-end gap-4">
+          <view class="-mb-1 text-black text-xl whitespace-nowrap">
+            {{item.promotion.discount}}
+          </view>
+          <view class="flex flex-wrap gap-2">
+            <block wx:if="{{item.promotion.eligibleItems.length > 0}}">
+              <view wx:for="{{item.promotion.eligibleItems}}" wx:key="eligibleItems" class="tag">
+                <view class="left-circle"></view>
+                <view class="text-xxs tag-text">
+                  {{item}}
+                </view>
+              </view>
+            </block>
+            <block wx:else>
+              <view class="tag">
+                <view class="left-circle"></view>
+                <view class="text-xxs tag-text">
+                  全部商品
+                </view>
+              </view>
+            </block>
+          </view>
+        </view>
+        <view class="h-px bg-gray-100 my-4"></view>
+        <view class="flex items-center justify-between">
+          <view class="flex items-center gap-4">
+            <view class="flex items-center">
+              <image wx:for="{{item.comments}}" wx:key="avatarUrl" src="{{item.avatarUrl}}" class="w-6 h-6 bg-gray rounded-full {{index !== 0 ? '-ml-2' : ''}}" />
+            </view>
+            <view class="text-xs text-gray">{{item.comments.length}} 条评论</view>
+          </view>
+          <image src="/images/ic_arrow.svg" class="h-4" mode="heightFix" />
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>

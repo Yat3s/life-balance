@@ -116,6 +116,14 @@ export const Pages = {
     authRequired: true,
     url: "/pages/circle/addcircle/addcircle",
   },
+  Perk: {
+    authRequired: true,
+    url: "/pages/perk/perk",
+  },
+  PerkDetail: {
+    authRequired: true,
+    url: "/pages/perk/perkdetail/perkdetail?id=",
+  },
 };
 
 export function navigationToAppConfigWebView(config) {
@@ -228,6 +236,14 @@ export function navigateToOnboarding() {
 
 export function navigateToAddCircle() {
   navigate(Pages.AddCircle);
+}
+
+export function navigateToPerk() {
+  navigate(Pages.Perk);
+}
+
+export function navigateToPerkDetail(partnerMerchantId) {
+  navigate(Pages.PerkDetail, partnerMerchantId);
 }
 
 export function navigate(page, urlParam = null) {

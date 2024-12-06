@@ -1,0 +1,79 @@
+.toolbar {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.appbar {
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.title {
+  font-size: 24pt;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.subtitle {
+  font-size: 12pt;
+  line-height: 12pt;
+  color: #b8b8b8;
+  margin-bottom: 20rpx;
+}
+
+.section-icon {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.section-title {
+  font-size: 12pt;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.section-action {
+  font-size: 10pt;
+  font-weight: bold;
+  color: #3785fc;
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+  background-color: #e9f2ff;
+  padding: 3px 6px 3px 6px;
+  border-radius: 30px 15px 15px 30px;
+  width: fit-content;
+}
+
+.left-circle {
+  width: 10px;
+  height: 10px;
+  background-color: #e9f2ff;
+  border-radius: 50%;
+  position: relative;
+  margin-right: 4px;
+  overflow: hidden;
+}
+
+.left-circle::before {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.tag-text {
+  color: #6c8097;
+}
