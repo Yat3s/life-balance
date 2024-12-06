@@ -51,7 +51,7 @@
             <view class="flex items-center">
               <image wx:for="{{item.comments}}" wx:key="avatarUrl" src="{{item.avatarUrl}}" class="w-6 h-6 bg-gray rounded-full {{index !== 0 ? '-ml-2' : ''}}" />
             </view>
-            <view class="text-xs text-gray">{{item.comments.length}} 条评论</view>
+            <view class="text-xs text-gray">{{item.commentCount}} 条评论</view>
           </view>
           <image src="/images/ic_arrow.svg" class="h-4 -mr-0dot5" mode="heightFix" />
         </view>

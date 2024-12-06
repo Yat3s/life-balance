@@ -53,8 +53,15 @@ Page({
   fetchAllPartnerMerchants() {
     fetchAllPartnerMerchants().then((res) => {
       if (res.success) {
+        const partnerMerchants = res.data.map((item) => {
+          item.commentCount = item.comments.length;
+          item.comments = item.comments
+            .filter((comment) => comment._openid)
+            .slice(0, 3);
+          return item;
+        });
         this.setData({
-          partnerMerchants: res.data,
+          partnerMerchants,
         });
       }
     });
