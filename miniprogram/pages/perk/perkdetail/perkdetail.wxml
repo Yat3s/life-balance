@@ -80,7 +80,63 @@
       </view>
     </view>
   </view>
-  <view class="fixed z-10 bottom-safe-area left-0 right-0 bg-comment text-white rounded-full text-center text-sm px-4 py-2 mx-8">
+  <view bindtap="onShowCommentModal" class="fixed z-10 bottom-safe-area left-0 right-0 bg-comment text-white rounded-full text-center text-sm px-4 py-2 mx-8">
     评价一下
+  </view>
+</view>
+
+<!-- Comment Modal -->
+<view class="cu-modal bottom-modal {{showingModal === 'comment' ? 'show' : ''}}" bindtap="onDismissModal">
+  <view class="cu-dialog bg-white comment-modal-main" catchtap>
+    <view class="p-6">
+      <view class="flex flex-col gap-4">
+        <view class="flex flex-col items-start gap-3">
+          <view class="mb-1 text-black text-xs font-semibold">
+            👍 我觉得不错
+          </view>
+          <view wx:for="{{positiveTemplates}}" wx:key="positiveTemplates" class="w-full text-comment-template bg-comment-template rounded-full p-2 py-2dot5 text-gray text-xs border border-solid {{selectedCommentTemplate === item.content ? 'border-comment-template-selected' : 'border-transparent'}}" bindtap="onSelectCommentTemplate" data-template="{{item.content}}">
+            {{item.content}}
+          </view>
+        </view>
+        <view class="flex flex-col items-start gap-3">
+          <view class="mb-1 text-black text-xs font-semibold">
+            👎 我觉得不行
+          </view>
+          <view wx:for="{{negativeTemplates}}" wx:key="negativeTemplates" class="w-full text-comment-template bg-comment-template rounded-full p-2 py-2dot5 text-gray text-xs border border-solid {{selectedCommentTemplate === item.content ? 'border-comment-template-selected' : 'border-transparent'}}" bindtap="onSelectCommentTemplate" data-template="{{item.content}}">
+            {{item.content}}
+          </view>
+        </view>
+      </view>
+      <view class="flex items-center gap-2 mt-4">
+        <view bindtap="onDismissModal" class="flex-1 border border-solid border-gray-300 rounded-full text-center text-sm py-2">
+          取消
+        </view>
+        <view bindtap="onPostComment" class="flex-1 rounded-full text-white text-center text-sm py-2 {{canSendComment ? 'bg-comment' : 'bg-gray-300'}}">
+          发送评论
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- Auth Modal -->
+<view class="cu-modal {{showingModal === 'auth' ? 'show' : ''}}" catchtap="onDismissModal" catchtouchmove>
+  <view class="cu-dialog modal-main" catchtap>
+    <view class="flex flex-col gap-4 p-4">
+      <view class="text-lg font-semibold">
+        温馨提醒
+      </view>
+      <view class="text-sm text-tip">
+        发表评论需先进行企业认证，是否前往认证？
+      </view>
+    </view>
+    <view class="flex gap-4 justify-center mt-6 mb-4 px-4">
+      <view class="py-2 flex-1 rounded-full text-cancel border-gray text-sm" bindtap="onDismissModal">
+        取消
+      </view>
+      <view class="py-2 flex-1 rounded-full bg-blueBg text-white text-sm" bindtap="goToAuth">
+        前往认证
+      </view>
+    </view>
   </view>
 </view>

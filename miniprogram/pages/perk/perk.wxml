@@ -15,7 +15,7 @@
       <view wx:for="{{partnerMerchants}}" wx:key="id" bindtap="onPartnerMerchantItemTap" data-partner-merchant="{{item}}" class="flex flex-col p-6 pb-4 bg-white rounded-lg">
         <view class="flex items-center gap-4">
           <image src="{{item.logo}}" class="w-12 h-8 bg-gray-200 rounded-md" />
-          <view class="text-black font-semibold text-xl">
+          <view class="text-black text-xl">
             {{item.name}}
           </view>
         </view>
@@ -53,7 +53,7 @@
             </view>
             <view class="text-xs text-gray">{{item.comments.length}} 条评论</view>
           </view>
-          <image src="/images/ic_arrow.svg" class="h-4" mode="heightFix" />
+          <image src="/images/ic_arrow.svg" class="h-4 -mr-0dot5" mode="heightFix" />
         </view>
       </view>
     </view>

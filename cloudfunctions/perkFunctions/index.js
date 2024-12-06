@@ -1,4 +1,5 @@
 const fetchAllPartnerMerchants = require("./actions/fetchAllPartnerMerchants");
+const postComment = require("./actions/postComment");
 
 exports.main = async (event, context) => {
   const props = event.data;
