@@ -32,12 +32,18 @@ exports.main = async (props, context) => {
       };
     }
 
+    const savedComment = {
+      _openid: openid,
+      ...comment,
+      createdAt: new Date().getTime(),
+    };
+
     await db
       .collection(COLLECTION_NAME_PERKS)
       .doc(partnerMerchantId)
       .update({
         data: {
-          comments: db.command.push(comment),
+          comments: db.command.push(savedComment),
         },
       });
     return {

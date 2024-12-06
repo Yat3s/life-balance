@@ -51,3 +51,27 @@
 .pb-safe-area {
   padding-bottom: calc(env(safe-area-inset-bottom) + 4rem);
 }
+
+.bg-comment-template {
+  background-color: #e2edff;
+}
+
+.text-comment-template {
+  color: #5f769d;
+}
+
+.border-comment-template-selected {
+  border-color: #5e98f9;
+}
+
+.border-gray {
+  border: 1rpx solid #dfdfdf;
+}
+
+.text-cancel {
+  color: #3b4054;
+}
+
+.comment-modal-main {
+  border-radius: 0.75rem !important;
+}
