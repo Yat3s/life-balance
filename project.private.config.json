@@ -6,6 +6,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "perk",
+          "pathName": "pages/perk/perk",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/onboarding/onboarding",
           "pathName": "pages/onboarding/onboarding",
           "query": "",
