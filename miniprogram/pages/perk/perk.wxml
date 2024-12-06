@@ -49,7 +49,7 @@
         <view class="flex items-center justify-between">
           <view class="flex items-center gap-4">
             <view class="flex items-center">
-              <image wx:for="{{item.comments}}" wx:key="avatarUrl" src="{{item.avatarUrl}}" class="w-6 h-6 bg-gray rounded-full {{index !== 0 ? '-ml-2' : ''}}" />
+              <image wx:for="{{item.comments}}" wx:key="avatarUrl" src="{{item.avatarUrl}}" class="w-6 h-6 bg-gray-200 rounded-full {{index !== 0 ? '-ml-2' : ''}}" />
             </view>
             <view class="text-xs text-gray">{{item.commentCount}} 条评论</view>
           </view>
