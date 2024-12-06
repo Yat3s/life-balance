@@ -6,6 +6,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "perkdetail",
+          "pathName": "pages/perk/perkdetail/perkdetail",
+          "query": "id=7b38e2d367519f260296861141b48e32",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "perk",
           "pathName": "pages/perk/perk",
           "query": "",

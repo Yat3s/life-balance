@@ -1,2 +1,86 @@
-<!--pages/perk/perkdetail/perkdetail.wxml-->
-<text>pages/perk/perkdetail/perkdetail.wxml</text>
+<toolbar isBack="{{true}}" bgColor="bg-white">
+</toolbar>
+<view class="plr pt-8 pb-safe-area">
+  <view class="bg-white rounded-lg pt-5 px-3 py-4 mb-4">
+    <view class="px-2 flex items-center gap-3">
+      <image src="{{partnerMerchant.logo}}" class="w-10 h-logo bg-gray-200 rounded-md" />
+      <view class="text-black font-semibold text-lg">
+        {{partnerMerchant.name}}
+      </view>
+    </view>
+    <view class="px-2 flex items-center gap-4 mt-4">
+      <view class="text-black text-lg whitespace-nowrap">
+        {{partnerMerchant.promotion.discount}}
+      </view>
+      <view class="flex flex-wrap gap-2">
+        <block wx:if="{{partnerMerchant.promotion.eligibleItems.length > 0}}">
+          <view wx:for="{{partnerMerchant.promotion.eligibleItems}}" wx:key="eligibleItems" class="tag">
+            <view class="left-circle"></view>
+            <view class="text-xxs tag-text">
+              {{item}}
+            </view>
+          </view>
+        </block>
+        <block wx:else>
+          <view class="tag">
+            <view class="left-circle"></view>
+            <view class="text-xxs tag-text">
+              全部商品
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+    <view class="px-2">
+      <view class="h-px bg-gray-100 w-full mt-4"></view>
+    </view>
+    <view class="mt-4 px-2">
+      <view class="text-black text-sm font-semibold">
+        折扣兑换方式
+      </view>
+      <view class="text-gray text-xs mt-1">
+        {{partnerMerchant.promotion.description}}
+      </view>
+    </view>
+    <view class="mt-7">
+      <view class="pl-2 text-black text-sm font-semibold">
+        店家地址
+      </view>
+      <view class="text-gray text-xs mt-1 px-2">
+        {{partnerMerchant.location.address}}
+      </view>
+      <view class="mt-2 rounded-lg overflow-hidden">
+        <map id="map" class="w-full h-32" longitude="{{partnerMerchant.location.longitude}}" latitude="{{partnerMerchant.location.latitude}}" scale="16" markers="{{markers}}" bindmarkertap="onClickMapMarker"></map>
+      </view>
+    </view>
+  </view>
+  <view class="bg-white rounded-lg px-3 pt-5 py-4 mb-4">
+    <view class="text-gray text-xs ml-2">
+      {{partnerMerchant.comments.length}} 条评论
+    </view>
+    <view class="mt-4 flex flex-col gap-4">
+      <view wx:for="{{partnerMerchant.comments}}" wx:key="comments" class="flex items-start gap-3 bg-comment-item rounded-lg p-4">
+        <view class="w-9 h-9 bg-gray-200 rounded-full">
+          <image src="{{item.avatarUrl}}" class="w-9 h-9 rounded-full" />
+        </view>
+        <view class="flex flex-col gap-1">
+          <view class="flex items-center gap-1">
+            <view class="text-gray text-xs">
+              {{item.nickName}}
+            </view>
+            <view class="h-2dot5 w-px bg-gray-300 rounded-full"></view>
+            <view class="text-gray text-xs">
+              {{item.createdAtStr}}
+            </view>
+          </view>
+          <view class="text-black text-sm">
+            {{item.content}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="fixed z-10 bottom-safe-area left-0 right-0 bg-comment text-white rounded-full text-center text-sm px-4 py-2 mx-8">
+    评价一下
+  </view>
+</view>
