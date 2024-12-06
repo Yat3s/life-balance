@@ -14,7 +14,7 @@
       <!-- Partner Merchant Item -->
       <view wx:for="{{partnerMerchants}}" wx:key="id" bindtap="onPartnerMerchantItemTap" data-partner-merchant="{{item}}" class="flex flex-col p-6 pb-4 bg-white rounded-lg">
         <view class="flex items-center gap-4">
-          <image src="/images/perk/perk-1.png" class="w-12 h-8 bg-gray-200 rounded-md" />
+          <image src="{{item.logo}}" class="w-12 h-8 bg-gray-200 rounded-md" />
           <view class="text-black font-semibold text-xl">
             {{item.name}}
           </view>
