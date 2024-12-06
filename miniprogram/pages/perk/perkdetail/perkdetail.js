@@ -20,7 +20,7 @@ Page({
   onLoad(options) {
     const partnerMerchantId = options.id;
     const user = app.globalData.userInfo;
-    const hasAuth = user.company;
+    const hasAuth = !!user?.company;
     this.setData({ partnerMerchantId, hasAuth });
     this.fetchPartnerMerchantDetail(partnerMerchantId);
     this.fetchMerchantCommentTemplates();
