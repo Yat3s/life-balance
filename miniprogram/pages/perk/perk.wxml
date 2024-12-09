@@ -1,29 +1,29 @@
 <view class="appbar" style="height: {{appBarHeight}}px;">
-  <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="toolbar plr {{collapsed? 'shadow' : ''}}">
+  <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="toolbar plr {{collapsed? 'bg-white shadow' : ''}}">
     <view style="font-size: {{titleScale * 24}}pt;" class="title">Perks</view>
     <view style="font-size: {{subtitleScale * 12}}pt;" class="subtitle">
       Staff Partner Discounts
     </view>
   </view>
 </view>
-<scroll-view class="h-full" scroll-y="true" bindscroll="onPageScrolled">
-  <view style="height: 150px;"></view>
+<scroll-view style="height: 100vh;" scroll-y="true" bindscroll="onPageScrolled">
+  <view style="height: 170px;"></view>
   <view class="plr">
     <!-- Partner Merchant List -->
-    <view class="flex flex-col gap-4">
+    <view class="flex flex-col gap-4 pb-6">
       <!-- Partner Merchant Item -->
       <view wx:for="{{partnerMerchants}}" wx:key="id" bindtap="onPartnerMerchantItemTap" data-partner-merchant="{{item}}" class="flex flex-col p-6 pb-4 bg-white rounded-lg">
         <view class="flex items-center gap-4">
-          <image src="{{item.logo}}" class="w-12 h-8 bg-gray-200 rounded-md" />
-          <view class="text-black text-xl">
+          <image src="{{item.logo}}" lazy-load="{{true}}" class="w-10 h-logo bg-gray-200 rounded-md" />
+          <view class="text-black text-xl font-w-450">
             {{item.name}}
           </view>
         </view>
         <view class="mt-4 text-gray text-xs">
           {{item.location.address}}
         </view>
-        <view class="mt-8 flex items-end gap-4">
-          <view class="-mb-1 text-black text-xl whitespace-nowrap">
+        <view class="mt-8 flex items-center gap-2">
+          <view class="text-black text-xl whitespace-nowrap">
             {{item.promotion.discount}}
           </view>
           <view class="flex flex-wrap gap-2">
@@ -45,11 +45,11 @@
             </block>
           </view>
         </view>
-        <view class="h-px bg-gray-100 my-4"></view>
+        <view class="h-px bg-gray-100 mb-4 mt-3"></view>
         <view class="flex items-center justify-between">
           <view class="flex items-center gap-4">
             <view class="flex items-center">
-              <image wx:for="{{item.comments}}" wx:key="avatarUrl" src="{{item.avatarUrl}}" class="w-6 h-6 bg-gray-200 rounded-full {{index !== 0 ? '-ml-2' : ''}}" />
+              <image wx:for="{{item.comments}}" wx:key="avatarUrl" src="{{item.avatarUrl}}" lazy-load="{{true}}" class="w-6 h-6 bg-gray-200 rounded-full {{index !== 0 ? '-ml-2' : ''}}" />
             </view>
             <view class="text-xs text-gray">{{item.commentCount}} 条评论</view>
           </view>

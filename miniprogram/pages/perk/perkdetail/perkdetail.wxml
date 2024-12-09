@@ -3,8 +3,8 @@
 <view class="plr pt-8 pb-safe-area">
   <view class="bg-white rounded-lg pt-5 px-3 py-4 mb-4">
     <view class="px-2 flex items-center gap-3">
-      <image src="{{partnerMerchant.logo}}" class="w-10 h-logo bg-gray-200 rounded-md" />
-      <view class="text-black font-semibold text-lg">
+      <image src="{{partnerMerchant.logo}}" lazy-load="{{true}}" class="w-9 h-6 bg-gray-200 rounded-md" />
+      <view class="text-black font-w-450 text-lg">
         {{partnerMerchant.name}}
       </view>
     </view>
@@ -35,7 +35,7 @@
       <view class="h-px bg-gray-100 w-full mt-4"></view>
     </view>
     <view class="mt-4 px-2">
-      <view class="text-black text-sm font-semibold">
+      <view class="text-black text-sm font-w-450">
         折扣兑换方式
       </view>
       <view class="text-gray text-xs mt-1">
@@ -43,7 +43,7 @@
       </view>
     </view>
     <view class="mt-7">
-      <view class="pl-2 text-black text-sm font-semibold">
+      <view class="pl-2 text-black text-sm font-w-450">
         店家地址
       </view>
       <view class="text-gray text-xs mt-1 px-2">
@@ -61,14 +61,14 @@
     <view class="mt-4 flex flex-col gap-4">
       <view wx:for="{{partnerMerchant.comments}}" wx:key="comments" class="flex items-start gap-3 bg-comment-item rounded-lg p-4">
         <view class="w-9 h-9 bg-gray-200 rounded-full">
-          <image src="{{item.avatarUrl}}" class="w-9 h-9 rounded-full" />
+          <image src="{{item.avatarUrl}}" lazy-load="{{true}}" class="w-9 h-9 rounded-full" />
         </view>
         <view class="flex flex-col gap-1">
           <view class="flex items-center gap-1">
             <view class="text-gray text-xs">
               {{item.nickName}}
             </view>
-            <view class="h-2dot5 w-px bg-gray-300 rounded-full"></view>
+            <view class="h-2dot5 w-px separator rounded-full"></view>
             <view class="text-gray text-xs">
               {{item.createdAtStr}}
             </view>
@@ -91,18 +91,18 @@
     <view class="p-6">
       <view class="flex flex-col gap-4">
         <view class="flex flex-col items-start gap-3">
-          <view class="mb-1 text-black text-xs font-semibold">
+          <view class="mb-1 text-black text-xs font-w-450">
             👍 我觉得不错
           </view>
-          <view wx:for="{{positiveTemplates}}" wx:key="positiveTemplates" class="w-full text-comment-template bg-comment-template rounded-full p-2 py-2dot5 text-gray text-xs border border-solid {{selectedCommentTemplate === item.content ? 'border-comment-template-selected' : 'border-transparent'}}" bindtap="onSelectCommentTemplate" data-template="{{item.content}}">
+          <view wx:for="{{positiveTemplates}}" wx:key="positiveTemplates" class="w-full text-comment-template bg-comment-template rounded-full p-2 py-2dot5 text-gray text-xs border border-3 border-solid {{selectedCommentTemplate === item.content ? 'border-comment-template-selected' : 'border-transparent'}}" bindtap="onSelectCommentTemplate" data-template="{{item.content}}">
             {{item.content}}
           </view>
         </view>
         <view class="flex flex-col items-start gap-3">
-          <view class="mb-1 text-black text-xs font-semibold">
+          <view class="mb-1 text-black text-xs font-w-450">
             👎 我觉得不行
           </view>
-          <view wx:for="{{negativeTemplates}}" wx:key="negativeTemplates" class="w-full text-comment-template bg-comment-template rounded-full p-2 py-2dot5 text-gray text-xs border border-solid {{selectedCommentTemplate === item.content ? 'border-comment-template-selected' : 'border-transparent'}}" bindtap="onSelectCommentTemplate" data-template="{{item.content}}">
+          <view wx:for="{{negativeTemplates}}" wx:key="negativeTemplates" class="w-full text-comment-template bg-comment-template rounded-full p-2 py-2dot5 text-gray text-xs border border-3 border-solid {{selectedCommentTemplate === item.content ? 'border-comment-template-selected' : 'border-transparent'}}" bindtap="onSelectCommentTemplate" data-template="{{item.content}}">
             {{item.content}}
           </view>
         </view>
@@ -111,7 +111,7 @@
         <view bindtap="onDismissModal" class="flex-1 border border-solid border-gray-300 rounded-full text-center text-sm py-2">
           取消
         </view>
-        <view bindtap="onPostComment" class="flex-1 rounded-full text-white text-center text-sm py-2 {{canSendComment ? 'bg-comment' : 'bg-gray-300'}}">
+        <view bindtap="onPostComment" class="flex-1 rounded-full text-center text-sm py-2 {{canSendComment ? 'bg-comment text-white' : 'bg-send-disabled text-send-disabled'}}">
           发送评论
         </view>
       </view>

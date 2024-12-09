@@ -48,32 +48,48 @@
   display: flex;
   align-items: center;
   background-color: #e9f2ff;
-  padding: 3px 6px 3px 6px;
+  padding: 2px 6px 2px 6px;
   border-radius: 30px 15px 15px 30px;
   width: fit-content;
 }
 
 .left-circle {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   background-color: #e9f2ff;
   border-radius: 50%;
   position: relative;
-  margin-right: 4px;
+  margin-right: 3px;
   overflow: hidden;
 }
 
 .left-circle::before {
   content: "";
   position: absolute;
-  top: 1px;
+  top: 1.4px;
   left: 1px;
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background-color: white;
 }
 
 .tag-text {
   color: #6c8097;
+}
+
+.text-black {
+  color: #06122c;
+}
+
+.font-w-450 {
+  font-weight: 450;
+}
+
+.w-logo {
+  width: 2.2rem;
+}
+
+.h-logo {
+  height: 1.56rem;
 }
