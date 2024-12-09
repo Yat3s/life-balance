@@ -12,14 +12,14 @@
     <!-- Partner Merchant List -->
     <view class="flex flex-col gap-4 pb-6">
       <!-- Partner Merchant Item -->
-      <view wx:for="{{partnerMerchants}}" wx:key="id" bindtap="onPartnerMerchantItemTap" data-partner-merchant="{{item}}" class="flex flex-col p-6 pb-4 bg-white rounded-lg">
+      <view wx:for="{{partnerMerchants}}" wx:key="id" bindtap="onPartnerMerchantItemTap" data-partner-merchant-id="{{item._id}}" class="flex flex-col p-6 pb-4 bg-white rounded-lg">
         <view class="flex items-center gap-4">
           <image src="{{item.logo}}" lazy-load="{{true}}" class="w-10 h-logo bg-gray-200 rounded-md" />
-          <view class="text-black text-xl font-w-450">
+          <view class="flex-1 text-black text-xl font-w-450 truncate">
             {{item.name}}
           </view>
         </view>
-        <view class="mt-4 text-gray text-xs">
+        <view class="mt-4 text-gray text-xs truncate">
           {{item.location.address}}
         </view>
         <view class="mt-8 flex items-center gap-2">

@@ -21,6 +21,12 @@
     <commuteV2 class="w-full"></commuteV2>
     <!-- Canteen -->
     <canteenV2 class="w-full"></canteenV2>
+    <!-- Perks -->
+    <view bindtap="goToPerks" class="border border-solid border-gray-200 p-4 rounded-xl">
+      <view class="text-sm font-bold text-center">
+        进入员工折扣页
+      </view>
+    </view>
     <view class="flex gap-2">
       <!-- Latest Circle -->
       <view class="flex-1">
