@@ -68,8 +68,8 @@ Page({
   },
 
   onPartnerMerchantItemTap(e) {
-    const partnerMerchant = e.currentTarget.dataset.partnerMerchant;
-    navigateToPerkDetail(partnerMerchant.id);
+    const partnerMerchantId = e.currentTarget.dataset.partnerMerchantId;
+    navigateToPerkDetail(partnerMerchantId);
   },
 
   /**

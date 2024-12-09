@@ -4,7 +4,7 @@
   <view class="bg-white rounded-lg pt-5 px-3 py-4 mb-4">
     <view class="px-2 flex items-center gap-3">
       <image src="{{partnerMerchant.logo}}" lazy-load="{{true}}" class="w-9 h-6 bg-gray-200 rounded-md" />
-      <view class="text-black font-w-450 text-lg">
+      <view class="flex-1 text-black font-w-450 text-lg truncate">
         {{partnerMerchant.name}}
       </view>
     </view>
@@ -38,7 +38,7 @@
       <view class="text-black text-sm font-w-450">
         折扣兑换方式
       </view>
-      <view class="text-gray text-xs mt-1">
+      <view class="text-gray text-xs mt-1 truncate">
         {{partnerMerchant.promotion.description}}
       </view>
     </view>
@@ -46,7 +46,7 @@
       <view class="pl-2 text-black text-sm font-w-450">
         店家地址
       </view>
-      <view class="text-gray text-xs mt-1 px-2">
+      <view class="text-gray text-xs mt-1 px-2 truncate">
         {{partnerMerchant.location.address}}
       </view>
       <view class="mt-2 rounded-lg overflow-hidden">
@@ -63,9 +63,9 @@
         <view class="w-9 h-9 bg-gray-200 rounded-full">
           <image src="{{item.avatarUrl}}" lazy-load="{{true}}" class="w-9 h-9 rounded-full" />
         </view>
-        <view class="flex flex-col gap-1">
+        <view class="flex flex-col gap-1 overflow-hidden">
           <view class="flex items-center gap-1">
-            <view class="text-gray text-xs">
+            <view class="flex-1 text-gray text-xs truncate">
               {{item.nickName}}
             </view>
             <view class="h-2dot5 w-px separator rounded-full"></view>
