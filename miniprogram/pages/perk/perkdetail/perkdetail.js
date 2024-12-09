@@ -164,6 +164,7 @@ Page({
       nickName: user.nickName,
       content: selectedCommentTemplate,
     };
+    this.onDismissModal();
     postComment(partnerMerchantId, comment)
       .then((res) => {
         if (res.success) {
@@ -185,9 +186,6 @@ Page({
           title: "评论失败",
           icon: "none",
         });
-      })
-      .finally(() => {
-        this.onDismissModal();
       });
   },
 

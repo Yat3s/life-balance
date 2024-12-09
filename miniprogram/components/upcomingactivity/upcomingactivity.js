@@ -1,7 +1,4 @@
-import {
-  navigateToActivityDetail,
-  navigateToActivityPage,
-} from "../../pages/router";
+import { navigateToActivityDetail } from "../../pages/router";
 import { fetchUpcomingActivity } from "../../repository/dashboardRepo";
 
 Component({

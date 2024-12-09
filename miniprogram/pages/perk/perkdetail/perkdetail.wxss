@@ -2,28 +2,28 @@
   display: flex;
   align-items: center;
   background-color: #e9f2ff;
-  padding: 3px 6px 3px 6px;
+  padding: 2px 6px 2px 6px;
   border-radius: 30px 15px 15px 30px;
   width: fit-content;
 }
 
 .left-circle {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   background-color: #e9f2ff;
   border-radius: 50%;
   position: relative;
-  margin-right: 4px;
+  margin-right: 3px;
   overflow: hidden;
 }
 
 .left-circle::before {
   content: "";
   position: absolute;
-  top: 1px;
+  top: 1.4px;
   left: 1px;
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background-color: white;
 }
@@ -33,7 +33,7 @@
 }
 
 .h-logo {
-  height: 1.67rem;
+  height: 1.625rem;
 }
 
 .bg-comment {
@@ -74,4 +74,28 @@
 
 .comment-modal-main {
   border-radius: 0.75rem !important;
+}
+
+.text-black {
+  color: #06122c;
+}
+
+.font-w-450 {
+  font-weight: 450;
+}
+
+.separator {
+  background-color: #dfdfdf;
+}
+
+.bg-send-disabled {
+  background-color: #dfdfdf;
+}
+
+.text-send-disabled {
+  color: #929292;
+}
+
+.border-3 {
+  border-width: 3rpx;
 }
