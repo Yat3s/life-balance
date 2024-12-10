@@ -17,6 +17,29 @@ Page({
     this.fetchLotteryData();
   },
 
+  subscribeNotification(tempId, title, content) {
+    wx.showModal({
+      title,
+      content,
+      success: (res) => {
+        if (res.confirm) {
+          wx.requestSubscribeMessage({
+            tmplIds: [tempId],
+            success: (res) => {
+              this.createTicket();
+            },
+            fail: (err) => {
+              console.error("Subscribe failed:", err);
+              this.createTicket();
+            },
+          });
+        } else if (res.cancel) {
+          this.createTicket();
+        }
+      },
+    });
+  },
+
   setupVideoAd() {
     if (wx.createRewardedVideoAd) {
       this.setData({
@@ -35,7 +58,11 @@ Page({
 
       this.data.videoAd.onClose((res) => {
         if (res && res.isEnded) {
-          this.handleAdReward();
+          this.subscribeNotification(
+            "wV8HUYugxQ3OI9MBkEPXMutZnOPHtQsu1tdMCoxOgi8",
+            "抽奖提醒",
+            "是否订阅抽奖结果通知？"
+          );
         } else {
           wx.showToast({
             title: "需要观看完整视频才能参与",
@@ -81,7 +108,7 @@ Page({
     });
   },
 
-  async handleAdReward() {
+  async createTicket() {
     try {
       if (!this.data.currentLottery?._id) {
         wx.showToast({
@@ -92,6 +119,7 @@ Page({
       }
 
       wx.showLoading({ title: "处理中" });
+
       const ticket = await createLotteryTicket(this.data.currentLottery._id);
 
       if (!ticket.success) {
@@ -108,6 +136,7 @@ Page({
         title: "参与成功！",
         icon: "success",
       });
+
       this.fetchLotteryData();
     } catch (error) {
       wx.hideLoading();
