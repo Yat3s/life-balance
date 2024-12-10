@@ -93,7 +93,21 @@
 </block>
 <view class="pb-20" />
 <view class="fixed bottom-0 left-0 right-0 h-20 p-4 bg-white">
-  <view class="w-full py-2dot5 text-sm font-normal bg-blue-500 text-white rounded-full flex items-center justify-center" bind:tap="onJoinLottery">
+  <view class="w-full py-2dot5 text-sm font-normal bg-button text-white rounded-full flex items-center justify-center" bind:tap="onJoinLottery">
     <text>观看视频参与抽奖</text>
+  </view>
+</view>
+<!-- Ads Desc Modal -->
+<view class="cu-modal {{showingModal === 'ads-desc' ? 'show' : ''}}" bind:tap="hideModal">
+  <view class="cu-dialog rounded-lg bg-white" catch:tap>
+    <view class="p-6 py-8">
+      <view class="text-center mb-4 text-black text-sm">🥺为什么要看广告？</view>
+      <view class="text-ads-desc text-xs leading-5 text-left">
+        Life Balance 服务器近期运营维护等成本变高，为能持续给大家带来更好的功能和体验，我们选择了一个方式：大家观看30秒小广告参与抽奖，获得的广告收益来支持小程序的运营，感谢大家的理解与支持～
+      </view>
+      <view class="w-full py-2 bg-button text-white rounded-full mt-10 text-sm" bind:tap="hideModal">
+        知道了
+      </view>
+    </view>
   </view>
 </view>

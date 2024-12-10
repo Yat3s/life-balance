@@ -155,7 +155,13 @@ Page({
   },
 
   onJoinLottery() {
-    if (this.data.videoAd) {
+    this.setData({
+      showingModal: "ads-desc",
+    });
+  },
+
+  hideModal() {
+    if (this.data.showingModal === "ads-desc" && this.data.videoAd) {
       this.data.videoAd.show().catch(() => {
         this.data.videoAd
           .load()
@@ -169,6 +175,10 @@ Page({
           });
       });
     }
+
+    this.setData({
+      showingModal: null,
+    });
   },
 
   onShareAppMessage() {
