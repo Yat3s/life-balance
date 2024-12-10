@@ -19,10 +19,14 @@ page {
 }
 
 .bg-button {
-  background-color: liner-gradient(#3785fc, #3785fc);
+  background-color: #3785fc;
 }
 
 .line {
   background-color: #eaeaea;
   height: 1rpx;
+}
+
+.text-ads-desc {
+  color: #989898;
 }
