@@ -1,8 +1,10 @@
 import { formatDateWithDotSeparator } from "../../../common/util";
 import { getAppConfig } from "../../../repository/baseRepo";
 import {
+  deleteComment,
   fetchPartnerMerchant,
   postComment,
+  updateComment,
 } from "../../../repository/perkRepo";
 import { navigateToAuth, navigateToProfile } from "../../router";
 
@@ -51,7 +53,11 @@ Page({
               ...item,
               createdAtStr: formatDateWithDotSeparator(item.createdAt),
             }))
-            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .sort((a, b) => {
+              const dateA = new Date(a.updatedAt || a.createdAt);
+              const dateB = new Date(b.updatedAt || b.createdAt);
+              return dateB - dateA;
+            })
         : [];
 
       const partnerMerchant = {
@@ -125,6 +131,7 @@ Page({
       showingModal: null,
       canSendComment: false,
       selectedCommentTemplate: null,
+      selectedComment: null,
     });
   },
 
@@ -154,6 +161,7 @@ Page({
   onPostComment() {
     const partnerMerchantId = this.data.partnerMerchantId;
     const selectedCommentTemplate = this.data.selectedCommentTemplate;
+    const selectedComment = this.data.selectedComment;
     const user = app.globalData.userInfo;
     if (!selectedCommentTemplate) {
       wx.showToast({
@@ -162,23 +170,111 @@ Page({
       });
       return;
     }
-    const comment = {
-      avatarUrl: user.avatarUrl,
-      nickName: user.nickName,
-      content: selectedCommentTemplate,
-    };
     this.onDismissModal();
-    postComment(partnerMerchantId, comment)
+    if (selectedComment) {
+      const commentInfo = {
+        createdAt: selectedComment.createdAt,
+        _openid: selectedComment._openid,
+        content: selectedComment.content,
+      };
+      const newCommentText = selectedCommentTemplate;
+      updateComment(partnerMerchantId, commentInfo, newCommentText)
+        .then((res) => {
+          if (res.success) {
+            wx.showToast({
+              title: "重新评价成功",
+              icon: "success",
+            });
+            this.fetchPartnerMerchantDetail(partnerMerchantId);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          wx.showToast({
+            title: "重新评价失败",
+            icon: "none",
+          });
+        });
+    } else {
+      const comment = {
+        avatarUrl: user.avatarUrl,
+        nickName: user.nickName,
+        content: selectedCommentTemplate,
+      };
+      postComment(partnerMerchantId, comment)
+        .then((res) => {
+          if (res.success) {
+            wx.showToast({
+              title: "评价成功",
+              icon: "success",
+            });
+            this.fetchPartnerMerchantDetail(partnerMerchantId);
+          } else {
+            wx.showToast({
+              title: "评价失败",
+              icon: "none",
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          wx.showToast({
+            title: "评价失败",
+            icon: "none",
+          });
+        });
+    }
+  },
+
+  onGoProfile(e) {
+    const userId = e.currentTarget.dataset.userId;
+    navigateToProfile(userId);
+  },
+
+  onShowCommentActionSheet(e) {
+    const comment = e.currentTarget.dataset.comment;
+    this.setData({
+      selectedComment: comment,
+    });
+    const isCurrentUserComment =
+      comment._openid === app.globalData.userInfo._openid;
+    if (!isCurrentUserComment) {
+      return;
+    }
+    wx.showActionSheet({
+      itemList: ["重新评价", "删除评价"],
+      success: (res) => {
+        if (res.tapIndex === 0) {
+          this.onShowCommentModal();
+        } else if (res.tapIndex === 1) {
+          this.onDeleteComment();
+        }
+      },
+    });
+  },
+
+  onDeleteComment() {
+    const comment = this.data.selectedComment;
+    const partnerMerchantId = this.data.partnerMerchantId;
+    const commentInfo = {
+      createdAt: comment.createdAt,
+      _openid: comment._openid,
+      content: comment.content,
+    };
+    wx.showLoading({
+      title: "删除中...",
+    });
+    deleteComment(partnerMerchantId, commentInfo)
       .then((res) => {
         if (res.success) {
           wx.showToast({
-            title: "评论成功",
+            title: "删除成功",
             icon: "success",
           });
           this.fetchPartnerMerchantDetail(partnerMerchantId);
         } else {
           wx.showToast({
-            title: "评论失败",
+            title: "删除失败",
             icon: "none",
           });
         }
@@ -186,15 +282,14 @@ Page({
       .catch((err) => {
         console.error(err);
         wx.showToast({
-          title: "评论失败",
+          title: "删除失败",
           icon: "none",
         });
+      })
+      .finally(() => {
+        wx.hideLoading();
+        this.onDismissModal();
       });
-  },
-
-  onGoProfile(e) {
-    const userId = e.currentTarget.dataset.userId;
-    navigateToProfile(userId);
   },
 
   /**

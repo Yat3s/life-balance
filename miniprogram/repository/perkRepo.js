@@ -26,3 +26,22 @@ export const postComment = (partnerMerchantId, comment) => {
     comment,
   });
 };
+
+export const updateComment = (
+  partnerMerchantId,
+  commentInfo,
+  newCommentText
+) => {
+  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, "updateComment", {
+    partnerMerchantId,
+    commentInfo,
+    newCommentText,
+  });
+};
+
+export const deleteComment = (partnerMerchantId, commentInfo) => {
+  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, "deleteComment", {
+    partnerMerchantId,
+    commentInfo,
+  });
+};
