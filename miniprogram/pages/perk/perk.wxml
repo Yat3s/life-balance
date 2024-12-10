@@ -1,14 +1,13 @@
-<view class="appbar" style="height: {{appBarHeight}}px;">
-  <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="toolbar plr {{collapsed? 'bg-white shadow' : ''}}">
-    <view style="font-size: {{titleScale * 24}}pt;" class="title">Perks</view>
-    <view style="font-size: {{subtitleScale * 12}}pt;" class="subtitle">
-      Staff Partner Discounts
-    </view>
-  </view>
-</view>
-<scroll-view style="height: 100vh;" scroll-y="true" bindscroll="onPageScrolled">
-  <view style="height: 170px;"></view>
+<toolbar isBack="{{true}}" bgColor="bg-white">
+</toolbar>
+<scroll-view scroll-y="true">
   <view class="plr">
+    <view class="pt-8 pl-6 pb-4">
+      <view class="title">Perks</view>
+      <view class="subtitle">
+        Staff Partner Discounts
+      </view>
+    </view>
     <!-- Partner Merchant List -->
     <view class="flex flex-col gap-4 pb-6">
       <!-- Partner Merchant Item -->
@@ -49,7 +48,8 @@
         <view class="flex items-center justify-between">
           <view class="flex items-center gap-4">
             <view class="flex items-center">
-              <image wx:for="{{item.comments}}" wx:key="avatarUrl" src="{{item.avatarUrl}}" lazy-load="{{true}}" class="w-6 h-6 bg-gray-200 rounded-full {{index !== 0 ? '-ml-2' : ''}}" />
+              <!-- avatar -->
+              <image wx:for="{{item.comments}}" bindtap="onGoProfile" data-user-id="{{item.userId}}" wx:key="avatarUrl" src="{{item.avatarUrl}}" lazy-load="{{true}}" class="w-6 h-6 bg-gray-200 rounded-full {{index !== 0 ? '-ml-2' : ''}}" />
             </view>
             <view class="text-xs text-gray">{{item.commentCount}} 条评论</view>
           </view>

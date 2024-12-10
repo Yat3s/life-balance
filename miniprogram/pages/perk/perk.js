@@ -1,5 +1,5 @@
 import { fetchAllPartnerMerchants } from "../../repository/perkRepo";
-import { navigateToPerkDetail } from "../../pages/router";
+import { navigateToPerkDetail, navigateToProfile } from "../../pages/router";
 const app = getApp();
 const COLLAPSED_SCROLL_TOP = 150;
 const MIN_TITLE_SCALE = 0.5;
@@ -70,6 +70,12 @@ Page({
   onPartnerMerchantItemTap(e) {
     const partnerMerchantId = e.currentTarget.dataset.partnerMerchantId;
     navigateToPerkDetail(partnerMerchantId);
+  },
+
+  onGoProfile(e) {
+    const userId = e.currentTarget.dataset.userId;
+    console.log(userId);
+    navigateToProfile(userId);
   },
 
   /**
