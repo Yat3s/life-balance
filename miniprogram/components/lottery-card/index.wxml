@@ -7,34 +7,18 @@
       <view class="text-gray text-xs">第 {{lottery.phase}} 期</view>
       <view class="font-semibold text-base mt-1 truncate-ellipsis mb-5">{{lottery.title}}</view>
       <!-- Participants -->
-      <block wx:if="{{isOngoing}}">
-        <view class="flex items-center mt-2">
-          <view class="flex items-center ml-1">
-            <block wx:for="{{lottery.participants}}" wx:key="userId">
-              <view class="-ml-2 rounded-full border border-solid border-gray-300 shrink-0 w-5 h-5">
-                <image wx:if="{{index < 3}}" src="{{item.avatarUrl}}" lazy-load="{{true}}" class="w-full h-full rounded-full bg-gray-200" />
-              </view>
-            </block>
-            <view wx:if="{{participantCount > 3}}" class="ml-1 text-xs text-gray-500">
-              +{{participantCount - 3}}
+      <view class="flex items-center mt-2">
+        <view class="flex items-center ml-1">
+          <block wx:for="{{lottery.participants}}" wx:key="userId">
+            <view class="-ml-2 rounded-full border border-solid border-gray-300 shrink-0 w-5 h-5">
+              <image wx:if="{{index < 3}}" src="{{item.avatarUrl}}" lazy-load="{{true}}" class="w-full h-full rounded-full bg-gray-200" />
             </view>
+          </block>
+          <view wx:if="{{participantCount > 3}}" class="ml-1 text-xs text-gray-500">
+            +{{participantCount - 3}}
           </view>
         </view>
-      </block>
-      <block wx:else>
-        <view class="flex items-center mt-2">
-          <view class="flex items-center">
-            <block wx:for="{{lottery.winners}}" wx:key="userId">
-              <view class="-ml-2 rounded-full border border-solid border-gray-300 shrink-0 w-5 h-5">
-                <image wx:if="{{index < 3}}" src="{{item.user.avatarUrl}}" lazy-load="{{true}}" class="w-full h-full rounded-full bg-gray-200" />
-              </view>
-            </block>
-            <view wx:if="{{lottery.winners.length > 3}}" class="ml-1 text-xs text-gray-500">
-              +{{lottery.winners.length - 3}}
-            </view>
-          </view>
-        </view>
-      </block>
+      </view>
     </view>
     <!-- Status text (absolute positioned) -->
     <view class="absolute top-4 right-4 z-20">
