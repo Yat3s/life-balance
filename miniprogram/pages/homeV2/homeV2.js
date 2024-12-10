@@ -1,6 +1,6 @@
 const { getDateInEnglish } = require("../../common/util");
 const { fetchUserInfo } = require("../../repository/userRepo");
-const { navigateToPerk } = require("../router");
+const { navigateToPerk, navigateToLottery } = require("../router");
 
 const app = getApp();
 const COLLAPSED_SCROLL_TOP = 60;
@@ -18,6 +18,7 @@ Component({
     statusBarHeight: app.globalData.statusBarHeight,
     appBarHeight: MAX_APP_BAR_HEIGHT,
     collapsed: false,
+    LOTTERY_FEATURE_ENABLED: true,
   },
 
   lifetimes: {
@@ -78,6 +79,9 @@ Component({
     },
     goToPerks() {
       navigateToPerk();
+    },
+    navToLottery() {
+      navigateToLottery();
     },
   },
 });

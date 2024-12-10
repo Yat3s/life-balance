@@ -1,0 +1,95 @@
+<toolbar isBack="{{true}}">
+  <view slot="backText" class="text-sm">抽奖</view>
+</toolbar>
+<block wx:if="{{currentLottery}}">
+  <view class="plr">
+    <!-- Image Carousel -->
+    <block wx:if="{{currentLottery.prizeTiers[0].images && currentLottery.prizeTiers[0].images.length > 0}}">
+      <block wx:if="{{currentLottery.prizeTiers[0].images.length > 1}}">
+        <swiper class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6" catch:tap="previewProductPicture" data-product="{{currentLottery}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
+          <swiper-item wx:for="{{currentLottery.prizeTiers[0].images}}" wx:for-item="image" wx:key="*this">
+            <image src="{{image}}" mode="aspectFill" class="w-full h-full rounded-lg" lazy-load="{{true}}" />
+          </swiper-item>
+        </swiper>
+      </block>
+      <block wx:else>
+        <view class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6" catch:tap="previewProductPicture" data-product="{{currentLottery}}">
+          <image src="{{currentLottery.prizeTiers[0].images[0]}}" mode="aspectFill" class="w-full h-full rounded-lg" lazy-load="{{true}}" />
+        </view>
+      </block>
+    </block>
+    <!-- Title -->
+    <view class="mb-4">
+      <view class="text-xs text-gray">第 {{currentLottery.phase}} 期</view>
+      <view class="text-lg font-semibold mb-2">{{currentLottery.title}}</view>
+    </view>
+    <!-- Drawn Time -->
+    <view class="mb-4">
+      <view class="text-drawn-time text-xs mb-0dot5">开奖日期</view>
+      <view class="font-semibold text-sm">{{currentLottery.formattedDrawTime}}</view>
+    </view>
+    <!-- Status -->
+    <view class="mb-5">
+      <view class="text-drawn-time text-xs">中奖人👑</view>
+      <view class="mt-2 text-none-drawn py-6 bg-drawn text-center font-medium rounded-lg">
+        <block wx:if="{{currentLottery.drawnAt > now}}">
+          <block wx:if="{{hasParticipated}}">你已参与，等待开奖 ⌛️</block>
+          <block wx:else>暂未开奖</block>
+        </block>
+        <block wx:else>
+          <block wx:if="{{currentLottery.winners && currentLottery.winners.length > 0}}">
+            <view class="flex flex-wrap gap-2 justify-center">
+              <block wx:for="{{currentLottery.winners}}" wx:key="ticketId">
+                <view class="flex items-center">
+                  <image src="{{item.user.avatarUrl}}" class="w-8 h-8 rounded-full" mode="aspectFill" />
+                  <text class="ml-2">{{item.user.nickName}}</text>
+                </view>
+              </block>
+            </view>
+          </block>
+          <block wx:else>暂无中奖者</block>
+        </block>
+      </view>
+    </view>
+    <!-- Participants -->
+    <view class="mb-4">
+      <view class="text-xs text-drawn-time">共 {{currentLottery.participants.length || 0}} 人参与</view>
+      <view class="mt-2 flex flex-wrap gap-2">
+        <block wx:for="{{currentLottery.participants}}" wx:key="index">
+          <image src="{{item.avatarUrl}}" class="w-6 h-6 rounded-full" mode="aspectFill" />
+        </block>
+      </view>
+    </view>
+    <!-- Description -->
+    <view>
+      <view class="text-drawn-time text-xs mb-1">抽奖说明</view>
+      <view class="text-xs">{{currentLottery.description}}</view>
+    </view>
+  </view>
+</block>
+<block wx:if="{{pastLotteries.length > 0}}">
+  <view class="plr">
+    <view class="text-lg font-medium">往期抽奖</view>
+    <view class="mt-2 space-y-3">
+      <view wx:for="{{pastLotteries}}" wx:key="_id" class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+        <view class="flex items-center">
+          <image src="{{item.prizeTiers[0].image[0]}}" class="w-12 h-12 rounded-lg" mode="aspectFill" />
+          <view class="ml-3">{{item.phase}}期 {{item.title}}</view>
+        </view>
+        <view class="flex items-center space-x-1">
+          <block wx:for="{{item.winners}}" wx:for-item="winner" wx:key="ticketId">
+            <image src="{{winner.user.avatarUrl}}" class="w-6 h-6 rounded-full" mode="aspectFill" />
+          </block>
+          <view class="ml-2 text-gray-400">
+            <text class="iconfont icon-right"></text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</block>
+<view class="fixed bottom-0 left-0 right-0 h-20 p-4 bg-white">
+  <view class="w-full py-2dot5 text-sm font-normal bg-blue-500 text-white rounded-full flex items-center justify-center" bind:tap="onJoinLottery">
+    <text>观看视频参与抽奖</text>
+  </view>
+</view>

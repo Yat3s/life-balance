@@ -1,0 +1,24 @@
+page {
+  background-color: #fff;
+  padding-bottom: 5rem;
+}
+
+.text-gray {
+  color: #acacac;
+}
+
+.text-drawn-time {
+  color: #a1a1a3;
+}
+
+.bg-drawn {
+  background-color: #fafafa;
+}
+
+.text-none-drawn {
+  color: #b7b7b7;
+}
+
+.bg-button {
+  background-color: liner-gradient(#3785fc, #3785fc);
+}
