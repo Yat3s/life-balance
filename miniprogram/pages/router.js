@@ -124,6 +124,10 @@ export const Pages = {
     authRequired: true,
     url: "/pages/perk/perkdetail/perkdetail?id=",
   },
+  Lottery: {
+    authRequired: true,
+    url: "/pages/lottery/lottery",
+  },
 };
 
 export function navigationToAppConfigWebView(config) {
@@ -244,6 +248,10 @@ export function navigateToPerk() {
 
 export function navigateToPerkDetail(partnerMerchantId) {
   navigate(Pages.PerkDetail, partnerMerchantId);
+}
+
+export function navigateToLottery() {
+  navigate(Pages.Lottery);
 }
 
 export function navigate(page, urlParam = null) {
