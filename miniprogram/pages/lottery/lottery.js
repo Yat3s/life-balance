@@ -40,6 +40,13 @@ Page({
     });
   },
 
+  previewImage(e) {
+    const images = e.currentTarget.dataset.lottery.prizeTiers[0].images || [];
+    wx.previewImage({
+      urls: images,
+    });
+  },
+
   setupVideoAd() {
     if (wx.createRewardedVideoAd) {
       this.setData({
