@@ -35,7 +35,12 @@
       <view class="pl-2 text-black text-sm font-w-450">店家地址</view>
       <view class="text-gray text-xs mt-1 px-2 truncate">{{partnerMerchant.location.address}}</view>
       <view class="mt-2 rounded-lg overflow-hidden">
-        <map id="map" class="w-full h-32" longitude="{{partnerMerchant.location.longitude}}" latitude="{{partnerMerchant.location.latitude}}" scale="16" markers="{{markers}}" bindmarkertap="onClickMapMarker"></map>
+        <view wx:if="{{partnerMerchant.location.longitude && partnerMerchant.location.latitude && markers.length > 0}}">
+          <map id="map" class="w-full h-32" longitude="{{partnerMerchant.location.longitude}}" latitude="{{partnerMerchant.location.latitude}}" scale="16" markers="{{markers}}" bindmarkertap="onClickMapMarker"></map>
+        </view>
+        <view wx:else>
+          <view class="w-full h-32 skeleton-bg skeleton-animate"/>
+        </view>
       </view>
     </view>
   </view>
