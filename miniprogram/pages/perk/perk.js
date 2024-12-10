@@ -74,7 +74,6 @@ Page({
 
   onGoProfile(e) {
     const userId = e.currentTarget.dataset.userId;
-    console.log(userId);
     navigateToProfile(userId);
   },
 
