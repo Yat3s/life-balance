@@ -4,7 +4,7 @@ import {
   fetchPartnerMerchant,
   postComment,
 } from "../../../repository/perkRepo";
-import { navigateToAuth } from "../../router";
+import { navigateToAuth, navigateToProfile } from "../../router";
 
 const app = getApp();
 
@@ -187,6 +187,11 @@ Page({
           icon: "none",
         });
       });
+  },
+
+  onGoProfile(e) {
+    const userId = e.currentTarget.dataset.userId;
+    navigateToProfile(userId);
   },
 
   /**

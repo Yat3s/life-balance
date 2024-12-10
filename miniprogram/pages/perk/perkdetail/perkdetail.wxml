@@ -60,12 +60,13 @@
     </view>
     <view class="mt-4 flex flex-col gap-4">
       <view wx:for="{{partnerMerchant.comments}}" wx:key="comments" class="flex items-start gap-3 bg-comment-item rounded-lg p-4">
-        <view class="w-9 h-9 bg-gray-200 rounded-full">
+        <view bindtap="onGoProfile" data-user-id="{{item.userId}}" class="w-9 h-9 bg-gray-200 rounded-full">
+          <!-- avatar -->
           <image src="{{item.avatarUrl}}" lazy-load="{{true}}" class="w-9 h-9 rounded-full" />
         </view>
         <view class="flex flex-col gap-1 overflow-hidden">
           <view class="flex items-center gap-1">
-            <view class="flex-1 text-gray text-xs truncate">
+            <view bindtap="onGoProfile" data-user-id="{{item.userId}}" class="flex-1 text-gray text-xs truncate">
               {{item.nickName}}
             </view>
             <view class="h-2dot5 w-px separator rounded-full"></view>
