@@ -37,7 +37,6 @@ Component({
           if (res.success) {
             const now = Date.now();
 
-            // Add participants array for avatar display
             const participants =
               res.data.tickets?.map((ticket) => ({
                 userId: ticket.userId,
@@ -47,7 +46,7 @@ Component({
             this.setData({
               lottery: {
                 ...res.data,
-                participants, // Add participants to lottery object
+                participants,
               },
               isOngoing: res.data.drawnAt > now,
               participantCount: res.data.tickets?.length || 0,
