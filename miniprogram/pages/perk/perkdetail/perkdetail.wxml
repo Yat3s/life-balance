@@ -1,12 +1,9 @@
-<toolbar isBack="{{true}}" bgColor="bg-white">
-</toolbar>
+<toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
 <view class="plr pt-8 pb-safe-area flex flex-col min-perk-detail-height">
   <view class="bg-white rounded-lg pt-5 px-3 py-4 mb-4">
     <view class="px-2 flex items-center gap-3">
-      <image src="{{partnerMerchant.logo}}" lazy-load="{{true}}" class="w-9 h-6 bg-gray-200 rounded-md" />
-      <view class="flex-1 text-black font-w-450 text-lg truncate">
-        {{partnerMerchant.name}}
-      </view>
+      <!-- <image src="{{partnerMerchant.logo}}" lazy-load="{{true}}" class="w-9 h-6 bg-gray-200 rounded-md" /> -->
+      <view class="flex-1 text-black font-w-450 text-xl truncate">{{partnerMerchant.name}}</view>
     </view>
     <view class="px-2 flex items-center gap-4 mt-4">
       <view class="text-black text-lg whitespace-nowrap">
@@ -16,17 +13,13 @@
         <block wx:if="{{partnerMerchant.promotion.eligibleItems.length > 0}}">
           <view wx:for="{{partnerMerchant.promotion.eligibleItems}}" wx:key="eligibleItems" class="tag">
             <view class="left-circle"></view>
-            <view class="text-xxs tag-text">
-              {{item}}
-            </view>
+            <view class="text-xxs tag-text">{{item}}</view>
           </view>
         </block>
         <block wx:else>
           <view class="tag">
             <view class="left-circle"></view>
-            <view class="text-xxs tag-text">
-              全部商品
-            </view>
+            <view class="text-xxs tag-text">全部商品</view>
           </view>
         </block>
       </view>
@@ -35,50 +28,36 @@
       <view class="h-px bg-gray-100 w-full mt-4"></view>
     </view>
     <view class="mt-4 px-2">
-      <view class="text-black text-sm font-w-450">
-        折扣兑换方式
-      </view>
-      <view class="text-gray text-xs mt-1 truncate">
-        {{partnerMerchant.promotion.description}}
-      </view>
+      <view class="text-black text-sm font-w-450">折扣兑换方式</view>
+      <rich-text class="text-xs text-gray mt-1" nodes="{{partnerMerchant.promotion.description}}"></rich-text>
     </view>
     <view class="mt-7">
-      <view class="pl-2 text-black text-sm font-w-450">
-        店家地址
-      </view>
-      <view class="text-gray text-xs mt-1 px-2 truncate">
-        {{partnerMerchant.location.address}}
-      </view>
+      <view class="pl-2 text-black text-sm font-w-450">店家地址</view>
+      <view class="text-gray text-xs mt-1 px-2 truncate">{{partnerMerchant.location.address}}</view>
       <view class="mt-2 rounded-lg overflow-hidden">
         <map id="map" class="w-full h-32" longitude="{{partnerMerchant.location.longitude}}" latitude="{{partnerMerchant.location.latitude}}" scale="16" markers="{{markers}}" bindmarkertap="onClickMapMarker"></map>
       </view>
     </view>
   </view>
-  <view class="bg-white rounded-lg px-3 pt-5 py-4 mb-2 flex-1 flex flex-col">
-    <view class="text-gray text-xs ml-2">
-      {{partnerMerchant.comments.length}} 条评价
-    </view>
+
+  <view class="bg-white rounded-lg px-3 pt-5 py-4 mb-2 {{partnerMerchant.comments.length > 0 ? '' : 'flex-1'}}">
+    <view class="text-gray text-xs ml-2">{{partnerMerchant.comments.length}} 条评论</view>
     <block wx:if="{{partnerMerchant.comments.length > 0}}">
-      <view class="mt-4 flex flex-col gap-4">
-        <view wx:for="{{partnerMerchant.comments}}" wx:key="comments" class="flex items-start gap-3 bg-comment-item rounded-lg p-4">
-          <view bindtap="onGoProfile" data-user-id="{{item.userId}}" class="w-9 h-9 bg-gray-200 rounded-full">
-            <!-- avatar -->
-            <image src="{{item.avatarUrl}}" lazy-load="{{true}}" class="w-9 h-9 rounded-full" />
-          </view>
-          <view class="flex flex-col gap-1 overflow-hidden">
-            <view class="flex items-center gap-1">
-              <view bindtap="onGoProfile" data-user-id="{{item.userId}}" class="flex-1 text-gray text-xs truncate">
-                {{item.nickName}}
-              </view>
-              <view class="h-2dot5 w-px separator rounded-full"></view>
-              <view class="text-gray text-xs">
-                {{item.createdAtStr}}
-              </view>
+         <view class="mt-4 flex flex-col gap-4">
+      <view wx:for="{{partnerMerchant.comments}}" wx:key="comments" class="flex items-start gap-3 bg-comment-item rounded-lg p-4">
+        <view bindtap="onGoProfile" data-user-id="{{item.userId}}" class="w-9 h-9 bg-gray-200 rounded-full">
+          <!-- avatar -->
+          <image src="{{item.avatarUrl}}" lazy-load="{{true}}" class="w-9 h-9 rounded-full" />
+        </view>
+        <view class="flex-1">
+          <view class="flex items-center gap-1 justify-between w-full">
+            <view bindtap="onGoProfile" data-user-id="{{item.userId}}" class="flex-1 text-gray text-xs truncate">
+              {{item.nickName}}
             </view>
-            <view class="text-black text-sm">
-              {{item.content}}
-            </view>
+            <view class="text-gray text-xs">{{item.createdAtStr}}</view>
           </view>
+          <view class="text-black text-sm mt-1">{{item.content}}</view>
+        </view>
         </view>
       </view>
     </block>
@@ -88,27 +67,25 @@
       </view>
     </block>
   </view>
+
+  <view bindtap="onShowCommentModal" class="fixed z-10 bottom-safe-area left-0 right-0 bg-comment text-white rounded-full text-center text-sm px-4 py-2 mx-8">
+    评价一下
+  </view>
 </view>
-<view bindtap="onShowCommentModal" class="fixed z-10 bottom-safe-area left-0 right-0 bg-comment text-white rounded-full text-center text-sm px-4 py-2 mx-8">
-  评价一下
-</view>
+
 <!-- Comment Modal -->
 <view class="cu-modal bottom-modal {{showingModal === 'comment' ? 'show' : ''}}" bindtap="onDismissModal">
   <view class="cu-dialog bg-white comment-modal-main" catchtap>
     <view class="p-6">
       <view class="flex flex-col gap-4">
         <view class="flex flex-col items-start gap-3">
-          <view class="mb-1 text-black text-xs font-w-450">
-            👍 我觉得不错
-          </view>
+          <view class="mb-1 text-black text-xs font-w-450">👍 我觉得不错</view>
           <view wx:for="{{positiveTemplates}}" wx:key="positiveTemplates" class="w-full text-comment-template bg-comment-template rounded-full p-2 py-2dot5 text-gray text-xs border border-3 border-solid {{selectedCommentTemplate === item.content ? 'border-comment-template-selected' : 'border-transparent'}}" bindtap="onSelectCommentTemplate" data-template="{{item.content}}">
             {{item.content}}
           </view>
         </view>
         <view class="flex flex-col items-start gap-3">
-          <view class="mb-1 text-black text-xs font-w-450">
-            👎 我觉得不行
-          </view>
+          <view class="mb-1 text-black text-xs font-w-450">👎 我觉得不行</view>
           <view wx:for="{{negativeTemplates}}" wx:key="negativeTemplates" class="w-full text-comment-template bg-comment-template rounded-full p-2 py-2dot5 text-gray text-xs border border-3 border-solid {{selectedCommentTemplate === item.content ? 'border-comment-template-selected' : 'border-transparent'}}" bindtap="onSelectCommentTemplate" data-template="{{item.content}}">
             {{item.content}}
           </view>
@@ -130,12 +107,8 @@
 <view class="cu-modal {{showingModal === 'auth' ? 'show' : ''}}" catchtap="onDismissModal" catchtouchmove>
   <view class="cu-dialog modal-main" catchtap>
     <view class="flex flex-col gap-4 p-4">
-      <view class="text-lg font-semibold">
-        温馨提醒
-      </view>
-      <view class="text-sm text-tip">
-        发表评论需先进行企业认证，是否前往认证？
-      </view>
+      <view class="text-lg font-semibold">温馨提醒</view>
+      <view class="text-sm text-tip">发表评论需先进行企业认证，是否前往认证？</view>
     </view>
     <view class="flex gap-4 justify-center mt-6 mb-4 px-4">
       <view class="py-2 flex-1 rounded-full text-cancel border-gray text-sm" bindtap="onDismissModal">
