@@ -69,9 +69,8 @@ Page({
           id: 1,
           latitude: partnerMerchant.location.latitude,
           longitude: partnerMerchant.location.longitude,
-          iconPath: "/images/ic_map_location.png",
           width: 17,
-          height: 23,
+          height: 25,
           callout: {
             content: partnerMerchant.name,
             color: "#000",
