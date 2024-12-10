@@ -1,4 +1,4 @@
-<toolbar isBack="{{true}}">
+<toolbar bgColor="bg-white" isBack="{{true}}">
   <view slot="backText" class="text-sm">抽奖</view>
 </toolbar>
 <block wx:if="{{currentLottery}}">
@@ -53,10 +53,12 @@
     </view>
     <!-- Participants -->
     <view class="mb-4">
-      <view class="text-xs text-drawn-time">共 {{currentLottery.participants.length || 0}} 人参与</view>
-      <view class="mt-2 flex flex-wrap gap-2">
-        <block wx:for="{{currentLottery.participants}}" wx:key="index">
-          <image src="{{item.avatarUrl}}" class="w-6 h-6 rounded-full" mode="aspectFill" />
+      <view class="text-xs text-drawn-time">共 {{currentLottery.tickets.length || 0}} 人参与</view>
+      <view class="mt-2 flex items-center flex-wrap ml-1">
+        <block wx:for="{{currentLottery.tickets}}" wx:key="index">
+          <view class="w-6 h-6 -ml-2 rounded-full border border-solid border-gray-300">
+            <image src="{{item.user.avatarUrl}}" class="w-full h-full rounded-full" />
+          </view>
         </block>
       </view>
     </view>
@@ -88,6 +90,7 @@
     </view>
   </view>
 </block>
+<view class="pb-20" />
 <view class="fixed bottom-0 left-0 right-0 h-20 p-4 bg-white">
   <view class="w-full py-2dot5 text-sm font-normal bg-blue-500 text-white rounded-full flex items-center justify-center" bind:tap="onJoinLottery">
     <text>观看视频参与抽奖</text>

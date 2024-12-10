@@ -1,6 +1,5 @@
 page {
   background-color: #fff;
-  padding-bottom: 5rem;
 }
 
 .text-gray {

@@ -54,9 +54,9 @@ exports.main = async (props, context) => {
           tickets: _.push({
             userId: wxContext.OPENID,
             code,
+            user: userInfo,
             createdAt: Date.now(),
           }),
-          participants: _.push(userInfo),
         },
       });
 

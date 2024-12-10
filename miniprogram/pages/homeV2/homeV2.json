@@ -5,6 +5,7 @@
     "commuteV2": "/components/commuteV2/commuteV2",
     "canteenV2": "/components/canteenV2/canteenV2",
     "latestCircle": "/components/latestcircle/latestcircle",
-    "upcomingActivity": "/components/upcomingactivity/upcomingactivity"
+    "upcomingActivity": "/components/upcomingactivity/upcomingactivity",
+    "lottery-card": "/components/lottery-card/index"
   }
 }
