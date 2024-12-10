@@ -6,14 +6,14 @@
     <!-- Image Carousel -->
     <block wx:if="{{currentLottery.prizeTiers[0].images && currentLottery.prizeTiers[0].images.length > 0}}">
       <block wx:if="{{currentLottery.prizeTiers[0].images.length > 1}}">
-        <swiper class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6" catch:tap="previewProductPicture" data-product="{{currentLottery}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
+        <swiper class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6" bind:tap="previewImage" data-lottery="{{currentLottery}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
           <swiper-item wx:for="{{currentLottery.prizeTiers[0].images}}" wx:for-item="image" wx:key="*this">
             <image src="{{image}}" mode="aspectFill" class="w-full h-full rounded-lg" lazy-load="{{true}}" />
           </swiper-item>
         </swiper>
       </block>
       <block wx:else>
-        <view class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6" catch:tap="previewProductPicture" data-product="{{currentLottery}}">
+        <view class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6" bind:tap="previewImage" data-lottery="{{currentLottery}}">
           <image src="{{currentLottery.prizeTiers[0].images[0]}}" mode="aspectFill" class="w-full h-full rounded-lg" lazy-load="{{true}}" />
         </view>
       </block>
@@ -52,7 +52,7 @@
       </view>
     </view>
     <!-- Participants -->
-    <view class="mb-4">
+    <view>
       <view class="text-xs text-drawn-time">共 {{currentLottery.tickets.length || 0}} 人参与</view>
       <view class="mt-2 flex items-center flex-wrap ml-1">
         <block wx:for="{{currentLottery.tickets}}" wx:key="index">
@@ -62,6 +62,7 @@
         </block>
       </view>
     </view>
+    <view class="line my-6" />
     <!-- Description -->
     <view>
       <view class="text-drawn-time text-xs mb-1">抽奖说明</view>
