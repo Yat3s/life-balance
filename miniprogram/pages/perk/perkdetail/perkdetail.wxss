@@ -99,3 +99,7 @@
 .border-3 {
   border-width: 3rpx;
 }
+
+.min-perk-detail-height {
+  min-height: calc(100vh - env(safe-area-inset-bottom) - 4rem);
+}

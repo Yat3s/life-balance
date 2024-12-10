@@ -1,6 +1,6 @@
 <toolbar isBack="{{true}}" bgColor="bg-white">
 </toolbar>
-<view class="plr pt-8 pb-safe-area">
+<view class="plr pt-8 pb-safe-area flex flex-col min-perk-detail-height">
   <view class="bg-white rounded-lg pt-5 px-3 py-4 mb-4">
     <view class="px-2 flex items-center gap-3">
       <image src="{{partnerMerchant.logo}}" lazy-load="{{true}}" class="w-9 h-6 bg-gray-200 rounded-md" />
@@ -54,38 +54,44 @@
       </view>
     </view>
   </view>
-  <view class="bg-white rounded-lg px-3 pt-5 py-4 mb-4">
+  <view class="bg-white rounded-lg px-3 pt-5 py-4 mb-2 flex-1 flex flex-col">
     <view class="text-gray text-xs ml-2">
-      {{partnerMerchant.comments.length}} 条评论
+      {{partnerMerchant.comments.length}} 条评价
     </view>
-    <view class="mt-4 flex flex-col gap-4">
-      <view wx:for="{{partnerMerchant.comments}}" wx:key="comments" class="flex items-start gap-3 bg-comment-item rounded-lg p-4">
-        <view bindtap="onGoProfile" data-user-id="{{item.userId}}" class="w-9 h-9 bg-gray-200 rounded-full">
-          <!-- avatar -->
-          <image src="{{item.avatarUrl}}" lazy-load="{{true}}" class="w-9 h-9 rounded-full" />
-        </view>
-        <view class="flex flex-col gap-1 overflow-hidden">
-          <view class="flex items-center gap-1">
-            <view bindtap="onGoProfile" data-user-id="{{item.userId}}" class="flex-1 text-gray text-xs truncate">
-              {{item.nickName}}
-            </view>
-            <view class="h-2dot5 w-px separator rounded-full"></view>
-            <view class="text-gray text-xs">
-              {{item.createdAtStr}}
-            </view>
+    <block wx:if="{{partnerMerchant.comments.length > 0}}">
+      <view class="mt-4 flex flex-col gap-4">
+        <view wx:for="{{partnerMerchant.comments}}" wx:key="comments" class="flex items-start gap-3 bg-comment-item rounded-lg p-4">
+          <view bindtap="onGoProfile" data-user-id="{{item.userId}}" class="w-9 h-9 bg-gray-200 rounded-full">
+            <!-- avatar -->
+            <image src="{{item.avatarUrl}}" lazy-load="{{true}}" class="w-9 h-9 rounded-full" />
           </view>
-          <view class="text-black text-sm">
-            {{item.content}}
+          <view class="flex flex-col gap-1 overflow-hidden">
+            <view class="flex items-center gap-1">
+              <view bindtap="onGoProfile" data-user-id="{{item.userId}}" class="flex-1 text-gray text-xs truncate">
+                {{item.nickName}}
+              </view>
+              <view class="h-2dot5 w-px separator rounded-full"></view>
+              <view class="text-gray text-xs">
+                {{item.createdAtStr}}
+              </view>
+            </view>
+            <view class="text-black text-sm">
+              {{item.content}}
+            </view>
           </view>
         </view>
       </view>
-    </view>
-  </view>
-  <view bindtap="onShowCommentModal" class="fixed z-10 bottom-safe-area left-0 right-0 bg-comment text-white rounded-full text-center text-sm px-4 py-2 mx-8">
-    评价一下
+    </block>
+    <block wx:else>
+      <view class="flex-1 flex items-center justify-center text-gray text-xs mt-4">
+        快来评价一下吧～
+      </view>
+    </block>
   </view>
 </view>
-
+<view bindtap="onShowCommentModal" class="fixed z-10 bottom-safe-area left-0 right-0 bg-comment text-white rounded-full text-center text-sm px-4 py-2 mx-8">
+  评价一下
+</view>
 <!-- Comment Modal -->
 <view class="cu-modal bottom-modal {{showingModal === 'comment' ? 'show' : ''}}" bindtap="onDismissModal">
   <view class="cu-dialog bg-white comment-modal-main" catchtap>

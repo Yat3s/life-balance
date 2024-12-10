@@ -46,11 +46,13 @@ Page({
     fetchPartnerMerchant(partnerMerchantId).then((res) => {
       const partnerMerchantData = res.data[0];
       const partnerMerchantComments = partnerMerchantData.comments
-        .map((item) => ({
-          ...item,
-          createdAtStr: formatDateWithDotSeparator(item.createdAt),
-        }))
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        ? partnerMerchantData.comments
+            .map((item) => ({
+              ...item,
+              createdAtStr: formatDateWithDotSeparator(item.createdAt),
+            }))
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        : [];
 
       const partnerMerchant = {
         ...partnerMerchantData,
