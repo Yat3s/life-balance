@@ -26,9 +26,7 @@
       <view class="text-sm font-bold text-center">进入员工折扣页</view>
     </view>
     <!-- Lottery -->
-    <view wx:if="{{LOTTERY_FEATURE_ENABLED}}" bindtap="navToLottery" class="border border-solid border-gray-200 p-4 rounded-xl">
-      <view class="text-sm font-bold text-center">抽奖</view>
-    </view>
+    <lottery-card wx:if="{{LOTTERY_FEATURE_ENABLED}}" />
     <view class="flex gap-2">
       <!-- Latest Circle -->
       <view class="flex-1">

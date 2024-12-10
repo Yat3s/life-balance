@@ -1,6 +1,6 @@
 const { getDateInEnglish } = require("../../common/util");
 const { fetchUserInfo } = require("../../repository/userRepo");
-const { navigateToPerk, navigateToLottery } = require("../router");
+const { navigateToPerk } = require("../router");
 
 const app = getApp();
 const COLLAPSED_SCROLL_TOP = 60;
@@ -79,9 +79,6 @@ Component({
     },
     goToPerks() {
       navigateToPerk();
-    },
-    navToLottery() {
-      navigateToLottery();
     },
   },
 });

@@ -3,6 +3,7 @@ import {
   fetchAllLotteries,
   createLotteryTicket,
 } from "../../repository/lotteryRepo";
+const app = getApp();
 
 Page({
   data: {
@@ -68,7 +69,7 @@ Page({
 
       const hasParticipated =
         current?.tickets?.some(
-          (ticket) => ticket.userId === this.data.openid
+          (ticket) => ticket.userId === app.globalData.userInfo._openid
         ) || false;
 
       this.setData({

@@ -1,7 +1,7 @@
-@import 'colorui/main.wxss';
-@import 'colorui/icon.wxss';
-@import 'colorui/animation.wxss';
-@import 'styles/tailwind.wxss';
+@import "colorui/main.wxss";
+@import "colorui/icon.wxss";
+@import "colorui/animation.wxss";
+@import "styles/tailwind.wxss";
 
 page {
   background: #f9f9f9;
