@@ -55,6 +55,11 @@ Page({
       if (res.success) {
         const partnerMerchants = res.data.map((item) => {
           item.commentCount = item.comments ? item.comments.length : 0;
+          item.comments.sort((a, b) => {
+            const dateA = new Date(a.updatedAt || a.createdAt);
+            const dateB = new Date(b.updatedAt || b.createdAt);
+            return dateB - dateA;
+          });
           item.comments = item.comments
             ? item.comments.filter((comment) => comment._openid).slice(0, 3)
             : [];
@@ -85,7 +90,9 @@ Page({
   /**
    * Lifecycle function--Called when page show
    */
-  onShow() {},
+  onShow() {
+    this.fetchAllPartnerMerchants();
+  },
 
   /**
    * Lifecycle function--Called when page hide
