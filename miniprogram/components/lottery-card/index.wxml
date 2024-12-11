@@ -5,10 +5,11 @@
     </view>
     <view class="shrink-0 ml-4 z-20">
       <view class="text-gray text-xs">第 {{lottery.phase}} 期</view>
-      <view class="font-semibold text-base mt-1 truncate-ellipsis mb-5">{{lottery.title}}</view>
+      <view class="font-semibold text-base mt-1 truncate-ellipsis mb-8">{{lottery.title}}</view>
       <!-- Participants -->
-      <view class="flex items-center mt-2">
+      <view class="flex items-center">
         <view class="flex items-center ml-1">
+          <view wx:if="{{lottery.participants.length === 0}}" class="rounded-full shrink-0 w-5 h-5" />
           <block wx:for="{{lottery.participants}}" wx:key="userId">
             <view class="-ml-2 rounded-full border border-solid border-gray-300 shrink-0 w-5 h-5">
               <image wx:if="{{index < 3}}" src="{{item.avatarUrl}}" lazy-load="{{true}}" class="w-full h-full rounded-full bg-gray-200" />
