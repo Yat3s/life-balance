@@ -102,3 +102,86 @@
     </view>
   </view>
 </template>
+<template name="partner-merchant-skeleton">
+  <view class="mt-4 plr">
+    <!-- Skeleton List -->
+    <view wx:for="{{[1, 2, 3, 4]}}" wx:key="*this" class="flex flex-col p-6 pb-4 bg-white rounded-lg mb-4">
+      <!-- Top Section -->
+      <view class="flex items-center gap-4">
+        <!-- <view class="w-10 h-logo skeleton-bg rounded-md skeleton-animate" /> -->
+        <view class="flex-1">
+          <view class="mt-1 w-2on5 h-5 skeleton-bg rounded skeleton-animate" />
+        </view>
+      </view>
+      <view class="mt-5 w-4on5 h-3 skeleton-bg rounded skeleton-animate" />
+      <!-- Promotions -->
+      <view class="mt-9 flex items-center gap-2">
+        <view class="w-14 h-6 skeleton-bg rounded skeleton-animate" />
+        <view class="flex flex-wrap gap-2">
+          <view wx:for="{{[1, 2, 3]}}" wx:key="*this" class="w-14 h-4 skeleton-bg rounded skeleton-animate" />
+        </view>
+      </view>
+      <!-- Separator -->
+      <view class="h-px bg-gray-100 my-4"></view>
+      <!-- Bottom Section -->
+      <view class="flex items-center justify-between">
+        <view class="flex items-center gap-4">
+          <view class="flex items-center">
+            <view wx:for="{{[1, 2, 3]}}" wx:key="*this" class="w-6 h-6 skeleton-bg rounded-full skeleton-animate {{index !== 0 ? '-ml-2' : ''}}"></view>
+          </view>
+          <view class="w-20 h-3 skeleton-bg rounded skeleton-animate" />
+        </view>
+        <view class="w-4 h-4 skeleton-bg rounded skeleton-animate" />
+      </view>
+    </view>
+  </view>
+</template>
+<template name="perk-detail-skeleton">
+  <view class="plr pt-8 pb-safe-area flex flex-col min-perk-detail-height">
+    <!-- Skeleton for Partner Merchant Info -->
+    <view class="bg-white rounded-lg pt-5 px-3 py-4 mb-4 skeleton-animate">
+      <view class="px-2 flex items-center gap-3">
+        <!-- <view class="w-9 h-6 skeleton-bg rounded-md skeleton-animate"></view> -->
+        <view class="mt-1dot5 w-2on5 h-5 skeleton-bg rounded skeleton-animate"></view>
+      </view>
+      <view class="px-2 flex items-center gap-4 mt-5dot5">
+        <view class="w-14 h-5 skeleton-bg rounded skeleton-animate"></view>
+        <view class="flex flex-wrap gap-2">
+          <view wx:for="{{[1,2,3]}}" wx:key="*this" class="w-14 h-4 skeleton-bg rounded skeleton-animate"></view>
+        </view>
+      </view>
+      <view class="px-2">
+        <view class="h-px bg-gray-100 w-full mt-4"></view>
+      </view>
+      <view class="mt-5 px-2">
+        <view class="h-4 w-20 skeleton-bg rounded skeleton-animate"></view>
+        <view class="h-3 w-full skeleton-bg rounded mt-2 skeleton-animate"></view>
+      </view>
+      <view class="mt-8">
+        <view class="ml-2 h-4 w-20 skeleton-bg rounded skeleton-animate"></view>
+        <view class="ml-2 h-3 w-64 skeleton-bg rounded mt-1dot5 skeleton-animate"></view>
+        <view class="mt-2 w-full h-32 skeleton-bg rounded-lg skeleton-animate"></view>
+      </view>
+    </view>
+
+    <!-- Skeleton for Comments Section -->
+    <view class="bg-white rounded-lg px-3 pt-5 py-4 mb-2 flex flex-col flex-1">
+      <view class="h-4 w-32 skeleton-bg rounded ml-2 skeleton-animate"></view>
+      <view class="mt-4 flex flex-col gap-4">
+        <view wx:for="{{[1,2,3]}}" wx:key="*this" class="flex flex-col items-start gap-3 bg-comment-item rounded-lg p-4">
+          <view class="flex items-center gap-3">
+            <view class="w-9 h-9 skeleton-bg rounded-full skeleton-animate"></view>
+            <view class="flex-1">
+              <view class="h-3 w-32 skeleton-bg rounded skeleton-animate"></view>
+              <view class="h-3 w-48 skeleton-bg rounded mt-2 skeleton-animate"></view>
+            </view>
+          </view>
+          <view class="h-4 w-full skeleton-bg rounded mt-2 skeleton-animate"></view>
+        </view>
+      </view>
+    </view>
+
+    <!-- Skeleton for Comment Button -->
+    <view class="fixed z-10 bottom-safe-area left-0 right-0 bg-comment text-white rounded-full text-center text-sm h-8 px-4 py-2 mx-8 skeleton-bg"></view>
+  </view>
+</template>

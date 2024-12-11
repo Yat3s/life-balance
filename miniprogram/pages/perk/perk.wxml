@@ -1,5 +1,7 @@
+<import src="../../components/skeleton/index.wxml" />
 <toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
-<scroll-view scroll-y="true" class="mt-4">
+<view wx:if="{{partnerMerchants}}">
+  <scroll-view scroll-y="true" class="mt-4">
   <view class="plr">
     <!-- Partner Merchant List -->
     <view class="flex flex-col gap-4 pb-6">
@@ -47,3 +49,7 @@
     </view>
   </view>
 </scroll-view>
+</view>
+<view wx:else>
+  <template is="partner-merchant-skeleton" />
+</view>
