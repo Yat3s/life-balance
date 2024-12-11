@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "lottery-detail": "/components/lottery-detail/index"
+  }
+}

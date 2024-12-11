@@ -7,8 +7,8 @@
 <block wx:if="{{pastLotteries.length > 0}}">
   <view class="plr mt-12">
     <view class="text-xs text-drawn-time">往期抽奖</view>
-    <view class="mt-2">
-      <view wx:for="{{pastLotteries}}" wx:key="_id" class="flex items-center p-3 rounded-lg bg-lottery-history border-gray-light">
+    <view wx:for="{{pastLotteries}}" wx:key="_id" class="mt-2">
+      <view class="flex items-center p-3 rounded-lg bg-lottery-history border-gray-light" data-lottery="{{item}}" bind:tap="onTapLotteryHistory">
         <image src="{{item.prizeTiers[0].images[0]}}" class="w-16 h-14 rounded-lg bg-gray-200" mode="aspectFill" lazy-load="{{true}}" />
         <view class="flex flex-col ml-3">
           <view class="text-xs font-medium mb-2">第 {{item.phase}} 期 {{item.title}}</view>
@@ -26,6 +26,7 @@
             </block>
           </view>
         </view>
+        <image class="w-3dot5 h-3dot5 ml-auto" src="/images/ic_arrow_r.svg" />
       </view>
     </view>
   </view>

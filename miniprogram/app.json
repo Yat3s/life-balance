@@ -35,7 +35,8 @@
     "pages/user/sponsor/sponsor",
     "pages/perk/perk",
     "pages/perk/perkdetail/perkdetail",
-    "pages/lottery/lottery"
+    "pages/lottery/lottery",
+    "pages/lottery/history/history"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -43,9 +44,7 @@
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom"
   },
-  "requiredPrivateInfos": [
-    "chooseLocation"
-  ],
+  "requiredPrivateInfos": ["chooseLocation"],
   "sitemapLocation": "sitemap.json",
   "style": "v2",
   "useExtendedLib": {
