@@ -1,17 +1,19 @@
 import { navigateToLottery } from "../../pages/router";
 import { fetchLatestLottery as _fetchLatestLottery } from "../../repository/lotteryRepo";
 
+const MAX_DISPLAY = 6;
+
 Component({
   options: {
     addGlobalClass: true,
   },
-
   properties: {},
-
   data: {
     lottery: null,
     isOngoing: false,
-    participantCount: 0,
+    displayParticipants: [],
+    hasMoreParticipants: false,
+    remainingCount: 0,
   },
 
   pageLifetimes: {
@@ -31,6 +33,17 @@ Component({
       navigateToLottery();
     },
 
+    processParticipants(participants) {
+      const totalParticipants = participants.length;
+
+      this.setData({
+        displayParticipants: participants.slice(0, MAX_DISPLAY),
+        hasMoreParticipants: totalParticipants > MAX_DISPLAY,
+        remainingCount:
+          totalParticipants > MAX_DISPLAY ? totalParticipants - MAX_DISPLAY : 0,
+      });
+    },
+
     fetchLatestLottery() {
       _fetchLatestLottery()
         .then((res) => {
@@ -47,9 +60,9 @@ Component({
                 participants,
               },
               isOngoing: res.data.winners && res.data.winners.length === 0,
-              participantCount: res.data.tickets?.length || 0,
             });
-            console.log(this.data.lottery);
+
+            this.processParticipants(participants);
           }
         })
         .catch((error) => {

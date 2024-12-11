@@ -8,20 +8,20 @@
       <view class="font-semibold text-base mt-1 truncate-ellipsis mb-8">{{lottery.title}}</view>
       <!-- Participants -->
       <view class="flex items-center">
-        <view class="flex items-center ml-1">
-          <view wx:if="{{lottery.participants.length === 0}}" class="rounded-full shrink-0 w-5 h-5" />
-          <block wx:for="{{lottery.participants}}" wx:key="userId">
-            <view class="-ml-2 rounded-full border border-solid border-gray-300 shrink-0 w-5 h-5">
-              <image wx:if="{{index < 3}}" src="{{item.avatarUrl}}" lazy-load="{{true}}" class="w-full h-full rounded-full bg-gray-200" />
+        <view class="flex items-center">
+          <view wx:if="{{displayParticipants.length === 0}}" class="rounded-full shrink-0 w-5 h-5" />
+          <block wx:for="{{displayParticipants}}" wx:key="userId">
+            <view class="{{index === 0 ? '' : '-ml-2'}} rounded-full border border-solid border-gray-300 shrink-0 w-5 h-5">
+              <image src="{{item.avatarUrl}}" lazy-load="{{true}}" class="w-full h-full rounded-full bg-gray-200" />
             </view>
           </block>
-          <view wx:if="{{participantCount > 3}}" class="ml-1 text-xs text-gray-500">
-            +{{participantCount - 3}}
+          <view wx:if="{{hasMoreParticipants}}" class="ml-1 text-xs text-gray-500">
+            +{{remainingCount}}
           </view>
         </view>
       </view>
     </view>
-    <!-- Status text (absolute positioned) -->
+    <!-- Status text -->
     <view class="absolute top-4 right-4 z-20">
       <block wx:if="{{isOngoing}}">
         <view class="text-gray text-xs">进行中</view>
@@ -31,7 +31,7 @@
       </block>
     </view>
     <image class="w-40 h-full absolute top-0 right-0 bottom-0 z-10" src="/images/ic_blue_circle.svg" />
-    <!-- Action button (bottom-right) -->
+    <!-- Action button -->
     <view class="absolute bottom-4 right-4 z-20">
       <block wx:if="{{isOngoing}}">
         <view class="bg-blue-500 text-white text-xs py-1dot5 px-3dot5 rounded-full">参与抽奖</view>
