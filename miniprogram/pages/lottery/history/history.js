@@ -20,7 +20,6 @@ Page({
 
     Promise.all([fetchUserInfo(), fetchLotteryById(options.id)])
       .then(([userInfo, lotteryData]) => {
-        console.log("🚀 ~ .then ~ userInfo:", userInfo);
         if (!lotteryData) {
           wx.showToast({
             title: "抽奖信息不存在",
@@ -34,8 +33,6 @@ Page({
           ...lotteryData.data[0],
           formattedDrawTime: formatDate(lotteryData.data[0].drawnAt),
         };
-
-        console.log("🚀 ~ .then ~ formattedLottery:", formattedLottery);
 
         const hasParticipated =
           formattedLottery.tickets?.some(
