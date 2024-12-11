@@ -117,9 +117,9 @@
       <!-- Promotions -->
       <view class="mt-9 flex items-center gap-2">
         <view class="w-14 h-6 skeleton-bg rounded skeleton-animate" />
-        <view class="flex flex-wrap gap-2">
+        <!-- <view class="flex flex-wrap gap-2">
           <view wx:for="{{[1, 2, 3]}}" wx:key="*this" class="w-14 h-4 skeleton-bg rounded skeleton-animate" />
-        </view>
+        </view> -->
       </view>
       <!-- Separator -->
       <view class="h-px bg-gray-100 my-4"></view>
@@ -146,9 +146,9 @@
       </view>
       <view class="px-2 flex items-center gap-4 mt-5dot5">
         <view class="w-14 h-5 skeleton-bg rounded skeleton-animate"></view>
-        <view class="flex flex-wrap gap-2">
+        <!-- <view class="flex flex-wrap gap-2">
           <view wx:for="{{[1,2,3]}}" wx:key="*this" class="w-14 h-4 skeleton-bg rounded skeleton-animate"></view>
-        </view>
+        </view> -->
       </view>
       <view class="px-2">
         <view class="h-px bg-gray-100 w-full mt-4"></view>

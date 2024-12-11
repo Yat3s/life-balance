@@ -1,5 +1,7 @@
 <import src="../../components/skeleton/index.wxml" />
-<toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
+<toolbar isBack="{{true}}" bgColor="bg-white">
+  <view slot="backText" class="text-sm">员工折扣</view>
+</toolbar>
 <view wx:if="{{partnerMerchants}}">
   <scroll-view scroll-y="true" class="mt-4">
   <view class="plr">
@@ -14,7 +16,7 @@
         <view class="mt-4 text-gray text-xs truncate">{{item.location.address}}</view>
         <view class="mt-8 flex items-center gap-2">
           <view class="text-black text-xl whitespace-nowrap">{{item.promotion.discount}}</view>
-          <view class="flex flex-wrap gap-2">
+          <!-- <view class="flex flex-wrap gap-2">
             <block wx:if="{{item.promotion.eligibleItems.length > 0}}">
               <view wx:for="{{item.promotion.eligibleItems}}" wx:key="eligibleItems" class="tag">
                 <view class="left-circle"></view>
@@ -27,7 +29,7 @@
                 <view class="text-xxs tag-text">全部商品</view>
               </view>
             </block>
-          </view>
+          </view> -->
         </view>
         <view class="h-px bg-gray-100 mb-4 mt-3"></view>
         <view class="flex items-center justify-between">

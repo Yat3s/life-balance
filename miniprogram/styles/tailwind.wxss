@@ -3321,6 +3321,10 @@ video {
   border-width: 2rpx;
 }
 
+.border-3 {
+  border-width: 3rpx;
+}
+
 .border-4 {
   border-width: 4rpx;
 }

@@ -11,7 +11,7 @@
       <view class="text-black text-lg whitespace-nowrap">
         {{partnerMerchant.promotion.discount}}
       </view>
-      <view class="flex flex-wrap gap-2">
+      <!-- <view class="flex flex-wrap gap-2">
         <block wx:if="{{partnerMerchant.promotion.eligibleItems.length > 0}}">
           <view wx:for="{{partnerMerchant.promotion.eligibleItems}}" wx:key="eligibleItems" class="tag">
             <view class="left-circle"></view>
@@ -24,7 +24,7 @@
             <view class="text-xxs tag-text">全部商品</view>
           </view>
         </block>
-      </view>
+      </view> -->
     </view>
     <view class="px-2">
       <view class="h-px bg-gray-100 w-full mt-4"></view>
@@ -80,7 +80,7 @@
     </block>
   </view>
 
-  <view bindtap="onShowCommentModal" class="fixed z-10 bottom-safe-area left-0 right-0 bg-comment text-white rounded-full text-center text-sm px-4 py-2 mx-8">
+  <view bindtap="onShowCommentModal" class="fixed z-10 bottom-safe-area left-0 right-0 bg-comment text-white rounded-full text-center text-sm px-4 py-3 mx-8">
     评价一下
   </view>
 </view>
@@ -95,13 +95,13 @@
       <view class="flex flex-col gap-4">
         <view class="flex flex-col items-start gap-3">
           <view class="mb-1 text-black text-xs font-w-450">👍 我觉得不错</view>
-          <view wx:for="{{positiveTemplates}}" wx:key="positiveTemplates" class="w-full text-comment-template bg-comment-template rounded-full p-2 py-2dot5 text-gray text-xs border border-3 border-solid {{selectedCommentTemplate === item.content ? 'border-comment-template-selected' : 'border-transparent'}}" bindtap="onSelectCommentTemplate" data-template="{{item.content}}">
+          <view wx:for="{{positiveTemplates}}" wx:key="positiveTemplates" class="w-full text-comment-template bg-comment-template rounded-full p-2 py-2dot5 text-gray text-xs border-4 border-solid {{selectedCommentTemplate === item.content ? 'border-comment-template-selected' : 'border-transparent'}}" bindtap="onSelectCommentTemplate" data-template="{{item.content}}">
             {{item.content}}
           </view>
         </view>
         <view class="flex flex-col items-start gap-3">
           <view class="mb-1 text-black text-xs font-w-450">👎 我觉得不行</view>
-          <view wx:for="{{negativeTemplates}}" wx:key="negativeTemplates" class="w-full text-comment-template bg-comment-template rounded-full p-2 py-2dot5 text-gray text-xs border border-3 border-solid {{selectedCommentTemplate === item.content ? 'border-comment-template-selected' : 'border-transparent'}}" bindtap="onSelectCommentTemplate" data-template="{{item.content}}">
+          <view wx:for="{{negativeTemplates}}" wx:key="negativeTemplates" class="w-full text-comment-template bg-comment-template rounded-full p-2 py-2dot5 text-gray text-xs border-4 border-solid {{selectedCommentTemplate === item.content ? 'border-comment-template-selected' : 'border-transparent'}}" bindtap="onSelectCommentTemplate" data-template="{{item.content}}">
             {{item.content}}
           </view>
         </view>
