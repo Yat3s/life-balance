@@ -27,27 +27,32 @@
     <view class="mb-4">
       <view class="text-drawn-time text-xs mb-0dot5">开奖日期</view>
       <view class="font-semibold text-sm">{{currentLottery.formattedDrawTime}}</view>
+      <view wx:if="{{currentLottery.tickets.length > 0 && userInfo.role === 1024}}" class="mt-2 py-1 px-3 bg-button text-white rounded text-xs inline-block" bind:tap="debugDrawLottery">
+        测试开奖
+      </view>
     </view>
     <!-- Status -->
     <view class="mb-5">
       <view class="text-drawn-time text-xs">中奖人👑</view>
       <view class="mt-2 text-none-drawn py-6 bg-drawn text-center font-medium rounded-lg">
-        <block wx:if="{{currentLottery.drawnAt > now}}">
-          <block wx:if="{{hasParticipated}}">你已参与，等待开奖 ⌛️</block>
-          <block wx:else>暂未开奖</block>
+        <block wx:if="{{currentLottery.winners && currentLottery.winners.length > 0}}">
+          <view class="flex flex-wrap gap-2 justify-center">
+            <block wx:for="{{currentLottery.winners}}" wx:key="ticketId">
+              <view class="flex flex-col items-center">
+                <view class="relative">
+                  <image src="{{item.user.avatarUrl}}" class="w-6 h-6 rounded-full" mode="aspectFill" />
+                  <view wx:if="{{item.userId === userInfo._openid}}" class="absolute -top-1 -left-1 w-3 h-3 bg-yellow-400 rounded-full flex items-center justify-center text-white" style="font-size: 8px;">
+                    我
+                  </view>
+                </view>
+                <text class="text-xxs text-gray truncate-ellipsis">{{item.user.nickName}}</text>
+              </view>
+            </block>
+          </view>
         </block>
         <block wx:else>
-          <block wx:if="{{currentLottery.winners && currentLottery.winners.length > 0}}">
-            <view class="flex flex-wrap gap-2 justify-center">
-              <block wx:for="{{currentLottery.winners}}" wx:key="ticketId">
-                <view class="flex items-center">
-                  <image src="{{item.user.avatarUrl}}" class="w-8 h-8 rounded-full" mode="aspectFill" />
-                  <text class="ml-2">{{item.user.nickName}}</text>
-                </view>
-              </block>
-            </view>
-          </block>
-          <block wx:else>暂无中奖者</block>
+          <block wx:if="{{hasParticipated}}">你已参与，等待开奖 ⌛️</block>
+          <block wx:else>暂未开奖</block>
         </block>
       </view>
     </view>
@@ -92,11 +97,11 @@
   </view>
 </block>
 <view class="pb-24" />
-<view class="fixed bottom-0 left-0 right-0 h-20 p-4 bg-white">
+<view wx:if="{{currentLottery.winners.length === 0}}" class="fixed bottom-0 left-0 right-0 h-20 p-4 bg-white">
   <view wx:if="{{!hasParticipated}}" class="w-full py-2dot5 text-sm font-normal bg-button text-white rounded-full flex items-center justify-center" bind:tap="onJoinLottery">
     <text>观看视频参与抽奖</text>
   </view>
-  <view wx:if="{{currentLottery.drawnAt > now && hasParticipated}}" class="w-full py-2dot5 text-sm font-normal bg-button text-white rounded-full flex items-center justify-center">
+  <view wx:if="{{hasParticipated}}" class="w-full py-2dot5 text-sm font-normal bg-button text-white rounded-full flex items-center justify-center">
     你已参与，等待开奖 ⌛️
   </view>
 </view>

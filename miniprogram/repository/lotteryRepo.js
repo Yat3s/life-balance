@@ -15,3 +15,9 @@ export const createLotteryTicket = (lotteryId) => {
     lotteryId,
   });
 };
+
+export const drawLottery = (lotteryId) => {
+  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, "drawLottery", {
+    lotteryId,
+  });
+};
