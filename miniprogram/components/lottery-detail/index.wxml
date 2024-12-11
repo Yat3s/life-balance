@@ -23,7 +23,7 @@
   <view class="mb-4">
     <view class="text-drawn-time text-xs mb-0dot5">开奖日期</view>
     <view class="font-semibold text-sm">{{lottery.formattedDrawTime}}</view>
-    <view wx:if="{{lottery.tickets.length > 0 && userInfo.role === 1024}}" class="mt-2 py-1 px-3 bg-button text-white rounded text-xs inline-block" bind:tap="debugDrawLottery">
+    <view wx:if="{{lottery.tickets.length > 0 && userInfo.role === 1024 && lottery.winners.length === 0}}" class="mt-2 py-1 px-3 bg-button text-white rounded text-xs inline-block" bind:tap="debugDrawLottery">
       测试开奖
     </view>
   </view>
@@ -37,7 +37,7 @@
             <view class="flex flex-col items-center">
               <view class="relative">
                 <image src="{{item.user.avatarUrl}}" class="w-6 h-6 rounded-full" mode="aspectFill" />
-                <view wx:if="{{item.userId === userInfo._openid}}" class="absolute -top-1 -left-1 w-3 h-3 bg-yellow-400 rounded-full flex items-center justify-center text-white" style="font-size: 8px;">
+                <view wx:if="{{item.user._openid === userInfo._openid}}" class="absolute -top-1 -left-1 w-3 h-3 bg-yellow-400 rounded-full flex items-center justify-center text-white" style="font-size: 8px;">
                   我
                 </view>
               </view>
@@ -55,9 +55,9 @@
   <!-- Participants -->
   <view>
     <view class="text-xs text-drawn-time">共 {{lottery.tickets.length || 0}} 人参与</view>
-    <view class="mt-2 flex items-center flex-wrap ml-1">
+    <view class="mt-2 flex items-center flex-wrap">
       <block wx:for="{{lottery.tickets}}" wx:key="index">
-        <view class="w-6 h-6 -ml-2 rounded-full border border-solid border-gray-300">
+        <view class="{{index === 0 ? '' : '-ml-1dot5'}} w-6 h-6 rounded-full border border-solid border-gray-300">
           <image src="{{item.user.avatarUrl}}" class="w-full h-full rounded-full" />
         </view>
       </block>

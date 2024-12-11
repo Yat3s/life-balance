@@ -1,1 +1,49 @@
-/* components/lottery-detail/index.wxss */
+page {
+  background-color: #fff;
+  padding-bottom: 5rem;
+}
+
+.text-gray {
+  color: #acacac;
+}
+
+.text-drawn-time {
+  color: #a1a1a3;
+}
+
+.bg-drawn {
+  background-color: #fafafa;
+}
+
+.text-none-drawn {
+  color: #b7b7b7;
+}
+
+.bg-button {
+  background-color: #3785fc;
+}
+
+.line {
+  background-color: #eaeaea;
+  height: 1rpx;
+}
+
+.text-ads-desc {
+  color: #989898;
+}
+
+.truncate-ellipsis {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100rpx;
+}
+
+.bg-lottery-history {
+  background-color: #fafafa;
+}
+
+.border-gray-light {
+  border: 1rpx solid #f1f1f1;
+}

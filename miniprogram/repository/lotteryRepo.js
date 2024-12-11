@@ -1,6 +1,17 @@
 import { cloudFunctionCall } from "./baseRepo";
 
 const CLOUD_FUNCTION_COLLECTION = "lotteryFunctions";
+const COLLECTION_NAME_LOTTERIES = "lotteries";
+const db = wx.cloud.database();
+
+export const fetchLotteryById = (lotteryId) => {
+  return db
+    .collection(COLLECTION_NAME_LOTTERIES)
+    .where({
+      _id: lotteryId,
+    })
+    .get();
+};
 
 export const fetchAllLotteries = () => {
   return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, "fetchAllLotteries", {});

@@ -5,6 +5,7 @@ import {
   drawLottery,
 } from "../../repository/lotteryRepo";
 import { fetchUserInfo } from "../../repository/userRepo";
+import { navigateToLotteryHistory } from "../router";
 
 const CHECK_LOTTERY_RESULT_DURATION = 500;
 const LOTTERY_SUBSCRIPTION_TEMP_ID =
@@ -240,6 +241,11 @@ Page({
     this.setData({
       showingModal: null,
     });
+  },
+
+  onTapLotteryHistory(e) {
+    const lottery = e.currentTarget.dataset.lottery;
+    navigateToLotteryHistory(lottery._id);
   },
 
   onShareAppMessage() {

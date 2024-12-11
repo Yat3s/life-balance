@@ -40,8 +40,6 @@ exports.main = async (event, context) => {
           ticketId: winningTicket.code,
           userId: winningTicket.userId,
           user: winningTicket.user,
-          prizeTier: prizeTier.tier,
-          prizeName: prizeTier.name,
         });
 
         nonWinnerUserIds.delete(winningTicket.userId);

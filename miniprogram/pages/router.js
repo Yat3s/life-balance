@@ -128,6 +128,10 @@ export const Pages = {
     authRequired: true,
     url: "/pages/lottery/lottery",
   },
+  LotteryHistory: {
+    authRequired: true,
+    url: "/pages/lottery/history/history?id=",
+  },
 };
 
 export function navigationToAppConfigWebView(config) {
@@ -248,6 +252,10 @@ export function navigateToPerk() {
 
 export function navigateToPerkDetail(partnerMerchantId) {
   navigate(Pages.PerkDetail, partnerMerchantId);
+}
+
+export function navigateToLotteryHistory(lotteryId) {
+  navigate(Pages.LotteryHistory, lotteryId);
 }
 
 export function navigateToLottery() {
