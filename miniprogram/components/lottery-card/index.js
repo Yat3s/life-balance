@@ -12,6 +12,9 @@ Component({
     lottery: null,
     isOngoing: false,
     participantCount: 0,
+    displayParticipants: [],
+    hasMoreParticipants: false,
+    remainingCount: 0,
   },
 
   pageLifetimes: {
@@ -31,6 +34,18 @@ Component({
       navigateToLottery();
     },
 
+    processParticipants(participants) {
+      const maxDisplay = 6;
+      const totalParticipants = participants.length;
+
+      this.setData({
+        displayParticipants: participants.slice(0, maxDisplay),
+        hasMoreParticipants: totalParticipants > maxDisplay,
+        remainingCount:
+          totalParticipants > maxDisplay ? totalParticipants - maxDisplay : 0,
+      });
+    },
+
     fetchLatestLottery() {
       _fetchLatestLottery()
         .then((res) => {
@@ -47,9 +62,10 @@ Component({
                 participants,
               },
               isOngoing: res.data.winners && res.data.winners.length === 0,
-              participantCount: res.data.tickets?.length || 0,
+              participantCount: participants.length,
             });
-            console.log(this.data.lottery);
+
+            this.processParticipants(participants);
           }
         })
         .catch((error) => {
