@@ -68,7 +68,7 @@
 <template name="lottery-skeleton">
   <view class="plr">
     <!-- Image Carousel Skeleton -->
-    <view class="w-full h-80 mb-6 bg-gray-100 skeleton-animate" />
+    <view class="w-full h-80 mb-6 bg-gray-100 skeleton-animate rounded-lg" />
     <!-- Title Skeleton -->
     <view class="mb-4">
       <view class="w-20 h-3 bg-gray-100 rounded skeleton-animate mb-1" />
