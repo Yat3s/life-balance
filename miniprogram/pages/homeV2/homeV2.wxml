@@ -1,13 +1,10 @@
-<view class="appbar" style="height: {{appBarHeight}}px;">
-  <view style="padding-top: {{statusBarHeight}}px;min-height: {{toolbarHeight}}px;{{collapsed ? 'height:' + appBarHeight + 'px;' : ''}}" class="toolbar plr {{collapsed? 'shadow bg-white' : ''}}" />
-</view>
-<scroll-view scroll-y="true" class="main" bindscroll="onPageScrolled">
+<scroll-view scroll-y="true" class="main">
   <view style="height:100px; padding-top: {{statusBarHeight + toolbarHeight}}px; margin-top: 32rpx;" class="flex flex-col">
     <view class="ml-2 flex flex-col gap-1">
-      <view style="font-size: {{titleScale * 14}}pt; line-height: {{titleScale * 14}}pt;" class="user-name">
+      <view class="user-name">
         Hi, {{userInfo ? userInfo.nickName : 'Friend!'}}
       </view>
-      <view style="font-size: {{titleScale * 10}}pt; line-height: {{titleScale * 11}}pt;" class="user-welcome-message margin-top-xs">
+      <view class="user-welcome-message margin-top-xs">
         {{nowDateInEnglish}} - {{welcomeMessage}}
       </view>
     </view>
