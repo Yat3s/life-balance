@@ -60,8 +60,10 @@ Page({
   onShareAppMessage() {
     const { lottery } = this.data;
     return {
-      title: `第 ${lottery.phase} 期 ${lottery.title}`,
+      title: `${lottery.title}`,
       path: `/pages/lottery/history/history?id=${lottery._id}`,
     };
   },
+
+  onShareTimeline() {},
 });

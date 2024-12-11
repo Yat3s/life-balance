@@ -47,3 +47,35 @@ page {
 .border-gray-light {
   border: 1rpx solid #f1f1f1;
 }
+
+.share-btn {
+  background: none;
+  border: none;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  line-height: 1 !important;
+  display: flex;
+  align-items: center;
+  color: #576b95;
+  font-size: 24rpx;
+}
+
+.share-btn::after {
+  display: none;
+  border: none;
+}
+
+.share-btn[hover] {
+  background: none;
+}
+
+.share-btn:active {
+  opacity: 0.8;
+}
+
+.share-btn text {
+  white-space: nowrap;
+}
