@@ -1,6 +1,8 @@
 import { navigateToLottery } from "../../pages/router";
 import { fetchLatestLottery as _fetchLatestLottery } from "../../repository/lotteryRepo";
 
+const MAX_DISPLAY = 6;
+
 Component({
   options: {
     addGlobalClass: true,
@@ -35,7 +37,7 @@ Component({
     },
 
     processParticipants(participants) {
-      const maxDisplay = 6;
+      const maxDisplay = MAX_DISPLAY;
       const totalParticipants = participants.length;
 
       this.setData({
