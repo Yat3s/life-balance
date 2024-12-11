@@ -15,9 +15,17 @@
     </block>
   </block>
   <!-- Title -->
-  <view class="mb-4">
-    <view class="text-xs text-gray">第 {{lottery.phase}} 期</view>
-    <view class="text-lg font-semibold mb-2">{{lottery.title}}</view>
+  <view class="mb-4 flex items-center justify-between">
+    <view>
+      <view wx:if="{{lottery.phase}}" class="text-xs text-gray">第 {{lottery.phase}} 期</view>
+      <view class="text-lg font-semibold">{{lottery.title}}</view>
+    </view>
+    <button wx:if="{{!lottery.winners.length}}" class="share-btn" open-type="share" data-lottery="{{lottery}}">
+      <view class="flex items-center gap-1">
+        <image class="w-3 h-3 mb-0dot5" src="/images/ic_share.svg" />
+        <text class="text-xs">分享给好友</text>
+      </view>
+    </button>
   </view>
   <!-- Drawn Time -->
   <view class="mb-4">

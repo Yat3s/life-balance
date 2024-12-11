@@ -348,9 +348,16 @@ Page({
   },
 
   onShareAppMessage() {
+    const title = this.data.currentLottery?.title
+      ? `「${this.data.currentLottery.title}」抽奖进行中，快来参与吧~`
+      : "精彩抽奖等你来";
+
     return {
-      title: this.data.currentLottery?.title || "抽奖活动",
+      title,
+      imageUrl: this.data.currentLottery.prizeTiers[0]?.images[0],
       path: "/pages/lottery/lottery",
     };
   },
+
+  onShareTimeline() {},
 });

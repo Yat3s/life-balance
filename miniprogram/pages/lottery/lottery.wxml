@@ -1,6 +1,6 @@
 <import src="../../components/skeleton/index.wxml" />
 <toolbar bgColor="bg-white" isBack="{{true}}">
-  <view slot="backText" class="text-sm">抽奖</view>
+  <view slot="backText" class="text-sm">活动抽奖</view>
 </toolbar>
 <lottery-detail wx:if="{{currentLottery}}" lottery="{{currentLottery}}" userInfo="{{userInfo}}" />
 <template wx:if="{{!currentLottery}}" is="lottery-skeleton" />
