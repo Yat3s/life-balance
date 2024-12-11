@@ -12,7 +12,8 @@ const LOTTERY_SUBSCRIPTION_TEMP_ID =
 
 Page({
   data: {
-    pastLotteries: [],
+    currentLottery: null,
+    pastLotteries: null,
     videoAd: null,
   },
 

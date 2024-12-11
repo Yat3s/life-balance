@@ -1,80 +1,80 @@
+<import src="../../components/skeleton/index.wxml" />
 <toolbar bgColor="bg-white" isBack="{{true}}">
   <view slot="backText" class="text-sm">抽奖</view>
 </toolbar>
-<block wx:if="{{currentLottery}}">
-  <view class="plr">
-    <!-- Image Carousel -->
-    <block wx:if="{{currentLottery.prizeTiers[0].images && currentLottery.prizeTiers[0].images.length > 0}}">
-      <block wx:if="{{currentLottery.prizeTiers[0].images.length > 1}}">
-        <swiper class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6" bind:tap="previewImage" data-lottery="{{currentLottery}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
-          <swiper-item wx:for="{{currentLottery.prizeTiers[0].images}}" wx:for-item="image" wx:key="*this">
-            <image src="{{image}}" mode="aspectFill" class="w-full h-full rounded-lg" lazy-load="{{true}}" />
-          </swiper-item>
-        </swiper>
-      </block>
-      <block wx:else>
-        <view class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6" bind:tap="previewImage" data-lottery="{{currentLottery}}">
-          <image src="{{currentLottery.prizeTiers[0].images[0]}}" mode="aspectFill" class="w-full h-full rounded-lg" lazy-load="{{true}}" />
-        </view>
-      </block>
+<view wx:if="{{currentLottery}}" class="plr">
+  <!-- Image Carousel -->
+  <block wx:if="{{currentLottery.prizeTiers[0].images && currentLottery.prizeTiers[0].images.length > 0}}">
+    <block wx:if="{{currentLottery.prizeTiers[0].images.length > 1}}">
+      <swiper class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6" bind:tap="previewImage" data-lottery="{{currentLottery}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
+        <swiper-item wx:for="{{currentLottery.prizeTiers[0].images}}" wx:for-item="image" wx:key="*this">
+          <image src="{{image}}" mode="aspectFill" class="w-full h-full rounded-lg" lazy-load="{{true}}" />
+        </swiper-item>
+      </swiper>
     </block>
-    <!-- Title -->
-    <view class="mb-4">
-      <view class="text-xs text-gray">第 {{currentLottery.phase}} 期</view>
-      <view class="text-lg font-semibold mb-2">{{currentLottery.title}}</view>
-    </view>
-    <!-- Drawn Time -->
-    <view class="mb-4">
-      <view class="text-drawn-time text-xs mb-0dot5">开奖日期</view>
-      <view class="font-semibold text-sm">{{currentLottery.formattedDrawTime}}</view>
-      <view wx:if="{{currentLottery.tickets.length > 0 && userInfo.role === 1024}}" class="mt-2 py-1 px-3 bg-button text-white rounded text-xs inline-block" bind:tap="debugDrawLottery">
-        测试开奖
+    <block wx:else>
+      <view class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6" bind:tap="previewImage" data-lottery="{{currentLottery}}">
+        <image src="{{currentLottery.prizeTiers[0].images[0]}}" mode="aspectFill" class="w-full h-full rounded-lg" lazy-load="{{true}}" />
       </view>
-    </view>
-    <!-- Status -->
-    <view class="mb-5">
-      <view class="text-drawn-time text-xs">中奖人👑</view>
-      <view class="mt-2 text-none-drawn py-6 bg-drawn text-center font-medium rounded-lg">
-        <block wx:if="{{currentLottery.winners && currentLottery.winners.length > 0}}">
-          <view class="flex flex-wrap gap-2 justify-center">
-            <block wx:for="{{currentLottery.winners}}" wx:key="ticketId">
-              <view class="flex flex-col items-center">
-                <view class="relative">
-                  <image src="{{item.user.avatarUrl}}" class="w-6 h-6 rounded-full" mode="aspectFill" />
-                  <view wx:if="{{item.userId === userInfo._openid}}" class="absolute -top-1 -left-1 w-3 h-3 bg-yellow-400 rounded-full flex items-center justify-center text-white" style="font-size: 8px;">
-                    我
-                  </view>
-                </view>
-                <text class="text-xxs text-gray truncate-ellipsis">{{item.user.nickName}}</text>
-              </view>
-            </block>
-          </view>
-        </block>
-        <block wx:else>
-          <block wx:if="{{hasParticipated}}">你已参与，等待开奖 ⌛️</block>
-          <block wx:else>暂未开奖</block>
-        </block>
-      </view>
-    </view>
-    <!-- Participants -->
-    <view>
-      <view class="text-xs text-drawn-time">共 {{currentLottery.tickets.length || 0}} 人参与</view>
-      <view class="mt-2 flex items-center flex-wrap ml-1">
-        <block wx:for="{{currentLottery.tickets}}" wx:key="index">
-          <view class="w-6 h-6 -ml-2 rounded-full border border-solid border-gray-300">
-            <image src="{{item.user.avatarUrl}}" class="w-full h-full rounded-full" />
-          </view>
-        </block>
-      </view>
-    </view>
-    <view class="line my-6" />
-    <!-- Description -->
-    <view>
-      <view class="text-drawn-time text-xs mb-1">抽奖说明</view>
-      <view class="text-xs">{{currentLottery.description}}</view>
+    </block>
+  </block>
+  <!-- Title -->
+  <view class="mb-4">
+    <view class="text-xs text-gray">第 {{currentLottery.phase}} 期</view>
+    <view class="text-lg font-semibold mb-2">{{currentLottery.title}}</view>
+  </view>
+  <!-- Drawn Time -->
+  <view class="mb-4">
+    <view class="text-drawn-time text-xs mb-0dot5">开奖日期</view>
+    <view class="font-semibold text-sm">{{currentLottery.formattedDrawTime}}</view>
+    <view wx:if="{{currentLottery.tickets.length > 0 && userInfo.role === 1024}}" class="mt-2 py-1 px-3 bg-button text-white rounded text-xs inline-block" bind:tap="debugDrawLottery">
+      测试开奖
     </view>
   </view>
-</block>
+  <!-- Status -->
+  <view class="mb-5">
+    <view class="text-drawn-time text-xs">中奖人👑</view>
+    <view class="mt-2 text-none-drawn py-6 bg-drawn text-center font-medium rounded-lg">
+      <block wx:if="{{currentLottery.winners && currentLottery.winners.length > 0}}">
+        <view class="flex flex-wrap gap-2 justify-center">
+          <block wx:for="{{currentLottery.winners}}" wx:key="ticketId">
+            <view class="flex flex-col items-center">
+              <view class="relative">
+                <image src="{{item.user.avatarUrl}}" class="w-6 h-6 rounded-full" mode="aspectFill" />
+                <view wx:if="{{item.userId === userInfo._openid}}" class="absolute -top-1 -left-1 w-3 h-3 bg-yellow-400 rounded-full flex items-center justify-center text-white" style="font-size: 8px;">
+                  我
+                </view>
+              </view>
+              <text class="text-xxs text-gray truncate-ellipsis">{{item.user.nickName}}</text>
+            </view>
+          </block>
+        </view>
+      </block>
+      <block wx:else>
+        <block wx:if="{{hasParticipated}}">你已参与，等待开奖 ⌛️</block>
+        <block wx:else>暂未开奖</block>
+      </block>
+    </view>
+  </view>
+  <!-- Participants -->
+  <view>
+    <view class="text-xs text-drawn-time">共 {{currentLottery.tickets.length || 0}} 人参与</view>
+    <view class="mt-2 flex items-center flex-wrap ml-1">
+      <block wx:for="{{currentLottery.tickets}}" wx:key="index">
+        <view class="w-6 h-6 -ml-2 rounded-full border border-solid border-gray-300">
+          <image src="{{item.user.avatarUrl}}" class="w-full h-full rounded-full" />
+        </view>
+      </block>
+    </view>
+  </view>
+  <view class="line my-6" />
+  <!-- Description -->
+  <view>
+    <view class="text-drawn-time text-xs mb-1">抽奖说明</view>
+    <view class="text-xs">{{currentLottery.description}}</view>
+  </view>
+</view>
+<template wx:if="{{!currentLottery}}" is="lottery-skeleton" />
 <block wx:if="{{pastLotteries.length > 0}}">
   <view class="plr">
     <view class="text-lg font-medium">往期抽奖</view>
@@ -97,7 +97,7 @@
   </view>
 </block>
 <view class="pb-24" />
-<view wx:if="{{currentLottery.winners.length === 0}}" class="fixed bottom-0 left-0 right-0 h-20 p-4 bg-white">
+<view wx:if="{{currentLottery && currentLottery.winners.length === 0}}" class="fixed bottom-0 left-0 right-0 h-20 p-4 bg-white">
   <view wx:if="{{!hasParticipated}}" class="w-full py-2dot5 text-sm font-normal bg-button text-white rounded-full flex items-center justify-center" bind:tap="onJoinLottery">
     <text>观看视频参与抽奖</text>
   </view>
