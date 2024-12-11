@@ -1,4 +1,6 @@
 const cloud = require("wx-server-sdk");
+const createId = require("cuid");
+
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 
 const COLLECTION_LOTTERIES = "lotteries";
@@ -10,7 +12,7 @@ exports.main = async (props, context) => {
   const _ = db.command;
 
   try {
-    const code = Math.floor(10000000 + Math.random() * 90000000).toString();
+    const code = createId();
 
     const lottery = await db
       .collection(COLLECTION_LOTTERIES)
