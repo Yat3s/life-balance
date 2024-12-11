@@ -39,7 +39,7 @@
           <map catch:tap="onOpenLocation" id="map" class="w-full h-32" longitude="{{partnerMerchant.location.longitude}}" latitude="{{partnerMerchant.location.latitude}}" scale="16" markers="{{markers}}" bindmarkertap="onClickMapMarker"></map>
         </view>
         <view wx:else>
-          <view class="w-full h-32 skeleton-bg skeleton-animate"/>
+          <view class="w-full h-32 skeleton-bg skeleton-animate" />
         </view>
       </view>
     </view>
@@ -49,20 +49,25 @@
     <view class="text-gray text-xs ml-2">{{partnerMerchant.comments.length}} 条评论</view>
     <block wx:if="{{partnerMerchant.comments.length > 0}}">
       <view class="mt-4 flex flex-col gap-4">
-        <view wx:for="{{partnerMerchant.comments}}" bindtap="onShowCommentActionSheet" data-comment="{{item}}" wx:key="comments" class="flex items-start gap-3 bg-comment-item rounded-lg p-4">
-          <view catchtap="onGoProfile" data-user-id="{{item.userId}}" class="w-9 h-9 bg-gray-200 rounded-full">
-            <!-- avatar -->
-            <image src="{{item.avatarUrl}}" lazy-load="{{true}}" class="w-9 h-9 rounded-full" />
-          </view>
-          <view class="flex-1">
-            <view class="flex items-center gap-1 justify-between w-full">
-              <view catchtap="onGoProfile" data-user-id="{{item.userId}}" class="flex-1 text-gray text-xs truncate">
-                {{item.nickName}}
-              </view>
-              <view class="text-gray text-xs">{{item.createdAtStr}}</view>
+        <view wx:for="{{partnerMerchant.comments}}" bindlongtap="onShowCommentActionSheet" data-comment="{{item}}" wx:key="comments" class="flex flex-col gap-3 bg-comment-item rounded-lg p-4">
+          <view class="flex items-start gap-3">
+            <view catchtap="onGoProfile" data-user-id="{{item.userId}}" class="w-9 h-9 bg-gray-200 rounded-full">
+              <!-- avatar -->
+              <image src="{{item.avatarUrl}}" lazy-load="{{true}}" class="w-9 h-9 rounded-full" />
             </view>
-            <view class="text-black text-sm mt-1">{{item.content}}</view>
+            <view class="flex-1">
+              <view class="flex items-start gap-1 justify-between w-full">
+                <view class="flex flex-col items-start gap-0dot5">
+                  <view catchtap="onGoProfile" data-user-id="{{item.userId}}" class="flex-1 text-gray text-xs truncate">
+                    {{item.nickName}}
+                  </view>
+                  <view class="text-gray text-xs">{{item.createdAtStr}}</view>
+                </view>
+                <image wx:if="{{item.isCurrentUserComment}}" bindtap="onShowCommentActionSheet" data-comment="{{item}}" src="/images/ic_comment_more.svg" class="w-4 h-4" />
+              </view>
+            </view>
           </view>
+          <view class="text-black text-sm mt-1">{{item.content}}</view>
         </view>
       </view>
     </block>
