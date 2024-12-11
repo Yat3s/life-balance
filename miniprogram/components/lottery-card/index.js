@@ -35,8 +35,6 @@ Component({
       _fetchLatestLottery()
         .then((res) => {
           if (res.success) {
-            const now = Date.now();
-
             const participants =
               res.data.tickets?.map((ticket) => ({
                 userId: ticket.userId,
@@ -48,7 +46,7 @@ Component({
                 ...res.data,
                 participants,
               },
-              isOngoing: res.data.drawnAt > now,
+              isOngoing: res.data.winners && res.data.winners.length === 0,
               participantCount: res.data.tickets?.length || 0,
             });
             console.log(this.data.lottery);
