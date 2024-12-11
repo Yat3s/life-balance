@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "lottery-detail": "/components/lottery-detail/index"
+    "lottery-detail": "/components/lottery-detail/index",
+    "user-avatar": "/components/user-avatar/index"
   }
 }

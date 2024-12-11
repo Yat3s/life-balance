@@ -11,13 +11,13 @@
       <view class="flex items-center p-3 rounded-lg bg-lottery-history border-gray-light" data-lottery="{{item}}" bind:tap="onTapLotteryHistory">
         <image src="{{item.prizeTiers[0].images[0]}}" class="w-16 h-14 rounded-lg bg-gray-200" mode="aspectFill" lazy-load="{{true}}" />
         <view class="flex flex-col ml-3">
-          <view class="text-xs font-medium mb-2">第 {{item.phase}} 期 {{item.title}}</view>
+          <view class="text-xs font-medium mb-3">第 {{item.phase}} 期 {{item.title}}</view>
           <view class="flex items-center">
             <view class="text-drawn-time text-xs">中奖人：</view>
             <block wx:for="{{item.winners}}" wx:key="ticketId">
               <view class="relative {{index === 0 ? '' : '-ml-2'}}">
                 <view class="rounded-full border border-solid border-gray-300 shrink-0 w-5 h-5">
-                  <image src="{{item.user.avatarUrl}}" lazy-load="{{true}}" class="w-full h-full rounded-full bg-gray-200" />
+                  <user-avatar className="w-full h-full rounded-full" userInfo="{{item.user}}" />
                 </view>
                 <view wx:if="{{item.user._openid === userInfo._openid}}" class="absolute -top-1 -left-1 w-3 h-3 bg-yellow-400 rounded-full flex items-center justify-center text-white" style="font-size: 8px;">
                   我
