@@ -7,13 +7,10 @@ Component({
   options: {
     addGlobalClass: true,
   },
-
   properties: {},
-
   data: {
     lottery: null,
     isOngoing: false,
-    participantCount: 0,
     displayParticipants: [],
     hasMoreParticipants: false,
     remainingCount: 0,
@@ -37,14 +34,13 @@ Component({
     },
 
     processParticipants(participants) {
-      const maxDisplay = MAX_DISPLAY;
       const totalParticipants = participants.length;
 
       this.setData({
-        displayParticipants: participants.slice(0, maxDisplay),
-        hasMoreParticipants: totalParticipants > maxDisplay,
+        displayParticipants: participants.slice(0, MAX_DISPLAY),
+        hasMoreParticipants: totalParticipants > MAX_DISPLAY,
         remainingCount:
-          totalParticipants > maxDisplay ? totalParticipants - maxDisplay : 0,
+          totalParticipants > MAX_DISPLAY ? totalParticipants - MAX_DISPLAY : 0,
       });
     },
 
@@ -64,7 +60,6 @@ Component({
                 participants,
               },
               isOngoing: res.data.winners && res.data.winners.length === 0,
-              participantCount: participants.length,
             });
 
             this.processParticipants(participants);
