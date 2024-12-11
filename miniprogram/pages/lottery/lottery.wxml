@@ -93,7 +93,7 @@
 </block>
 <view class="pb-24" />
 <view class="fixed bottom-0 left-0 right-0 h-20 p-4 bg-white">
-  <view wx:if="{{!hasParticipated}}" class="w-full py-2dot5 text-sm font-normal bg-button text-white rounded-full flex items-center justify-center" bind:tap="createTicket">
+  <view wx:if="{{!hasParticipated}}" class="w-full py-2dot5 text-sm font-normal bg-button text-white rounded-full flex items-center justify-center" bind:tap="onJoinLottery">
     <text>观看视频参与抽奖</text>
   </view>
   <view wx:if="{{currentLottery.drawnAt > now && hasParticipated}}" class="w-full py-2dot5 text-sm font-normal bg-button text-white rounded-full flex items-center justify-center">
