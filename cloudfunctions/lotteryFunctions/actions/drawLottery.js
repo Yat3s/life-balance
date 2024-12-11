@@ -1,28 +1,36 @@
 const cloud = require("wx-server-sdk");
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 
-const db = cloud.database();
-const _ = db.command;
 const COLLECTION_NAME = "lotteries";
 const TEMPLATE_ID = "wV8HUYugxQ3OI9MBkEPXMutZnOPHtQsu1tdMCoxOgi8";
+const db = cloud.database();
+const _ = db.command;
 
-exports.main = async (event, context) => {
+exports.main = async (props, context) => {
+  const { lotteryId } = props;
+
   try {
-    const now = Date.now();
-    const lottery = await db
-      .collection(COLLECTION_NAME)
-      .where({
-        drawnAt: _.lte(now),
-        winners: _.size(0),
-      })
-      .get();
+    const lottery = await db.collection(COLLECTION_NAME).doc(lotteryId).get();
 
-    if (!lottery.data.length) {
-      console.log("[Lottery] No lottery events need to be drawn");
-      return;
+    if (!lottery.data) {
+      console.log(`[Lottery] Lottery with ID ${lotteryId} not found`);
+      return {
+        success: false,
+        error: "Lottery not found",
+      };
     }
 
-    const currentLottery = lottery.data[0];
+    const currentLottery = lottery.data;
+
+    // Check if lottery has already been drawn
+    if (currentLottery.winners && currentLottery.winners.length > 0) {
+      console.log(`[Lottery] Lottery ${lotteryId} has already been drawn`);
+      return {
+        success: false,
+        error: "Lottery already drawn",
+      };
+    }
+
     const winners = [];
     const nonWinnerUserIds = new Set(
       currentLottery.tickets.map((ticket) => ticket.userId)
@@ -51,7 +59,7 @@ exports.main = async (event, context) => {
 
     await db
       .collection(COLLECTION_NAME)
-      .doc(currentLottery._id)
+      .doc(lotteryId)
       .update({
         data: {
           winners: winners,
@@ -108,7 +116,15 @@ exports.main = async (event, context) => {
         winners.length + nonWinnerUserIds.size
       }`
     );
+
+    return {
+      success: true,
+    };
   } catch (error) {
     console.error("[Lottery] Draw execution failed:", error);
+    return {
+      success: false,
+      error: error.message,
+    };
   }
 };

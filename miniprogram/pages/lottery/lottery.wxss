@@ -30,3 +30,11 @@ page {
 .text-ads-desc {
   color: #989898;
 }
+
+.truncate-ellipsis {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100rpx;
+}

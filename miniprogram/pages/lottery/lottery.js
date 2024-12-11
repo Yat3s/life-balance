@@ -2,19 +2,82 @@ import { formatDate } from "../../lib/utils";
 import {
   fetchAllLotteries,
   createLotteryTicket,
+  drawLottery,
 } from "../../repository/lotteryRepo";
-const app = getApp();
+import { fetchUserInfo } from "../../repository/userRepo";
+
+const CHECK_LOTTERY_RESULT_DURATION = 500;
+const LOTTERY_SUBSCRIPTION_TEMP_ID =
+  "wV8HUYugxQ3OI9MBkEPXMutZnOPHtQsu1tdMCoxOgi8";
 
 Page({
   data: {
-    currentLottery: null,
     pastLotteries: [],
     videoAd: null,
   },
 
   onLoad(options) {
-    this.setupVideoAd();
-    this.fetchLotteryData();
+    fetchUserInfo().then((res) => {
+      this.setData(
+        {
+          userInfo: res,
+        },
+        () => {
+          this.setupVideoAd();
+          this.fetchLotteryData();
+        }
+      );
+    });
+  },
+
+  async debugDrawLottery() {
+    try {
+      wx.showLoading({ title: "开奖中..." });
+      const result = await drawLottery(this.data.currentLottery._id);
+      wx.hideLoading();
+
+      if (result.success) {
+        wx.showToast({
+          title: "开奖成功",
+          icon: "success",
+        });
+        this.fetchLotteryData();
+        setTimeout(() => {
+          this.checkLotteryResult();
+        }, CHECK_LOTTERY_RESULT_DURATION);
+      } else {
+        wx.showToast({
+          title: result.error || "开奖失败",
+          icon: "none",
+        });
+      }
+    } catch (error) {
+      wx.hideLoading();
+      wx.showToast({
+        title: error.message || "开奖失败",
+        icon: "none",
+      });
+    }
+  },
+
+  checkLotteryResult() {
+    const { currentLottery, userInfo } = this.data;
+    if (!currentLottery || !currentLottery.winners || !userInfo) return;
+
+    console.log("Checking result:", {
+      winners: currentLottery.winners,
+      userOpenId: userInfo._openid,
+    });
+
+    const isWinner = currentLottery.winners.some(
+      (winner) => winner.userId === userInfo._openid
+    );
+
+    wx.showToast({
+      title: isWinner ? "恭喜您中奖啦！" : "很遗憾未能中奖",
+      icon: isWinner ? "success" : "none",
+      duration: 2000,
+    });
   },
 
   subscribeNotification(tempId, title, content) {
@@ -66,7 +129,7 @@ Page({
       this.data.videoAd.onClose((res) => {
         if (res && res.isEnded) {
           this.subscribeNotification(
-            "wV8HUYugxQ3OI9MBkEPXMutZnOPHtQsu1tdMCoxOgi8",
+            LOTTERY_SUBSCRIPTION_TEMP_ID,
             "抽奖提醒",
             "是否订阅抽奖结果通知？"
           );
@@ -87,27 +150,24 @@ Page({
       if (!res.data.length) return;
 
       const allLotteries = res.data.sort((a, b) => a.createdAt - b.createdAt);
-
       const lotteriesWithPhase = allLotteries.map((lottery, index) => ({
         ...lottery,
         phase: index + 1,
         formattedDrawTime: formatDate(lottery.drawnAt),
       }));
 
-      const current = lotteriesWithPhase.find(
-        (lottery) => lottery.drawnAt > now
-      );
+      const latestLottery = lotteriesWithPhase[lotteriesWithPhase.length - 1];
       const past = lotteriesWithPhase
-        .filter((lottery) => lottery.drawnAt <= now)
+        .filter((lottery) => lottery._id !== latestLottery._id)
         .sort((a, b) => b.createdAt - a.createdAt);
 
       const hasParticipated =
-        current?.tickets?.some(
-          (ticket) => ticket.userId === app.globalData.userInfo._openid
+        latestLottery?.tickets?.some(
+          (ticket) => ticket.userId === this.data.userInfo._openid
         ) || false;
 
       this.setData({
-        currentLottery: current,
+        currentLottery: latestLottery,
         pastLotteries: past,
         now,
         hasParticipated,
