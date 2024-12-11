@@ -173,7 +173,6 @@ Page({
   onPostComment() {
     const partnerMerchantId = this.data.partnerMerchantId;
     const selectedCommentTemplate = this.data.selectedCommentTemplate;
-    const selectedComment = this.data.selectedComment;
     const user = app.globalData.userInfo;
     if (!selectedCommentTemplate) {
       wx.showToast({
@@ -183,59 +182,33 @@ Page({
       return;
     }
     this.onDismissModal();
-    if (selectedComment) {
-      const commentInfo = {
-        createdAt: selectedComment.createdAt,
-        _openid: selectedComment._openid,
-        content: selectedComment.content,
-      };
-      const newCommentText = selectedCommentTemplate;
-      updateComment(partnerMerchantId, commentInfo, newCommentText)
-        .then((res) => {
-          if (res.success) {
-            wx.showToast({
-              title: "重新评价成功",
-              icon: "success",
-            });
-            this.fetchPartnerMerchantDetail(partnerMerchantId);
-          }
-        })
-        .catch((err) => {
-          console.error(err);
+    const comment = {
+      avatarUrl: user.avatarUrl,
+      nickName: user.nickName,
+      content: selectedCommentTemplate,
+    };
+    postComment(partnerMerchantId, comment)
+      .then((res) => {
+        if (res.success) {
           wx.showToast({
-            title: "重新评价失败",
-            icon: "none",
+            title: "评价成功",
+            icon: "success",
           });
-        });
-    } else {
-      const comment = {
-        avatarUrl: user.avatarUrl,
-        nickName: user.nickName,
-        content: selectedCommentTemplate,
-      };
-      postComment(partnerMerchantId, comment)
-        .then((res) => {
-          if (res.success) {
-            wx.showToast({
-              title: "评价成功",
-              icon: "success",
-            });
-            this.fetchPartnerMerchantDetail(partnerMerchantId);
-          } else {
-            wx.showToast({
-              title: "评价失败",
-              icon: "none",
-            });
-          }
-        })
-        .catch((err) => {
-          console.error(err);
+          this.fetchPartnerMerchantDetail(partnerMerchantId);
+        } else {
           wx.showToast({
             title: "评价失败",
             icon: "none",
           });
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        wx.showToast({
+          title: "评价失败",
+          icon: "none",
         });
-    }
+      });
   },
 
   onGoProfile(e) {
@@ -254,11 +227,9 @@ Page({
       return;
     }
     wx.showActionSheet({
-      itemList: ["重新评价", "删除评价"],
+      itemList: ["删除评价"],
       success: (res) => {
         if (res.tapIndex === 0) {
-          this.onShowCommentModal();
-        } else if (res.tapIndex === 1) {
           this.onDeleteComment();
         }
       },
