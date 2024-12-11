@@ -10,12 +10,16 @@ import { navigateToLotteryHistory } from "../router";
 const CHECK_LOTTERY_RESULT_DURATION = 500;
 const LOTTERY_SUBSCRIPTION_TEMP_ID =
   "wV8HUYugxQ3OI9MBkEPXMutZnOPHtQsu1tdMCoxOgi8";
+const POLLING_INTERVAL = 5000; // 5 seconds
+const ENABLE_POLLING = false;
 
 Page({
   data: {
     currentLottery: null,
     pastLotteries: null,
     videoAd: null,
+    pollingTimer: null,
+    isPolling: false,
   },
 
   onLoad(options) {
@@ -27,9 +31,82 @@ Page({
         () => {
           this.setupVideoAd();
           this.fetchLotteryData();
+          if (ENABLE_POLLING) {
+            console.log("[Polling] Polling feature is enabled");
+            this.startPolling();
+          } else {
+            console.log("[Polling] Polling feature is disabled");
+          }
         }
       );
     });
+  },
+
+  onUnload() {
+    if (ENABLE_POLLING) {
+      this.stopPolling();
+    }
+  },
+
+  onHide() {
+    if (ENABLE_POLLING) {
+      this.stopPolling();
+    }
+  },
+
+  onShow() {
+    if (ENABLE_POLLING && !this.data.isPolling) {
+      this.startPolling();
+    }
+  },
+
+  startPolling() {
+    if (!ENABLE_POLLING) {
+      console.log("[Polling] Polling feature is disabled, skipping start");
+      return;
+    }
+
+    if (this.data.isPolling) {
+      console.log("[Polling] Already polling, skipping start");
+      return;
+    }
+
+    console.log("[Polling] Starting polling service");
+    this.setData({ isPolling: true });
+    this.fetchLotteryData(); // Initial fetch
+
+    const pollingTimer = setInterval(() => {
+      const { currentLottery } = this.data;
+
+      if (currentLottery && !currentLottery.winners.length) {
+        console.log("[Polling] Checking lottery status", {
+          lotteryId: currentLottery._id,
+          phase: currentLottery.phase,
+          timestamp: new Date().toISOString(),
+        });
+        this.fetchLotteryData();
+      } else {
+        console.log("[Polling] Stopping - lottery completed or invalid", {
+          hasCurrentLottery: !!currentLottery,
+          hasWinners: currentLottery?.winners ? true : false,
+          timestamp: new Date().toISOString(),
+        });
+        this.stopPolling();
+      }
+    }, POLLING_INTERVAL);
+
+    this.setData({ pollingTimer });
+  },
+
+  stopPolling() {
+    if (this.data.pollingTimer) {
+      console.log("[Polling] Stopping polling service");
+      clearInterval(this.data.pollingTimer);
+      this.setData({
+        pollingTimer: null,
+        isPolling: false,
+      });
+    }
   },
 
   async debugDrawLottery() {
@@ -145,10 +222,11 @@ Page({
     }
   },
 
-  fetchLotteryData() {
-    const now = Date.now();
+  async fetchLotteryData() {
+    try {
+      const now = Date.now();
+      const res = await fetchAllLotteries();
 
-    fetchAllLotteries().then((res) => {
       if (!res.data.length) return;
 
       const allLotteries = res.data.sort((a, b) => a.createdAt - b.createdAt);
@@ -168,13 +246,34 @@ Page({
           (ticket) => ticket.userId === this.data.userInfo._openid
         ) || false;
 
+      // Check if lottery status has changed
+      const previousLottery = this.data.currentLottery;
+      if (
+        previousLottery &&
+        latestLottery.winners &&
+        !previousLottery.winners
+      ) {
+        console.log("[Polling] Lottery results detected", {
+          lotteryId: latestLottery._id,
+          phase: latestLottery.phase,
+          winnersCount: latestLottery.winners.length,
+          timestamp: new Date().toISOString(),
+        });
+
+        setTimeout(() => {
+          this.checkLotteryResult();
+        }, CHECK_LOTTERY_RESULT_DURATION);
+      }
+
       this.setData({
         currentLottery: latestLottery,
         pastLotteries: past,
         now,
         hasParticipated,
       });
-    });
+    } catch (error) {
+      console.error("Failed to fetch lottery data:", error);
+    }
   },
 
   async createTicket() {
