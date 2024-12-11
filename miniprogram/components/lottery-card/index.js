@@ -13,7 +13,6 @@ Component({
     isOngoing: false,
     displayParticipants: [],
     hasMoreParticipants: false,
-    remainingCount: 0,
   },
 
   pageLifetimes: {
@@ -40,8 +39,6 @@ Component({
         displayParticipants: participants.slice(0, MAX_DISPLAY),
         hasMoreParticipants: totalParticipants > MAX_DISPLAY,
         totalParticipants,
-        remainingCount:
-          totalParticipants > MAX_DISPLAY ? totalParticipants - MAX_DISPLAY : 0,
       });
     },
 
