@@ -107,6 +107,17 @@ Page({
     });
   },
 
+  onOpenLocation() {
+    const { partnerMerchant } = this.data;
+    wx.openLocation({
+      latitude: partnerMerchant.location.latitude,
+      longitude: partnerMerchant.location.longitude,
+      name: partnerMerchant.name,
+      address: partnerMerchant.location.address,
+      scale: 16,
+    });
+  },
+
   onShowCommentModal() {
     const hasAuth = this.data.hasAuth;
     const selectedCommentTemplate = this.data.selectedCommentTemplate;
