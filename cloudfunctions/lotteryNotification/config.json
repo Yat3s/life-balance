@@ -4,9 +4,9 @@
   },
   "triggers": [
     {
-      "name": "nightLotteryCheck",
+      "name": "lotteryCheck",
       "type": "timer",
-      "config": "0 10 11 * * * *"
+      "config": "0 0 10 * * * *"
     }
   ]
 }
