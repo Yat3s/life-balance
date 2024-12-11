@@ -7,6 +7,13 @@ const COLLECTION_NAME = "lotteries";
 const TEMPLATE_ID = "wV8HUYugxQ3OI9MBkEPXMutZnOPHtQsu1tdMCoxOgi8";
 
 exports.main = async (event, context) => {
+  // Add trigger source check
+  const wxContext = cloud.getWXContext();
+  if (wxContext.SOURCE !== "wx_trigger") {
+    console.log("[Lottery] Skipping execution - not triggered by timer");
+    return;
+  }
+
   try {
     const now = Date.now();
     const lottery = await db
