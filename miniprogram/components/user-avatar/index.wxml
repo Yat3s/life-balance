@@ -1,0 +1,1 @@
+<image class="{{className}} bg-gray-200" src="{{userInfo.avatarUrl}}" mode="aspectFill" bind:tap="onTapUserAvatar" lazy-load="{{true}}" />

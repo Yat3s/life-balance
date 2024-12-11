@@ -1,5 +1,7 @@
 {
   "component": true,
-  "usingComponents": {},
+  "usingComponents": {
+    "user-avatar": "/components/user-avatar/index"
+  },
   "multipleSlots": true
 }
