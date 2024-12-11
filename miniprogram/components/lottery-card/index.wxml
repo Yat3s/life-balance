@@ -15,8 +15,8 @@
               <image src="{{item.avatarUrl}}" lazy-load="{{true}}" class="w-full h-full rounded-full bg-gray-200" />
             </view>
           </block>
-          <view wx:if="{{hasMoreParticipants}}" class="ml-1 text-xs text-gray-500">
-            +{{remainingCount}}
+          <view wx:if="{{hasMoreParticipants}}" class="ml-1 text-xxs text-gray">
+            {{totalParticipants}} 人参与
           </view>
         </view>
       </view>

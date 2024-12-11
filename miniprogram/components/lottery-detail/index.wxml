@@ -63,9 +63,9 @@
   <!-- Participants -->
   <view>
     <view class="text-xs text-drawn-time">共 {{lottery.tickets.length || 0}} 人参与</view>
-    <view class="mt-2 flex items-center flex-wrap">
+    <view class="mt-2 flex items-center flex-wrap gap-1">
       <block wx:for="{{lottery.tickets}}" wx:key="index">
-        <view class="{{index === 0 ? '' : '-ml-1dot5'}} w-6 h-6 rounded-full border border-solid border-gray-300">
+        <view class="w-6 h-6 rounded-full border border-solid border-gray-300">
           <user-avatar className="w-full h-full rounded-full" userInfo="{{item.user}}" />
         </view>
       </block>

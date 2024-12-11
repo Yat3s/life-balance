@@ -4312,7 +4312,7 @@ video {
 }
 
 .text-xxs {
-  font-size: 0.625rem;
+  font-size: 0.7rem;
   line-height: 1rem;
 }
 
