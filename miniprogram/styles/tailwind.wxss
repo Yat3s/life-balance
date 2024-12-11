@@ -4307,7 +4307,7 @@ video {
 }
 
 .text-tiny {
-  font-size: 0.5rem;    /* 0.5 × 16 = 8px */
+  font-size: 0.5rem; /* 0.5 × 16 = 8px */
   line-height: 0.75rem; /* 0.75 × 16 = 12px */
 }
 
@@ -5545,6 +5545,10 @@ video {
 
 .ml-5 {
   margin-left: 1.25rem;
+}
+
+.mt-5dot5 {
+  margin-top: 1.375rem;
 }
 
 .mt-6 {

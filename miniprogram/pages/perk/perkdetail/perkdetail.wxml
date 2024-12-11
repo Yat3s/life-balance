@@ -1,5 +1,7 @@
+<import src="../../../components/skeleton/index.wxml" />
 <toolbar isBack="{{true}}" bgColor="bg-white"></toolbar>
-<view class="plr pt-8 pb-safe-area flex flex-col min-perk-detail-height">
+<view wx:if="{{partnerMerchant}}">
+  <view class="plr pt-8 pb-safe-area flex flex-col min-perk-detail-height">
   <view class="bg-white rounded-lg pt-5 px-3 py-4 mb-4">
     <view class="px-2 flex items-center gap-3">
       <!-- <image src="{{partnerMerchant.logo}}" lazy-load="{{true}}" class="w-9 h-6 bg-gray-200 rounded-md" /> -->
@@ -28,8 +30,8 @@
       <view class="h-px bg-gray-100 w-full mt-4"></view>
     </view>
     <view class="mt-4 px-2">
-      <view class="text-black text-sm font-w-450">折扣兑换方式</view>
-      <rich-text class="text-xs text-gray mt-1" nodes="{{partnerMerchant.promotion.description}}"></rich-text>
+      <view class="text-black text-sm font-w-450 mb-1">折扣兑换方式</view>
+      <rich-text class="text-xs text-gray" nodes="{{partnerMerchant.promotion.description}}"></rich-text>
     </view>
     <view class="mt-7" catch:tap="onOpenLocation">
       <view class="pl-2 text-black text-sm font-w-450">店家地址</view>
@@ -82,7 +84,10 @@
     评价一下
   </view>
 </view>
-
+</view>
+<view wx:else>
+  <template is="perk-detail-skeleton" />
+</view>
 <!-- Comment Modal -->
 <view class="cu-modal bottom-modal {{showingModal === 'comment' ? 'show' : ''}}" bindtap="onDismissModal">
   <view class="cu-dialog bg-white comment-modal-main" catchtap>
