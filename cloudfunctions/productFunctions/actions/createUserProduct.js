@@ -1,10 +1,10 @@
-const cloud = require('wx-server-sdk');
+const cloud = require("wx-server-sdk");
 
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 const _ = db.command;
-const COLLECTION_NAME_FLEA_MARKET_PRODUCTS = 'flea-market-products';
-const COLLECTION_NAME_USERS = 'users';
+const COLLECTION_NAME_FLEA_MARKET_PRODUCTS = "flea-market-products";
+const COLLECTION_NAME_USERS = "users";
 
 exports.main = async (props, context) => {
   const wxContext = cloud.getWXContext();
@@ -12,18 +12,26 @@ exports.main = async (props, context) => {
   const { createUserProductData } = props;
 
   try {
-    const userResult = await db
-      .collection(COLLECTION_NAME_USERS)
-      .where({
-        _openid: openid,
-      })
-      .get();
+    const userInfo = (
+      await db
+        .collection(COLLECTION_NAME_USERS)
+        .where({
+          _openid: openid,
+        })
+        .get()
+    ).data[0];
 
     const dataToInsert = {
       ...createUserProductData,
       terminated: false,
       userId: openid,
-      user: userResult.data[0],
+      user: {
+        _id: userInfo._id,
+        _openid: userInfo._openid,
+        avatarUrl: userInfo.avatarUrl,
+        nickName: userInfo.nickName,
+        ...(userInfo.company ? { company: userInfo.company } : {}),
+      },
       createdAt: new Date().getTime(),
       updatedAt: new Date().getTime(),
     };
@@ -37,13 +45,13 @@ exports.main = async (props, context) => {
     return {
       success: true,
       data: result._id,
-      message: 'Item created successfully',
+      message: "Item created successfully",
     };
   } catch (error) {
     return {
       success: false,
       error: error.message,
-      message: 'Failed to create item',
+      message: "Failed to create item",
     };
   }
 };
