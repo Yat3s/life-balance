@@ -1,4 +1,4 @@
-import { formatDateWithDotSeparator } from "../../../common/util";
+import { formatDateTimeWithDotSeparator } from "../../../common/util";
 import { getAppConfig } from "../../../repository/baseRepo";
 import {
   deleteComment,
@@ -51,7 +51,9 @@ Page({
         ? partnerMerchantData.comments
             .map((item) => ({
               ...item,
-              createdAtStr: formatDateWithDotSeparator(item.createdAt),
+              createdAtStr: formatDateTimeWithDotSeparator(item.createdAt),
+              isCurrentUserComment:
+                item._openid === app.globalData.userInfo._openid,
             }))
             .sort((a, b) => {
               const dateA = new Date(a.updatedAt || a.createdAt);
