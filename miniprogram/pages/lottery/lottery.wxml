@@ -36,7 +36,7 @@
   <view wx:if="{{!hasParticipated}}" class="w-full py-2dot5 text-sm font-normal bg-button text-white rounded-full flex items-center justify-center" bind:tap="onJoinLottery">
     <text>观看视频参与抽奖</text>
   </view>
-  <view wx:if="{{hasParticipated}}" class="w-full py-2dot5 text-sm font-normal bg-button text-white rounded-full flex items-center justify-center">
+  <view wx:if="{{hasParticipated}}" class="w-full py-2dot5 text-sm font-normal bg-gray-200 text-gray rounded-full flex items-center justify-center">
     你已参与，等待开奖 ⌛️
   </view>
 </view>

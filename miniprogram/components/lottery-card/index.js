@@ -1,7 +1,7 @@
 import { navigateToLottery } from "../../pages/router";
 import { fetchLatestLottery as _fetchLatestLottery } from "../../repository/lotteryRepo";
 
-const MAX_DISPLAY = 6;
+const MAX_DISPLAY = 3;
 
 Component({
   options: {
@@ -39,6 +39,7 @@ Component({
       this.setData({
         displayParticipants: participants.slice(0, MAX_DISPLAY),
         hasMoreParticipants: totalParticipants > MAX_DISPLAY,
+        totalParticipants,
         remainingCount:
           totalParticipants > MAX_DISPLAY ? totalParticipants - MAX_DISPLAY : 0,
       });
