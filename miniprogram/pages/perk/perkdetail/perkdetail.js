@@ -275,6 +275,25 @@ Page({
       });
   },
 
+  onShowCallMerchantActionSheet() {
+    const partnerMerchant = this.data.partnerMerchant;
+    wx.showActionSheet({
+      itemList: [partnerMerchant.section],
+      success: (res) => {
+        if (res.tapIndex === 0) {
+          this.onCallMerchant();
+        }
+      },
+    });
+  },
+
+  onCallMerchant() {
+    const partnerMerchant = this.data.partnerMerchant;
+    wx.makePhoneCall({
+      phoneNumber: partnerMerchant.section,
+    });
+  },
+
   /**
    * Lifecycle function--Called when page is initially rendered
    */
