@@ -10,6 +10,7 @@ import { navigateToLotteryHistory } from "../router";
 const CHECK_LOTTERY_RESULT_DURATION = 500;
 const LOTTERY_SUBSCRIPTION_TEMP_ID =
   "wV8HUYugxQ3OI9MBkEPXMutZnOPHtQsu1tdMCoxOgi8";
+const ADS_MODAL_SHOWN_KEY = "ads_modal_shown";
 
 Page({
   data: {
@@ -224,9 +225,29 @@ Page({
   },
 
   onJoinLottery() {
-    this.setData({
-      showingModal: "ads-desc",
-    });
+    const hasShownModal = wx.getStorageSync(ADS_MODAL_SHOWN_KEY);
+
+    if (!hasShownModal) {
+      this.setData({
+        showingModal: "ads-desc",
+      });
+      wx.setStorageSync(ADS_MODAL_SHOWN_KEY, true);
+    } else {
+      if (this.data.videoAd) {
+        this.data.videoAd.show().catch(() => {
+          this.data.videoAd
+            .load()
+            .then(() => this.data.videoAd.show())
+            .catch((err) => {
+              console.error("Failed to display video ad", err);
+              wx.showToast({
+                title: "广告加载失败",
+                icon: "none",
+              });
+            });
+        });
+      }
+    }
   },
 
   hideModal() {
