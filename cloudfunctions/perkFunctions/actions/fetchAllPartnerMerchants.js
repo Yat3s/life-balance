@@ -14,7 +14,7 @@ exports.main = async (props, context) => {
     for (let i = 0; i < batchTimes; i++) {
       const promise = db
         .collection(COLLECTION_NAME_PERKS)
-        .orderBy("createdAt", "desc")
+        .orderBy("_updateTime", "desc")
         .skip(i * MAX_LIMIT)
         .limit(MAX_LIMIT)
         .get();

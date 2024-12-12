@@ -47,6 +47,11 @@ Page({
   fetchPartnerMerchantDetail(partnerMerchantId) {
     fetchPartnerMerchant(partnerMerchantId).then((res) => {
       const partnerMerchantData = res.data[0];
+      // calculate promotion value
+      partnerMerchantData.promotion.promotionValue =
+        partnerMerchantData.promotion.type == "discount"
+          ? Number(partnerMerchantData.promotion.value) * 100
+          : partnerMerchantData.promotion.value;
       const partnerMerchantComments = partnerMerchantData.comments
         ? partnerMerchantData.comments
             .map((item) => ({
