@@ -17,8 +17,8 @@
   <!-- Title -->
   <view class="mb-4 flex items-center justify-between">
     <view>
-      <view wx:if="{{lottery.phase}}" class="text-xs text-gray">第 {{lottery.phase}} 期</view>
-      <view class="text-lg font-semibold">{{lottery.title}}</view>
+      <view class="text-xs text-gray">{{lottery.series}}</view>
+      <view class="text-lg font-semibold">{{lottery.prizeTiers[0].name}}</view>
     </view>
     <button wx:if="{{!lottery.winners.length}}" class="share-btn" open-type="share" data-lottery="{{lottery}}">
       <view class="flex items-center gap-1">
@@ -45,7 +45,7 @@
             <view class="flex items-center gap-2">
               <view class="relative">
                 <user-avatar className="w-10 h-10 rounded-full" userInfo="{{item.user}}" />
-                <view wx:if="{{item.user._openid === userInfo._openid}}" class="absolute -top-1 -left-1 w-3 h-3 bg-yellow-400 rounded-full flex items-center justify-center text-white" style="font-size: 8px;">
+                <view wx:if="{{item.user._openid === userInfo._openid}}" class="absolute -top-1 -left-2 w-7 h-4 bg-yellow-400 rounded-full flex items-center justify-center text-white" style="font-size: 10px;">
                   我
                 </view>
               </view>
@@ -62,11 +62,14 @@
   </view>
   <!-- Participants -->
   <view>
-    <view class="text-xs text-drawn-time">共 {{lottery.tickets.length || 0}} 人参与</view>
-    <view class="mt-2 flex items-center flex-wrap gap-1">
+    <view class="text-xs text-drawn-time mb-2dot5">共 {{lottery.tickets.length || 0}} 人参与</view>
+    <view class="flex items-center flex-wrap gap-1">
       <block wx:for="{{lottery.tickets}}" wx:key="index">
-        <view class="w-8 h-8 rounded-full border border-solid border-gray-300">
-          <user-avatar className="w-full h-full rounded-full" userInfo="{{item.user}}" />
+        <view class="relative">
+          <view class="w-8 h-8 rounded-full border border-solid border-gray-300">
+            <user-avatar className="w-full h-full rounded-full" userInfo="{{item.user}}" />
+          </view>
+          <view wx:if="{{item.isWinner}}" class="absolute -top-4 right-2 text-lg">👑</view>
         </view>
       </block>
     </view>

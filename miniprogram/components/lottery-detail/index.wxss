@@ -37,7 +37,7 @@ page {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  max-width: 100rpx;
+  max-width: 400rpx;
 }
 
 .bg-lottery-history {
