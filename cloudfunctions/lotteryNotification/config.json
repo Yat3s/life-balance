@@ -6,7 +6,7 @@
     {
       "name": "lotteryCheck",
       "type": "timer",
-      "config": "10 0 10 * * * *"
+      "config": "10 0 10,18 * * * *"
     }
   ]
 }

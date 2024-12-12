@@ -4,7 +4,7 @@
       <image src="{{lottery.prizeTiers[0].images[0]}}" class="w-24 h-full rounded-lg bg-gray-200" mode="aspectFill" lazy-load="{{true}}" />
     </view>
     <view class="shrink-0 ml-4 z-20">
-      <view class="text-gray text-xs">第 {{lottery.phase}} 期</view>
+      <view class="text-gray text-xs">{{lottery.series}}</view>
       <view class="font-semibold text-base mt-1 truncate-ellipsis mb-8">{{lottery.title}}</view>
       <!-- Participants -->
       <view class="flex items-center">
