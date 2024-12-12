@@ -1,5 +1,5 @@
-import { navigateToLottery } from "../../pages/router";
-import { fetchLatestLottery as _fetchLatestLottery } from "../../repository/luckDrawRepo";
+import { navigateToLuckDraw } from "../../pages/router";
+import { fetchLatestLuckDraw as _fetchLatestLuckDraw } from "../../repository/luckDrawRepo";
 
 const MAX_DISPLAY = 3;
 
@@ -9,7 +9,7 @@ Component({
   },
   properties: {},
   data: {
-    lottery: null,
+    luckDraw: null,
     isOngoing: false,
     displayParticipants: [],
     hasMoreParticipants: false,
@@ -17,19 +17,19 @@ Component({
 
   pageLifetimes: {
     show() {
-      this.fetchLatestLottery();
+      this.fetchLatestLuckDraw();
     },
   },
 
   lifetimes: {
     attached() {
-      this.fetchLatestLottery();
+      this.fetchLatestLuckDraw();
     },
   },
 
   methods: {
-    navToLottery() {
-      navigateToLottery();
+    navToLuckDraw() {
+      navigateToLuckDraw();
     },
 
     processParticipants(participants) {
@@ -42,8 +42,8 @@ Component({
       });
     },
 
-    fetchLatestLottery() {
-      _fetchLatestLottery()
+    fetchLatestLuckDraw() {
+      _fetchLatestLuckDraw()
         .then((res) => {
           if (res.success) {
             const participants =
@@ -53,7 +53,7 @@ Component({
               })) || [];
 
             this.setData({
-              lottery: {
+              luckDraw: {
                 ...res.data,
                 participants,
               },
@@ -64,7 +64,7 @@ Component({
           }
         })
         .catch((error) => {
-          console.error("Failed to fetch lottery:", error);
+          console.error("Failed to fetch luck draw:", error);
         });
     },
   },

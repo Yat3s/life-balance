@@ -1,0 +1,6 @@
+<import src="../../../components/skeleton/index.wxml" />
+<toolbar bgColor="bg-white" isBack="{{true}}">
+    <view slot="backText" class="text-sm">{{luckDraw.series}}</view>
+</toolbar>
+<luck-draw-detail wx:if="{{luckDraw}}" luckDraw="{{luckDraw}}" userInfo="{{userInfo}}" />
+<template wx:if="{{!luckDraw}}" is="luck-draw-skeleton" />

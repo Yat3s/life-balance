@@ -1,21 +1,21 @@
 import { formatDate } from "../../lib/utils";
 import {
-  fetchAllLotteries,
-  createLotteryTicket,
-  drawLottery,
+  fetchAllLuckDraws,
+  createLuckDrawTicket,
+  draw,
 } from "../../repository/luckDrawRepo";
 import { fetchUserInfo } from "../../repository/userRepo";
-import { navigateToLotteryHistory } from "../router";
+import { navigateToLuckDrawHistory } from "../router";
 
-const CHECK_LOTTERY_RESULT_DURATION = 500;
-const LOTTERY_SUBSCRIPTION_TEMP_ID =
+const CHECK_DRAW_RESULT_DURATION = 500;
+const LUCK_DRAW_SUBSCRIPTION_TEMP_ID =
   "wV8HUYugxQ3OI9MBkEPXMutZnOPHtQsu1tdMCoxOgi8";
 const ADS_MODAL_SHOWN_KEY = "ads_modal_shown";
 
 Page({
   data: {
-    currentLottery: null,
-    previousLotteries: null,
+    currentLuckDraw: null,
+    previousLuckDraws: null,
     videoAd: null,
   },
 
@@ -27,16 +27,16 @@ Page({
         },
         () => {
           this.setupVideoAd();
-          this.fetchLotteryData();
+          this.fetchLuckDrawData();
         }
       );
     });
   },
 
-  async debugDrawLottery() {
+  async debugDraw() {
     try {
       wx.showLoading({ title: "开奖中..." });
-      const result = await drawLottery(this.data.currentLottery._id);
+      const result = await draw(this.data.currentLuckDraw._id);
       wx.hideLoading();
 
       if (result.success) {
@@ -44,10 +44,10 @@ Page({
           title: "开奖成功",
           icon: "success",
         });
-        this.fetchLotteryData();
+        this.fetchLuckDrawData();
         setTimeout(() => {
-          this.checkLotteryResult();
-        }, CHECK_LOTTERY_RESULT_DURATION);
+          this.checkDrawResult();
+        }, CHECK_DRAW_RESULT_DURATION);
       } else {
         wx.showToast({
           title: result.error || "开奖失败",
@@ -63,16 +63,16 @@ Page({
     }
   },
 
-  checkLotteryResult() {
-    const { currentLottery, userInfo } = this.data;
-    if (!currentLottery || !currentLottery.winners || !userInfo) return;
+  checkDrawResult() {
+    const { currentLuckDraw, userInfo } = this.data;
+    if (!currentLuckDraw || !currentLuckDraw.winners || !userInfo) return;
 
     console.log("Checking result:", {
-      winners: currentLottery.winners,
+      winners: currentLuckDraw.winners,
       userOpenId: userInfo._openid,
     });
 
-    const isWinner = currentLottery.winners.some(
+    const isWinner = currentLuckDraw.winners.some(
       (winner) => winner.userId === userInfo._openid
     );
 
@@ -126,7 +126,7 @@ Page({
   },
 
   previewImage(e) {
-    const images = e.currentTarget.dataset.lottery.prizeTiers[0].images || [];
+    const images = e.currentTarget.dataset.luckDraw.prizeTiers[0].images || [];
     wx.previewImage({
       urls: images,
     });
@@ -151,7 +151,7 @@ Page({
       this.data.videoAd.onClose((res) => {
         if (res && res.isEnded) {
           this.subscribeNotification(
-            LOTTERY_SUBSCRIPTION_TEMP_ID,
+            LUCK_DRAW_SUBSCRIPTION_TEMP_ID,
             "开奖提醒订阅",
             "为了及时收到开奖结果通知，建议订阅开奖提醒。不订阅的话将无法收到开奖通知哦～"
           );
@@ -165,48 +165,48 @@ Page({
     }
   },
 
-  async fetchLotteryData() {
+  async fetchLuckDrawData() {
     try {
-      const res = await fetchAllLotteries();
+      const res = await fetchAllLuckDraws();
 
       if (!res.data.length) return;
 
-      const allLotteries = res.data.sort((a, b) => a.createdAt - b.createdAt);
-      const lotteries = allLotteries.map((lottery) => ({
-        ...lottery,
-        formattedDrawTime: formatDate(lottery.drawnAt),
-        tickets: lottery.tickets.map((ticket) => ({
+      const allLuckDraws = res.data.sort((a, b) => a.createdAt - b.createdAt);
+      const luckDraws = allLuckDraws.map((luckDraw) => ({
+        ...luckDraw,
+        formattedDrawTime: formatDate(luckDraw.drawnAt),
+        tickets: luckDraw.tickets.map((ticket) => ({
           ...ticket,
           isWinner:
-            lottery.winners?.some(
+            luckDraw.winners?.some(
               (winner) => winner.userId === ticket.user._openid
             ) || false,
         })),
       }));
 
-      const latestLottery = lotteries[lotteries.length - 1];
-      const previousLotteries = lotteries
-        .filter((lottery) => lottery._id !== latestLottery._id)
+      const latestLuckDraw = luckDraws[luckDraws.length - 1];
+      const previousLuckDraws = luckDraws
+        .filter((luckDraw) => luckDraw._id !== latestLuckDraw._id)
         .sort((a, b) => b.createdAt - a.createdAt);
 
       const hasParticipated =
-        latestLottery?.tickets?.some(
+        latestLuckDraw?.tickets?.some(
           (ticket) => ticket.userId === this.data.userInfo._openid
         ) || false;
 
       this.setData({
-        currentLottery: latestLottery,
-        previousLotteries,
+        currentLuckDraw: latestLuckDraw,
+        previousLuckDraws,
         hasParticipated,
       });
     } catch (error) {
-      console.error("Failed to fetch lottery data:", error);
+      console.error("Failed to fetch luck draw data:", error);
     }
   },
 
   async createTicket() {
     try {
-      if (!this.data.currentLottery?._id) {
+      if (!this.data.currentLuckDraw?._id) {
         wx.showToast({
           title: "没有进行中的抽奖活动",
           icon: "none",
@@ -216,7 +216,7 @@ Page({
 
       wx.showLoading({ title: "处理中" });
 
-      const ticket = await createLotteryTicket(this.data.currentLottery._id);
+      const ticket = await createLuckDrawTicket(this.data.currentLuckDraw._id);
 
       if (!ticket.success) {
         wx.hideLoading();
@@ -233,7 +233,7 @@ Page({
         icon: "success",
       });
 
-      this.fetchLotteryData();
+      this.fetchLuckDrawData();
     } catch (error) {
       wx.hideLoading();
       wx.showToast({
@@ -243,7 +243,7 @@ Page({
     }
   },
 
-  onJoinLottery() {
+  onJoinLuckDraw() {
     const hasShownModal = wx.getStorageSync(ADS_MODAL_SHOWN_KEY);
 
     if (!hasShownModal) {
@@ -290,20 +290,20 @@ Page({
     });
   },
 
-  onTapLotteryHistory(e) {
-    const lottery = e.currentTarget.dataset.lottery;
-    navigateToLotteryHistory(lottery._id);
+  onTapLuckDrawHistory(e) {
+    const luckDraw = e.currentTarget.dataset.luckDraw;
+    navigateToLuckDrawHistory(luckDraw._id);
   },
 
   onShareAppMessage() {
-    const title = this.data.currentLottery?.prizeTiers[0]
-      ? `「${this.data.currentLottery.prizeTiers[0].name}」抽奖进行中，快来参与吧~`
+    const title = this.data.currentLuckDraw?.prizeTiers[0]
+      ? `「${this.data.currentLuckDraw.prizeTiers[0].name}」抽奖进行中，快来参与吧~`
       : "精彩抽奖等你来";
 
     return {
       title,
-      imageUrl: this.data.currentLottery.prizeTiers[0]?.images[0],
-      path: "/pages/lottery/lottery",
+      imageUrl: this.data.currentLuckDraw.prizeTiers[0]?.images[0],
+      path: "/pages/luck-draw/luck-draw",
     };
   },
 

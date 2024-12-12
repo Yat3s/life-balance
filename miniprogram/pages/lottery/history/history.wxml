@@ -1,6 +1,0 @@
-<import src="../../../components/skeleton/index.wxml" />
-<toolbar bgColor="bg-white" isBack="{{true}}">
-    <view slot="backText" class="text-sm">{{lottery.series}}</view>
-</toolbar>
-<lottery-detail wx:if="{{lottery}}" lottery="{{lottery}}" userInfo="{{userInfo}}" />
-<template wx:if="{{!lottery}}" is="lottery-skeleton" />

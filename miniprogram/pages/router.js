@@ -124,13 +124,13 @@ export const Pages = {
     authRequired: true,
     url: "/pages/perk/perkdetail/perkdetail?id=",
   },
-  Lottery: {
+  LuckDraw: {
     authRequired: true,
-    url: "/pages/lottery/lottery",
+    url: "/pages/luck-draw/luck-draw",
   },
-  LotteryHistory: {
+  LuckDrawHistory: {
     authRequired: true,
-    url: "/pages/lottery/history/history?id=",
+    url: "/pages/luck-draw/history/history?id=",
   },
 };
 
@@ -254,12 +254,12 @@ export function navigateToPerkDetail(partnerMerchantId) {
   navigate(Pages.PerkDetail, partnerMerchantId);
 }
 
-export function navigateToLotteryHistory(lotteryId) {
-  navigate(Pages.LotteryHistory, lotteryId);
+export function navigateToLuckDrawHistory(luckDrawId) {
+  navigate(Pages.LuckDrawHistory, luckDrawId);
 }
 
-export function navigateToLottery() {
-  navigate(Pages.Lottery);
+export function navigateToLuckDraw() {
+  navigate(Pages.LuckDraw);
 }
 
 export function navigate(page, urlParam = null) {

@@ -1,9 +1,7 @@
 <scroll-view scroll-y="true" class="main">
   <view style="height:100px; padding-top: {{statusBarHeight + toolbarHeight}}px; margin-top: 32rpx;" class="flex flex-col">
     <view class="ml-2 flex flex-col gap-1">
-      <view class="user-name">
-        Hi, {{userInfo ? userInfo.nickName : 'Friend!'}}
-      </view>
+      <view class="user-name">Hi, {{userInfo ? userInfo.nickName : 'Friend!'}}</view>
       <view class="user-welcome-message margin-top-xs">
         {{nowDateInEnglish}} - {{welcomeMessage}}
       </view>
@@ -22,8 +20,8 @@
     <view bindtap="goToPerks" class="border border-solid border-gray-200 p-4 rounded-xl">
       <view class="text-sm font-bold text-center">进入员工折扣页</view>
     </view>
-    <!-- Lottery -->
-    <lottery-card wx:if="{{LOTTERY_FEATURE_ENABLED}}" />
+    <!-- Luck Draw -->
+    <luck-draw-card />
     <view class="flex gap-2">
       <!-- Latest Circle -->
       <view class="flex-1">

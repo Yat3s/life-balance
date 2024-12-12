@@ -3,7 +3,7 @@ const cloud = require("wx-server-sdk");
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 
-const COLLECTION_NAME = "lotteries";
+const COLLECTION_NAME = "luck-draws";
 
 exports.main = async (props, context) => {
   try {
@@ -16,7 +16,7 @@ exports.main = async (props, context) => {
     if (!latest.data[0]) {
       return {
         success: false,
-        message: "No lottery found",
+        message: "No luck draw found",
       };
     }
 

@@ -3,7 +3,7 @@ const createId = require("cuid");
 
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 
-const COLLECTION_LOTTERIES = "lotteries";
+const COLLECTION_LUCK_DRAWS = "luck-draws";
 const COLLECTION_USERS = "users";
 
 exports.main = async (props, context) => {
@@ -14,12 +14,12 @@ exports.main = async (props, context) => {
   try {
     const code = createId();
 
-    const lottery = await db
-      .collection(COLLECTION_LOTTERIES)
-      .doc(props.lotteryId)
+    const luckDraw = await db
+      .collection(COLLECTION_LUCK_DRAWS)
+      .doc(props.luckDrawId)
       .get();
 
-    const tickets = lottery.data.tickets || [];
+    const tickets = luckDraw.data.tickets || [];
 
     const hasParticipated = tickets.some(
       (ticket) => ticket.userId === wxContext.OPENID
@@ -49,8 +49,8 @@ exports.main = async (props, context) => {
     }
 
     await db
-      .collection(COLLECTION_LOTTERIES)
-      .doc(props.lotteryId)
+      .collection(COLLECTION_LUCK_DRAWS)
+      .doc(props.luckDrawId)
       .update({
         data: {
           tickets: _.push({

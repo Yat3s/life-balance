@@ -65,7 +65,7 @@
     </view>
   </view>
 </template>
-<template name="lottery-skeleton">
+<template name="luck-draw-skeleton">
   <view class="plr">
     <!-- Image Carousel Skeleton -->
     <view class="w-full h-80 mb-6 bg-gray-100 skeleton-animate rounded-lg" />
@@ -163,7 +163,6 @@
         <view class="mt-2 w-full h-32 skeleton-bg rounded-lg skeleton-animate"></view>
       </view>
     </view>
-
     <!-- Skeleton for Comments Section -->
     <view class="bg-white rounded-lg px-3 pt-5 py-4 mb-2 flex flex-col flex-1">
       <view class="h-4 w-32 skeleton-bg rounded ml-2 skeleton-animate"></view>
@@ -180,7 +179,6 @@
         </view>
       </view>
     </view>
-
     <!-- Skeleton for Comment Button -->
     <view class="fixed z-10 bottom-safe-area left-0 right-0 bg-comment text-white rounded-full text-center text-sm h-8 px-4 py-2 mx-8 skeleton-bg"></view>
   </view>

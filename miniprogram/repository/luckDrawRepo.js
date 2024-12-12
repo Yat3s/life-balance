@@ -1,34 +1,34 @@
 import { cloudFunctionCall } from "./baseRepo";
 
-const CLOUD_FUNCTION_COLLECTION = "lotteryFunctions";
-const COLLECTION_NAME_LOTTERIES = "lotteries";
+const CLOUD_FUNCTION_COLLECTION = "luckDrawFunctions";
+const COLLECTION_NAME = "luck-draws";
 const db = wx.cloud.database();
 
-export const fetchLotteryById = (lotteryId) => {
+export const fetchLuckDrawById = (luckDrawId) => {
   return db
-    .collection(COLLECTION_NAME_LOTTERIES)
+    .collection(COLLECTION_NAME)
     .where({
-      _id: lotteryId,
+      _id: luckDrawId,
     })
     .get();
 };
 
-export const fetchAllLotteries = () => {
-  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, "fetchAllLotteries", {});
+export const fetchAllLuckDraws = () => {
+  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, "fetchAll", {});
 };
 
-export const fetchLatestLottery = () => {
-  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, "fetchLatestLottery", {});
+export const fetchLatestLuckDraw = () => {
+  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, "fetchLatest", {});
 };
 
-export const createLotteryTicket = (lotteryId) => {
-  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, "createLotteryTicket", {
-    lotteryId,
+export const createLuckDrawTicket = (luckDrawId) => {
+  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, "createTicket", {
+    luckDrawId,
   });
 };
 
-export const drawLottery = (lotteryId) => {
-  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, "drawLottery", {
-    lotteryId,
+export const draw = (luckDrawId) => {
+  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, "draw", {
+    luckDrawId,
   });
 };
