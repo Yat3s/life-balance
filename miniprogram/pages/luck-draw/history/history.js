@@ -29,14 +29,13 @@ Page({
           return;
         }
 
-        const luckDrawInfo = luckDrawData.data[0];
         const formattedLuckDraw = {
-          ...luckDrawInfo,
-          formattedDrawTime: formatDate(luckDrawInfo.drawnAt),
-          tickets: luckDrawInfo.tickets.map((ticket) => ({
+          ...luckDrawData,
+          formattedDrawTime: formatDate(luckDrawData.drawnAt),
+          tickets: luckDrawData.tickets.map((ticket) => ({
             ...ticket,
             isWinner:
-              luckDrawInfo.winners?.some(
+              luckDrawData.winners?.some(
                 (winner) => winner.userId === ticket.user._openid
               ) || false,
           })),

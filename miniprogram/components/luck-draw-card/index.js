@@ -12,7 +12,6 @@ Component({
     luckDraw: null,
     isOngoing: false,
     displayParticipants: [],
-    hasMoreParticipants: false,
   },
 
   pageLifetimes: {
@@ -37,7 +36,6 @@ Component({
 
       this.setData({
         displayParticipants: participants.slice(0, MAX_DISPLAY),
-        hasMoreParticipants: totalParticipants > MAX_DISPLAY,
         totalParticipants,
       });
     },
@@ -45,23 +43,21 @@ Component({
     fetchLatestLuckDraw() {
       _fetchLatestLuckDraw()
         .then((res) => {
-          if (res.success) {
-            const participants =
-              res.data.tickets?.map((ticket) => ({
-                userId: ticket.userId,
-                avatarUrl: ticket.user.avatarUrl,
-              })) || [];
+          const participants =
+            res[0].tickets?.map((ticket) => ({
+              userId: ticket.user.userId,
+              avatarUrl: ticket.user.avatarUrl,
+            })) || [];
 
-            this.setData({
-              luckDraw: {
-                ...res.data,
-                participants,
-              },
-              isOngoing: res.data.winners && res.data.winners.length === 0,
-            });
+          this.setData({
+            luckDraw: {
+              ...res[0],
+              participants,
+            },
+            isOngoing: res[0].winners && res[0].winners.length === 0,
+          });
 
-            this.processParticipants(participants);
-          }
+          this.processParticipants(participants);
         })
         .catch((error) => {
           console.error("Failed to fetch luck draw:", error);

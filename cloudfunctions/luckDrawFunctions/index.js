@@ -1,6 +1,5 @@
 const fetchAll = require("./actions/fetchAll");
 const createTicket = require("./actions/createTicket");
-const fetchLatest = require("./actions/fetchLatest");
 const draw = require("./actions/draw");
 
 exports.main = async (event, context) => {
@@ -9,8 +8,6 @@ exports.main = async (event, context) => {
   switch (event.action) {
     case "fetchAll":
       return await fetchAll.main(props, context);
-    case "fetchLatest":
-      return await fetchLatest.main(props, context);
     case "createTicket":
       return await createTicket.main(props, context);
     case "draw":
