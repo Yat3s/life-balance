@@ -14,7 +14,7 @@ const LOTTERY_SUBSCRIPTION_TEMP_ID =
 Page({
   data: {
     currentLottery: null,
-    pastLotteries: null,
+    previousLotteries: null,
     videoAd: null,
   },
 
@@ -147,20 +147,25 @@ Page({
 
   async fetchLotteryData() {
     try {
-      const now = Date.now();
       const res = await fetchAllLotteries();
 
       if (!res.data.length) return;
 
       const allLotteries = res.data.sort((a, b) => a.createdAt - b.createdAt);
-      const lotteriesWithPhase = allLotteries.map((lottery, index) => ({
+      const lotteries = allLotteries.map((lottery) => ({
         ...lottery,
-        phase: index + 1,
         formattedDrawTime: formatDate(lottery.drawnAt),
+        tickets: lottery.tickets.map((ticket) => ({
+          ...ticket,
+          isWinner:
+            lottery.winners?.some(
+              (winner) => winner.userId === ticket.user._openid
+            ) || false,
+        })),
       }));
 
-      const latestLottery = lotteriesWithPhase[lotteriesWithPhase.length - 1];
-      const past = lotteriesWithPhase
+      const latestLottery = lotteries[lotteries.length - 1];
+      const previousLotteries = lotteries
         .filter((lottery) => lottery._id !== latestLottery._id)
         .sort((a, b) => b.createdAt - a.createdAt);
 
@@ -171,8 +176,7 @@ Page({
 
       this.setData({
         currentLottery: latestLottery,
-        pastLotteries: past,
-        now,
+        previousLotteries,
         hasParticipated,
       });
     } catch (error) {
@@ -252,8 +256,8 @@ Page({
   },
 
   onShareAppMessage() {
-    const title = this.data.currentLottery?.title
-      ? `「${this.data.currentLottery.title}」抽奖进行中，快来参与吧~`
+    const title = this.data.currentLottery?.prizeTiers[0]
+      ? `「${this.data.currentLottery.prizeTiers[0].name}」抽奖进行中，快来参与吧~`
       : "精彩抽奖等你来";
 
     return {

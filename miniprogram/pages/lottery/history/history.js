@@ -29,9 +29,17 @@ Page({
           return;
         }
 
+        const lotteryInfo = lotteryData.data[0];
         const formattedLottery = {
-          ...lotteryData.data[0],
-          formattedDrawTime: formatDate(lotteryData.data[0].drawnAt),
+          ...lotteryInfo,
+          formattedDrawTime: formatDate(lotteryInfo.drawnAt),
+          tickets: lotteryInfo.tickets.map((ticket) => ({
+            ...ticket,
+            isWinner:
+              lotteryInfo.winners?.some(
+                (winner) => winner.userId === ticket.user._openid
+              ) || false,
+          })),
         };
 
         const hasParticipated =
@@ -51,16 +59,15 @@ Page({
           title: "加载失败",
           icon: "none",
         });
-        setTimeout(() => {
-          wx.navigateBack();
-        }, 1500);
+        wx.navigateBack();
       });
   },
 
   onShareAppMessage() {
     const { lottery } = this.data;
+    const prize = lottery.prizeTiers[0].name;
     return {
-      title: `${lottery.title}`,
+      title: `${prize}`,
       path: `/pages/lottery/history/history?id=${lottery._id}`,
     };
   },
