@@ -1,5 +1,5 @@
 import { navigateToLottery } from "../../pages/router";
-import { fetchLatestLottery as _fetchLatestLottery } from "../../repository/lotteryRepo";
+import { fetchLatestLottery as _fetchLatestLottery } from "../../repository/luckDrawRepo";
 
 const MAX_DISPLAY = 3;
 

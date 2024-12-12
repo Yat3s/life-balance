@@ -1,5 +1,5 @@
 import { formatDate } from "../../../lib/utils";
-import { fetchLotteryById } from "../../../repository/lotteryRepo";
+import { fetchLotteryById } from "../../../repository/luckDrawRepo";
 import { fetchUserInfo } from "../../../repository/userRepo";
 
 Page({

@@ -3,7 +3,7 @@ import {
   fetchAllLotteries,
   createLotteryTicket,
   drawLottery,
-} from "../../repository/lotteryRepo";
+} from "../../repository/luckDrawRepo";
 import { fetchUserInfo } from "../../repository/userRepo";
 import { navigateToLotteryHistory } from "../router";
 
@@ -87,19 +87,38 @@ Page({
     wx.showModal({
       title,
       content,
+      confirmText: "订阅提醒",
+      cancelText: "暂不订阅",
       success: (res) => {
         if (res.confirm) {
           wx.requestSubscribeMessage({
             tmplIds: [tempId],
             success: (res) => {
+              if (res[tempId] === "accept") {
+                wx.showToast({
+                  title: "订阅成功，开奖后将收到通知",
+                  icon: "success",
+                  duration: 2000,
+                });
+              }
               this.createTicket();
             },
             fail: (err) => {
               console.error("Subscribe failed:", err);
+              wx.showToast({
+                title: "未订阅提醒，开奖结果将无法及时通知",
+                icon: "none",
+                duration: 2000,
+              });
               this.createTicket();
             },
           });
         } else if (res.cancel) {
+          wx.showToast({
+            title: "未订阅提醒，开奖结果将无法及时通知",
+            icon: "none",
+            duration: 2000,
+          });
           this.createTicket();
         }
       },
@@ -133,8 +152,8 @@ Page({
         if (res && res.isEnded) {
           this.subscribeNotification(
             LOTTERY_SUBSCRIPTION_TEMP_ID,
-            "抽奖提醒",
-            "是否订阅抽奖结果通知？"
+            "开奖提醒订阅",
+            "为了及时收到开奖结果通知，建议订阅开奖提醒。不订阅的话将无法收到开奖通知哦～"
           );
         } else {
           wx.showToast({
