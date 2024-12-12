@@ -33,7 +33,7 @@
       <view class="text-black text-sm font-w-450 mb-1">折扣兑换方式</view>
       <rich-text class="text-xs text-gray" nodes="{{partnerMerchant.promotion.description}}"></rich-text>
     </view>
-    <view class="mt-7" catch:tap="onOpenLocation">
+    <view class="mt-7" bindtap="onOpenLocation">
       <view class="pl-2 text-black text-sm font-w-450">店家地址</view>
       <view class="text-gray text-xs mt-1 px-2 truncate">{{partnerMerchant.location.address}}</view>
       <view class="mt-2 rounded-lg overflow-hidden">
@@ -44,6 +44,10 @@
           <view class="w-full h-32 skeleton-bg skeleton-animate" />
         </view>
       </view>
+    </view>
+    <view wx:if="{{partnerMerchant.section}}" class="mt-4 px-2" bindtap="onShowCallMerchantActionSheet">
+      <view class="text-black text-sm font-w-450 mb-1">店家联系方式</view>
+      <view class="text-gray text-xs mt-1 truncate">点我联系店家</view>
     </view>
   </view>
 
