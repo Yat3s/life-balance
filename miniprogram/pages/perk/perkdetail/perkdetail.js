@@ -65,6 +65,9 @@ Page({
       const partnerMerchant = {
         ...partnerMerchantData,
         comments: partnerMerchantComments,
+        displayContact: partnerMerchantData.contact
+          ? this.maskPhoneNumber(partnerMerchantData.contact)
+          : "",
       };
       const markers = [
         {
@@ -118,6 +121,10 @@ Page({
       address: partnerMerchant.location.address,
       scale: 16,
     });
+  },
+
+  maskPhoneNumber(phoneNumber) {
+    return phoneNumber.slice(0, 3) + "****" + phoneNumber.slice(-4);
   },
 
   onShowCommentModal() {
@@ -278,7 +285,7 @@ Page({
   onShowCallMerchantActionSheet() {
     const partnerMerchant = this.data.partnerMerchant;
     wx.showActionSheet({
-      itemList: [partnerMerchant.section],
+      itemList: [partnerMerchant.contact],
       success: (res) => {
         if (res.tapIndex === 0) {
           this.onCallMerchant();
@@ -290,7 +297,7 @@ Page({
   onCallMerchant() {
     const partnerMerchant = this.data.partnerMerchant;
     wx.makePhoneCall({
-      phoneNumber: partnerMerchant.section,
+      phoneNumber: partnerMerchant.contact,
     });
   },
 
@@ -328,4 +335,6 @@ Page({
    * Called when user click on the top right corner to share
    */
   onShareAppMessage() {},
+
+  onShareTimeline() {},
 });
