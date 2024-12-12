@@ -74,7 +74,7 @@
   <view class="line my-6" />
   <!-- Description -->
   <view>
-    <view class="text-drawn-time text-xs mb-1">抽奖说明</view>
-    <view class="text-xs">{{lottery.description}}</view>
+    <view class="text-drawn-time text-xs mb-2dot5">抽奖 & 奖品说明</view>
+    <rich-text nodes="{{lottery.description}}" />
   </view>
 </view>
