@@ -160,7 +160,7 @@
       <view class="mt-8">
         <view class="ml-2 h-4 w-20 skeleton-bg rounded skeleton-animate"></view>
         <view class="ml-2 h-3 w-64 skeleton-bg rounded mt-1dot5 skeleton-animate"></view>
-        <view class="mt-2 w-full h-32 skeleton-bg rounded-lg skeleton-animate"></view>
+        <view class="mt-2 ml-2 w-full h-32 skeleton-bg rounded-lg skeleton-animate"></view>
       </view>
     </view>
     <!-- Skeleton for Comments Section -->
