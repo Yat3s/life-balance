@@ -18,7 +18,7 @@
   <view class="mb-4 flex items-center justify-between">
     <view>
       <view class="text-xs text-gray">{{luckDraw.series}}</view>
-      <view class="text-lg font-semibold">{{luckDraw.prizeTiers[0].name}}</view>
+      <view class="text-lg font-semibold">{{luckDraw.title}}</view>
     </view>
     <button wx:if="{{!luckDraw.winners.length}}" class="share-btn" open-type="share" data-luck-draw="{{luckDraw}}">
       <view class="flex items-center gap-1">

@@ -76,7 +76,7 @@ exports.main = async (event, context) => {
           miniprogram_state: MINIPROGRAM_STATE,
           page: `/pages/luck-draw/luck-draw`,
           data: {
-            thing1: { value: currentLuckDraw.prizeTiers[0].name },
+            thing1: { value: currentLuckDraw.title },
             thing3: { value: "恭喜您中奖啦！" },
             thing8: { value: "中奖用户请联系：Yat3s 领取奖品" },
           },
@@ -97,7 +97,7 @@ exports.main = async (event, context) => {
           miniprogram_state: MINIPROGRAM_STATE,
           page: `/pages/luck-draw/luck-draw`,
           data: {
-            thing1: { value: currentLuckDraw.prizeTiers[0].name },
+            thing1: { value: currentLuckDraw.title },
             thing3: { value: "很遗憾未能中奖，感谢参与" },
             thing8: { value: "下次活动将会更精彩" },
           },
