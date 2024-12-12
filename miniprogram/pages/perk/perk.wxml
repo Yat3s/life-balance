@@ -15,7 +15,10 @@
         </view>
         <view class="mt-4 text-gray text-xs truncate">{{item.location.address}}</view>
         <view class="mt-8 flex items-center gap-2">
-          <view class="text-black text-xl whitespace-nowrap">{{item.promotion.discount}}</view>
+          <view class="flex items-baseline gap-0dot5">
+            <view class="text-black whitespace-nowrap {{item.promotion.type == 'discount' ? 'text-2xl' : 'text-xl'}}">{{item.promotion.promotionValue}}</view>
+            <view wx:if="{{item.promotion.type == 'discount'}}" class="text-black text-sm font-w-450">折</view>
+          </view>
           <!-- <view class="flex flex-wrap gap-2">
             <block wx:if="{{item.promotion.eligibleItems.length > 0}}">
               <view wx:for="{{item.promotion.eligibleItems}}" wx:key="eligibleItems" class="tag">

@@ -54,12 +54,18 @@ Page({
     fetchAllPartnerMerchants().then((res) => {
       if (res.success) {
         const partnerMerchants = res.data.map((item) => {
+          // calculate promotion value
+          item.promotion.promotionValue =
+            item.promotion.type == "discount"
+              ? Number(item.promotion.value) * 100
+              : item.promotion.value;
           item.commentCount = item.comments ? item.comments.length : 0;
           item.comments.sort((a, b) => {
             const dateA = new Date(a.updatedAt || a.createdAt);
             const dateB = new Date(b.updatedAt || b.createdAt);
             return dateB - dateA;
           });
+          // filter comments
           item.comments = item.comments
             ? item.comments.filter((comment) => comment._openid).slice(0, 3)
             : [];

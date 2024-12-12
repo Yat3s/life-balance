@@ -8,8 +8,9 @@
       <view class="flex-1 text-black font-w-450 text-xl truncate">{{partnerMerchant.name}}</view>
     </view>
     <view class="px-2 flex items-center gap-4 mt-4">
-      <view class="text-black text-lg whitespace-nowrap">
-        {{partnerMerchant.promotion.discount}}
+      <view class="flex items-baseline gap-0dot5">
+        <view class="text-black whitespace-nowrap {{partnerMerchant.promotion.type == 'discount' ? 'text-xl' : 'text-lg'}}">{{partnerMerchant.promotion.promotionValue}}</view>
+        <view wx:if="{{partnerMerchant.promotion.type == 'discount'}}" class="text-black text-xs font-w-450">折</view>
       </view>
       <!-- <view class="flex flex-wrap gap-2">
         <block wx:if="{{partnerMerchant.promotion.eligibleItems.length > 0}}">
