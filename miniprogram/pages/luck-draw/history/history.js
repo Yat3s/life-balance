@@ -29,7 +29,7 @@ Page({
           return;
         }
 
-        const luckDrawInfo = luckDrawData.data[0];
+        const luckDrawInfo = luckDrawData[0];
         const formattedLuckDraw = {
           ...luckDrawInfo,
           formattedDrawTime: formatDate(luckDrawInfo.drawnAt),
