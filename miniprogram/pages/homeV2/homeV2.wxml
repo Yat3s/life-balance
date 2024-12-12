@@ -18,7 +18,7 @@
     <canteenV2 class="w-full"></canteenV2>
     <!-- Perks -->
     <view bindtap="goToPerks" class="border border-solid border-gray-200 p-4 rounded-xl">
-      <view class="text-sm font-bold text-center">进入员工折扣页</view>
+      <view class="text-sm font-bold text-center">折扣商家</view>
     </view>
     <!-- Luck Draw -->
     <luck-draw-card />
