@@ -10,7 +10,7 @@ export const fetchLuckDrawById = (luckDrawId) => {
 
 export const fetchLatestLuckDraw = () => {
   return cloudCall(
-    db.collection(COLLECTION_NAME).orderBy("createdAt", "desc").limit(1).get()
+    db.collection(COLLECTION_NAME).orderBy("_createTime", "desc").limit(1).get()
   );
 };
 

@@ -171,7 +171,7 @@ Page({
 
       if (!res.data.length) return;
 
-      const allLuckDraws = res.data.sort((a, b) => a.createdAt - b.createdAt);
+      const allLuckDraws = res.data.sort((a, b) => a.createTime - b.createTime);
       const luckDraws = allLuckDraws.map((luckDraw) => ({
         ...luckDraw,
         formattedDrawTime: formatDate(luckDraw.drawnAt),
@@ -187,7 +187,7 @@ Page({
       const latestLuckDraw = luckDraws[luckDraws.length - 1];
       const previousLuckDraws = luckDraws
         .filter((luckDraw) => luckDraw._id !== latestLuckDraw._id)
-        .sort((a, b) => b.createdAt - a.createdAt);
+        .sort((a, b) => b.createTime - a.createTime);
 
       const hasParticipated =
         latestLuckDraw?.tickets?.some(
@@ -297,7 +297,7 @@ Page({
 
   onShareAppMessage() {
     const title = this.data.currentLuckDraw?.prizeTiers[0]
-      ? `「${this.data.currentLuckDraw.prizeTiers[0].name}」抽奖进行中，快来参与吧~`
+      ? `「${this.data.currentLuckDraw.title}」抽奖进行中，快来参与吧~`
       : "精彩抽奖等你来";
 
     return {

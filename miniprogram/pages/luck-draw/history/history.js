@@ -64,7 +64,7 @@ Page({
 
   onShareAppMessage() {
     const { luckDraw } = this.data;
-    const prize = luckDraw.prizeTiers[0].name;
+    const prize = luckDraw.title;
     return {
       title: `${prize}`,
       path: `/pages/luck-draw/history/history?id=${luckDraw._id}`,
