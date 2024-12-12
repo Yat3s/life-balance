@@ -1,5 +1,4 @@
 const fetchAllLotteries = require("./actions/fetchAllLotteries");
-const createLottery = require("./actions/createLottery");
 const createLotteryTicket = require("./actions/createLotteryTicket");
 const fetchLatestLottery = require("./actions/fetchLatestLottery");
 const drawLottery = require("./actions/drawLottery");
@@ -12,8 +11,6 @@ exports.main = async (event, context) => {
       return await fetchAllLotteries.main(props, context);
     case "fetchLatestLottery":
       return await fetchLatestLottery.main(props, context);
-    case "createLottery":
-      return await createLottery.main(props, context);
     case "createLotteryTicket":
       return await createLotteryTicket.main(props, context);
     case "drawLottery":
