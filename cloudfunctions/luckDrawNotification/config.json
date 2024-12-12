@@ -4,7 +4,7 @@
   },
   "triggers": [
     {
-      "name": "lotteryCheck",
+      "name": "luckDrawCheck",
       "type": "timer",
       "config": "10 0 10,18 * * * *"
     }

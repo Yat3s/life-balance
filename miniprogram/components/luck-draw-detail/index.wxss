@@ -40,10 +40,6 @@ page {
   max-width: 400rpx;
 }
 
-.bg-lottery-history {
-  background-color: #fafafa;
-}
-
 .border-gray-light {
   border: 1rpx solid #f1f1f1;
 }

@@ -35,8 +35,8 @@
     "pages/user/sponsor/sponsor",
     "pages/perk/perk",
     "pages/perk/perkdetail/perkdetail",
-    "pages/lottery/lottery",
-    "pages/lottery/history/history"
+    "pages/luck-draw/luck-draw",
+    "pages/luck-draw/history/history"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

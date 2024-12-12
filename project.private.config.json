@@ -6,8 +6,8 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/lottery/lottery",
-          "pathName": "pages/lottery/lottery",
+          "name": "pages/luck-name/luck-name",
+          "pathName": "pages/luck-name/luck-name",
           "query": "",
           "launchMode": "default",
           "scene": null

@@ -1,6 +1,6 @@
 Component({
   properties: {
-    lottery: {
+    luckDraw: {
       type: Object,
       value: null,
     },
@@ -14,10 +14,14 @@ Component({
 
   methods: {
     previewImage() {
-      const images = this.data.lottery.prizeTiers[0].images || [];
+      const images = this.data.luckDraw.prizeTiers[0].images || [];
       wx.previewImage({
         urls: images,
       });
+    },
+
+    debugDraw() {
+      this.triggerEvent("debugDraw", this.data.luckDraw._id);
     },
   },
 });

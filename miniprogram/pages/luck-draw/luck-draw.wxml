@@ -2,13 +2,13 @@
 <toolbar bgColor="bg-white" isBack="{{true}}">
   <view slot="backText" class="text-sm">活动抽奖</view>
 </toolbar>
-<lottery-detail wx:if="{{currentLottery}}" lottery="{{currentLottery}}" userInfo="{{userInfo}}" />
-<template wx:if="{{!currentLottery}}" is="lottery-skeleton" />
-<block wx:if="{{previousLotteries.length > 0}}">
+<luck-draw-detail wx:if="{{currentLuckDraw}}" luckDraw="{{currentLuckDraw}}" userInfo="{{userInfo}}" bind:debugDraw="debugDraw" />
+<template wx:if="{{!currentLuckDraw}}" is="luck-draw-skeleton" />
+<block wx:if="{{previousLuckDraws.length > 0}}">
   <view class="plr mt-12">
     <view class="text-xs text-drawn-time">往期抽奖</view>
-    <view wx:for="{{previousLotteries}}" wx:key="_id" class="mt-2">
-      <view class="flex items-center p-3 rounded-lg bg-lottery-history border-gray-light" data-lottery="{{item}}" bind:tap="onTapLotteryHistory">
+    <view wx:for="{{previousLuckDraws}}" wx:key="_id" class="mt-2">
+      <view class="flex items-center p-3 rounded-lg bg-luck-draw-history border-gray-light" data-luck-draw="{{item}}" bind:tap="onTapLuckDrawHistory">
         <image src="{{item.prizeTiers[0].images[0]}}" class="w-16 h-14 rounded-lg bg-gray-200" mode="aspectFill" lazy-load="{{true}}" />
         <view class="flex flex-col ml-3">
           <view class="text-xs font-medium mb-3">{{item.series}} {{item.prizeTiers[0].name}}</view>
@@ -32,8 +32,8 @@
   </view>
 </block>
 <view class="pb-24" />
-<view wx:if="{{currentLottery && currentLottery.winners.length === 0}}" class="fixed bottom-0 left-0 right-0 h-20 p-4 bg-white">
-  <view wx:if="{{!hasParticipated}}" class="w-full py-2dot5 text-sm font-normal bg-button text-white rounded-full flex items-center justify-center" bind:tap="onJoinLottery">
+<view wx:if="{{currentLuckDraw && currentLuckDraw.winners.length === 0}}" class="fixed bottom-0 left-0 right-0 h-20 p-4 bg-white">
+  <view wx:if="{{!hasParticipated}}" class="w-full py-2dot5 text-sm font-normal bg-button text-white rounded-full flex items-center justify-center" bind:tap="onJoinLuckDraw">
     <text>观看视频参与抽奖</text>
   </view>
   <view wx:if="{{hasParticipated}}" class="w-full py-2dot5 text-sm font-normal bg-gray-200 text-gray rounded-full flex items-center justify-center">

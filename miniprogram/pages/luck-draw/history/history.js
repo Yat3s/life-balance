@@ -1,10 +1,10 @@
 import { formatDate } from "../../../lib/utils";
-import { fetchLotteryById } from "../../../repository/luckDrawRepo";
+import { fetchLuckDrawById } from "../../../repository/luckDrawRepo";
 import { fetchUserInfo } from "../../../repository/userRepo";
 
 Page({
   data: {
-    lottery: null,
+    luckDraw: null,
     userInfo: null,
   },
 
@@ -18,9 +18,9 @@ Page({
       return;
     }
 
-    Promise.all([fetchUserInfo(), fetchLotteryById(options.id)])
-      .then(([userInfo, lotteryData]) => {
-        if (!lotteryData) {
+    Promise.all([fetchUserInfo(), fetchLuckDrawById(options.id)])
+      .then(([userInfo, luckDrawData]) => {
+        if (!luckDrawData) {
           wx.showToast({
             title: "抽奖信息不存在",
             icon: "none",
@@ -29,32 +29,32 @@ Page({
           return;
         }
 
-        const lotteryInfo = lotteryData.data[0];
-        const formattedLottery = {
-          ...lotteryInfo,
-          formattedDrawTime: formatDate(lotteryInfo.drawnAt),
-          tickets: lotteryInfo.tickets.map((ticket) => ({
+        const luckDrawInfo = luckDrawData.data[0];
+        const formattedLuckDraw = {
+          ...luckDrawInfo,
+          formattedDrawTime: formatDate(luckDrawInfo.drawnAt),
+          tickets: luckDrawInfo.tickets.map((ticket) => ({
             ...ticket,
             isWinner:
-              lotteryInfo.winners?.some(
+              luckDrawInfo.winners?.some(
                 (winner) => winner.userId === ticket.user._openid
               ) || false,
           })),
         };
 
         const hasParticipated =
-          formattedLottery.tickets?.some(
+          formattedLuckDraw.tickets?.some(
             (ticket) => ticket.userId === userInfo._openid
           ) || false;
 
         this.setData({
-          lottery: formattedLottery,
+          luckDraw: formattedLuckDraw,
           userInfo,
           hasParticipated,
         });
       })
       .catch((error) => {
-        console.error("Failed to fetch lottery history:", error);
+        console.error("Failed to fetch luck draw history:", error);
         wx.showToast({
           title: "加载失败",
           icon: "none",
@@ -64,11 +64,11 @@ Page({
   },
 
   onShareAppMessage() {
-    const { lottery } = this.data;
-    const prize = lottery.prizeTiers[0].name;
+    const { luckDraw } = this.data;
+    const prize = luckDraw.prizeTiers[0].name;
     return {
       title: `${prize}`,
-      path: `/pages/lottery/history/history?id=${lottery._id}`,
+      path: `/pages/luck-draw/history/history?id=${luckDraw._id}`,
     };
   },
 

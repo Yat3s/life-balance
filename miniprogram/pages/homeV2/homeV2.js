@@ -12,7 +12,6 @@ Component({
   data: {
     toolbarHeight: app.globalData.toolbarHeight,
     statusBarHeight: app.globalData.statusBarHeight,
-    LOTTERY_FEATURE_ENABLED: true,
   },
 
   lifetimes: {

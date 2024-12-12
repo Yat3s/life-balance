@@ -4,11 +4,11 @@ const { getAllData } = require("../lib/utils");
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 
-const COLLECTION_NAME = "lotteries";
+const COLLECTION_NAME = "luck-draws";
 
 exports.main = async (props, context) => {
   try {
-    const lotteries = await getAllData(db, {
+    const luckDraws = await getAllData(db, {
       collection: COLLECTION_NAME,
       whereCondition: {},
       orderBy: {
@@ -19,7 +19,7 @@ exports.main = async (props, context) => {
 
     return {
       success: true,
-      data: lotteries,
+      data: luckDraws,
       message: "Data retrieved successfully",
     };
   } catch (error) {
