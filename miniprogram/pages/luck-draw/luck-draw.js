@@ -296,7 +296,7 @@ Page({
   },
 
   onShareAppMessage() {
-    const title = this.data.currentLuckDraw?.prizeTiers[0]
+    const title = this.data.currentLuckDraw?.title
       ? `「${this.data.currentLuckDraw.title}」抽奖进行中，快来参与吧~`
       : "精彩抽奖等你来";
 
