@@ -28,7 +28,7 @@
         <view class="text-bold stock-title text-is-top">微软市值第一了吗？</view>
         <view class="flex items-baseline gap-1">
           <view class="font-bold stock-title">{{stockData.msft.price}}</view>
-          <view class="text-xxs text-gray-400">{{stockData.msft.change}}%</view>
+          <view class="text-xxs text-gray-400">{{stockData.msft.change}}</view>
         </view>
       </view>
       <view class="w-8 h-8">
