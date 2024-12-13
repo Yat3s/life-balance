@@ -33,9 +33,13 @@ exports.main = async (props, context) => {
     }
 
     const savedComment = {
-      userId: user._id,
-      _openid: openid,
-      ...comment,
+      user: {
+        _id: user._id,
+        _openid: user._openid,
+        avatarUrl: user.avatarUrl,
+        nickName: user.nickName,
+      },
+      content: comment.content,
       createdAt: new Date().getTime(),
     };
 

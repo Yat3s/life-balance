@@ -40,7 +40,9 @@
             <view class="flex items-center gap-4">
               <view class="flex items-center">
                 <!-- avatar -->
-                <image wx:for="{{item.comments}}" bindtap="onGoProfile" data-user-id="{{item.userId}}" wx:key="avatarUrl" src="{{item.avatarUrl}}" lazy-load="{{true}}" class="w-6 h-6 bg-gray-200 rounded-full {{index !== 0 ? '-ml-2' : ''}}" />
+                <view>
+                  <user-avatar wx:for="{{item.comments}}" wx:key="avatarUrl" userInfo="{{item.user}}" className="w-6 h-6 bg-gray-200 rounded-full {{index !== 0 ? '-ml-2' : ''}}" />
+                </view>
               </view>
               <view class="text-xs text-gray">{{item.commentCount}} 条评价</view>
             </view>
