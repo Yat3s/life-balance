@@ -9,14 +9,10 @@ cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV,
 });
 
-function formatPriceChange(change, changePercent) {
-  const numericChange = parseFloat(change);
-  const sign = numericChange >= 0 ? "+" : "";
-
+function formatPriceChange(changePercent) {
   const percentValue = parseFloat(changePercent.replace("%", ""));
-  const formattedPercent = `${sign}${percentValue.toFixed(2)}%`;
-
-  return `${sign}${change} (${formattedPercent})`;
+  const sign = percentValue >= 0 ? "+" : "";
+  return `${sign}${percentValue.toFixed(2)}`;
 }
 
 function formatMarketCap(mktcap) {
@@ -106,10 +102,7 @@ async function getStockQuote(symbol) {
       price: parseFloat(quote["05. price"]).toFixed(2),
       change: parseFloat(quote["09. change"]).toFixed(2),
       changePercent: quote["10. change percent"].trim(),
-      formattedChange: formatPriceChange(
-        parseFloat(quote["09. change"]).toFixed(2),
-        quote["10. change percent"].trim()
-      ),
+      formattedChange: formatPriceChange(quote["10. change percent"].trim()),
       volume: parseInt(quote["06. volume"]),
       high: parseFloat(quote["03. high"]).toFixed(2),
       low: parseFloat(quote["04. low"]).toFixed(2),
@@ -209,7 +202,7 @@ exports.main = async (event, context) => {
         msft: msft
           ? {
               ...msft,
-              change: msft.formattedChange, // Using the new formatted change string
+              change: msft.formattedChange, // Now only returns the percentage value
             }
           : null,
         stocks,
