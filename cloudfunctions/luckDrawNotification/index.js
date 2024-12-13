@@ -1,4 +1,6 @@
 const cloud = require("wx-server-sdk");
+const { performLuckDraw } = require("./lib/luck-draw");
+
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 
 const db = cloud.database();
@@ -31,29 +33,10 @@ exports.main = async (event, context) => {
     }
 
     const currentLuckDraw = luckDraw.data[0];
-    const winners = [];
-    const nonWinnerUserIds = new Set(
-      currentLuckDraw.tickets.map((ticket) => ticket.userId)
+    const { winners, nonWinners } = performLuckDraw(
+      currentLuckDraw.tickets,
+      currentLuckDraw.prizeTiers
     );
-
-    for (const prizeTier of currentLuckDraw.prizeTiers) {
-      const tickets = [...currentLuckDraw.tickets];
-      for (let i = 0; i < prizeTier.count; i++) {
-        if (tickets.length === 0) break;
-
-        const randomIndex = Math.floor(Math.random() * tickets.length);
-        const winningTicket = tickets[randomIndex];
-
-        winners.push({
-          ticketId: winningTicket.code,
-          userId: winningTicket.userId,
-          user: winningTicket.user,
-        });
-
-        nonWinnerUserIds.delete(winningTicket.userId);
-        tickets.splice(randomIndex, 1);
-      }
-    }
 
     await db
       .collection(COLLECTION_NAME)
@@ -89,7 +72,7 @@ exports.main = async (event, context) => {
         })
     );
 
-    const nonWinnerPromises = Array.from(nonWinnerUserIds).map((userId) =>
+    const nonWinnerPromises = nonWinners.map((userId) =>
       cloud.openapi.subscribeMessage
         .send({
           touser: userId,
@@ -113,7 +96,7 @@ exports.main = async (event, context) => {
     await Promise.all([...winnerPromises, ...nonWinnerPromises]);
     console.log(
       `[Notification] All notifications sent, total: ${
-        winners.length + nonWinnerUserIds.size
+        winners.length + nonWinners.length
       }`
     );
   } catch (error) {
