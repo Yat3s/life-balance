@@ -73,8 +73,6 @@ Page({
             : [];
           return item;
         });
-
-        console.log(partnerMerchants);
         this.setData({
           partnerMerchants,
         });

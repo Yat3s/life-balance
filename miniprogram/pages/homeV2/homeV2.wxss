@@ -115,3 +115,7 @@ page {
   -ms-flex: 0.8 1 0%;
   flex: 0.8 1 0%;
 }
+
+.h-menu-partner-merchant {
+  height: 8.7rem;
+}
