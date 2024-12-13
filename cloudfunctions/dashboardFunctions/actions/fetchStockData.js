@@ -3,7 +3,6 @@ const rp = require("request-promise");
 
 const API_KEY = "WEQGVELPMJ086QXP";
 const BASE_URL = "https://www.alphavantage.co/query";
-const CACHE_TIME = 5 * 60 * 1000; // 5 minutes cache
 
 cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV,
@@ -25,59 +24,7 @@ async function withRetry(fn, retries = 3, delay = 2000) {
   }
 }
 
-async function getCache(key) {
-  try {
-    const db = cloud.database();
-    const result = await db
-      .collection("stockCache")
-      .where({
-        key,
-        timestamp: cloud.database().command.gt(Date.now() - CACHE_TIME),
-      })
-      .limit(1)
-      .get();
-
-    return result.data[0];
-  } catch (error) {
-    console.error("Cache read error:", error);
-    return null;
-  }
-}
-
-async function setCache(key, data) {
-  try {
-    const db = cloud.database();
-    const existing = await getCache(key);
-
-    if (existing) {
-      await db
-        .collection("stockCache")
-        .doc(existing._id)
-        .update({
-          data: {
-            data,
-            timestamp: Date.now(),
-          },
-        });
-    } else {
-      await db.collection("stockCache").add({
-        data: {
-          key,
-          data,
-          timestamp: Date.now(),
-        },
-      });
-    }
-  } catch (error) {
-    console.error("Cache write error:", error);
-  }
-}
-
 async function getStockQuote(symbol) {
-  const cacheKey = `quote_${symbol}`;
-  const cached = await getCache(cacheKey);
-  if (cached) return cached.data;
-
   const fetchQuote = async () => {
     const option = {
       uri: `${BASE_URL}?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${API_KEY}`,
@@ -92,7 +39,7 @@ async function getStockQuote(symbol) {
       throw new Error(`Failed to get data for ${symbol}`);
     }
 
-    const data = {
+    return {
       symbol,
       price: parseFloat(quote["05. price"]).toFixed(2),
       change: parseFloat(quote["09. change"]).toFixed(2),
@@ -103,19 +50,12 @@ async function getStockQuote(symbol) {
       low: parseFloat(quote["04. low"]).toFixed(2),
       time: quote["07. latest trading day"],
     };
-
-    await setCache(cacheKey, data);
-    return data;
   };
 
   return await withRetry(fetchQuote);
 }
 
 async function getCompanyOverview(symbol) {
-  const cacheKey = `overview_${symbol}`;
-  const cached = await getCache(cacheKey);
-  if (cached) return cached.data;
-
   const fetchOverview = async () => {
     const option = {
       uri: `${BASE_URL}?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}`,
@@ -129,7 +69,7 @@ async function getCompanyOverview(symbol) {
       throw new Error(`Failed to get company info for ${symbol}`);
     }
 
-    const data = {
+    return {
       mktcap:
         (parseFloat(response.MarketCapitalization) / 1000000000).toFixed(2) +
         "B",
@@ -137,9 +77,6 @@ async function getCompanyOverview(symbol) {
       industry: response.Industry,
       sector: response.Sector,
     };
-
-    await setCache(cacheKey, data);
-    return data;
   };
 
   return await withRetry(fetchOverview);
@@ -165,16 +102,6 @@ exports.main = async (event, context) => {
         await new Promise((resolve) => setTimeout(resolve, 500));
       } catch (error) {
         console.error(`Error processing ${symbol} data:`, error);
-        const cachedQuote = await getCache(`quote_${symbol}`);
-        const cachedOverview = await getCache(`overview_${symbol}`);
-
-        if (cachedQuote && cachedOverview) {
-          stocks.push({
-            ...cachedQuote.data,
-            ...cachedOverview.data,
-            fromCache: true,
-          });
-        }
       }
     }
 
@@ -182,7 +109,6 @@ exports.main = async (event, context) => {
       throw new Error("No stock data retrieved");
     }
 
-    // Sort by market cap (now in trillions)
     stocks.sort((a, b) => parseFloat(b.mktcap) - parseFloat(a.mktcap));
 
     const top1 = stocks[0];
@@ -196,7 +122,7 @@ exports.main = async (event, context) => {
         msft: msft
           ? {
               ...msft,
-              change: msft.formattedChange, // Now only returns the percentage value
+              change: msft.formattedChange,
             }
           : null,
         stocks,
