@@ -40,6 +40,6 @@
     </view>
   </view>
   <view wx:if="{{!luckDraw}}">
-    <view class="shine w-full h-24"></view>
+    <view class="shine w-full h-22"></view>
   </view>
 </view>
