@@ -23,6 +23,10 @@
   width: 1.375rem;
 }
 
+.h-5dot5 {
+  height: 1.375rem;
+}
+
 .food-bg {
   background: radial-gradient(
     ellipse at center,

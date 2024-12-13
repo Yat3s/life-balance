@@ -3,7 +3,7 @@
     <view class="flex flex-col">
       <view class="flex justify-between items-center">
         <view class="text-sm font-bold">食堂菜单</view>
-        <image src="/images/ic_home_card_enter.svg" class="w-5dot5" mode="widthFix" />
+        <image src="/images/ic_home_card_enter.svg" class="w-5dot5 h-5dot5" mode="widthFix" />
       </view>
       <view wx:if="{{todayMenuB25.foodWaste !== undefined }}" class="mt-10 text-xs">
         <view class="text-card">
