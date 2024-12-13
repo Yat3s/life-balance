@@ -67,10 +67,14 @@ Page({
           });
           // filter comments
           item.comments = item.comments
-            ? item.comments.filter((comment) => comment._openid).slice(0, 3)
+            ? item.comments
+                .filter((comment) => comment.user._openid)
+                .slice(0, 3)
             : [];
           return item;
         });
+
+        console.log(partnerMerchants);
         this.setData({
           partnerMerchants,
         });

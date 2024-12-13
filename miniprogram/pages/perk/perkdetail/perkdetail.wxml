@@ -61,15 +61,15 @@
       <view class="mt-4 flex flex-col gap-4">
         <view wx:for="{{partnerMerchant.comments}}" bindlongtap="onShowCommentActionSheet" data-comment="{{item}}" wx:key="comments" class="flex flex-col gap-3 bg-comment-item rounded-lg p-4">
           <view class="flex items-start gap-3">
-            <view catchtap="onGoProfile" data-user-id="{{item.userId}}" class="w-9 h-9 bg-gray-200 rounded-full">
+            <view catchtap="onGoProfile" data-user-id="{{item.user._id}}" class="w-9 h-9 bg-gray-200 rounded-full">
               <!-- avatar -->
-              <image src="{{item.avatarUrl}}" lazy-load="{{true}}" class="w-9 h-9 rounded-full" />
+              <user-avatar userInfo="{{item.user}}" className="w-9 h-9 rounded-full" />
             </view>
             <view class="flex-1">
               <view class="flex items-start gap-1 justify-between w-full">
                 <view class="flex flex-col items-start gap-0dot5">
-                  <view catchtap="onGoProfile" data-user-id="{{item.userId}}" class="flex-1 text-gray text-xs truncate">
-                    {{item.nickName}}
+                  <view catchtap="onGoProfile" data-user-id="{{item.user._id}}" class="flex-1 text-gray text-xs truncate">
+                    {{item.user.nickName}}
                   </view>
                   <view class="text-gray text-xs">{{item.createdAtStr}}</view>
                 </view>
