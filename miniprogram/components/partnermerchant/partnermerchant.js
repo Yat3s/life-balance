@@ -1,4 +1,5 @@
 import { navigateToPerk } from "../../pages/router";
+import { fetchLatestPartnerMerchant } from "../../repository/dashboardRepo";
 
 Component({
   /**
@@ -14,12 +15,23 @@ Component({
    */
   data: {},
 
+  lifetimes: {
+    attached() {
+      this.fetchLatestPartnerMerchant();
+    },
+  },
+
   /**
    * Component methods
    */
   methods: {
     goToPerks() {
       navigateToPerk();
+    },
+    fetchLatestPartnerMerchant() {
+      fetchLatestPartnerMerchant().then((res) => {
+        this.setData({ partnerMerchant: res[0] });
+      });
     },
   },
 });

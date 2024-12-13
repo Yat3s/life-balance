@@ -9,7 +9,7 @@ const COLLECTION_NAME_FOOD_MENU_ZM = "foodmenu-zhongmeng";
 const COLLECTION_NAME_WECHAT_GROUPS = "wechatgroups";
 const COLLECTION_ACTIVITY = "activities";
 const COLLECTION_NAME_FAQ = "faq";
-
+const COLLECTION_NAME_PARTNER_MERCHANTS = "partner-merchants";
 const db = wx.cloud.database();
 const _ = db.command;
 
@@ -128,6 +128,22 @@ export function fetchUpcomingActivity() {
       .get(),
     "fetchLatestActivity",
     preProcessStartDate
+  );
+}
+
+export function fetchLatestPartnerMerchant() {
+  return cloudCall(
+    db
+      .collection(COLLECTION_NAME_PARTNER_MERCHANTS)
+      .field({
+        _id: true,
+        name: true,
+        logo: true,
+      })
+      .orderBy("_createTime", "desc")
+      .limit(1)
+      .get(),
+    "fetchLatestPartnerMerchant"
   );
 }
 
