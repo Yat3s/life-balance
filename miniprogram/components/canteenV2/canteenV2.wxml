@@ -1,44 +1,23 @@
-<view bindtap="toMenuDetail" class="border border-solid border-gray-200 p-4 pr-0 rounded-xl flex flex-col justify-between">
-  <view wx:if="{{todayMenuB25}}" class="relative">
-    <view class="flex justify-between {{todayMenuB25.foodWaste !== undefined ? 'items-start' : 'items-center mt-2'}}">
-      <view class="mt-1 flex flex-col gap-4">
-
-        <view class="flex gap-2 items-center justify-between {{todayMenuB25.foodWaste !== undefined ? '' : '-mt-6'}}">
-          <view class="flex flex-1 gap-4 items-center">
-            <view>
-              <view class="font-bold text-sm">{{todayMenuB25.canteenName}}</view>
-              <view class="text-date text-xs">
-                {{todayMenuB25.startDateStr}} - {{todayMenuB25.endDateStr}}
-              </view>
-            </view>
-            <view>
-              <view class="font-bold text-sm">{{todayMenuZhongmeng.canteenName}}</view>
-              <view class="text-date text-xs">
-                {{todayMenuZhongmeng.startDateStr}} - {{todayMenuZhongmeng.endDateStr}}
-              </view>
-            </view>
-          </view>
-        </view>
-
-        <view wx:if="{{todayMenuB25.foodWaste !== undefined }}" class="text-xs text-gray">
-          上周浪费
-          <text class="text-tip">{{todayMenuB25.foodWaste}} kg</text>
-          食物(~
-          <text class="text-tip">{{todayMenuB25.equivalentMeal}} 份</text>
-          餐食)
-        </view>
+<view bindtap="toMenuDetail" class="bg-home-card p-4 rounded-xl flex flex-col h-full">
+  <view wx:if="{{todayMenuB25}}">
+    <view class="flex flex-col">
+      <view class="flex justify-between items-center">
+        <view class="text-sm font-bold">食堂菜单</view>
+        <image src="/images/ic_home_card_enter.svg" class="w-5dot5" mode="widthFix" />
       </view>
-    </view>
-    <view class="absolute right-0 top-0 food-bg w-1on3dot5 h-22 flex items-center justify-center {{todayMenuB25.foodWaste !== undefined ? '' : '-mt-6'}}">
-      <view class="relative w-full h-full content-center">
-        <image src="/images/img_steak.png" class="w-12 steak" mode="widthFix" />
-        <image src="/images/img_taco.png" class="w-12 taco" mode="widthFix" />
-        <image src="/images/img_carrot.png" class="w-12 carrot" mode="widthFix" />
+      <view wx:if="{{todayMenuB25.foodWaste !== undefined }}" class="mt-10 text-xs">
+        <view class="text-card">
+          上周浪费食物
+        </view>
+        <view class="flex items-baseline gap-2">
+          <view class="font-bold text-xl">{{todayMenuB25.foodWaste}}kg</view>
+          <view class="text-card">~{{todayMenuB25.equivalentMeal}}份餐食</view>
+        </view>
       </view>
     </view>
   </view>
 
   <view wx:if="{{!todayMenuB25}}">
-    <view class="shine w-72 h-20"></view>
+    <view class="shine w-full h-26"></view>
   </view>
 </view>

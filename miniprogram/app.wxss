@@ -211,3 +211,7 @@ button::after {
     background-position: 468px 0;
   }
 }
+
+.bg-home-card {
+  background: linear-gradient(102.61deg, #f2f5fe 7.34%, #f4f6f8 94.6%);
+}

@@ -1,0 +1,35 @@
+.partner-merchant-bg {
+  background: linear-gradient(102.61deg, #f2f5fe 7.34%, #f4f6f8 94.6%);
+}
+
+.w-5dot5 {
+  width: 1.375rem;
+}
+
+.bg-red-gradient {
+  /* background: radial-gradient(
+    ellipse at center,
+    rgba(246, 166, 198, 0.8),
+    rgba(255, 230, 240, 0) 75%
+  ); */
+
+  background: radial-gradient(
+      ellipse at left,
+      rgba(246, 166, 198, 0.8),
+      transparent
+    ),
+    radial-gradient(ellipse at right, rgba(255, 208, 54, 0.8), transparent);
+}
+
+.content-center {
+  left: calc(50% - 4.1rem);
+  transform: translateX(-50%, -50%);
+}
+
+.blur {
+  filter: blur(20px);
+}
+
+.translate-x-center {
+  transform: translateX(26%);
+}

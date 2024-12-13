@@ -1,4 +1,4 @@
-<view class="border border-solid border-gray-200 p-4 rounded-xl">
+<view class="p-4 rounded-xl bg-home-card">
   <!-- Parking -->
   <view bindtap="refresh">
     <view class="flex flex-col gap-4 items-start justify-between">
@@ -11,12 +11,12 @@
             </view>
           </progressRing>
           <view class="mt-1">
-            <view class="text-xs text-gray mb-0dot5">B25 - 剩余车位</view>
+            <view class="text-xs text-card mb-0dot5">B25 - 剩余车位</view>
             <view class="flex items-baseline">
               <view class="text-2dot5xl font-bold {{parkingSpace.b25.remaining === 0 ? 'text-gray' : ''}}">
                 {{parkingSpace.b25.remaining}}
               </view>
-              <view class="text-gray text-xs ml-0dot5">/{{parkingConfig.b25.maxSpaces}}</view>
+              <view class="text-card text-xs ml-0dot5">/{{parkingConfig.b25.maxSpaces}}</view>
             </view>
           </view>
         </view>
@@ -28,28 +28,28 @@
             </view>
           </progressRing>
           <view class="mt-1">
-            <view class="text-xs text-gray mb-0dot5">中盟 - 剩余车位</view>
+            <view class="text-xs text-card mb-0dot5">中盟 - 剩余车位</view>
             <view class="flex items-baseline">
-              <view class="text-2dot5xl font-bold {{parkingSpace.zhongmeng.remaining === 0 ? 'text-gray' : ''}}">
+              <view class="text-2dot5xl font-bold {{parkingSpace.zhongmeng.remaining === 0 ? 'text-card' : ''}}">
                 {{parkingSpace.zhongmeng.remaining}}
               </view>
-              <view class="text-gray text-xs ml-0dot5">/{{parkingConfig.zhongmeng.maxSpaces}}</view>
+              <view class="text-card text-xs ml-0dot5">/{{parkingConfig.zhongmeng.maxSpaces}}</view>
             </view>
           </view>
         </view>
       </view>
       <view wx:if="{{lastParkingFullTimeStr}}" class="flex items-center justify-between">
-        <view class="text-xs text-gray">{{lastParkingFullTimeStr}}</view>
+        <view class="text-xs text-card">{{lastParkingFullTimeStr}}</view>
       </view>
       <view wx:if="{{!lastParkingFullTimeStr}}">
         <view class="shine w-40 h-4"></view>
       </view>
       <block>
         <!-- Divider -->
-        <view class="mt-1 border-dashed border-0 border-b-2 border-gray-200 w-full"></view>
+        <view class="mt-1 border-dashed border-0 border-b-2 border-separator w-full"></view>
         <!-- Parking Full Tip -->
         <view class="flex items-center gap-2">
-          <view class="text-gray text-xs">车位已满？</view>
+          <view class="text-card text-xs">车位已满？</view>
           <view bind:tap="toParkingTip" class="py-1 px-2 bg-link rounded-full flex items-center text-xs text-link">
             其他停车方案
           </view>

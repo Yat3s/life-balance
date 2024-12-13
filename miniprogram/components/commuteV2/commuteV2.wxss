@@ -1,6 +1,7 @@
-.bg {
-  background: linear-gradient(140deg, #ebeef8 0%, #fafbfc 100%);
+.commute-bg {
+  background: linear-gradient(102.61deg, #f2f5fe 7.34%, #f4f6f8 94.6%);
 }
+
 .commute-icon {
   width: 48rpx;
   height: 48rpx;
@@ -10,6 +11,14 @@
   font-weight: bold;
   color: black;
   font-size: 12pt;
+}
+
+.text-card {
+  color: #a5afc9;
+}
+
+.border-separator {
+  border-color: #b8c2d1;
 }
 
 .parking-refresh-icon {
