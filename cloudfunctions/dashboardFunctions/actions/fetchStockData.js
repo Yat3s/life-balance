@@ -9,15 +9,10 @@ cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV,
 });
 
-function formatPriceChange(changePercent) {
+function formatChange(changePercent) {
   const percentValue = parseFloat(changePercent.replace("%", ""));
   const sign = percentValue >= 0 ? "+" : "";
   return `${sign}${percentValue.toFixed(2)}`;
-}
-
-function formatMarketCap(mktcap) {
-  const numericValue = parseFloat(mktcap.replace("B", ""));
-  return (numericValue / 1000).toFixed(2);
 }
 
 async function withRetry(fn, retries = 3, delay = 2000) {
@@ -102,7 +97,7 @@ async function getStockQuote(symbol) {
       price: parseFloat(quote["05. price"]).toFixed(2),
       change: parseFloat(quote["09. change"]).toFixed(2),
       changePercent: quote["10. change percent"].trim(),
-      formattedChange: formatPriceChange(quote["10. change percent"].trim()),
+      formattedChange: formatChange(quote["10. change percent"].trim()),
       volume: parseInt(quote["06. volume"]),
       high: parseFloat(quote["03. high"]).toFixed(2),
       low: parseFloat(quote["04. low"]).toFixed(2),
@@ -135,10 +130,9 @@ async function getCompanyOverview(symbol) {
     }
 
     const data = {
-      mktcap: formatMarketCap(
+      mktcap:
         (parseFloat(response.MarketCapitalization) / 1000000000).toFixed(2) +
-          "B"
-      ),
+        "B",
       name: response.Name,
       industry: response.Industry,
       sector: response.Sector,
