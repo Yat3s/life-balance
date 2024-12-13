@@ -1,3 +1,7 @@
+.canteen-bg {
+  background: linear-gradient(102.61deg, #f2f5fe 7.34%, #f4f6f8 94.6%);
+}
+
 .text-tip {
   color: #7f6ca7;
   margin: 0 2rpx;
@@ -9,6 +13,14 @@
 
 .text-date {
   color: #bcbcbc;
+}
+
+.text-card {
+  color: #a5afc9;
+}
+
+.w-5dot5 {
+  width: 1.375rem;
 }
 
 .food-bg {

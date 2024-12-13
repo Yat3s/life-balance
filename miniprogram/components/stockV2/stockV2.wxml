@@ -1,6 +1,6 @@
 <view class="relative h-20">
   <!-- Loading State -->
-  <view class="absolute inset-0 flex items-center justify-center rounded-xl stock-border stock-bg fade-in-out" hidden="{{!loadingStockData}}">
+  <view class="absolute inset-0 flex items-center justify-center rounded-xl stock-border bg-home-card fade-in-out" hidden="{{!loadingStockData}}">
     <image src="/images/ic_emoji_no.png" class="w-8 h-8 rotate-animation mr-3"></image>
     <view class="text-sm text-gray mr-1 text-loading">
       <span>微</span>
@@ -22,13 +22,13 @@
     </view>
   </view>
   <!-- Loaded Content -->
-  <view class="absolute inset-0 p-4 flex items-center justify-between gap-1 rounded-xl stock-border stock-bg fade-in-out" hidden="{{loadingStockData}}">
+  <view class="absolute inset-0 p-4 flex items-center justify-between gap-1 rounded-xl stock-border bg-home-card fade-in-out" hidden="{{loadingStockData}}">
     <view class="flex items-center gap-0dot5">
       <view>
         <view class="text-bold stock-title text-is-top">微软市值第一了吗？</view>
         <view class="flex items-baseline gap-1">
           <view class="font-bold stock-title">{{stockData.msft.price}}</view>
-          <view class="text-xxs text-gray-400">{{stockData.msft.change}}%</view>
+          <view class="text-xxs text-card-deep">{{stockData.msft.change}}%</view>
         </view>
       </view>
       <view class="w-8 h-8">
@@ -37,10 +37,10 @@
       </view>
     </view>
     <view class="flex items-center gap-2">
-      <view class="text-xxs font-bold text-gray-400">
+      <view class="text-xxs font-bold text-card-deep">
         {{stockData.top1.symbol}}({{stockData.top1.mktcap}}T)
       </view>
-      <view class="text-xxs text-gray whitespace-nowrap">
+      <view class="text-xxs text-card-deep whitespace-nowrap">
         <view>- {{stockData.top2.symbol}}({{stockData.top2.mktcap}}T)</view>
         <view>- {{stockData.top3.symbol}}({{stockData.top3.mktcap}}T)</view>
         <view>- {{stockData.top4.symbol}}({{stockData.top4.mktcap}}T)</view>

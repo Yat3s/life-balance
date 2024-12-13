@@ -1,9 +1,13 @@
 .bg-button {
-  background-color: #3785fc;
+  background: linear-gradient(95.38deg, #5e9af5 0%, #fb4999 94.74%);
 }
 
 .text-gray {
   color: #acacac;
+}
+
+.text-card {
+  color: #a5afc9;
 }
 
 .truncate-ellipsis {
@@ -12,4 +16,8 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   max-width: 300rpx;
+}
+
+.luck-draw-card-bg {
+  background: linear-gradient(102.61deg, #f2f5fe 7.34%, #f4f6f8 94.6%);
 }

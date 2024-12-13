@@ -23,7 +23,7 @@
 }
 
 .stock-bg {
-  background: linear-gradient(to right, #f2f5fe, #f4f6f8);
+  background: linear-gradient(102.61deg, #f2f5fe 7.34%, #f4f6f8 94.6%);
 }
 
 .stock-title {
@@ -33,6 +33,10 @@
 .text-is-top {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.text-card-deep {
+  color: #919bac;
 }
 
 @keyframes rotate-bounce-shake {
@@ -144,9 +148,9 @@
 
 @keyframes text-loading {
   0% {
-    color: #b2caa7; 
+    color: #b2caa7;
   }
   100% {
-    color: #a59aca; 
+    color: #a59aca;
   }
 }

@@ -1,10 +1,10 @@
-<view wx:if="{{luckDraw}}" class="border border-solid border-gray-200 p-4 rounded-xl relative" catch:tap="navToLuckDraw">
-  <view class="flex">
+<view class="bg-home-card p-4 rounded-xl relative" catch:tap="navToLuckDraw">
+  <view wx:if="{{luckDraw}}" class="flex">
     <view class="shrink-0">
       <image src="{{luckDraw.prizeTiers[0].images[0]}}" class="w-24 h-full rounded-lg bg-gray-200" mode="aspectFill" lazy-load="{{true}}" />
     </view>
     <view class="shrink-0 ml-4 z-20">
-      <view class="text-gray text-xs">{{luckDraw.series}}</view>
+      <view class="text-card text-xs">{{luckDraw.series}}</view>
       <view class="font-semibold text-base mt-1 truncate-ellipsis mb-8">{{luckDraw.title}}</view>
       <!-- Participants -->
       <view class="flex items-center">
@@ -15,20 +15,20 @@
               <image src="{{item.avatarUrl}}" lazy-load="{{true}}" class="w-full h-full rounded-full bg-gray-200" />
             </view>
           </block>
-          <view class="ml-1 text-xxs text-gray">{{totalParticipants}} 人参与</view>
+          <view class="ml-1 text-xxs text-card">{{totalParticipants}} 人参与</view>
         </view>
       </view>
     </view>
     <!-- Status text -->
     <view class="absolute top-4 right-4 z-20">
       <block wx:if="{{isOngoing}}">
-        <view class="text-gray text-xs">进行中</view>
+        <view class="text-card text-xs">进行中</view>
       </block>
       <block wx:else>
-        <view class="text-gray text-xs">已结束</view>
+        <view class="text-card text-xs">已结束</view>
       </block>
     </view>
-    <image class="w-40 h-full absolute top-0 right-0 bottom-0 z-10" src="/images/ic_blue_circle.svg" />
+    <!-- <image class="w-40 h-full absolute top-0 right-0 bottom-0 z-10" src="/images/ic_blue_circle.svg" /> -->
     <!-- Action button -->
     <view class="absolute bottom-4 right-4 z-20">
       <block wx:if="{{isOngoing}}">
@@ -38,5 +38,8 @@
         <view class="bg-button text-white text-xs py-1dot5 px-3dot5 rounded-full">查看抽奖</view>
       </block>
     </view>
+  </view>
+  <view wx:if="{{!luckDraw}}">
+    <view class="shine w-full h-24"></view>
   </view>
 </view>

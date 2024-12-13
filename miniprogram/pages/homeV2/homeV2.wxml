@@ -10,27 +10,24 @@
   <view class="mt-12">
     <stockV2></stockV2>
   </view>
-  <view class="ml-2 mt-9 widget-section-title text-xs">微软(中国)有限公司 - 苏州</view>
-  <view class="flex flex-col gap-4 mt-2 pb-4">
+  <view class="flex flex-col gap-2 mt-2 pb-4">
     <!-- Parking Space -->
     <commuteV2 class="w-full"></commuteV2>
-    <!-- Canteen -->
-    <canteenV2 class="w-full"></canteenV2>
-    <!-- Perks -->
-    <view bindtap="goToPerks" class="border border-solid border-gray-200 p-4 rounded-xl">
-      <view class="text-sm font-bold text-center">折扣商家</view>
+    <view class="flex items-stretch gap-2">
+      <!-- Canteen -->
+      <canteenV2 class="flex-1"></canteenV2>
+      <!-- Perks -->
+      <partnerMerchant class="flex-1"></partnerMerchant>
     </view>
     <!-- Luck Draw -->
     <luck-draw-card />
-    <view class="flex gap-2">
-      <!-- Latest Circle -->
+    <!-- <view class="flex gap-2">
       <view class="flex-1">
         <latestCircle></latestCircle>
       </view>
-      <!-- Upcoming Activity -->
       <view class="flex-1">
         <upcomingActivity></upcomingActivity>
       </view>
-    </view>
+    </view> -->
   </view>
 </scroll-view>

@@ -1,6 +1,5 @@
 const { getDateInEnglish } = require("../../common/util");
 const { fetchUserInfo } = require("../../repository/userRepo");
-const { navigateToPerk } = require("../router");
 
 const app = getApp();
 
@@ -45,9 +44,6 @@ Component({
           userInfo,
         });
       });
-    },
-    goToPerks() {
-      navigateToPerk();
     },
   },
 });

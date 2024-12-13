@@ -34,7 +34,7 @@
   height: 100%;
   border-radius: 50%;
   background: conic-gradient(
-    #e4e5e7 calc(var(--progress-value) * 1%),
+    #d8e1f4 calc(var(--progress-value) * 1%),
     var(--current-color) 0%
   );
   transform: rotate(-180deg);
@@ -49,7 +49,7 @@
   position: absolute;
   width: 80%;
   height: 80%;
-  background-color: white;
+  background-color: #edf1f7;
   border-radius: 50%;
   z-index: 2;
 }

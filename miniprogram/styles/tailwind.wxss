@@ -4162,6 +4162,10 @@ video {
   height: 6rem;
 }
 
+.h-26 {
+  height: 6.5rem;
+}
+
 .h-28 {
   height: 7rem;
 }
@@ -10442,6 +10446,10 @@ video {
 
 .-left-16 {
   left: -4rem;
+}
+
+.-top-18 {
+  top: -4.5rem;
 }
 
 .-top-20 {

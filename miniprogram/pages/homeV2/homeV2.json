@@ -6,6 +6,7 @@
     "canteenV2": "/components/canteenV2/canteenV2",
     "latestCircle": "/components/latestcircle/latestcircle",
     "upcomingActivity": "/components/upcomingactivity/upcomingactivity",
+    "partnerMerchant": "/components/partnermerchant/partnermerchant",
     "luck-draw-card": "/components/luck-draw-card/index"
   }
 }
