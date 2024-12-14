@@ -13,7 +13,7 @@
         <view class="flex flex-col ml-3">
           <view class="text-xs font-medium mb-3">{{item.series}} {{item.title}}</view>
           <view class="flex items-center">
-            <view class="text-drawn-time text-xs">中奖人：</view>
+            <view class="text-drawn-time text-xs">中奖用户：</view>
             <block wx:for="{{item.winners}}" wx:key="ticketId">
               <view class="relative {{index === 0 ? '' : '-ml-2'}}">
                 <view class="rounded-full border border-solid border-gray-300 shrink-0 w-5 h-5">

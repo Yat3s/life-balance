@@ -37,7 +37,7 @@
   </view>
   <!-- Status -->
   <view class="mb-5">
-    <view class="text-drawn-time text-xs">中奖人👑</view>
+    <view class="text-drawn-time text-xs">中奖用户👑</view>
     <view class="mt-2 text-none-drawn py-6 bg-drawn text-center font-medium rounded-lg">
       <block wx:if="{{luckDraw.winners && luckDraw.winners.length > 0}}">
         <view class="flex flex-wrap gap-2 justify-center">
@@ -79,7 +79,7 @@
   <view class="line my-6" />
   <!-- Description -->
   <view>
-    <view class="text-drawn-time text-xs mb-2dot5">抽奖 & 奖品说明</view>
+    <view class="text-drawn-time text-xs mb-2dot5">抽奖/奖品说明</view>
     <rich-text nodes="{{luckDraw.description}}" />
   </view>
 </view>
