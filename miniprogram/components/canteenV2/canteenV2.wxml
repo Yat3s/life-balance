@@ -10,8 +10,8 @@
           上周浪费食物
         </view>
         <view class="flex items-baseline gap-2">
-          <view class="font-bold text-xl">{{todayMenuB25.foodWaste}}kg</view>
-          <view class="text-card">~{{todayMenuB25.equivalentMeal}}份餐食</view>
+          <view class="font-bold text-lg">{{todayMenuB25.foodWaste}}kg</view>
+          <view class="text-card text-xxs">~{{todayMenuB25.equivalentMeal}}份餐食</view>
         </view>
       </view>
     </view>

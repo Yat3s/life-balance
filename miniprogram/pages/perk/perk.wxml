@@ -1,6 +1,6 @@
 <import src="../../components/skeleton/index.wxml" />
 <toolbar isBack="{{true}}" bgColor="bg-white">
-  <view slot="backText" class="text-sm">折扣商家</view>
+  <view slot="backText" class="text-sm">合作商家</view>
 </toolbar>
 <view wx:if="{{partnerMerchants}}">
   <scroll-view scroll-y="true" class="mt-4">
