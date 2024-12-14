@@ -1,6 +1,5 @@
 const fetchAll = require("./actions/fetchAll");
 const createTicket = require("./actions/createTicket");
-const draw = require("./actions/draw");
 
 exports.main = async (event, context) => {
   const props = event.data;
@@ -10,8 +9,6 @@ exports.main = async (event, context) => {
       return await fetchAll.main(props, context);
     case "createTicket":
       return await createTicket.main(props, context);
-    case "draw":
-      return await draw.main(props, context);
     default:
       return {
         success: false,
