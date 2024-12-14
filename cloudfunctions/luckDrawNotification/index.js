@@ -1,6 +1,5 @@
 const cloud = require("wx-server-sdk");
 const { performLuckDraw } = require("./lib/luck-draw");
-
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 
 const db = cloud.database();
@@ -9,17 +8,42 @@ const COLLECTION_NAME = "luck-draws";
 const TEMPLATE_ID = "wV8HUYugxQ3OI9MBkEPXMutZnOPHtQsu1tdMCoxOgi8";
 const MINIPROGRAM_STATE = "trial";
 
-exports.main = async (event, context) => {
-  // Add trigger source check
-  const wxContext = cloud.getWXContext();
-  if (wxContext.SOURCE !== "wx_trigger") {
-    console.log("[LuckDraw] Skipping execution - not triggered by timer");
-    return;
-  }
+const NOTIFICATIONS = {
+  winner: {
+    message: "恭喜您中奖啦！",
+    endMessage: "中奖用户请联系：Yat3s 领取奖品",
+  },
+  nonWinner: {
+    message: "很遗憾未能中奖，感谢参与",
+    endMessage: "下次活动将会更精彩",
+  },
+};
 
+const sendNotification = async (userId, title, isWinner) => {
   try {
+    const template = isWinner ? NOTIFICATIONS.winner : NOTIFICATIONS.nonWinner;
+    await cloud.openapi.subscribeMessage.send({
+      touser: userId,
+      templateId: TEMPLATE_ID,
+      miniprogram_state: MINIPROGRAM_STATE,
+      page: `/pages/luck-draw/luck-draw`,
+      data: {
+        thing1: { value: title },
+        thing3: { value: template.message },
+        thing8: { value: template.endMessage },
+      },
+    });
+  } catch (error) {
+    console.error(`[Notification] Send failed (userId: ${userId}):`, error);
+  }
+};
+
+const getLuckDraw = async (event) => {
+  const wxContext = cloud.getWXContext();
+
+  if (wxContext.SOURCE === "wx_trigger") {
     const now = Date.now();
-    const luckDraw = await db
+    const result = await db
       .collection(COLLECTION_NAME)
       .where({
         drawnAt: _.lte(now),
@@ -27,79 +51,85 @@ exports.main = async (event, context) => {
       })
       .get();
 
-    if (!luckDraw.data.length) {
-      console.log("[LuckDraw] No luck draw events need to be drawn");
-      return;
+    return result.data[0];
+  }
+
+  const luckDrawId = event.data?.luckDrawId;
+  const luckDrawActionName = event.action;
+
+  if (luckDrawActionName === "draw" && luckDrawId) {
+    const result = await db.collection(COLLECTION_NAME).doc(luckDrawId).get();
+
+    return result.data;
+  }
+
+  return null;
+};
+
+exports.main = async (event, context) => {
+  try {
+    const currentLuckDraw = await getLuckDraw(event);
+
+    if (!currentLuckDraw) {
+      return { success: false, error: "No luck draw found" };
     }
 
-    const currentLuckDraw = luckDraw.data[0];
-    const { winners, nonWinners } = performLuckDraw(
-      currentLuckDraw.tickets,
-      currentLuckDraw.prizeTiers
-    );
+    if (currentLuckDraw.winners?.length > 0) {
+      return { success: false, error: "Luck draw already drawn" };
+    }
+
+    const tickets = currentLuckDraw.tickets.map(({ code, userId }) => ({
+      code,
+      userId,
+    }));
+    const prizeTiers = currentLuckDraw.prizeTiers.map(({ count, tier }) => ({
+      count,
+      tier,
+    }));
+
+    const drawResult = performLuckDraw(tickets, prizeTiers);
+
+    const winners = [];
+    const updatedTickets = currentLuckDraw.tickets.map((ticket) => {
+      for (const [tierName, { winners: tierWinners }] of Object.entries(
+        drawResult
+      )) {
+        if (tierWinners.includes(ticket.code)) {
+          winners.push({
+            ticketId: ticket.code,
+            userId: ticket.userId,
+            user: ticket.user,
+          });
+          return { ...ticket, prizeTier: tierName };
+        }
+      }
+      return ticket;
+    });
 
     await db
       .collection(COLLECTION_NAME)
       .doc(currentLuckDraw._id)
       .update({
-        data: {
-          winners: winners,
-        },
+        data: { winners, tickets: updatedTickets },
       });
 
-    console.log(
-      `[LuckDraw] Draw completed for "${currentLuckDraw.title}", number of winners: ${winners.length}`
+    const winnerIds = new Set(winners.map((w) => w.userId));
+    const notificationPromises = currentLuckDraw.tickets.map((ticket) =>
+      sendNotification(
+        ticket.userId,
+        currentLuckDraw.title,
+        winnerIds.has(ticket.userId)
+      )
     );
 
-    const winnerPromises = winners.map((winner) =>
-      cloud.openapi.subscribeMessage
-        .send({
-          touser: winner.userId,
-          templateId: TEMPLATE_ID,
-          miniprogram_state: MINIPROGRAM_STATE,
-          page: `/pages/luck-draw/luck-draw`,
-          data: {
-            thing1: { value: currentLuckDraw.title },
-            thing3: { value: "恭喜您中奖啦！" },
-            thing8: { value: "中奖用户请联系：Yat3s 领取奖品" },
-          },
-        })
-        .catch((error) => {
-          console.error(
-            `[Notification] Failed to send winner notification (userId: ${winner.userId}):`,
-            error
-          );
-        })
-    );
+    await Promise.all(notificationPromises);
 
-    const nonWinnerPromises = nonWinners.map((userId) =>
-      cloud.openapi.subscribeMessage
-        .send({
-          touser: userId,
-          templateId: TEMPLATE_ID,
-          miniprogram_state: MINIPROGRAM_STATE,
-          page: `/pages/luck-draw/luck-draw`,
-          data: {
-            thing1: { value: currentLuckDraw.title },
-            thing3: { value: "很遗憾未能中奖，感谢参与" },
-            thing8: { value: "下次活动将会更精彩" },
-          },
-        })
-        .catch((error) => {
-          console.error(
-            `[Notification] Failed to send non-winner notification (userId: ${userId}):`,
-            error
-          );
-        })
-    );
-
-    await Promise.all([...winnerPromises, ...nonWinnerPromises]);
-    console.log(
-      `[Notification] All notifications sent, total: ${
-        winners.length + nonWinners.length
-      }`
-    );
+    return {
+      success: true,
+      data: { drawResult, winners },
+    };
   } catch (error) {
-    console.error("[LuckDraw] Draw execution failed:", error);
+    console.error("[LuckDraw] Failed:", error);
+    return { success: false, error: error.message };
   }
 };

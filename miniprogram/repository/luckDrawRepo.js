@@ -1,6 +1,7 @@
 import { cloudCall, cloudFunctionCall } from "./baseRepo";
 
 const CLOUD_FUNCTION_COLLECTION = "luckDrawFunctions";
+const LUCK_DRAW_CLOUD_FUNCTION = "luckDrawNotification";
 const COLLECTION_NAME = "luck-draws";
 const db = wx.cloud.database();
 
@@ -25,7 +26,7 @@ export const createLuckDrawTicket = (luckDrawId) => {
 };
 
 export const draw = (luckDrawId) => {
-  return cloudFunctionCall(CLOUD_FUNCTION_COLLECTION, "draw", {
+  return cloudFunctionCall(LUCK_DRAW_CLOUD_FUNCTION, "draw", {
     luckDrawId,
   });
 };
