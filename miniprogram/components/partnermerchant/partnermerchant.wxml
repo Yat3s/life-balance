@@ -5,8 +5,10 @@
   </view>
   <view wx:if="{{partnerMerchant}}" class="relative h-full">
     <view class="relative w-full">
-      <view class="text-sm font-bold text-center absolute top-0 left-0">折扣商家</view>
-      <image src="/images/ic_home_card_enter.svg" class="w-5dot5 h-5dot5 absolute top-0 right-0" mode="widthFix" />
+      <view class="flex justify-between items-center">
+        <view class="text-sm font-bold text-center">折扣商家</view>
+        <image src="/images/ic_home_card_enter.svg" class="w-5dot5 h-5dot5" mode="widthFix" />
+      </view>
     </view>
 
     <view class="absolute bottom-0 left-0 overflow-hidden w-full">
@@ -15,8 +17,8 @@
           最新合作
         </view>
         <view class="flex items-center gap-2">
-          <view class="w-6 h-6 rounded-full bg-logo">
-            <image src="{{partnerMerchant.logo}}" class="w-6 h-6 rounded-full" mode="aspectFill" />
+          <view class="w-5 h-5 rounded-full bg-logo">
+            <image src="{{partnerMerchant.logo}}" class="w-5 h-5 rounded-full" mode="aspectFill" />
           </view>
           <view class="flex-1 text-sm font-semibold truncate">
             {{partnerMerchant.name}}
