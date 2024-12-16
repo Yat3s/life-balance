@@ -1,7 +1,7 @@
 import { cloudCall, cloudFunctionCall } from "./baseRepo";
 
 const CLOUD_FUNCTION_COLLECTION = "luckDrawFunctions";
-const LUCK_DRAW_CLOUD_FUNCTION = "luckDrawNotification";
+const LUCK_DRAW_CLOUD_FUNCTION = "luckDraw";
 const COLLECTION_NAME = "luck-draws";
 const db = wx.cloud.database();
 
