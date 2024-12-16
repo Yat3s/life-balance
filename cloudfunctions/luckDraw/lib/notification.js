@@ -6,7 +6,7 @@ const MINIPROGRAM_STATE = "trial";
 const NOTIFICATIONS = {
   winner: {
     message: "恭喜您中奖啦！",
-    endMessage: "中奖用户请联系：Yat3s 领取奖品",
+    endMessage: "中奖用户请联系 zhiye 领取奖品",
   },
   nonWinner: {
     message: "很遗憾未能中奖，感谢参与",
