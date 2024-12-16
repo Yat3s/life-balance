@@ -4,13 +4,8 @@
     <view class="flex flex-col gap-4 items-start justify-between">
       <view class="flex w-full items-center gap-1 justify-between">
         <!-- B25 -->
-        <view class="flex gap-2dot5 items-center">
-          <progressRing isLoading="{{loadingParkingSpace}}" targetProgress="{{parkingSpace.b25.usedPercent}}" initialColor="{{ parkingSpace.b25.initialColor }}" finalColor="{{ parkingSpace.b25.finalColor }}" progressDuration="{{ parkingSpace.b25.progressDuration }}" colorChangeDuration="{{ parkingSpace.b25.colorChangeDuration }}">
-            <view class="flex flex-col items-center">
-              <image src="/images/ic_car_parking.png" class="w-5dot5 h-auto" mode="widthFix" />
-            </view>
-          </progressRing>
-          <view class="mt-1">
+        <view class="flex flex-col gap-2dot5 items-start">
+          <view class="">
             <view class="text-xs text-card mb-0dot5">B25 - 剩余车位</view>
             <view class="flex items-baseline">
               <view class="text-2dot5xl font-bold {{parkingSpace.b25.remaining === 0 ? 'text-card' : ''}}">
@@ -19,15 +14,14 @@
               <view class="text-card text-xs ml-0dot5">/{{parkingConfig.b25.maxSpaces}}</view>
             </view>
           </view>
+          <!-- Indicators -->
+          <view class="flex gap-0dot5 items-center">
+            <view wx:for="{{parkingSpace.b25.indicators}}" class="{{item.active ? 'bg-blue-500' : 'bg-blue-200'}} w-3 h-2 rounded-parking-indicator"></view>
+          </view>
         </view>
         <!-- Zhongmeng -->
-        <view class="flex gap-2dot5 items-center">
-          <progressRing isLoading="{{loadingParkingSpace}}" targetProgress="{{ parkingSpace.zhongmeng.usedPercent }}" initialColor="{{ parkingSpace.zhongmeng.initialColor }}" finalColor="{{ parkingSpace.zhongmeng.finalColor }}" progressDuration="{{ parkingSpace.zhongmeng.progressDuration }}" colorChangeDuration="{{ parkingSpace.zhongmeng.colorChangeDuration }}">
-            <view class="flex flex-col items-center">
-              <image src="/images/ic_car_parking.png" class="w-5dot5 h-auto" mode="widthFix" />
-            </view>
-          </progressRing>
-          <view class="mt-1">
+        <view class="flex flex-col gap-2dot5 items-start">
+          <view class="">
             <view class="text-xs text-card mb-0dot5">中盟 - 剩余车位</view>
             <view class="flex items-baseline">
               <view class="text-2dot5xl font-bold {{parkingSpace.zhongmeng.remaining === 0 ? 'text-card' : ''}}">
@@ -35,6 +29,10 @@
               </view>
               <view class="text-card text-xs ml-0dot5">/{{parkingConfig.zhongmeng.maxSpaces}}</view>
             </view>
+          </view>
+          <!-- Indicators -->
+          <view class="flex gap-0dot5 items-center">
+            <view wx:for="{{parkingSpace.zhongmeng.indicators}}" class="{{item.active ? 'bg-blue-500' : 'bg-blue-200'}} w-3 h-2 rounded-parking-indicator"></view>
           </view>
         </view>
       </view>

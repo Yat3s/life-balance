@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .grid {
+      display: flex;
+      gap: 5px;
+    }
+
+    .box {
+      width: 30px;
+      height: 30px;
+      background-color: #add8e6; /* 浅蓝色 */
+      border-radius: 5px;
+      transition: background-color 0.5s ease-in-out;
+    }
+
+    /* 深蓝色 */
+    .box.active {
+      background-color: #1e90ff;
+    }
+  </style>
+  <body>
+    <div class="grid">
+      <!-- 创建一行 12 个小格子 -->
+      <div class="box" data-index="1"></div>
+      <div class="box" data-index="2"></div>
+      <div class="box" data-index="3"></div>
+      <div class="box" data-index="4"></div>
+      <div class="box" data-index="5"></div>
+      <div class="box" data-index="6"></div>
+      <div class="box" data-index="7"></div>
+      <div class="box" data-index="8"></div>
+      <div class="box" data-index="9"></div>
+      <div class="box" data-index="10"></div>
+      <div class="box" data-index="11"></div>
+      <div class="box" data-index="12"></div>
+    </div>
+  </body>
+  <script>
+    function animateBoxes(percentage) {
+      const boxes = document.querySelectorAll(".box");
+      const total = boxes.length;
+      const activeCount = Math.round((percentage / 100) * total);
+
+      boxes.forEach((box, index) => {
+        // 逐个添加 active 类，产生动画效果
+        setTimeout(() => {
+          if (index < activeCount) {
+            box.classList.add("active");
+          } else {
+            box.classList.remove("active");
+          }
+        }, index * 300); // 每个小格延迟 300ms
+      });
+    }
+
+    // 示例：调用动画函数，传入百分比
+    animateBoxes(50); // 50% 的格子变成深蓝色
+  </script>
+</html>
