@@ -3,7 +3,7 @@
   <view slot="backText" class="text-sm">合作商家</view>
 </toolbar>
 <view wx:if="{{partnerMerchants}}">
-  <scroll-view scroll-y="true" class="mt-4">
+  <scroll-view scroll-y="true" class="mt-4 h-full">
   <view class="plr">
     <!-- Partner Merchant List -->
     <view class="flex flex-col gap-4 pb-6">
@@ -53,6 +53,10 @@
           <image src="/images/ic_arrow.svg" class="h-4 -mr-0dot5" mode="heightFix" />
         </view>
       </view>
+    </view>
+
+    <view class="text-center text-sm text-gray mt-4">
+      更多商家正在尝试接入中...
     </view>
   </view>
 </scroll-view>
