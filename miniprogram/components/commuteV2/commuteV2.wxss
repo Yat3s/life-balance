@@ -145,3 +145,19 @@
 .w-5dot5 {
   width: 1.375rem;
 }
+
+.h-5dot5 {
+  height: 1.375rem;
+}
+
+.rounded-parking-indicator {
+  border-radius: 0.1875rem;
+}
+
+.border-parking-indicator {
+  border-color: #157fff;
+}
+
+.bg-parking-indicator {
+  background-color: #dee8fe;
+}
