@@ -6,8 +6,8 @@
     <view class="shrink-0 ml-4 z-20">
       <view class="flex items-center gap-1">
         <view class="text-card text-xs">{{luckDraw.series}}</view>
-        <view class="text-beta border border-solid rounded-full bg-blue-600 text-white px-1 -mt-0dot5">
-          Beta
+        <view class="text-beta">
+          New
         </view>
       </view>
       <view class="font-semibold text-base mt-1 truncate-ellipsis mb-8">{{luckDraw.title}}</view>

@@ -8,8 +8,8 @@
       <view class="flex justify-between items-center">
         <view class="flex items-center gap-1">
           <view class="text-sm font-bold text-center">合作商家</view>
-          <view class="text-beta border border-solid rounded-full bg-blue-600 text-white px-1">
-            Beta
+          <view class="text-beta">
+            New
           </view>
         </view>
         <image src="/images/ic_home_card_enter.svg" class="w-5dot5 h-5dot5" mode="widthFix" />

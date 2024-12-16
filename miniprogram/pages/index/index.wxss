@@ -74,5 +74,9 @@ page {
 }
 
 .text-beta {
-  font-size: 14rpx;
+  font-size: 8pt;
+  border-radius: 20rpx;
+  padding: 0 10rpx;
+  color: white;
+  background-color: blue;
 }
