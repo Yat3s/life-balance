@@ -113,7 +113,7 @@
           <view class="mt-1 w-2on5 h-5 skeleton-bg rounded skeleton-animate" />
         </view>
       </view>
-      <view class="mt-5 w-4on5 h-3 skeleton-bg rounded skeleton-animate" />
+      <view class="mt-4 w-4on5 h-3 skeleton-bg rounded skeleton-animate" />
       <!-- Promotions -->
       <view class="mt-9 flex items-center gap-2">
         <view class="w-14 h-6 skeleton-bg rounded skeleton-animate" />
@@ -129,9 +129,9 @@
           <view class="flex items-center">
             <view wx:for="{{[1, 2, 3]}}" wx:key="*this" class="w-6 h-6 skeleton-bg rounded-full skeleton-animate {{index !== 0 ? '-ml-2' : ''}}"></view>
           </view>
-          <view class="w-20 h-3 skeleton-bg rounded skeleton-animate" />
+          <view class="mt-1 w-20 h-3 skeleton-bg rounded skeleton-animate" />
         </view>
-        <view class="w-4 h-4 skeleton-bg rounded skeleton-animate" />
+        <view class="mt-1 w-4 h-4 skeleton-bg rounded skeleton-animate" />
       </view>
     </view>
   </view>
