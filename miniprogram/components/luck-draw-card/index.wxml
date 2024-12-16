@@ -9,13 +9,17 @@
       <!-- Participants -->
       <view class="flex items-center">
         <view class="flex items-center">
-          <view wx:if="{{displayParticipants.length === 0}}" class="rounded-full shrink-0 w-5 h-5" />
-          <block wx:for="{{displayParticipants}}" wx:key="userId">
-            <view class="{{index === 0 ? '' : '-ml-2'}} rounded-full border border-solid border-gray-300 shrink-0 w-5 h-5">
-              <image src="{{item.avatarUrl}}" lazy-load="{{true}}" class="w-full h-full rounded-full bg-gray-200" />
+          <block wx:if="{{displayParticipants.length > 0}}">
+            <view wx:for="{{displayParticipants}}" wx:key="userId" class="mr-1">
+              <view class="{{index === 0 ? '' : '-ml-2'}} rounded-full border border-solid border-gray-300 shrink-0 w-5 h-5">
+                <image src="{{item.avatarUrl}}" lazy-load="{{true}}" class="w-full h-full rounded-full bg-gray-200" />
+              </view>
             </view>
           </block>
-          <view class="ml-1 text-xxs text-card">{{totalParticipants}} 人参与</view>
+          <view class="text-xxs text-card">{{totalParticipants}} 人参与</view>
+          <block wx:if="{{displayParticipants.length === 0}}">
+            <view class="rounded-full shrink-0 w-5 h-5" />
+          </block>
         </view>
       </view>
     </view>
