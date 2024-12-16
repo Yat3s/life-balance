@@ -13,7 +13,7 @@
           <view class="mt-1">
             <view class="text-xs text-card mb-0dot5">B25 - 剩余车位</view>
             <view class="flex items-baseline">
-              <view class="text-2dot5xl font-bold {{parkingSpace.b25.remaining === 0 ? 'text-gray' : ''}}">
+              <view class="text-2dot5xl font-bold {{parkingSpace.b25.remaining === 0 ? 'text-card' : ''}}">
                 {{parkingSpace.b25.remaining}}
               </view>
               <view class="text-card text-xs ml-0dot5">/{{parkingConfig.b25.maxSpaces}}</view>
