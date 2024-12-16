@@ -171,7 +171,9 @@ Page({
 
       if (!res.data.length) return;
 
-      const allLuckDraws = res.data.sort((a, b) => a.createTime - b.createTime);
+      const allLuckDraws = res.data.sort(
+        (a, b) => a._createTime - b._createTime
+      );
       const luckDraws = allLuckDraws.map((luckDraw) => ({
         ...luckDraw,
         formattedDrawTime: formatDate(luckDraw.drawnAt),
