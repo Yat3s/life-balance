@@ -2,7 +2,7 @@
   <!-- Parking -->
   <view bindtap="refresh">
     <view class="flex flex-col gap-4 items-start justify-between">
-      <view class="flex w-full items-center gap-1 justify-between">
+      <view class="flex w-full items-center gap-12">
         <!-- B25 -->
         <view class="flex flex-col gap-2dot5 items-start">
           <view class="">
@@ -16,7 +16,7 @@
           </view>
           <!-- Indicators -->
           <view class="flex gap-0dot5 items-center">
-            <view wx:for="{{parkingSpace.b25.indicators}}" class="{{item.active ? 'bg-blue-500' : 'bg-blue-200'}} w-3 h-2 rounded-parking-indicator"></view>
+            <view wx:for="{{parkingSpace.b25.indicators}}" class="{{item.active ? 'bg-blue-400' : 'bg-blue-200'}} w-3 h-2 rounded-parking-indicator"></view>
           </view>
         </view>
         <!-- Zhongmeng -->
@@ -32,7 +32,7 @@
           </view>
           <!-- Indicators -->
           <view class="flex gap-0dot5 items-center">
-            <view wx:for="{{parkingSpace.zhongmeng.indicators}}" class="{{item.active ? 'bg-blue-500' : 'bg-blue-200'}} w-3 h-2 rounded-parking-indicator"></view>
+            <view wx:for="{{parkingSpace.zhongmeng.indicators}}" class="{{item.active ? 'bg-blue-400' : 'bg-blue-200'}} w-3 h-2 rounded-parking-indicator"></view>
           </view>
         </view>
       </view>
