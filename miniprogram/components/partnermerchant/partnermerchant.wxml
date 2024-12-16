@@ -6,7 +6,12 @@
   <view wx:if="{{partnerMerchant}}" class="relative h-full">
     <view class="relative w-full">
       <view class="flex justify-between items-center">
-        <view class="text-sm font-bold text-center">合作商家</view>
+        <view class="flex items-center gap-1">
+          <view class="text-sm font-bold text-center">合作商家</view>
+          <view class="text-beta border border-solid rounded-full bg-blue-600 text-white px-1">
+            Beta
+          </view>
+        </view>
         <image src="/images/ic_home_card_enter.svg" class="w-5dot5 h-5dot5" mode="widthFix" />
       </view>
     </view>
