@@ -1,9 +1,9 @@
-<view bindtap="goToPerks" class="card bg-home-card p-4 rounded-xl flex flex-col h-full relative overflow-hidden">
+<view wx:if="{{partnerMerchant}}" bindtap="goToPerks" class="card bg-home-card p-4 rounded-xl flex flex-col h-full relative overflow-hidden">
   <view class="w-full h-auto">
     <image src="/images/img_bg_partner_merchant.png" class="w-1on2 h-auto absolute right-0 bottom-0" mode="widthFix" />
     <view class="absolute right-0 bottom-0 w-1on2 h-2on3 bg-foreground"></view>
   </view>
-  <view wx:if="{{partnerMerchant}}" class="relative h-full">
+  <view class="relative h-full">
     <view class="relative w-full">
       <view class="flex justify-between items-center">
         <view class="flex items-center gap-1">
@@ -32,8 +32,7 @@
       </view>
     </view>
   </view>
-
-  <view wx:if="{{!partnerMerchant}}" class="relative">
-    <view class="shine w-full h-26"></view>
-  </view>
+</view>
+<view wx:if="{{!partnerMerchant}}" class="relative">
+  <view class="shine-home-card rounded-xl w-full h-34dot5"></view>
 </view>

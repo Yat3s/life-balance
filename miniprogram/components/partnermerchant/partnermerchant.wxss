@@ -44,3 +44,7 @@
   opacity: 1;
   background: linear-gradient(135deg, #f2f5fe 45%, rgb(244, 246, 248, 0.3) 70%);
 }
+
+.h-34dot5 {
+  height: 8.7rem;
+}

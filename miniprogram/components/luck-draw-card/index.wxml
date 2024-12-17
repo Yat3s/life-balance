@@ -1,5 +1,5 @@
-<view class="bg-home-card p-4 rounded-xl relative" catch:tap="navToLuckDraw">
-  <view wx:if="{{luckDraw}}" class="flex">
+<view wx:if="{{luckDraw}}" class="bg-home-card p-4 rounded-xl relative" catch:tap="navToLuckDraw">
+  <view class="flex">
     <view class="shrink-0">
       <image src="{{luckDraw.prizeTiers[0].images[0]}}" class="w-24 h-full rounded-lg bg-gray-200" mode="aspectFill" lazy-load="{{true}}" />
     </view>
@@ -48,7 +48,7 @@
       </block>
     </view>
   </view>
-  <view wx:if="{{!luckDraw}}">
-    <view class="shine w-full h-22"></view>
-  </view>
+</view>
+<view wx:if="{{!luckDraw}}">
+  <view class="shine-home-card rounded-xl w-full h-32"></view>
 </view>
