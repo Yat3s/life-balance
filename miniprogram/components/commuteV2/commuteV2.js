@@ -121,9 +121,13 @@ Component({
           const used = maxSpaces - remaining;
           const usedPercent = Math.round((used / maxSpaces) * 100);
 
-          const remainingIndicatorCount = Math.floor(
+          let remainingIndicatorCount = Math.floor(
             remaining / SPACES_PER_INDICATOR
           );
+          if (remaining > 1 && remainingIndicatorCount === 0) {
+            remainingIndicatorCount = 1;
+          }
+
           const indicators =
             key === "b25"
               ? parkingSpace.b25.indicators
