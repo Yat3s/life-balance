@@ -1,5 +1,5 @@
-<view bindtap="toMenuDetail" class="bg-home-card p-4 rounded-xl flex flex-col h-full">
-  <view wx:if="{{todayMenuB25}}">
+<view wx:if="{{todayMenuB25}}" bindtap="toMenuDetail" class="bg-home-card p-4 rounded-xl flex flex-col h-full">
+  <view>
     <view class="flex flex-col">
       <view class="flex justify-between items-center">
         <view class="text-sm font-bold">食堂菜单</view>
@@ -16,8 +16,9 @@
       </view>
     </view>
   </view>
+</view>
+<view wx:if="{{!todayMenuB25}}" class="w-full h-34dot5">
+  <view class="shine-home-card w-full h-full rounded-xl">
 
-  <view wx:if="{{!todayMenuB25}}">
-    <view class="shine w-full h-26"></view>
   </view>
 </view>

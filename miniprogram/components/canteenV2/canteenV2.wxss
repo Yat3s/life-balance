@@ -66,3 +66,7 @@
   top: 1.5rem;
   left: 3.25rem;
 }
+
+.h-34dot5 {
+  height: 8.7rem;
+}
