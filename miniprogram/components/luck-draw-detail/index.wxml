@@ -15,17 +15,17 @@
     </block>
   </block>
   <!-- Title -->
-  <view class="mb-4 flex items-center justify-between">
-    <view>
+  <view class="mb-4">
+    <view class="flex items-center justify-between mb-2dot5">
       <view class="text-xs text-gray">{{luckDraw.series}}</view>
-      <view class="text-lg font-semibold">{{luckDraw.title}}</view>
+      <button wx:if="{{!luckDraw.winners.length}}" class="share-btn" open-type="share" data-luck-draw="{{luckDraw}}">
+        <view class="flex items-center gap-1">
+          <image class="w-3 h-3 mb-0dot5" src="/images/ic_share.svg" />
+          <text class="text-xs">分享给好友</text>
+        </view>
+      </button>
     </view>
-    <button wx:if="{{!luckDraw.winners.length}}" class="share-btn" open-type="share" data-luck-draw="{{luckDraw}}">
-      <view class="flex items-center gap-1">
-        <image class="w-3 h-3 mb-0dot5" src="/images/ic_share.svg" />
-        <text class="text-xs">分享给好友</text>
-      </view>
-    </button>
+    <view class="text-lg font-semibold">{{luckDraw.title}}</view>
   </view>
   <!-- Drawn Time -->
   <view class="mb-4">
