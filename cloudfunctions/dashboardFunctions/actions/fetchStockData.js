@@ -14,7 +14,7 @@ function formatChange(changePercent) {
   return `${sign}${percentValue.toFixed(2)}`;
 }
 
-async function withRetry(fn, retries = 3, delay = 2000) {
+async function withRetry(fn, retries = 3, delay = 1000) {
   try {
     return await fn();
   } catch (error) {
