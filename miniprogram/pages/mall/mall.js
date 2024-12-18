@@ -141,7 +141,9 @@ Component({
 
       switch (selectedCategory) {
         case "New":
-          filteredProducts.sort((a, b) => b.updatedAt - a.updatedAt);
+          // in cloud function
+          // Primary sorting condition: 'terminated' in ascending order
+          // Secondary sorting condition: 'createdAt' in descending order
           break;
         default:
           filteredProducts = filteredProducts.filter(

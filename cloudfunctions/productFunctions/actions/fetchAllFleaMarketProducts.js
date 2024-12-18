@@ -41,10 +41,10 @@ exports.main = async (props, context) => {
       whereCondition: {
         status: SALE_STATUS_ON,
       },
-      orderBy: {
-        field: "updatedAt",
-        type: "desc",
-      },
+      orderBy: [
+        { field: "terminated", type: "asc" },
+        { field: "createdAt", type: "desc" },
+      ],
     });
 
     // Extract unique userIds

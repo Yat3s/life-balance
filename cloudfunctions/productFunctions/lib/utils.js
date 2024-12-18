@@ -1,7 +1,7 @@
 const MAX_LIMIT = 20;
 
 async function getAllData(db, options) {
-  const { collection, whereCondition = {}, orderBy = {} } = options;
+  const { collection, whereCondition = {}, orderBy = [] } = options;
 
   const countResult = await db
     .collection(collection)
@@ -19,8 +19,10 @@ async function getAllData(db, options) {
       .skip(i * MAX_LIMIT)
       .limit(MAX_LIMIT);
 
-    if (orderBy.field) {
-      promise = promise.orderBy(orderBy.field, orderBy.type || 'desc');
+    if (orderBy.length > 0) {
+      orderBy.forEach((item) => {
+        promise = promise.orderBy(item.field, item.type || "desc");
+      });
     }
 
     promise = promise.get();
