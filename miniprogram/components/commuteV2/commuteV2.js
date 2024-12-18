@@ -124,7 +124,7 @@ Component({
           let remainingIndicatorCount = Math.floor(
             remaining / SPACES_PER_INDICATOR
           );
-          if (remaining > 1 && remainingIndicatorCount === 0) {
+          if (remaining >= 1 && remainingIndicatorCount === 0) {
             remainingIndicatorCount = 1;
           }
 
