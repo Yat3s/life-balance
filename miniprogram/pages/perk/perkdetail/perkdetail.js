@@ -49,8 +49,9 @@ Page({
     fetchPartnerMerchant(partnerMerchantId).then((res) => {
       const partnerMerchantData = res.data[0];
       // calculate promotion value
-      partnerMerchantData.promotion.promotionValue =
-        item.promotion.promotionValue = formatPromotionValue(item.promotion);
+      partnerMerchantData.promotion.promotionValue = formatPromotionValue(
+        partnerMerchantData.promotion
+      );
       const partnerMerchantComments = partnerMerchantData.comments
         ? partnerMerchantData.comments
             .map((item) => ({
