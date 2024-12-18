@@ -1,4 +1,5 @@
 import { formatDateTimeWithDotSeparator } from "../../../common/util";
+import { formatPromotionValue } from "../../../lib/utils";
 import { getAppConfig } from "../../../repository/baseRepo";
 import {
   deleteComment,
@@ -49,9 +50,7 @@ Page({
       const partnerMerchantData = res.data[0];
       // calculate promotion value
       partnerMerchantData.promotion.promotionValue =
-        partnerMerchantData.promotion.type == "discount"
-          ? Number(partnerMerchantData.promotion.value) * 100
-          : partnerMerchantData.promotion.value;
+        item.promotion.promotionValue = formatPromotionValue(item.promotion);
       const partnerMerchantComments = partnerMerchantData.comments
         ? partnerMerchantData.comments
             .map((item) => ({

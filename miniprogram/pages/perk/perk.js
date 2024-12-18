@@ -1,5 +1,6 @@
 import { fetchAllPartnerMerchants } from "../../repository/perkRepo";
 import { navigateToPerkDetail, navigateToProfile } from "../../pages/router";
+import { formatPromotionValue } from "../../lib/utils";
 const app = getApp();
 const COLLAPSED_SCROLL_TOP = 150;
 const MIN_TITLE_SCALE = 0.5;
@@ -55,10 +56,8 @@ Page({
       if (res.success) {
         const partnerMerchants = res.data.map((item) => {
           // calculate promotion value
-          item.promotion.promotionValue =
-            item.promotion.type == "discount"
-              ? Number(item.promotion.value) * 100
-              : item.promotion.value;
+          item.promotion.promotionValue = formatPromotionValue(item.promotion);
+
           item.commentCount = item.comments ? item.comments.length : 0;
           item.comments.sort((a, b) => {
             const dateA = new Date(a.updatedAt || a.createdAt);
