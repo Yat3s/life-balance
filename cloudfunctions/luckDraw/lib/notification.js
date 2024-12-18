@@ -2,6 +2,11 @@ const cloud = require("wx-server-sdk");
 
 const TEMPLATE_ID = "wV8HUYugxQ3OI9MBkEPXMutZnOPHtQsu1tdMCoxOgi8";
 const MINIPROGRAM_STATE = "trial";
+const MAX_THING_LENGTH = 20;
+
+const truncateString = (str) => {
+  return str.slice(0, MAX_THING_LENGTH);
+};
 
 const NOTIFICATIONS = {
   winner: {
@@ -23,9 +28,9 @@ const sendNotification = async (userId, title, isWinner) => {
       miniprogram_state: MINIPROGRAM_STATE,
       page: `/pages/luck-draw/luck-draw`,
       data: {
-        thing1: { value: title },
-        thing3: { value: template.message },
-        thing8: { value: template.endMessage },
+        thing1: { value: truncateString(title) },
+        thing3: { value: truncateString(template.message) },
+        thing8: { value: truncateString(template.endMessage) },
       },
     });
   } catch (error) {
