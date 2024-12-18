@@ -49,8 +49,14 @@ Page({
       const partnerMerchantData = res.data[0];
       // calculate promotion value
       partnerMerchantData.promotion.promotionValue =
-        partnerMerchantData.promotion.type == "discount"
-          ? Number(partnerMerchantData.promotion.value) * 100
+        partnerMerchantData.promotion.type === "discount"
+          ? Number(partnerMerchantData.promotion.value) % 1 === 0
+            ? partnerMerchantData.promotion.value // No decimal places, use as is
+            : partnerMerchantData.promotion.value *
+              (partnerMerchantData.promotion.value.toString().split(".")[1]
+                .length === 1
+                ? 10
+                : 100)
           : partnerMerchantData.promotion.value;
       const partnerMerchantComments = partnerMerchantData.comments
         ? partnerMerchantData.comments

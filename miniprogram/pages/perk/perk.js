@@ -56,9 +56,15 @@ Page({
         const partnerMerchants = res.data.map((item) => {
           // calculate promotion value
           item.promotion.promotionValue =
-            item.promotion.type == "discount"
-              ? Number(item.promotion.value) * 100
+            item.promotion.type === "discount"
+              ? Number(item.promotion.value) % 1 === 0
+                ? item.promotion.value // No decimal places, use as is
+                : item.promotion.value *
+                  (item.promotion.value.toString().split(".")[1].length === 1
+                    ? 10
+                    : 100)
               : item.promotion.value;
+
           item.commentCount = item.comments ? item.comments.length : 0;
           item.comments.sort((a, b) => {
             const dateA = new Date(a.updatedAt || a.createdAt);
