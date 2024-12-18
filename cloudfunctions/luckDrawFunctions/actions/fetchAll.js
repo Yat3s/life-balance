@@ -12,7 +12,7 @@ exports.main = async (props, context) => {
       collection: COLLECTION_NAME,
       whereCondition: {},
       orderBy: {
-        field: "created",
+        field: "_createTime",
         type: "desc",
       },
     });

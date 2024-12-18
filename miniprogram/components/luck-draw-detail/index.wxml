@@ -2,7 +2,7 @@
   <!-- Image Carousel -->
   <block wx:if="{{luckDraw.prizeTiers[0].images && luckDraw.prizeTiers[0].images.length > 0}}">
     <block wx:if="{{luckDraw.prizeTiers[0].images.length > 1}}">
-      <swiper class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6" bind:tap="previewImage" data-luck-draw="{{luckDraw}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
+      <swiper class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6 mt-2" bind:tap="previewImage" data-luck-draw="{{luckDraw}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
         <swiper-item wx:for="{{luckDraw.prizeTiers[0].images}}" wx:for-item="image" wx:key="*this">
           <image src="{{image}}" mode="aspectFill" class="w-full h-full rounded-lg" lazy-load="{{true}}" />
         </swiper-item>
