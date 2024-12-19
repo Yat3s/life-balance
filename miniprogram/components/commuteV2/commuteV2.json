@@ -1,6 +1,7 @@
 {
   "component": true,
   "usingComponents": {
-    "progressRing": "/components/progressring/progressring"
+    "progressRing": "/components/progressring/progressring",
+    "parkingSpaceIndicator": "/components/parkingspaceindicator/parkingspaceindicator"
   }
 }
