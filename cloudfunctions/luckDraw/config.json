@@ -6,7 +6,7 @@
     {
       "name": "luckDrawCheck",
       "type": "timer",
-      "config": "2 0 10,15,18 * * * *"
+      "config": "2 0 10,16,18 * * * *"
     }
   ]
 }
