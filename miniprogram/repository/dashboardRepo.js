@@ -409,7 +409,18 @@ export function fetchLastWeekParkingFullTime() {
       }
 
       let lastWeekParkingFull = res[0].full;
-      resolve(lastWeekParkingFull);
+      const lastWeekParkingFullResDate = new Date(lastWeekParkingFull);
+      lastWeekParkingFullResDate.setHours(0, 0, 0, 0);
+      // if the last week parking full time is the same as the last week parking full date,
+      // then return the last week parking full time
+      if (
+        lastWeekParkingFullResDate.getTime() ===
+        lastWeekParkingFullDate.getTime()
+      ) {
+        resolve(lastWeekParkingFull);
+      } else {
+        resolve(null);
+      }
     });
   });
 }
