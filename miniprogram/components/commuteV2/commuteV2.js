@@ -6,6 +6,7 @@ import {
 import {
   fetchLastWeekParkingFullTime,
   fetchParkingSpace,
+  recordParkingFull,
 } from "../../repository/dashboardRepo";
 
 const EMPTY_COLOR = "#3679EE";
@@ -112,8 +113,6 @@ Component({
     fetchParkingData() {
       const { parkingSpace } = this.data;
       fetchParkingSpace().then((parkingSpaceData) => {
-        console.log("parkingSpace", parkingSpaceData);
-
         const updatedParkingData = {};
         Object.keys(this.data.parkingConfig).forEach((key) => {
           const maxSpaces = this.data.parkingConfig[key].maxSpaces;
@@ -147,6 +146,19 @@ Component({
             indicators,
           };
         });
+
+        // record parking full
+        const now = new Date();
+        if (now.getHours() >= 9 && now.getHours() <= 13) {
+          const leftSpace = parkingSpaceData.b25;
+          if (leftSpace <= 3) {
+            recordParkingFull(Date.now());
+          } else if (leftSpace <= 10) {
+            recordParkingFull(null, null, Date.now());
+          } else if (leftSpace <= 20) {
+            recordParkingFull(null, Date.now(), null);
+          }
+        }
 
         this.setData({
           parkingSpace: updatedParkingData,
