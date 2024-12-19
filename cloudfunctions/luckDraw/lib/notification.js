@@ -1,7 +1,7 @@
 const cloud = require("wx-server-sdk");
 
 const TEMPLATE_ID = "wV8HUYugxQ3OI9MBkEPXMutZnOPHtQsu1tdMCoxOgi8";
-const MINIPROGRAM_STATE = "trial";
+const MINIPROGRAM_STATE = "formal";
 const MAX_THING_LENGTH = 20;
 
 const truncateString = (str) => {
