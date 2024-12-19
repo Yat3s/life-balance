@@ -55,8 +55,7 @@
         </view>
       </block>
       <block wx:else>
-        <block wx:if="{{hasParticipated}}">你已参与，等待开奖 ⌛️</block>
-        <block wx:else>暂未开奖</block>
+        <view>开奖时间：{{luckDraw.formattedDrawTime}}</view>
       </block>
     </view>
   </view>

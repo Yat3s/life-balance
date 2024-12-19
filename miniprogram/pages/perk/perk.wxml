@@ -4,22 +4,24 @@
 </toolbar>
 <view wx:if="{{partnerMerchants}}">
   <scroll-view scroll-y="true" class="mt-4 h-full">
-  <view class="plr">
-    <!-- Partner Merchant List -->
-    <view class="flex flex-col gap-4 pb-6">
-      <!-- Partner Merchant Item -->
-      <view wx:for="{{partnerMerchants}}" wx:key="id" bindtap="onPartnerMerchantItemTap" data-partner-merchant-id="{{item._id}}" class="flex flex-col p-6 pb-4 bg-white rounded-lg">
-        <view class="flex items-center gap-4">
-          <!-- <image src="{{item.logo}}" lazy-load="{{true}}" class="w-10 h-logo bg-gray-200 rounded-md" /> -->
-          <view class="flex-1 text-black text-xl font-w-450 truncate">{{item.name}}</view>
-        </view>
-        <view class="mt-2 text-gray text-xs truncate">{{item.location.address}}</view>
-        <view class="mt-8 flex items-center gap-2">
-          <view class="flex items-baseline gap-0dot5">
-            <view class="text-black whitespace-nowrap {{item.promotion.type == 'discount' ? 'text-2xl' : 'text-xl'}}">{{item.promotion.promotionValue}}</view>
-            <view wx:if="{{item.promotion.type == 'discount'}}" class="text-black text-sm font-w-450">折</view>
+    <view class="plr">
+      <!-- Partner Merchant List -->
+      <view class="flex flex-col gap-4 pb-6">
+        <!-- Partner Merchant Item -->
+        <view wx:for="{{partnerMerchants}}" wx:key="id" bindtap="onPartnerMerchantItemTap" data-partner-merchant-id="{{item._id}}" class="flex flex-col p-6 pb-4 bg-white rounded-lg">
+          <view class="flex items-center gap-2">
+            <image src="{{item.logo}}" lazy-load="{{true}}" class="w-12 h-12 bg-gray-200 rounded shrink-0" />
+            <view class="flex-1">
+              <view class="text-black text-lg font-w-450 truncate">{{item.name}}</view>
+              <view class="mt-1 text-gray text-xs truncate">{{item.location.address}}</view>
+            </view>
           </view>
-          <!-- <view class="flex flex-wrap gap-2">
+          <view class="mt-8 flex items-center gap-2">
+            <view class="flex items-baseline gap-0dot5">
+              <view class="text-black whitespace-nowrap {{item.promotion.type == 'discount' ? 'text-2xl' : 'text-xl'}}">{{item.promotion.promotionValue}}</view>
+              <view wx:if="{{item.promotion.type == 'discount'}}" class="text-black text-sm font-w-450">折</view>
+            </view>
+            <!-- <view class="flex flex-wrap gap-2">
             <block wx:if="{{item.promotion.eligibleItems.length > 0}}">
               <view wx:for="{{item.promotion.eligibleItems}}" wx:key="eligibleItems" class="tag">
                 <view class="left-circle"></view>
@@ -33,33 +35,33 @@
               </view>
             </block>
           </view> -->
-        </view>
-        <view class="h-px bg-gray-100 mb-4 mt-3"></view>
-        <view class="flex items-center justify-between">
-          <block wx:if="{{item.commentCount > 0}}">
-            <view class="flex items-center gap-4">
-              <view class="flex items-center">
-                <!-- avatar -->
-                <view>
-                  <user-avatar wx:for="{{item.comments}}" wx:key="avatarUrl" userInfo="{{item.user}}" className="w-6 h-6 bg-gray-200 rounded-full {{index !== 0 ? '-ml-2' : ''}}" />
+          </view>
+          <view class="h-px bg-gray-100 mb-4 mt-3"></view>
+          <view class="flex items-center justify-between">
+            <block wx:if="{{item.commentCount > 0}}">
+              <view class="flex items-center gap-4">
+                <view class="flex items-center">
+                  <!-- avatar -->
+                  <view>
+                    <user-avatar wx:for="{{item.comments}}" wx:key="avatarUrl" userInfo="{{item.user}}" className="w-6 h-6 bg-gray-200 rounded-full {{index !== 0 ? '-ml-2' : ''}}" />
+                  </view>
                 </view>
+                <view class="text-xs text-gray">{{item.commentCount}} 条评价</view>
               </view>
-              <view class="text-xs text-gray">{{item.commentCount}} 条评价</view>
-            </view>
-          </block>
-          <block wx:else>
-            <view class="text-xs text-gray">暂无评价</view>
-          </block>
-          <image src="/images/ic_arrow.svg" class="h-4 -mr-0dot5" mode="heightFix" />
+            </block>
+            <block wx:else>
+              <view class="text-xs text-gray">暂无评价</view>
+            </block>
+            <image src="/images/ic_arrow.svg" class="h-4 -mr-0dot5" mode="heightFix" />
+          </view>
         </view>
       </view>
-    </view>
 
-    <view class="text-center text-sm text-gray mt-4 mb-10">
-      更多商家正在尝试接入中...
+      <view class="text-center text-sm text-gray mt-4 mb-10">
+        更多商家正在尝试接入中...
+      </view>
     </view>
-  </view>
-</scroll-view>
+  </scroll-view>
 </view>
 <view wx:else>
   <template is="partner-merchant-skeleton" />

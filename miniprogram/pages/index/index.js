@@ -137,14 +137,13 @@ Page({
 
   checkNeedsProfileUpdate(userInfo) {
     if (!userInfo) return false;
-    if (userInfo.updatedAt) return false;
 
     const isDefaultAvatar = userInfo.avatarUrl?.startsWith(
       "https://thirdwx.qlogo.cn/mmopen/vi_32/"
     );
     const isDefaultNickName = userInfo.nickName === "微信用户";
 
-    return isDefaultNickName || isDefaultAvatar;
+    return (isDefaultNickName && !userInfo.updatedAt) || isDefaultAvatar;
   },
 
   onShow() {
