@@ -1,0 +1,21 @@
+@keyframes widthChange {
+  from {
+    width: 0;
+  }
+  to {
+    width: calc(var(--target-progress) * 1%);
+  }
+}
+
+/* simulate gap between indicators */
+.parking-indicator::after {
+  content: "";
+  position: absolute;
+  top: -0.125rem;
+  left: -0.125rem;
+  width: calc(100% + 0.25rem);
+  height: calc(100% + 0.25rem);
+  border: 0.125rem solid #f1f3fb;
+  border-radius: 0.28rem;
+  box-sizing: border-box;
+}
