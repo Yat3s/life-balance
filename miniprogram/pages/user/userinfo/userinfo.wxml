@@ -1,4 +1,4 @@
-<toolbar isBack="{{true}}" />
+<toolbar bgColor="bg-white" isBack="{{true}}" />
 <form bindsubmit="onUserInfoSubmit">
   <view class="main">
     <view class="section-container">
@@ -75,8 +75,8 @@
       </view>
     </view>
     <!-- Submit -->
-    <view style="margin-top: 40rpx;" class="flex justify-end">
-      <button form-type="submit" style="width: 200rpx; border-radius: 16rpx;" class="cu-btn bg-primary">
+    <view class="fixed bottom-0 left-0 w-full bg-white p-4 z-20">
+      <button form-type="submit" class="w-full rounded-lg bg-primary text-white py-2">
         Submit
       </button>
     </view>
