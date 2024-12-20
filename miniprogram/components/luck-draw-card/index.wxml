@@ -4,11 +4,11 @@
     <view class="shrink-0 ml-4 z-20 flex flex-col">
       <view class="flex items-center gap-1">
         <view class="text-card text-xs">{{luckDraw.series}}</view>
-        <view class="text-beta">
-          New
-        </view>
+        <view class="text-beta">New</view>
       </view>
-      <view class="flex-1 font-semibold text-base mt-1 truncate-ellipsis mb-8">{{luckDraw.title}}</view>
+      <view class="flex-1 font-semibold text-base mt-1 truncate-ellipsis mb-8">
+        {{luckDraw.title}}
+      </view>
       <!-- Participants -->
       <view class="flex items-center">
         <view class="flex items-center">
@@ -28,7 +28,7 @@
     </view>
     <!-- Status text -->
     <view class="absolute top-4 right-4 z-20">
-      <block wx:if="{{isOngoing}}">
+      <block wx:if="{{luckDraw.isOngoing}}">
         <view class="text-card text-xs">进行中</view>
       </block>
       <block wx:else>
