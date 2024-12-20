@@ -1,7 +1,7 @@
 import {
   updateUserInfo,
   uploadFiles,
-  fetchUserInfoOrSignup,
+  fetchUserInfo,
 } from "../../../repository/userRepo";
 const app = getApp();
 
@@ -147,7 +147,7 @@ Page({
   },
 
   onLoad(options) {
-    fetchUserInfoOrSignup().then((userInfo) => {
+    fetchUserInfo().then((userInfo) => {
       const files = [];
       if (userInfo.photos) {
         for (const photo of userInfo.photos) {
