@@ -58,7 +58,7 @@
         <textarea maxlength="300" value="{{desc}}" name="desc" class="margin-top-xs" placeholder="Your story（within 300 characters）" style="font-size: 11pt; width: 100%; min-height: 200rpx; border-radius: 12rpx; " />
       </view>
     </view>
-    <view class="section-container margin-top-lg">
+    <view class="section-container margin-top-lg mb-4">
       <view class="name-container">
         <view class="section-title">Delivery information</view>
       </view>
