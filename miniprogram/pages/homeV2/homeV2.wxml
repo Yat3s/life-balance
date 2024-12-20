@@ -10,6 +10,7 @@
   <view class="mt-12">
     <stockV2></stockV2>
   </view>
+  <view class="text-gray-400 text-xs mt-6">微软(中国)有限公司 - 苏州</view>
   <view class="flex flex-col gap-2 mt-2 pb-4">
     <!-- Parking Space -->
     <commuteV2 class="w-full"></commuteV2>

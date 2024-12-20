@@ -105,6 +105,7 @@ Component({
         app.globalData.userInfo = res;
         this.onClose();
       } catch (error) {
+        console.error("Update user info", error);
         wx.hideLoading();
         wx.showToast({
           title: error.message || "操作失败，请重试",

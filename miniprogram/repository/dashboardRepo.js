@@ -178,8 +178,7 @@ export function fetchBuilding2Progress() {
 }
 
 export function fetchFoodMenus(site = "b25") {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const today = setTimeToZero(new Date());
 
   switch (site) {
     case "b25": {
@@ -287,8 +286,9 @@ export function fetchCanteenStatus() {
 
 export function fetchParkingSpacePrediction() {
   const now = new Date();
-  const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-  oneWeekAgo.setHours(0, 0, 0, 0);
+  const oneWeekAgo = setTimeToZero(
+    new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
+  );
   const oneWeekAgoTimestamp = oneWeekAgo.getTime();
 
   return new Promise((reslove, reject) => {
@@ -323,8 +323,7 @@ export function fetchParkingSpacePrediction() {
 
       // Find a record before today
       let theDayFullBeforeToday = 0;
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
+      const today = setTimeToZero(new Date());
       for (let i = res.length - 1; i >= 0; i--) {
         const parkingFull = res[i];
         if (parkingFull.date < today.getTime() && parkingFull.full) {
@@ -360,10 +359,11 @@ export function fetchParkingSpacePrediction() {
 export function fetchLastParkingFullTime() {
   const now = new Date();
   const isMonday = now.getDay() == 1;
-  const lastParkingFullDate = new Date(
-    now.getTime() - (isMonday ? 3 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000)
+  const lastParkingFullDate = setTimeToZero(
+    new Date(
+      now.getTime() - (isMonday ? 3 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000)
+    )
   );
-  lastParkingFullDate.setHours(0, 0, 0, 0);
 
   return new Promise((resolve, reject) => {
     cloudCall(
@@ -388,10 +388,9 @@ export function fetchLastParkingFullTime() {
 
 export function fetchLastWeekParkingFullTime() {
   const now = new Date();
-  const lastWeekParkingFullDate = new Date(
-    now.getTime() - 7 * 24 * 60 * 60 * 1000
+  const lastWeekParkingFullDate = setTimeToZero(
+    new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
   );
-  lastWeekParkingFullDate.setHours(0, 0, 0, 0);
 
   return new Promise((resolve, reject) => {
     cloudCall(
@@ -409,14 +408,25 @@ export function fetchLastWeekParkingFullTime() {
       }
 
       let lastWeekParkingFull = res[0].full;
-      resolve(lastWeekParkingFull);
+      const lastWeekParkingFullResDate = setTimeToZero(
+        new Date(lastWeekParkingFull)
+      );
+      // if the last week parking full time is the same as the last week parking full date,
+      // then return the last week parking full time
+      if (
+        lastWeekParkingFullResDate.getTime() ===
+        lastWeekParkingFullDate.getTime()
+      ) {
+        resolve(lastWeekParkingFull);
+      } else {
+        resolve(null);
+      }
     });
   });
 }
 
 export function recordParkingFull(full = null, left20 = null, left10 = null) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const today = setTimeToZero(new Date());
   const todayTimestamp = today.getTime();
   cloudCall(
     db
@@ -475,4 +485,9 @@ function isObjectEmpty(obj) {
     }
   }
   return true;
+}
+
+function setTimeToZero(date) {
+  date.setHours(0, 0, 0, 0);
+  return date;
 }

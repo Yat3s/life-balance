@@ -14,6 +14,7 @@ const BUSY_COLOR = "#FF593B";
 const SPIN_DURATION = 0.3;
 const COLOR_CHANGE_DURATION = 0.6;
 const SPACES_PER_INDICATOR = 45;
+const MIN_INDICATOR_DISPLAY_USED_PERCENT = 97;
 
 Component({
   options: {
@@ -59,19 +60,12 @@ Component({
       const b25IndicatorCount = Math.round(
         parkingConfig.b25.maxSpaces / SPACES_PER_INDICATOR
       );
-      const b25Indicators = Array.from({ length: b25IndicatorCount }, () => ({
-        active: false,
-      }));
       const zhongmengIndicatorCount = Math.round(
         parkingConfig.zhongmeng.maxSpaces / SPACES_PER_INDICATOR
       );
-      const zhongmengIndicators = Array.from(
-        { length: zhongmengIndicatorCount },
-        () => ({ active: false })
-      );
       this.setData({
-        "parkingSpace.b25.indicators": b25Indicators,
-        "parkingSpace.zhongmeng.indicators": zhongmengIndicators,
+        "parkingSpace.b25.indicatorCount": b25IndicatorCount,
+        "parkingSpace.zhongmeng.indicatorCount": zhongmengIndicatorCount,
       });
     },
     refresh() {
@@ -111,39 +105,29 @@ Component({
     },
 
     fetchParkingData() {
-      const { parkingSpace } = this.data;
       fetchParkingSpace().then((parkingSpaceData) => {
         const updatedParkingData = {};
         Object.keys(this.data.parkingConfig).forEach((key) => {
           const maxSpaces = this.data.parkingConfig[key].maxSpaces;
+          const indicatorCount = this.data.parkingSpace[key].indicatorCount;
           const remaining = parkingSpaceData[key];
           const used = maxSpaces - remaining;
-          const usedPercent = Math.round((used / maxSpaces) * 100);
+          const usedPercent =
+            Math.floor((used / maxSpaces) * 100) >=
+              MIN_INDICATOR_DISPLAY_USED_PERCENT &&
+            Math.floor((used / maxSpaces) * 100) < 100
+              ? MIN_INDICATOR_DISPLAY_USED_PERCENT
+              : Math.floor((used / maxSpaces) * 100);
+          const remainingPercent = Math.floor((remaining / maxSpaces) * 100);
 
-          let remainingIndicatorCount = Math.floor(
-            remaining / SPACES_PER_INDICATOR
-          );
-          if (remaining >= 1 && remainingIndicatorCount === 0) {
-            remainingIndicatorCount = 1;
-          }
-
-          const indicators =
-            key === "b25"
-              ? parkingSpace.b25.indicators
-              : parkingSpace.zhongmeng.indicators;
-          indicators.forEach((indicator, index) => {
-            indicator.active = index < remainingIndicatorCount;
-          });
           updatedParkingData[key] = {
             remaining,
             used,
             usedPercent,
+            remainingPercent,
             initialColor: EMPTY_COLOR,
             finalColor: usedPercent >= 90 ? BUSY_COLOR : EMPTY_COLOR,
-            progressDuration: SPIN_DURATION,
-            colorChangeDuration: COLOR_CHANGE_DURATION,
-            remainingIndicatorCount,
-            indicators,
+            indicatorCount,
           };
         });
 
