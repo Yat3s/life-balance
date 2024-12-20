@@ -9,7 +9,7 @@
     <view class="text-xs text-drawn-time">往期抽奖</view>
     <view wx:for="{{previousLuckDraws}}" wx:key="_id" class="mt-2">
       <view class="flex items-center p-3 rounded-lg bg-luck-draw-history border-gray-light" data-luck-draw="{{item}}" bind:tap="onTapLuckDrawHistory">
-        <image src="{{item.prizeTiers[0].images[0]}}" class="w-16 h-14 rounded-lg bg-gray-200" mode="aspectFill" lazy-load="{{true}}" />
+        <image src="{{item.prizeTiers[0].images[0]}}" class="w-16 h-14 rounded-lg bg-gray-200 shrink-0" mode="aspectFill" lazy-load="{{true}}" />
         <view class="flex flex-col ml-3">
           <view class="text-xs font-medium mb-3">{{item.series}} {{item.title}}</view>
           <view class="flex items-center">

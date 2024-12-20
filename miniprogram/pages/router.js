@@ -126,7 +126,7 @@ export const Pages = {
   },
   LuckDraw: {
     authRequired: true,
-    url: "/pages/luck-draw/luck-draw",
+    url: "/pages/luck-draw/luck-draw?id=",
   },
   LuckDrawHistory: {
     authRequired: true,
@@ -258,8 +258,8 @@ export function navigateToLuckDrawHistory(luckDrawId) {
   navigate(Pages.LuckDrawHistory, luckDrawId);
 }
 
-export function navigateToLuckDraw() {
-  navigate(Pages.LuckDraw);
+export function navigateToLuckDraw(luckDrawId) {
+  navigate(Pages.LuckDraw, luckDrawId);
 }
 
 export function navigate(page, urlParam = null) {
