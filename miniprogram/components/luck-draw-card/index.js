@@ -40,7 +40,7 @@ Component({
     },
 
     async fetchLatestLuckDraw() {
-      const latestLuckDraw = await _fetchLatestLuckDraw();
+      const latestLuckDraw = (await _fetchLatestLuckDraw())[0];
       this.setData({
         luckDraw: latestLuckDraw,
       });

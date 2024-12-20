@@ -22,15 +22,12 @@ Page({
 
   async onLoad(options) {
     if (options.id) {
-      const currentLuckDraw = await fetchLuckDrawById(options.id);
-      this.setData({
-        currentLuckDraw,
-      });
+      this.fetchCurrentLuckDraw(options.id);
     }
     const luckDrawHistory = await fetchLuckDrawHistory();
     this.setData({
       previousLuckDraws: luckDrawHistory.filter(
-        (draw) => draw._id !== this.data.currentLuckDraw?._id
+        (draw) => draw._id !== options.id
       ),
     });
     fetchUserInfo().then((res) => {
@@ -42,6 +39,13 @@ Page({
           this.setupVideoAd();
         }
       );
+    });
+  },
+
+  async fetchCurrentLuckDraw(luckDrawId) {
+    const currentLuckDraw = await fetchLuckDrawById(luckDrawId);
+    this.setData({
+      currentLuckDraw,
     });
   },
 
@@ -206,7 +210,7 @@ Page({
         icon: "success",
       });
 
-      await fetchLuckDrawById(this.data.currentLuckDraw._id);
+      this.fetchCurrentLuckDraw(options.id);
     } catch (error) {
       wx.hideLoading();
       wx.showToast({
@@ -276,7 +280,7 @@ Page({
     return {
       title,
       imageUrl: this.data.currentLuckDraw.prizeTiers[0]?.images[0],
-      path: "/pages/luck-draw/luck-draw",
+      path: `/pages/luck-draw/luck-draw?id=${this.data.currentLuckDraw._id}`,
     };
   },
 
