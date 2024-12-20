@@ -1,4 +1,4 @@
-import { fetchUserInfo, updateUserInfo } from '../../repository/userRepo';
+import { fetchUserInfo, updateUserInfo } from "../../repository/userRepo";
 const app = getApp();
 
 Component({
@@ -14,6 +14,8 @@ Component({
   },
   data: {
     avatarChanged: false,
+    avatarTmpUrl: "",
+    nickName: "",
   },
 
   lifetimes: {
@@ -21,21 +23,28 @@ Component({
       fetchUserInfo().then((res) => {
         this.setData({
           userId: res._id,
-          avatarTmpUrl: res.avatarUrl,
-          nickName: res.nickName,
         });
       });
     },
   },
 
   methods: {
+    resetForm() {
+      this.setData({
+        avatarChanged: false,
+        avatarTmpUrl: "",
+        nickName: "",
+      });
+    },
+
     onClose() {
-      this.triggerEvent('close');
+      this.resetForm();
+      this.triggerEvent("close");
     },
 
     onChooseAvatar(e) {
       const { avatarUrl } = e.detail;
-      console.log('Avatar URL: ', avatarUrl);
+      console.log("Avatar URL: ", avatarUrl);
       this.setData({
         avatarTmpUrl: avatarUrl,
         avatarChanged: true,
@@ -54,22 +63,22 @@ Component({
 
       if (!nickName) {
         wx.showToast({
-          icon: 'none',
-          title: '请输入你的昵称',
+          icon: "none",
+          title: "请输入你的昵称",
         });
         return;
       }
 
       if (avatarChanged && !avatarTmpUrl) {
         wx.showToast({
-          icon: 'none',
-          title: '请选择你的头像',
+          icon: "none",
+          title: "请选择你的头像",
         });
         return;
       }
 
       wx.showLoading({
-        title: '更新中...',
+        title: "更新中...",
       });
 
       try {
@@ -88,14 +97,18 @@ Component({
         const res = await updateUserInfo(this.data.userId, updateData);
 
         wx.hideLoading();
-        console.log(res);
+        wx.showToast({
+          title: "更新成功",
+          icon: "success",
+        });
+
         app.globalData.userInfo = res;
         this.onClose();
       } catch (error) {
         wx.hideLoading();
         wx.showToast({
-          title: error.message || '操作失败，请重试',
-          icon: 'error',
+          title: error.message || "操作失败，请重试",
+          icon: "error",
         });
       }
     },
