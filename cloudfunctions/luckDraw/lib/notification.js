@@ -19,14 +19,14 @@ const NOTIFICATIONS = {
   },
 };
 
-const sendNotification = async (userId, title, isWinner) => {
+const sendNotification = async (userId, title, isWinner, luckDrawId) => {
   try {
     const template = isWinner ? NOTIFICATIONS.winner : NOTIFICATIONS.nonWinner;
     await cloud.openapi.subscribeMessage.send({
       touser: userId,
       templateId: TEMPLATE_ID,
       miniprogram_state: MINIPROGRAM_STATE,
-      page: `/pages/luck-draw/luck-draw`,
+      page: `/pages/luck-draw/luck-draw?id=${luckDrawId}`,
       data: {
         thing1: { value: truncateString(title) },
         thing3: { value: truncateString(template.message) },

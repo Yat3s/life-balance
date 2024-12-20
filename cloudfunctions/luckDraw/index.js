@@ -87,7 +87,8 @@ exports.main = async (event, context) => {
       sendNotification(
         ticket.userId,
         currentLuckDraw.title,
-        winnerIds.has(ticket.userId)
+        winnerIds.has(ticket.userId),
+        currentLuckDraw._id
       )
     );
 

@@ -1,4 +1,3 @@
-import { formatDate } from "../../../lib/utils";
 import { fetchLuckDrawById } from "../../../repository/luckDrawRepo";
 import { fetchUserInfo } from "../../../repository/userRepo";
 
@@ -19,8 +18,8 @@ Page({
     }
 
     Promise.all([fetchUserInfo(), fetchLuckDrawById(options.id)])
-      .then(([userInfo, luckDrawData]) => {
-        if (!luckDrawData) {
+      .then(([userInfo, luckDraw]) => {
+        if (!luckDraw) {
           wx.showToast({
             title: "抽奖信息不存在",
             icon: "none",
@@ -29,27 +28,9 @@ Page({
           return;
         }
 
-        const formattedLuckDraw = {
-          ...luckDrawData,
-          formattedDrawTime: formatDate(luckDrawData.drawnAt),
-          tickets: luckDrawData.tickets.map((ticket) => ({
-            ...ticket,
-            isWinner:
-              luckDrawData.winners?.some(
-                (winner) => winner.userId === ticket.user._openid
-              ) || false,
-          })),
-        };
-
-        const hasParticipated =
-          formattedLuckDraw.tickets?.some(
-            (ticket) => ticket.userId === userInfo._openid
-          ) || false;
-
         this.setData({
-          luckDraw: formattedLuckDraw,
+          luckDraw,
           userInfo,
-          hasParticipated,
         });
       })
       .catch((error) => {
@@ -66,6 +47,7 @@ Page({
     const { luckDraw } = this.data;
     return {
       title: luckDraw.title,
+      imageUrl: luckDraw.prizeTiers[0]?.images[0],
       path: `/pages/luck-draw/history/history?id=${luckDraw._id}`,
     };
   },

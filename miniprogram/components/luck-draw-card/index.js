@@ -10,7 +10,6 @@ Component({
   properties: {},
   data: {
     luckDraw: null,
-    isOngoing: false,
     displayParticipants: [],
   },
 
@@ -28,7 +27,7 @@ Component({
 
   methods: {
     navToLuckDraw() {
-      navigateToLuckDraw();
+      navigateToLuckDraw(this.data.luckDraw._id);
     },
 
     processParticipants(participants) {
@@ -40,28 +39,13 @@ Component({
       });
     },
 
-    fetchLatestLuckDraw() {
-      _fetchLatestLuckDraw()
-        .then((res) => {
-          const participants =
-            res[0].tickets?.map((ticket) => ({
-              userId: ticket.user.userId,
-              avatarUrl: ticket.user.avatarUrl,
-            })) || [];
+    async fetchLatestLuckDraw() {
+      const latestLuckDraw = (await _fetchLatestLuckDraw())[0];
+      this.setData({
+        luckDraw: latestLuckDraw,
+      });
 
-          this.setData({
-            luckDraw: {
-              ...res[0],
-              participants,
-            },
-            isOngoing: res[0].winners && res[0].winners.length === 0,
-          });
-
-          this.processParticipants(participants);
-        })
-        .catch((error) => {
-          console.error("Failed to fetch luck draw:", error);
-        });
+      this.processParticipants(latestLuckDraw.participants);
     },
   },
 });

@@ -1,8 +1,8 @@
-import { formatDate } from "../../lib/utils";
 import {
-  fetchAllLuckDraws,
   createLuckDrawTicket,
   draw,
+  fetchLuckDrawById,
+  fetchLuckDrawHistory,
 } from "../../repository/luckDrawRepo";
 import { fetchUserInfo } from "../../repository/userRepo";
 import { navigateToLuckDrawHistory } from "../router";
@@ -11,6 +11,7 @@ const CHECK_DRAW_RESULT_DURATION = 500;
 const LUCK_DRAW_SUBSCRIPTION_TEMP_ID =
   "wV8HUYugxQ3OI9MBkEPXMutZnOPHtQsu1tdMCoxOgi8";
 const ADS_MODAL_SHOWN_KEY = "ads_modal_shown";
+const ADS_TEMP_ID = "adunit-56ed7dde157954eb";
 
 Page({
   data: {
@@ -19,7 +20,16 @@ Page({
     videoAd: null,
   },
 
-  onLoad(options) {
+  async onLoad(options) {
+    if (options.id) {
+      this.fetchCurrentLuckDraw(options.id);
+    }
+    const luckDrawHistory = await fetchLuckDrawHistory();
+    this.setData({
+      previousLuckDraws: luckDrawHistory.filter(
+        (draw) => draw._id !== options.id
+      ),
+    });
     fetchUserInfo().then((res) => {
       this.setData(
         {
@@ -27,9 +37,15 @@ Page({
         },
         () => {
           this.setupVideoAd();
-          this.fetchLuckDrawData();
         }
       );
+    });
+  },
+
+  async fetchCurrentLuckDraw(luckDrawId) {
+    const currentLuckDraw = await fetchLuckDrawById(luckDrawId);
+    this.setData({
+      currentLuckDraw,
     });
   },
 
@@ -136,7 +152,7 @@ Page({
     if (wx.createRewardedVideoAd) {
       this.setData({
         videoAd: wx.createRewardedVideoAd({
-          adUnitId: "adunit-56ed7dde157954eb",
+          adUnitId: ADS_TEMP_ID,
         }),
       });
 
@@ -162,47 +178,6 @@ Page({
           });
         }
       });
-    }
-  },
-
-  async fetchLuckDrawData() {
-    try {
-      const res = await fetchAllLuckDraws();
-
-      if (!res.data.length) return;
-
-      const allLuckDraws = res.data.sort(
-        (a, b) => a._createTime - b._createTime
-      );
-      const luckDraws = allLuckDraws.map((luckDraw) => ({
-        ...luckDraw,
-        formattedDrawTime: formatDate(luckDraw.drawnAt),
-        tickets: luckDraw.tickets.map((ticket) => ({
-          ...ticket,
-          isWinner:
-            luckDraw.winners?.some(
-              (winner) => winner.userId === ticket.user._openid
-            ) || false,
-        })),
-      }));
-
-      const latestLuckDraw = luckDraws[luckDraws.length - 1];
-      const previousLuckDraws = luckDraws
-        .filter((luckDraw) => luckDraw._id !== latestLuckDraw._id)
-        .sort((a, b) => b.createTime - a.createTime);
-
-      const hasParticipated =
-        latestLuckDraw?.tickets?.some(
-          (ticket) => ticket.userId === this.data.userInfo._openid
-        ) || false;
-
-      this.setData({
-        currentLuckDraw: latestLuckDraw,
-        previousLuckDraws,
-        hasParticipated,
-      });
-    } catch (error) {
-      console.error("Failed to fetch luck draw data:", error);
     }
   },
 
@@ -235,7 +210,7 @@ Page({
         icon: "success",
       });
 
-      this.fetchLuckDrawData();
+      this.fetchCurrentLuckDraw(options.id);
     } catch (error) {
       wx.hideLoading();
       wx.showToast({
@@ -305,7 +280,7 @@ Page({
     return {
       title,
       imageUrl: this.data.currentLuckDraw.prizeTiers[0]?.images[0],
-      path: "/pages/luck-draw/luck-draw",
+      path: `/pages/luck-draw/luck-draw?id=${this.data.currentLuckDraw._id}`,
     };
   },
 

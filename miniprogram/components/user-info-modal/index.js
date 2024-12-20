@@ -14,6 +14,8 @@ Component({
   },
   data: {
     avatarChanged: false,
+    avatarTmpUrl: "",
+    nickName: "",
   },
 
   lifetimes: {
@@ -27,7 +29,16 @@ Component({
   },
 
   methods: {
+    resetForm() {
+      this.setData({
+        avatarChanged: false,
+        avatarTmpUrl: "",
+        nickName: "",
+      });
+    },
+
     onClose() {
+      this.resetForm();
       this.triggerEvent("close");
     },
 
@@ -86,7 +97,11 @@ Component({
         const res = await updateUserInfo(this.data.userId, updateData);
 
         wx.hideLoading();
-        console.log(res);
+        wx.showToast({
+          title: "更新成功",
+          icon: "success",
+        });
+
         app.globalData.userInfo = res;
         this.onClose();
       } catch (error) {
