@@ -126,10 +126,12 @@ export const Pages = {
   },
   LuckDraw: {
     authRequired: true,
+    companyRequired: true,
     url: "/pages/luck-draw/luck-draw",
   },
   LuckDrawHistory: {
     authRequired: true,
+    companyRequired: true,
     url: "/pages/luck-draw/history/history?id=",
   },
 };
@@ -268,29 +270,28 @@ export function navigate(page, urlParam = null) {
   }
 
   const url = urlParam ? page.url + urlParam : page.url;
-  if (page.authRequired) {
-    if (app.globalData.userInfo) {
-      wx.navigateTo({
-        url,
-      });
-    } else {
-      userRepo
-        .fetchUserInfoOrSignup()
-        .then((user) => {
-          wx.navigateTo({
-            url,
-          });
-        })
-        .catch((err) => {
-          wx.showToast({
-            icon: "none",
-            title: "Don't allow anonymous operation",
-          });
-        });
-    }
-  } else {
+  if (!page.authRequired) {
     wx.navigateTo({
       url,
     });
+    return;
   }
+
+  userRepo
+    .fetchUserInfoOrSignup()
+    .then((user) => {
+      let navUrl = url
+      if (page.companyRequired && !user.company) {
+        navUrl = '/pages/auth/auth'
+      }
+      wx.navigateTo({
+        url: navUrl,
+      });
+    })
+    .catch((err) => {
+      wx.showToast({
+        icon: "none",
+        title: "Don't allow anonymous operation",
+      });
+    });
 }
