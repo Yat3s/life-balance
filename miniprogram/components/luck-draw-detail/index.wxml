@@ -59,6 +59,7 @@
       </block>
     </view>
   </view>
+  <ad-custom class="mb-5" wx:if="{{hasParticipated || luckDraw.winners.length > 0}}" unit-id="{{adId}}" bindload="adLoad" binderror="adError" bindclose="adClose" />
   <!-- Participants -->
   <view>
     <view class="text-xs text-drawn-time mb-2dot5">共 {{luckDraw.tickets.length || 0}} 人参与</view>
