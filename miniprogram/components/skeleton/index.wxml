@@ -108,12 +108,12 @@
     <view wx:for="{{[1, 2, 3, 4]}}" wx:key="*this" class="flex flex-col p-6 pb-4 bg-white rounded-lg mb-4">
       <!-- Top Section -->
       <view class="flex items-center gap-4">
-        <!-- <view class="w-10 h-logo skeleton-bg rounded-md skeleton-animate" /> -->
+        <view class="w-12 h-12 skeleton-bg rounded skeleton-animate" />
         <view class="flex-1">
           <view class="mt-1 w-2on5 h-5 skeleton-bg rounded skeleton-animate" />
+          <view class="mt-3 w-4on5 h-3 skeleton-bg rounded skeleton-animate" />
         </view>
       </view>
-      <view class="mt-4 w-4on5 h-3 skeleton-bg rounded skeleton-animate" />
       <!-- Promotions -->
       <view class="mt-9 flex items-center gap-2">
         <view class="w-14 h-6 skeleton-bg rounded skeleton-animate" />
