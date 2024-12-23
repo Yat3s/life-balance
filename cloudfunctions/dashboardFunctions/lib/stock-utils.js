@@ -7,6 +7,7 @@ const db = cloud.database();
 const API_CONFIG = {
   key: 'WEQGVELPMJ086QXP',
   baseUrl: 'https://www.alphavantage.co/query',
+  rateLimit: 500, // API rate limit in ms
 };
 
 const CACHE_CONFIG = {
@@ -110,9 +111,26 @@ const cacheOperations = {
 };
 
 /**
- * Stock API operations
+ * Stock API operations with rate limiting
  */
 const stockAPI = {
+  async fetchBatch(symbols) {
+    const results = [];
+    for (const symbol of symbols) {
+      const [quote, overview] = await Promise.all([
+        this.fetchQuote(symbol),
+        this.fetchCompanyOverview(symbol),
+      ]);
+      results.push({ ...quote, ...overview });
+      if (symbols.indexOf(symbol) < symbols.length - 1) {
+        await new Promise((resolve) =>
+          setTimeout(resolve, API_CONFIG.rateLimit)
+        );
+      }
+    }
+    return results;
+  },
+
   async fetchQuote(symbol) {
     const fetchQuote = async () => {
       const option = {
@@ -172,10 +190,4 @@ const stockAPI = {
   },
 };
 
-module.exports = {
-  formatChange,
-  isNasdaqTradingHours,
-  withRetry,
-  cacheOperations,
-  stockAPI,
-};
+module.exports = { stockAPI, cacheOperations, isNasdaqTradingHours };

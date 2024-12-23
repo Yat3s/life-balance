@@ -1,86 +1,60 @@
 const {
-  isNasdaqTradingHours,
-  cacheOperations,
   stockAPI,
+  cacheOperations,
+  isNasdaqTradingHours,
 } = require('../lib/stock-utils');
 
-exports.main = async (event, context) => {
-  const symbols = ['MSFT', 'AAPL', 'NVDA', 'GOOG'];
+const SYMBOLS = ['MSFT', 'AAPL', 'NVDA', 'GOOG'];
 
-  try {
-    const isTrading = isNasdaqTradingHours();
-    let stocks = [];
-    let dataSource = 'Alpha Vantage';
-    let fromCache = false;
-
-    const cachedData = await cacheOperations.get();
-
-    if (isTrading) {
-      try {
-        for (const symbol of symbols) {
-          const [quoteData, overviewData] = await Promise.all([
-            stockAPI.fetchQuote(symbol),
-            stockAPI.fetchCompanyOverview(symbol),
-          ]);
-
-          stocks.push({
-            ...quoteData,
-            ...overviewData,
-          });
-
-          await new Promise((resolve) => setTimeout(resolve, 500));
-        }
-      } catch (error) {
-        console.error('Error fetching real-time data:', error);
-        if (cachedData) {
-          stocks = cachedData.stocks;
-          dataSource = 'Cache (Fallback)';
-          fromCache = true;
-        } else {
-          throw error;
-        }
-      }
-    } else {
-      if (cachedData) {
-        stocks = cachedData.stocks;
-        dataSource = 'Cache';
-        fromCache = true;
-      } else {
-        for (const symbol of symbols) {
-          const [quoteData, overviewData] = await Promise.all([
-            stockAPI.fetchQuote(symbol),
-            stockAPI.fetchCompanyOverview(symbol),
-          ]);
-
-          stocks.push({
-            ...quoteData,
-            ...overviewData,
-          });
-
-          await new Promise((resolve) => setTimeout(resolve, 500));
-        }
-      }
+async function getStockData(isTrading, cachedData) {
+  if (isTrading) {
+    try {
+      const stocks = await stockAPI.fetchBatch(SYMBOLS);
+      return { stocks, dataSource: 'Alpha Vantage', fromCache: false };
+    } catch (error) {
+      if (!cachedData) throw error;
+      return {
+        stocks: cachedData.stocks,
+        dataSource: 'Cache (Fallback)',
+        fromCache: true,
+      };
     }
+  }
 
-    if (stocks.length === 0) {
+  return cachedData
+    ? { stocks: cachedData.stocks, dataSource: 'Cache', fromCache: true }
+    : {
+        stocks: await stockAPI.fetchBatch(SYMBOLS),
+        dataSource: 'Alpha Vantage',
+        fromCache: false,
+      };
+}
+
+exports.main = async () => {
+  try {
+    const [cachedData, isTrading] = await Promise.all([
+      cacheOperations.get(),
+      isNasdaqTradingHours(),
+    ]);
+
+    const { stocks, dataSource, fromCache } = await getStockData(
+      isTrading,
+      cachedData
+    );
+
+    if (!stocks || stocks.length === 0) {
       throw new Error('No stock data retrieved');
     }
 
     stocks.sort((a, b) => parseFloat(b.mktcap) - parseFloat(a.mktcap));
-
     const top1 = stocks[0];
-    const msft = stocks.find((stock) => stock.symbol === 'MSFT') || null;
+    const msft = stocks.find((stock) => stock.symbol === 'MSFT');
 
     const responseData = {
       top1,
-      msft: msft
-        ? {
-            ...msft,
-            change: msft.formattedChange,
-          }
-        : null,
+      msft: msft ? { ...msft, change: msft.formattedChange } : null,
       stocks,
-      timestamp: new Date().getTime(),
+      timestamp: Date.now(),
       dataSource,
     };
 
