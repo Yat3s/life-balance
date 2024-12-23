@@ -13,6 +13,7 @@ Page({
 
   onLoad(options) {
     const id = options.id;
+    wx.showLoading();
     fetchUserProfile(id).then((user) => {
       console.log(user);
       if (user.birthday) {
@@ -46,16 +47,20 @@ Page({
       });
     });
 
-    fetchUserActivities(id).then((activities) => {
-      console.log("fetchUserActivities", activities);
-      activities.forEach((activity) => {
-        activity.isOrganizer = activity.organizer._id === id;
-        activity.createDateStr = formatDate(activity._createTime);
+    fetchUserActivities(id)
+      .then((activities) => {
+        console.log("fetchUserActivities", activities);
+        activities.forEach((activity) => {
+          activity.isOrganizer = activity.organizer._id === id;
+          activity.createDateStr = formatDate(activity._createTime);
+        });
+        this.setData({
+          activities,
+        });
+      })
+      .finally(() => {
+        wx.hideLoading();
       });
-      this.setData({
-        activities,
-      });
-    });
   },
 
   onPhotoClick(e) {
