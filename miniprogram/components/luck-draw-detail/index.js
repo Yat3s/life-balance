@@ -14,7 +14,7 @@ Component({
 
   data: {
     hasParticipated: false,
-    patchVideoAd: null,
+    customAd: null,
     adId: LUCK_DRAW_AD_TEMP_ID,
   },
 
@@ -24,8 +24,8 @@ Component({
     },
 
     detached() {
-      if (this.data.patchVideoAd) {
-        this.data.patchVideoAd.destroy();
+      if (this.data.customAd) {
+        this.data.customAd.destroy();
       }
     },
   },
@@ -40,7 +40,7 @@ Component({
 
   methods: {
     checkParticipationStatus() {
-      const { luckDraw, userInfo } = this.properties;
+      const { luckDraw, userInfo } = this.data;
       if (!luckDraw?.tickets || !userInfo) return;
 
       const hasParticipated = luckDraw.tickets.some(
@@ -50,39 +50,39 @@ Component({
       this.setData({ hasParticipated });
     },
 
-    setupPatchVideoAd() {
+    setupCustomAd() {
       if (!wx.createRewardedVideoAd) return;
 
-      const patchVideoAd = wx.createRewardedVideoAd({
+      const customAd = wx.createRewardedVideoAd({
         adUnitId: LUCK_DRAW_AD_TEMP_ID,
       });
 
-      patchVideoAd.onLoad(() => {
-        console.log("Patch video ad loaded successfully");
+      customAd.onLoad(() => {
+        console.log("Custom ad loaded successfully");
       });
 
-      patchVideoAd.onError((err) => {
+      customAd.onError((err) => {
         console.error("Failed to load custom video ad", err);
       });
 
-      patchVideoAd.onClose(() => {
-        console.log("Patch video ad closed");
+      customAd.onClose(() => {
+        console.log("Custom ad closed");
       });
 
-      this.setData({ patchVideoAd });
+      this.setData({ customAd });
     },
 
     showPatchAd() {
-      if (!this.data.patchVideoAd) {
-        this.setupPatchVideoAd();
+      if (!this.data.customAd) {
+        this.setupCustomAd();
       }
 
-      this.data.patchVideoAd?.show().catch(() => {
-        this.data.patchVideoAd
+      this.data.customAd?.show().catch(() => {
+        this.data.customAd
           ?.load()
-          .then(() => this.data.patchVideoAd.show())
+          .then(() => this.data.customAd.show())
           .catch((err) => {
-            console.error("Failed to display patch video ad", err);
+            console.error("Failed to display custom ad", err);
           });
       });
     },
