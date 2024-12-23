@@ -1,34 +1,10 @@
 const {
-  stockAPI,
+  getStockData,
   cacheOperations,
   isNasdaqTradingHours,
 } = require('../lib/stock-utils');
 
 const SYMBOLS = ['MSFT', 'AAPL', 'NVDA', 'GOOG'];
-
-async function getStockData(isTrading, cachedData) {
-  if (isTrading) {
-    try {
-      const stocks = await stockAPI.fetchBatch(SYMBOLS);
-      return { stocks, dataSource: 'Alpha Vantage', fromCache: false };
-    } catch (error) {
-      if (!cachedData) throw error;
-      return {
-        stocks: cachedData.stocks,
-        dataSource: 'Cache (Fallback)',
-        fromCache: true,
-      };
-    }
-  }
-
-  return cachedData
-    ? { stocks: cachedData.stocks, dataSource: 'Cache', fromCache: true }
-    : {
-        stocks: await stockAPI.fetchBatch(SYMBOLS),
-        dataSource: 'Alpha Vantage',
-        fromCache: false,
-      };
-}
 
 exports.main = async () => {
   try {
@@ -38,6 +14,7 @@ exports.main = async () => {
     ]);
 
     const { stocks, dataSource, fromCache } = await getStockData(
+      SYMBOLS,
       isTrading,
       cachedData
     );

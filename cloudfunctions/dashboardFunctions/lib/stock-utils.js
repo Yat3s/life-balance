@@ -190,4 +190,35 @@ const stockAPI = {
   },
 };
 
-module.exports = { stockAPI, cacheOperations, isNasdaqTradingHours };
+/**
+ * Get stock data based on trading hours and cache status
+ */
+async function getStockData(symbols, isTrading, cachedData) {
+  if (isTrading) {
+    try {
+      const stocks = await stockAPI.fetchBatch(symbols);
+      return { stocks, dataSource: 'Alpha Vantage', fromCache: false };
+    } catch (error) {
+      if (!cachedData) throw error;
+      return {
+        stocks: cachedData.stocks,
+        dataSource: 'Cache (Fallback)',
+        fromCache: true,
+      };
+    }
+  }
+
+  return cachedData
+    ? { stocks: cachedData.stocks, dataSource: 'Cache', fromCache: true }
+    : {
+        stocks: await stockAPI.fetchBatch(symbols),
+        dataSource: 'Alpha Vantage',
+        fromCache: false,
+      };
+}
+
+module.exports = {
+  cacheOperations,
+  isNasdaqTradingHours,
+  getStockData,
+};
