@@ -21,6 +21,11 @@ Page({
   },
 
   async onLoad(options) {
+    fetchUserInfo().then((res) => {
+      this.setData({
+        userInfo: res,
+      });
+    });
     if (options.id) {
       this.fetchCurrentLuckDraw(options.id);
     }
@@ -30,22 +35,17 @@ Page({
         (draw) => draw._id !== options.id
       ),
     });
-    fetchUserInfo().then((res) => {
-      this.setData(
-        {
-          userInfo: res,
-        },
-        () => {
-          this.setupVideoAd();
-        }
-      );
-    });
   },
 
   async fetchCurrentLuckDraw(luckDrawId) {
     const currentLuckDraw = await fetchLuckDrawById(luckDrawId);
+    const hasParticipated =
+      currentLuckDraw?.tickets?.some(
+        (ticket) => ticket.userId === this.data.userInfo._openid
+      ) || false;
     this.setData({
       currentLuckDraw,
+      hasParticipated,
     });
   },
 
@@ -224,47 +224,39 @@ Page({
     const hasShownModal = wx.getStorageSync(ADS_MODAL_SHOWN_KEY);
 
     if (!hasShownModal) {
-      this.setData({
-        showingModal: "ads-desc",
-      });
+      this.setData({ showingModal: "ads-desc" });
       wx.setStorageSync(ADS_MODAL_SHOWN_KEY, true);
+      this.setupVideoAd();
     } else {
-      if (this.data.videoAd) {
-        this.data.videoAd.show().catch(() => {
-          this.data.videoAd
-            .load()
-            .then(() => this.data.videoAd.show())
-            .catch((err) => {
-              console.error("Failed to display video ad", err);
-              wx.showToast({
-                title: "广告加载失败",
-                icon: "none",
-              });
-            });
-        });
-      }
+      this.showVideoAd();
     }
   },
 
-  hideModal() {
-    if (this.data.showingModal === "ads-desc" && this.data.videoAd) {
-      this.data.videoAd.show().catch(() => {
-        this.data.videoAd
-          .load()
-          .then(() => this.data.videoAd.show())
-          .catch((err) => {
-            console.error("Failed to display video ad", err);
-            wx.showToast({
-              title: "广告加载失败",
-              icon: "none",
-            });
-          });
-      });
+  showVideoAd() {
+    if (!this.data.videoAd) {
+      this.setupVideoAd();
     }
 
-    this.setData({
-      showingModal: null,
+    this.data.videoAd?.show().catch(() => {
+      this.data.videoAd
+        ?.load()
+        .then(() => this.data.videoAd.show())
+        .catch((err) => {
+          console.error("Failed to display video ad", err);
+          wx.showToast({
+            title: "广告加载失败",
+            icon: "none",
+          });
+        });
     });
+  },
+
+  hideModal() {
+    if (this.data.showingModal === "ads-desc") {
+      this.showVideoAd();
+    }
+
+    this.setData({ showingModal: null });
   },
 
   onTapLuckDrawHistory(e) {
