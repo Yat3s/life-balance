@@ -53,13 +53,13 @@ Page({
           title: "开奖成功",
           icon: "success",
         });
-        this.fetchLuckDrawData();
+        this.fetchCurrentLuckDraw(this.data.currentLuckDraw._id);
         setTimeout(() => {
           this.checkDrawResult();
         }, CHECK_DRAW_RESULT_DURATION);
       } else {
         wx.showToast({
-          title: result.error || "开奖失败",
+          title: result.message || "开奖失败",
           icon: "none",
         });
       }
