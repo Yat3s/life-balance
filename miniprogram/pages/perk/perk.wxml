@@ -11,7 +11,7 @@
         <view wx:for="{{partnerMerchants}}" wx:key="id" bindtap="onPartnerMerchantItemTap" data-partner-merchant-id="{{item._id}}" class="flex flex-col p-6 pb-4 bg-white rounded-lg">
           <view class="flex items-center gap-2">
             <image src="{{item.logo}}" lazy-load="{{true}}" class="w-12 h-12 bg-gray-200 rounded shrink-0" mode="aspectFill" />
-            <view class="flex-1">
+            <view class="flex-1 overflow-hidden">
               <view class="text-black text-lg font-w-450 truncate">{{item.name}}</view>
               <view class="mt-1 text-gray text-xs truncate">{{item.location.address}}</view>
             </view>

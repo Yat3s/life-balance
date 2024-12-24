@@ -82,7 +82,7 @@ Page({
           width: 17,
           height: 25,
           callout: {
-            content: partnerMerchant.name,
+            content: partnerMerchant.location.name,
             color: "#000",
             fontSize: 12,
             borderRadius: 3,
