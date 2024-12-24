@@ -6,23 +6,7 @@
  * @throws {Error} When there are insufficient participants or no tickets
  */
 function performLuckDraw(tickets, prizeTiers) {
-  // Validate input parameters
-  validateInput(tickets, prizeTiers);
-
-  // Group tickets by userId for efficient access
-  const ticketsByUser = groupTicketsByUser(tickets);
-  const users = Object.keys(ticketsByUser);
-
-  // Shuffle users for randomization
-  const shuffledUsers = shuffleArray([...users]);
-
-  return distributePrizes(shuffledUsers, ticketsByUser, prizeTiers);
-}
-
-/**
- * Validate input parameters for the lucky draw
- */
-function validateInput(tickets, prizeTiers) {
+  // Validate inputs
   if (!tickets?.length) {
     throw new Error("No tickets available for draw");
   }
@@ -39,43 +23,24 @@ function validateInput(tickets, prizeTiers) {
       `Insufficient participants. Required: ${totalPrizes}, Current: ${uniqueUsers}`
     );
   }
-}
 
-/**
- * Group tickets by userId for efficient access
- */
-function groupTicketsByUser(tickets) {
-  return tickets.reduce((acc, ticket) => {
+  // Group tickets by userId
+  const ticketsByUser = tickets.reduce((acc, ticket) => {
     if (!acc[ticket.userId]) {
       acc[ticket.userId] = [];
     }
     acc[ticket.userId].push(ticket);
     return acc;
   }, {});
-}
 
-/**
- * Shuffle array using Fisher-Yates algorithm
- */
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
+  // Shuffle users for random selection
+  const users = Object.keys(ticketsByUser);
+  for (let i = users.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
+    [users[i], users[j]] = [users[j], users[i]];
   }
-  return array;
-}
 
-/**
- * Select a random ticket from user's tickets
- */
-function getRandomTicket(userTickets) {
-  return userTickets[Math.floor(Math.random() * userTickets.length)];
-}
-
-/**
- * Distribute prizes across tiers
- */
-function distributePrizes(users, ticketsByUser, prizeTiers) {
+  // Distribute prizes
   const result = {};
   const winningUsers = new Set();
 
@@ -86,7 +51,9 @@ function distributePrizes(users, ticketsByUser, prizeTiers) {
     const winnerCount = Math.min(count, availableUsers.length);
     for (let i = 0; i < winnerCount; i++) {
       const userId = availableUsers[i];
-      const randomTicket = getRandomTicket(ticketsByUser[userId]);
+      const userTickets = ticketsByUser[userId];
+      const randomTicket =
+        userTickets[Math.floor(Math.random() * userTickets.length)];
 
       winners.push(randomTicket.code);
       winningUsers.add(userId);
