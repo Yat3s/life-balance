@@ -33,11 +33,13 @@ function performLuckDraw(tickets, prizeTiers) {
     return acc;
   }, {});
 
-  // Shuffle users for random selection
   const users = Object.keys(ticketsByUser);
-  for (let i = users.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [users[i], users[j]] = [users[j], users[i]];
+
+  if (users.length > 1) {
+    for (let i = users.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [users[i], users[j]] = [users[j], users[i]];
+    }
   }
 
   // Distribute prizes
@@ -69,22 +71,22 @@ module.exports = { performLuckDraw };
 
 // Test Lucky draw
 const tickets = [
-  { code: "A001" },
-  { code: "A002" },
-  { code: "A003" },
-  { code: "A004" },
-  { code: "A005" },
-  { code: "A006" },
-  { code: "A007" },
-  { code: "A008" },
-  { code: "A009" },
-  { code: "A010" },
+  { code: "A001", userId: "user1" },
+  { code: "A002", userId: "user1" },
+  { code: "A003", userId: "user2" },
+  { code: "A004", userId: "user2" },
+  { code: "A005", userId: "user3" },
+  { code: "A006", userId: "user3" },
+  { code: "A007", userId: "user4" },
+  { code: "A008", userId: "user4" },
+  { code: "A009", userId: "user5" },
+  { code: "A010", userId: "user5" },
 ];
 
 const prizeTiers = [
   { count: 2, tier: "First Prize" },
-  { count: 3, tier: "Second Prize" },
-  { count: 5, tier: "Third Prize" },
+  { count: 2, tier: "Second Prize" },
+  { count: 1, tier: "Third Prize" },
 ];
 
 const drawResult = performLuckDraw(tickets, prizeTiers);

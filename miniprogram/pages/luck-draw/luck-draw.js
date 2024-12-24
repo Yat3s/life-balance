@@ -141,6 +141,39 @@ Page({
     });
   },
 
+  onVideoAdClose(res) {
+    if (res && res.isEnded) {
+      wx.getSetting({
+        withSubscriptions: true,
+        success: (res) => {
+          const subscriptionsSetting = res.subscriptionsSetting;
+          const isAccepted =
+            subscriptionsSetting.itemSettings?.[
+              LUCK_DRAW_SUBSCRIPTION_TEMP_ID
+            ] === "accept";
+
+          if (!isAccepted) {
+            this.subscribeNotification(
+              LUCK_DRAW_SUBSCRIPTION_TEMP_ID,
+              "开奖提醒订阅",
+              "为了及时收到开奖结果通知，建议订阅开奖提醒。不订阅的话将无法收到开奖通知哦～"
+            );
+          } else {
+            this.createTicket();
+          }
+        },
+        fail: () => {
+          this.createTicket();
+        },
+      });
+    } else {
+      wx.showToast({
+        title: "需要观看完整视频才能参与",
+        icon: "none",
+      });
+    }
+  },
+
   setupVideoAd() {
     if (wx.createRewardedVideoAd) {
       this.setData({
@@ -157,20 +190,7 @@ Page({
         console.error("Failed to load video ad", err);
       });
 
-      this.data.videoAd.onClose((res) => {
-        if (res && res.isEnded) {
-          this.subscribeNotification(
-            LUCK_DRAW_SUBSCRIPTION_TEMP_ID,
-            "开奖提醒订阅",
-            "为了及时收到开奖结果通知，建议订阅开奖提醒。不订阅的话将无法收到开奖通知哦～"
-          );
-        } else {
-          wx.showToast({
-            title: "需要观看完整视频才能参与",
-            icon: "none",
-          });
-        }
-      });
+      this.data.videoAd.onClose(this.onVideoAdClose);
     }
   },
 
@@ -190,7 +210,6 @@ Page({
 
       if (result.success) {
         await this.fetchCurrentLuckDraw(this.data.currentLuckDraw._id);
-
         wx.showToast({
           title: "获得抽奖码成功！",
           icon: "success",

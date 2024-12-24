@@ -25,7 +25,7 @@ Component({
     },
 
     debugDraw() {
-      this.triggerEvent("debugDraw", this.data.luckDraw._id);
+      this.triggerEvent("debugDraw");
     },
   },
 });
