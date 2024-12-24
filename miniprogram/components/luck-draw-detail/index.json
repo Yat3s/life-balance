@@ -1,7 +1,8 @@
 {
   "component": true,
   "usingComponents": {
-    "user-avatar": "/components/user-avatar/index"
+    "user-avatar": "/components/user-avatar/index",
+    "o-image": "/components/oimage/oimage"
   },
   "styleIsolation": "apply-shared"
 }

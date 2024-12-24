@@ -225,6 +225,7 @@ Component({
         circle_name: e.currentTarget.dataset.circle.name,
       });
       const showingCircle = e.currentTarget.dataset.circle;
+      // console.log("showingCircle", showingCircle);
       this.setData({
         showingCircle,
         showingModal: "circle",

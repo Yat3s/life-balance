@@ -108,7 +108,8 @@
         <block wx:if="{{item.pictures && item.pictures.length > 0}}">
           <view class="flex gap-2 mb-2">
             <block wx:for="{{item.pictures}}" wx:for-item="pic" wx:key="index">
-              <image wx:if="{{index < 3}}" src="{{pic}}" class="w-20 h-20 bg-gray-200" lazy-load="{{true}}" mode="aspectFill" />
+              <!-- <image wx:if="{{index < 3}}" src="{{pic}}" class="w-20 h-20 bg-gray-200" lazy-load="{{true}}" mode="aspectFill" /> -->
+              <o-image className="w-20 h-20 bg-gray-200" url="{{pic}}" useThumbnail="{{true}}" width="120" height="120" />
             </block>
             <view wx:if="{{item.pictures.length > 3}}" class="flex items-end text-more text-sm self-baseline">
               +{{item.pictures.length - 3}}
@@ -186,7 +187,7 @@
   </view>
 </view>
 <!-- Flea Market Product Modal -->
-<view class="cu-modal {{ userInfo.company && showingModal === 'flea-market-product' ? 'show' : '' }}" bind:tap="hideModal" catchtouchmove>
+<view class="cu-modal {{ userInfo.company && selectedProduct && showingModal === 'flea-market-product' ? 'show' : '' }}" bind:tap="hideModal" catchtouchmove>
   <view class="cu-dialog rounded-lg bg-white" catch:tap>
     <view class="p-6">
       <view class="flex justify-between mb-3">
@@ -226,13 +227,15 @@
         <block wx:if="{{selectedProduct.pictures.length > 1}}">
           <swiper class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6" catch:tap="previewProductPicture" data-product="{{selectedProduct}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
             <swiper-item wx:for="{{selectedProduct.pictures}}" wx:for-item="picture" wx:key="*this">
-              <image src="{{picture}}" mode="aspectFill" class="w-full h-full rounded-lg" lazy-load="{{true}}" />
+              <!-- <image src="{{picture}}" mode="aspectFill" class="w-full h-full rounded-lg" lazy-load="{{true}}" /> -->
+              <o-image wx:if="{{picture}}" className="w-full h-full rounded-lg" url="{{picture}}" useThumbnail="{{true}}" width="300" height="300" />
             </swiper-item>
           </swiper>
         </block>
         <block wx:else>
           <view class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6" catch:tap="previewProductPicture" data-product="{{selectedProduct}}">
-            <image src="{{selectedProduct.pictures[0]}}" mode="aspectFill" class="w-full h-full rounded-lg" lazy-load="{{true}}" />
+            <!-- <image src="{{selectedProduct.pictures[0]}}" mode="aspectFill" class="w-full h-full rounded-lg" lazy-load="{{true}}" /> -->
+            <o-image wx:if="{{selectedProduct.pictures[0]}}" className="w-full h-full rounded-lg" url="{{selectedProduct.pictures[0]}}" useThumbnail="{{true}}" width="300" height="300" />
           </view>
         </block>
       </block>

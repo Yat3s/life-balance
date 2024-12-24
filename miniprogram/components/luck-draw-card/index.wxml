@@ -1,6 +1,6 @@
 <view wx:if="{{luckDraw}}" class="bg-home-card p-4 rounded-xl relative" catch:tap="navToLuckDraw">
   <view class="flex">
-    <image src="{{luckDraw.prizeTiers[0].images[0]}}" class="h-26 w-24 rounded-lg bg-gray-200" mode="aspectFill" lazy-load="{{true}}" />
+    <o-image className="h-26 w-24 rounded-lg bg-gray-200" url="{{luckDraw.prizeTiers[0].images[0]}}" useThumbnail="{{true}}" width="200" height="100" />
     <view class="shrink-0 ml-4 z-20 flex flex-col">
       <view class="flex items-center gap-1">
         <view class="text-card text-xs">{{luckDraw.series}}</view>
