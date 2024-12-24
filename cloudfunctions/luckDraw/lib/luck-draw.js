@@ -1,45 +1,63 @@
 /**
- * Perform a lucky draw
- * @param {Array<{code: string}>} tickets - List of participating tickets
+ * Perform a lucky draw ensuring fair distribution
+ * @param {Array<{code: string, userId: string}>} tickets - List of participating tickets
  * @param {Array<{count: number, tier: string}>} prizeTiers - Prize tiers and their quantities
  * @returns {Object} - Winners grouped by prize tier
  */
-const performLuckDraw = (tickets, prizeTiers) => {
-  // Deep copy the tickets array to avoid modifying the original
-  let remainingTickets = [...tickets];
+function performLuckDraw(tickets, prizeTiers) {
+  if (!tickets.length) {
+    throw new Error("No tickets available for draw");
+  }
 
-  // Initialize result object
+  // Group tickets by userId for efficient access
+  const ticketsByUser = tickets.reduce((acc, ticket) => {
+    if (!acc[ticket.userId]) {
+      acc[ticket.userId] = [];
+    }
+    acc[ticket.userId].push(ticket);
+    return acc;
+  }, {});
+
+  // Get unique users and shuffle them
+  const users = Object.keys(ticketsByUser);
+  for (let i = users.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [users[i], users[j]] = [users[j], users[i]];
+  }
+
   const result = {};
+  const winningUsers = new Set();
 
-  // Iterate through each prize tier
+  // Process each prize tier
   for (const { count, tier } of prizeTiers) {
-    // Throw error if there aren't enough tickets remaining
-    if (remainingTickets.length < count) {
-      throw new Error(`Not enough tickets for tier ${tier}`);
-    }
-
     const winners = [];
+    const availableUsers = users.filter((userId) => !winningUsers.has(userId));
 
-    // Randomly select specified number of winners
-    for (let i = 0; i < count; i++) {
-      // Generate random index
-      const randomIndex = Math.floor(Math.random() * remainingTickets.length);
+    // Get winners for current tier
+    const winnerCount = Math.min(count, availableUsers.length);
+    for (let i = 0; i < winnerCount; i++) {
+      const userId = availableUsers[i];
+      const userTickets = ticketsByUser[userId];
 
-      // Remove and get the winning ticket from remaining tickets
-      const [winner] = remainingTickets.splice(randomIndex, 1);
+      // Randomly select one ticket from user's tickets
+      const randomTicket =
+        userTickets[Math.floor(Math.random() * userTickets.length)];
 
-      // Add winning code to winners list
-      winners.push(winner.code);
+      winners.push(randomTicket.code);
+      winningUsers.add(userId);
     }
 
-    // Add winners of this tier to result object
-    result[tier] = {
-      winners,
-    };
+    if (winners.length < count) {
+      console.warn(
+        `Not enough unique users for tier ${tier}. Required: ${count}, Found: ${winners.length}`
+      );
+    }
+
+    result[tier] = { winners };
   }
 
   return result;
-};
+}
 
 module.exports = { performLuckDraw };
 

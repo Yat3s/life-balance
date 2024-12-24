@@ -27,7 +27,7 @@ Page({
       });
     });
     if (options.id) {
-      this.fetchCurrentLuckDraw(options.id);
+      await this.fetchCurrentLuckDraw(options.id);
     }
     const luckDrawHistory = await fetchLuckDrawHistory();
     this.setData({
@@ -39,14 +39,7 @@ Page({
 
   async fetchCurrentLuckDraw(luckDrawId) {
     const currentLuckDraw = await fetchLuckDrawById(luckDrawId);
-    const hasParticipated =
-      currentLuckDraw?.tickets?.some(
-        (ticket) => ticket.userId === this.data.userInfo._openid
-      ) || false;
-    this.setData({
-      currentLuckDraw,
-      hasParticipated,
-    });
+    this.setData({ currentLuckDraw });
   },
 
   async debugDraw() {
@@ -193,24 +186,23 @@ Page({
 
       wx.showLoading({ title: "处理中" });
 
-      const ticket = await createLuckDrawTicket(this.data.currentLuckDraw._id);
+      const result = await createLuckDrawTicket(this.data.currentLuckDraw._id);
 
-      if (!ticket.success) {
-        wx.hideLoading();
+      if (result.success) {
+        await this.fetchCurrentLuckDraw(this.data.currentLuckDraw._id);
+
         wx.showToast({
-          title: ticket.message || "参与失败",
+          title: "获得抽奖码成功！",
+          icon: "success",
+        });
+      } else {
+        wx.showToast({
+          title: result.message || "参与失败",
           icon: "none",
         });
-        return;
       }
 
       wx.hideLoading();
-      wx.showToast({
-        title: "参与成功！",
-        icon: "success",
-      });
-
-      this.fetchCurrentLuckDraw(options.id);
     } catch (error) {
       wx.hideLoading();
       wx.showToast({

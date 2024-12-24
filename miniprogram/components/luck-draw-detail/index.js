@@ -13,28 +13,10 @@ Component({
   },
 
   data: {
-    hasParticipated: false,
     adId: LUCK_DRAW_CUSTOM_AD_ID,
   },
 
-  lifetimes: {
-    attached() {
-      this.checkParticipationStatus();
-    },
-  },
-
   methods: {
-    checkParticipationStatus() {
-      const { luckDraw, userInfo } = this.data;
-      if (!luckDraw?.tickets || !userInfo) return;
-
-      const hasParticipated = luckDraw.tickets.some(
-        (ticket) => ticket.userId === userInfo._openid
-      );
-
-      this.setData({ hasParticipated });
-    },
-
     previewImage() {
       const images = this.data.luckDraw.prizeTiers[0].images || [];
       wx.previewImage({
