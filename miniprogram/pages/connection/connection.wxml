@@ -153,9 +153,11 @@
 <view class="cu-modal {{showingModal === 'circle' ? 'show' : ''}}" bindtap="onDismissModal" catchtouchmove>
   <view class="cu-dialog modal-main" catchtap>
     <view class="flex justify-between margin-bottom-lg">
-      <image bindtap="onCircleImageClick" src="{{showingCircle.coverPic}}" mode="aspectFill" wx:if="{{showingCircle.coverPic}}" class="circle-detail-cover-pic"></image>
+      <!-- <image bindtap="onCircleImageClick" src="{{showingCircle.coverPic}}" mode="aspectFill" wx:if="{{showingCircle.coverPic}}" class="circle-detail-cover-pic"></image> -->
+      <o-image wx:if="{{showingCircle.coverPic}}" bindtap="onCircleImageClick" className="rounded-lg h-25 w-50" url="{{showingCircle.coverPic}}" useThumbnail="{{true}}" width="130" height="80" />
       <view wx:if="{{!showingCircle.coverPic}}" class="circle-detail-logo-bg center">
-        <image class="circle-detail-logo" src="{{showingCircle.icon}}"></image>
+        <!-- <image class="circle-detail-logo" src="{{showingCircle.icon}}"></image> -->
+        <o-image wx:if="{{showingCircle.icon}}" className="w-10 h-10" url="{{showingCircle.icon}}" useThumbnail="{{true}}" width="130" height="80" />
       </view>
       <view class="action" bindtap="onDismissModal">
         <text class="modal-dismiss-icon cuIcon-close text-red"></text>

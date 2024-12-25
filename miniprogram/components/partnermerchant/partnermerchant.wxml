@@ -23,7 +23,7 @@
         </view>
         <view class="flex items-center gap-2">
           <view class="w-5 h-5 rounded-full bg-logo">
-            <image src="{{partnerMerchant.logo}}" class="w-5 h-5 rounded-full" mode="aspectFill" />
+            <o-image className="w-5 h-5 rounded-full" url="{{partnerMerchant.logo}}" useThumbnail="{{true}}" width="50" height="50" />
           </view>
           <view class="flex-1 text-sm font-semibold truncate">
             {{partnerMerchant.name}}

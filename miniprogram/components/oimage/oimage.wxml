@@ -1,0 +1,1 @@
+<image class="bg-gray-200 {{className}}" src="{{imageUrl}}" mode="aspectFill" lazy-load="{{true}}" />
