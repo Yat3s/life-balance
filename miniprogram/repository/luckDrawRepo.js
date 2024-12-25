@@ -7,7 +7,7 @@ const COLLECTION_NAME = "luck-draws";
 const db = wx.cloud.database();
 const LATEST_LUCK_DRAW_COUNT = 1;
 const LUCK_DRAW_HISTORY_COUNT = 10;
-const MAX_TICKETS_PER_USER = 3;
+const MAX_TICKETS_PER_USER = 2;
 
 const preprocessLuckDraw = (luckDrawData) => {
   if (!luckDrawData) return null;
@@ -61,7 +61,7 @@ const preprocessLuckDraw = (luckDrawData) => {
 
       const userWinRate =
         totalTickets > 0 && userTickets.length > 0
-          ? ((userTickets.length / totalTickets) * winnerCount * 100).toFixed(1)
+          ? ((userTickets.length / totalTickets) * winnerCount * 100).toFixed(3)
           : 0;
 
       processedData = {

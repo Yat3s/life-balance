@@ -44,5 +44,5 @@ page {
 }
 
 .z-max {
-  z-index: 999999;
+  z-index: 99;
 }

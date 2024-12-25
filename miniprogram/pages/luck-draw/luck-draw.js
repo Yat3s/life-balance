@@ -103,31 +103,14 @@ Page({
           wx.requestSubscribeMessage({
             tmplIds: [tempId],
             success: (res) => {
-              if (res[tempId] === "accept") {
-                wx.showToast({
-                  title: "订阅成功，开奖后将收到通知",
-                  icon: "success",
-                  duration: 2000,
-                });
-              }
               this.createTicket();
             },
             fail: (err) => {
               console.error("Subscribe failed:", err);
-              wx.showToast({
-                title: "未订阅提醒，开奖结果将无法及时通知",
-                icon: "none",
-                duration: 2000,
-              });
               this.createTicket();
             },
           });
         } else if (res.cancel) {
-          wx.showToast({
-            title: "未订阅提醒，开奖结果将无法及时通知",
-            icon: "none",
-            duration: 2000,
-          });
           this.createTicket();
         }
       },
@@ -141,7 +124,8 @@ Page({
     });
   },
 
-  onVideoAdClose(res) {
+  onVideoAdClose: function (res) {
+    const that = this;
     if (res && res.isEnded) {
       wx.getSetting({
         withSubscriptions: true,
@@ -153,17 +137,17 @@ Page({
             ] === "accept";
 
           if (!isAccepted) {
-            this.subscribeNotification(
+            that.subscribeNotification(
               LUCK_DRAW_SUBSCRIPTION_TEMP_ID,
               "开奖提醒订阅",
               "为了及时收到开奖结果通知，建议订阅开奖提醒。不订阅的话将无法收到开奖通知哦～"
             );
           } else {
-            this.createTicket();
+            that.createTicket();
           }
         },
         fail: () => {
-          this.createTicket();
+          that.createTicket();
         },
       });
     } else {
@@ -190,7 +174,7 @@ Page({
         console.error("Failed to load video ad", err);
       });
 
-      this.data.videoAd.onClose(this.onVideoAdClose);
+      this.data.videoAd.onClose(this.onVideoAdClose.bind(this));
     }
   },
 
@@ -210,8 +194,10 @@ Page({
 
       if (result.success) {
         await this.fetchCurrentLuckDraw(this.data.currentLuckDraw._id);
+
+        const isFirstTime = this.data.currentLuckDraw.userTickets.length === 1;
         wx.showToast({
-          title: "获得抽奖码成功！",
+          title: isFirstTime ? "参与成功！" : "提高概率成功！",
           icon: "success",
         });
       } else {
