@@ -58,18 +58,22 @@ Page({
           // calculate promotion value
           item.promotion.promotionValue = formatPromotionValue(item.promotion);
 
-          item.commentCount = item.comments ? item.comments.length : 0;
-          item.comments.sort((a, b) => {
-            const dateA = new Date(a.updatedAt || a.createdAt);
-            const dateB = new Date(b.updatedAt || b.createdAt);
-            return dateB - dateA;
-          });
-          // filter comments
-          item.comments = item.comments
-            ? item.comments
-                .filter((comment) => comment.user._openid)
-                .slice(0, 3)
-            : [];
+          if (!item.comments) {
+            item.commentCount = 0;
+            item.comments = [];
+          } else {
+            item.commentCount = item.comments.length;
+            item.comments = item.comments
+              ? item.comments
+                  .filter((comment) => comment.user._openid)
+                  .sort((a, b) => {
+                    const dateA = new Date(a.updatedAt || a.createdAt);
+                    const dateB = new Date(b.updatedAt || b.createdAt);
+                    return dateB - dateA;
+                  })
+                  .slice(0, 3)
+              : [];
+          }
           return item;
         });
         this.setData({
