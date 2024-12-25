@@ -227,15 +227,13 @@
         <block wx:if="{{selectedProduct.pictures.length > 1}}">
           <swiper class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6" catch:tap="previewProductPicture" data-product="{{selectedProduct}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
             <swiper-item wx:for="{{selectedProduct.pictures}}" wx:for-item="picture" wx:key="*this">
-              <!-- <image src="{{picture}}" mode="aspectFill" class="w-full h-full rounded-lg" lazy-load="{{true}}" /> -->
-              <o-image wx:if="{{picture}}" className="w-full h-full rounded-lg" url="{{picture}}" useThumbnail="{{true}}" width="300" height="300" />
+              <o-image wx:if="{{picture}}" className="w-full h-full rounded-lg" url="{{picture}}" useThumbnail="{{false}}" />
             </swiper-item>
           </swiper>
         </block>
         <block wx:else>
           <view class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6" catch:tap="previewProductPicture" data-product="{{selectedProduct}}">
-            <!-- <image src="{{selectedProduct.pictures[0]}}" mode="aspectFill" class="w-full h-full rounded-lg" lazy-load="{{true}}" /> -->
-            <o-image wx:if="{{selectedProduct.pictures[0]}}" className="w-full h-full rounded-lg" url="{{selectedProduct.pictures[0]}}" useThumbnail="{{true}}" width="300" height="300" />
+            <o-image wx:if="{{selectedProduct.pictures[0]}}" className="w-full h-full rounded-lg" url="{{selectedProduct.pictures[0]}}" useThumbnail="{{false}}"/>
           </view>
         </block>
       </block>

@@ -22,17 +22,21 @@ Component({
         this.convertCloudToHttps();
       },
     },
+    mode: {
+      type: String,
+      value: "aspectFill",
+    },
     useThumbnail: {
       type: Boolean,
       value: false,
     },
     width: {
       type: Number,
-      value: 0,
+      value: 200,
     },
     height: {
       type: Number,
-      value: 0,
+      value: 200,
     },
   },
 
