@@ -7,9 +7,12 @@ const COLLECTION_NAME = "luck-draws";
 const db = wx.cloud.database();
 const LATEST_LUCK_DRAW_COUNT = 1;
 const LUCK_DRAW_HISTORY_COUNT = 10;
+const MAX_TICKETS_PER_USER = 3;
 
 const preprocessLuckDraw = (luckDrawData) => {
   if (!luckDrawData) return null;
+
+  const userId = getApp()?.globalData?.userInfo?._openid;
 
   const processOne = (item) => {
     const tickets =
@@ -25,16 +28,51 @@ const preprocessLuckDraw = (luckDrawData) => {
         },
       })) || [];
 
-    return {
+    const uniqueParticipants = new Map();
+    tickets.forEach((ticket) => {
+      if (!uniqueParticipants.has(ticket.user.userId)) {
+        uniqueParticipants.set(ticket.user.userId, {
+          userId: ticket.user.userId,
+          avatarUrl: ticket.user.avatarUrl,
+          nickName: ticket.user.nickName,
+        });
+      }
+    });
+
+    let processedData = {
       ...item,
       formattedDrawTime: item.drawnAt ? formatDate(item.drawnAt) : null,
       tickets,
       isOngoing: !item.winners || item.winners.length === 0,
-      participants: tickets.map((ticket) => ({
-        userId: ticket.user.userId,
-        avatarUrl: ticket.user.avatarUrl,
-      })),
+      participants: Array.from(uniqueParticipants.values()),
     };
+
+    if (userId) {
+      const userTickets = tickets.filter((ticket) => ticket.userId === userId);
+      const remainingChances = Math.max(
+        MAX_TICKETS_PER_USER - userTickets.length,
+        0
+      );
+
+      const totalTickets = tickets.length;
+      const winnerCount =
+        item.prizeTiers?.reduce((sum, tier) => sum + tier.count, 0) || 0;
+
+      const userWinRate =
+        totalTickets > 0 && userTickets.length > 0
+          ? ((userTickets.length / totalTickets) * winnerCount * 100).toFixed(1)
+          : 0;
+
+      processedData = {
+        ...processedData,
+        userTickets,
+        remainingChances,
+        userWinRate,
+        hasParticipated: userTickets.length > 0,
+      };
+    }
+
+    return processedData;
   };
 
   return Array.isArray(luckDrawData)

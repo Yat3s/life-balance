@@ -35,6 +35,20 @@
       测试开奖
     </view>
   </view>
+  <!-- Tickets -->
+  <view wx:if="{{luckDraw.userTickets.length > 0}}" class="mb-5">
+    <view class="flex items-center justify-between mb-2 ">
+      <view class="text-drawn-time text-xs">我的抽奖码</view>
+      <text class="text-xs text-gray-700">中奖概率 {{luckDraw.userWinRate}}%</text>
+    </view>
+    <view class="grid grid-cols-2 gap-2">
+      <view wx:for="{{luckDraw.userTickets}}" wx:key="code" class="ticket-card relative overflow-hidden">
+        <view class="ticket-inner">
+          <text class="text-lg font-mono font-bold text-primary">{{item.code}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
   <!-- Status -->
   <view class="mb-5">
     <view class="text-drawn-time text-xs">中奖用户👑</view>
@@ -62,12 +76,14 @@
   <ad-custom class="mb-5" wx:if="{{hasParticipated || luckDraw.winners.length > 0}}" unit-id="{{adId}}" bindload="adLoad" binderror="adError" bindclose="adClose" />
   <!-- Participants -->
   <view>
-    <view class="text-xs text-drawn-time mb-2dot5">共 {{luckDraw.tickets.length || 0}} 人参与</view>
+    <view class="text-xs text-drawn-time mb-2dot5">
+      共 {{luckDraw.participants.length || 0}} 人参与
+    </view>
     <view class="flex items-center flex-wrap gap-1">
-      <block wx:for="{{luckDraw.tickets}}" wx:key="index">
+      <block wx:for="{{luckDraw.participants}}" wx:key="index">
         <view class="relative">
           <view class="w-8 h-8 rounded-full border border-solid border-gray-300">
-            <user-avatar className="w-full h-full rounded-full" userInfo="{{item.user}}" />
+            <user-avatar className="w-full h-full rounded-full" userInfo="{{item}}" />
           </view>
           <view wx:if="{{item.isWinner}}" class="absolute -top-4 left-1/2 -translate-x-1/2 text-lg">
             👑

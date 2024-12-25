@@ -42,3 +42,7 @@ page {
 .border-gray-light {
   border: 1rpx solid #f1f1f1;
 }
+
+.z-max {
+  z-index: 999999;
+}

@@ -75,3 +75,35 @@ page {
 .share-btn text {
   white-space: nowrap;
 }
+
+.ticket-card {
+  background: linear-gradient(135deg, #fff 0%, #f8f8f8 100%);
+  border: 1px solid #eee;
+  border-radius: 12rpx;
+  padding: 24rpx 0;
+}
+
+.ticket-inner {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ticket-inner::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 1px;
+  background: repeating-linear-gradient(
+    90deg,
+    #eee 0,
+    #eee 4rpx,
+    transparent 4rpx,
+    transparent 8rpx
+  );
+}

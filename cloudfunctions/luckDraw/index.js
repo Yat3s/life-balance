@@ -83,7 +83,13 @@ exports.main = async (event, context) => {
       });
 
     const winnerIds = new Set(winners.map((w) => w.userId));
-    const notificationPromises = currentLuckDraw.tickets.map((ticket) =>
+    const uniqueTickets = Array.from(
+      new Map(
+        currentLuckDraw.tickets.map((ticket) => [ticket.userId, ticket])
+      ).values()
+    );
+
+    const notificationPromises = uniqueTickets.map((ticket) =>
       sendNotification(
         ticket.userId,
         currentLuckDraw.title,
