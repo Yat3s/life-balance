@@ -37,11 +37,9 @@
   </view>
   <!-- Tickets -->
   <view wx:if="{{luckDraw.userTickets.length > 0}}" class="mb-5">
-    <view class="flex items-center justify-between mb-3">
-      <view class="text-sm font-medium text-gray-700">我的抽奖码</view>
-      <view class="px-3 py-1 bg-orange-50 rounded-full">
-        <text class="text-xs text-orange-500">中奖概率 {{luckDraw.userWinRate}}%</text>
-      </view>
+    <view class="flex items-center justify-between mb-2 ">
+      <view class="text-drawn-time text-xs">我的抽奖码</view>
+      <text class="text-xs text-gray-700">中奖概率 {{luckDraw.userWinRate}}%</text>
     </view>
     <view class="grid grid-cols-2 gap-2">
       <view wx:for="{{luckDraw.userTickets}}" wx:key="code" class="ticket-card relative overflow-hidden">
