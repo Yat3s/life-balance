@@ -1,7 +1,7 @@
 {
   "component": true,
   "usingComponents": {
-    "circleitem": "../../components/circleitem/circleitem",
-    "o-image": "../../components/oimage/oimage"
+    "circleitem": "/components/circleitem/circleitem",
+    "o-image": "/components/oimage/oimage"
   }
 }

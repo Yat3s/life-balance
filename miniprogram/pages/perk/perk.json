@@ -1,6 +1,6 @@
 {
   "usingComponents": {
     "user-avatar": "/components/user-avatar/index",
-    "o-image": "../../components/oimage/oimage"
+    "o-image": "/components/oimage/oimage"
   }
 }

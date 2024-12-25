@@ -1,6 +1,6 @@
 {
   "component": true,
   "usingComponents": {
-    "o-image": "../oimage/oimage"
+    "o-image": "/components/oimage/oimage"
   }
 }
