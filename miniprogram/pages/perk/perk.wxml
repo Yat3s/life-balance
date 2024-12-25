@@ -52,7 +52,7 @@
             <block wx:else>
               <view class="text-xs text-gray">暂无评价</view>
             </block>
-            <image src="/images/ic_arrow.svg" class="h-4 -mr-0dot5" mode="heightFix" />
+            <image src="/images/ic_arrow.svg" class="h-4 w-4 -mr-0dot5" mode="heightFix" />
           </view>
         </view>
       </view>
