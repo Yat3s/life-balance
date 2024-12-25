@@ -53,25 +53,44 @@ Component({
    * Component methods
    */
   methods: {
+    /**
+     * Converts cloud URLs to HTTPS and applies transformations if necessary.
+     */
     convertCloudToHttps() {
-      const { url, width, height, useThumbnail } = this.data;
+      const { url, useThumbnail, width, height } = this.data;
 
-      if (!url) {
-        return;
+      // If no URL or URL is not from the cloud base path, no transformation is needed
+      if (!url || !url.startsWith(cloudBasePath)) {
+        return this.setData({ imageUrl: url });
       }
 
-      let imageUrl = url;
-      if (url.startsWith(cloudBasePath)) {
-        const filePath = url.replace(cloudBasePath, "");
-        const rule = useThumbnail
-          ? `imageView2/2/w/${width}/h/${height}/format/webp`
-          : "";
-        imageUrl = rule ? `${httpsBaseUrl}${filePath}?${rule}` : url;
+      // If useThumbnail is false, return the original URL
+      if (!useThumbnail) {
+        return this.setData({ imageUrl: url });
       }
 
-      this.setData({
-        imageUrl,
-      });
+      // Prepare file path and generate the transformed URL
+      const filePath = url.replace(cloudBasePath, "");
+      const transformedUrl = this.buildThumbnailUrl(filePath, width, height);
+
+      // Set the transformed image URL
+      this.setData({ imageUrl: transformedUrl });
+    },
+
+    /**
+     * Builds the transformed image URL with thumbnail options.
+     * @param {string} filePath - The cloud file path.
+     * @param {number} width - The width for the thumbnail.
+     * @param {number} height - The height for the thumbnail.
+     * @returns {string} - The transformed image URL.
+     */
+    buildThumbnailUrl(filePath, width, height) {
+      let rule = "imageView2/2"; // Apply basic transformation
+      if (width) rule += `/w/${width}`; // Apply width if provided
+      if (height) rule += `/h/${height}`; // Apply height if provided
+      rule += "/format/webp"; // Ensure the format is webp
+
+      return `${httpsBaseUrl}${filePath}?${rule}`;
     },
   },
 });
