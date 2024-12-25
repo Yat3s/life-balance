@@ -33,19 +33,22 @@
 </block>
 <view class="pb-24" />
 <view wx:if="{{currentLuckDraw && currentLuckDraw.winners.length === 0}}" class="fixed bottom-0 left-0 right-0 p-4 bg-white z-max">
-  <block wx:if="{{!currentLuckDraw.hasParticipated || currentLuckDraw.remainingChances > 0}}">
-    <view class="flex items-center justify-between mb-2">
-      <text class="text-xs text-gray-500">当前中奖概率约 {{currentLuckDraw.userWinRate}}%</text>
-      <text class="text-xs text-gray-500">已获得 {{3 - currentLuckDraw.remainingChances}}/3 次机会</text>
+  <block wx:if="{{!currentLuckDraw.hasParticipated}}">
+    <view class="w-full py-3 text-sm font-normal bg-button text-white rounded-full flex flex-col items-center justify-center" bind:tap="onJoinLuckDraw">
+      <text>观看广告参与抽奖</text>
     </view>
-    <view class="w-full py-3 text-sm font-normal bg-button text-white rounded-full flex items-center justify-center" bind:tap="onJoinLuckDraw">
-      <text>观看视频获取抽奖码</text>
+  </block>
+  <block wx:elif="{{currentLuckDraw.remainingChances > 0}}">
+    <view class="w-full py-3 text-sm font-normal bg-button text-white rounded-full flex flex-col items-center justify-center" bind:tap="onJoinLuckDraw">
+      <text>观看广告提高中奖概率</text>
+      <text class="text-xxs text-gray-300">当前中奖概率约 {{currentLuckDraw.userWinRate}}%</text>
     </view>
   </block>
   <block wx:else>
     <view class="flex flex-col">
-      <view class="w-full py-3 text-sm font-normal bg-gray-200 text-gray rounded-full flex items-center justify-center">
-        <text>已获得全部抽奖码，等待开奖 ⌛️</text>
+      <view class="w-full py-3 text-sm font-normal bg-gray-200 text-gray rounded-full flex flex-col items-center justify-center">
+        <text>已参与抽奖，等待开奖 ⌛️</text>
+        <text class="text-xxs text-gray-400">当前中奖概率约 {{currentLuckDraw.userWinRate}}%</text>
       </view>
     </view>
   </block>

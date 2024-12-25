@@ -35,20 +35,6 @@
       测试开奖
     </view>
   </view>
-  <!-- Tickets -->
-  <view wx:if="{{luckDraw.userTickets.length > 0}}" class="mb-5">
-    <view class="flex items-center justify-between mb-2 ">
-      <view class="text-drawn-time text-xs">我的抽奖码</view>
-      <text class="text-xs text-gray-700">中奖概率 {{luckDraw.userWinRate}}%</text>
-    </view>
-    <view class="grid grid-cols-2 gap-2">
-      <view wx:for="{{luckDraw.userTickets}}" wx:key="code" class="ticket-card relative overflow-hidden">
-        <view class="ticket-inner">
-          <text class="text-lg font-mono font-bold text-primary">{{item.code}}</text>
-        </view>
-      </view>
-    </view>
-  </view>
   <!-- Status -->
   <view class="mb-5">
     <view class="text-drawn-time text-xs">中奖用户👑</view>
