@@ -32,6 +32,7 @@ const preprocessLuckDraw = (luckDrawData) => {
     tickets.forEach((ticket) => {
       if (!uniqueParticipants.has(ticket.user.userId)) {
         uniqueParticipants.set(ticket.user.userId, {
+          _id: ticket.user._id,
           userId: ticket.user.userId,
           avatarUrl: ticket.user.avatarUrl,
           nickName: ticket.user.nickName,
