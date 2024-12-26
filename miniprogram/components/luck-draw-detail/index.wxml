@@ -4,7 +4,7 @@
     <block wx:if="{{luckDraw.prizeTiers[0].images.length > 1}}">
       <swiper class="screen-swiper round-dot w-full h-80 rounded-t-lg mb-6 mt-2" bind:tap="previewImage" data-luck-draw="{{luckDraw}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
         <swiper-item wx:for="{{luckDraw.prizeTiers[0].images}}" wx:for-item="image" wx:key="*this">
-          <o-image className="w-full h-full rounded-lg" url="{{image}}" useThumbnail="{{true}}" width="400" height="400" />
+          <o-image className="w-full h-full rounded-lg" url="{{image}}" useThumbnail width="400" height="400" />
         </swiper-item>
       </swiper>
     </block>
