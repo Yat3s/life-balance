@@ -1,0 +1,14 @@
+<toolbar isBack="{{true}}" bgColor="bg-white">
+  <view slot="backText" class="text-sm">FeatureFlag Management</view>
+</toolbar>
+<view class="plr pb-10 pt-8">
+  <view class="flex flex-col gap-4">
+    <view wx:for="{{featureList}}" wx:key="index" class="flex items-center justify-between bg-white rounded-lg p-4">
+      <view class="text-sm text-black font-semibold">{{item.key}}</view>
+      <switch checked="{{item.value}}" class="" data-key="{{item.key}}" bindchange="handleSwitchChange" />
+    </view>
+  </view>
+</view>
+<view bind:tap="updateAppconfig" class="fixed bottom-4 py-4 h-20 w-full z-50 bg-page">
+  <view class="update-btn mx-4">UPDATE</view>
+</view>

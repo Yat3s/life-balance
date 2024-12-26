@@ -8,6 +8,7 @@ import {
 import {
   navigateToAdmin,
   navigateToAuth,
+  navigateToCMS,
   navigateToEditUserInfo,
   navigateToPendingAuthListPage,
   navigateToProfile,
@@ -72,8 +73,8 @@ Component({
       });
     },
 
-    onPendingAuthListClick() {
-      navigateToPendingAuthListPage();
+    onAdminConsoleClick() {
+      navigateToCMS();
     },
 
     onActivityClick() {

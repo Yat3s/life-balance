@@ -1,4 +1,6 @@
-<toolbar isBack="true" bgColor="bg-white"></toolbar>
+<toolbar isBack="{{true}}" bgColor="bg-white">
+  <view slot="backText" class="text-sm">Verification Management</view>
+</toolbar>
 <view class="p-4 flex flex-col">
   <scroll-view class="flex-1 pb-20" scroll-y="true">
     <view class="flex flex-row items-center mb-2">

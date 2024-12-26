@@ -7,7 +7,6 @@
     "pages/activity/draftactivity/draftactivity",
     "pages/user/userinfo/userinfo",
     "pages/auth/auth",
-    "pages/auth/pendingauth/pendingauth",
     "pages/carpool/postcarpool/postcarpool",
     "pages/webview/webview",
     "pages/home/foodmenu/foodmenu",
@@ -36,7 +35,10 @@
     "pages/perk/perk",
     "pages/perk/perkdetail/perkdetail",
     "pages/luck-draw/luck-draw",
-    "pages/luck-draw/history/history"
+    "pages/luck-draw/history/history",
+    "pages/cms/cms",
+    "pages/cms/featureflagmanagement/featureflagmanagement",
+    "pages/cms/verificationmanagement/verificationmanagement"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
