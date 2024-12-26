@@ -8,10 +8,6 @@ export const Pages = {
     authRequired: false,
     url: "/pages/auth/auth?origin=",
   },
-  PendingAuthListPage: {
-    authRequired: true,
-    url: "/pages/auth/pendingauth/pendingauth",
-  },
   UserInfo: {
     authRequired: true,
     url: "/pages/user/userinfo/userinfo",
@@ -134,6 +130,21 @@ export const Pages = {
     companyRequired: true,
     url: "/pages/luck-draw/history/history?id=",
   },
+  CMS: {
+    authRequired: true,
+    companyRequired: true,
+    url: "/pages/cms/cms",
+  },
+  FeatureFlagManagement: {
+    authRequired: true,
+    companyRequired: true,
+    url: "/pages/cms/featureflagmanagement/featureflagmanagement",
+  },
+  VerificationManagement: {
+    authRequired: true,
+    companyRequired: true,
+    url: "/pages/cms/verificationmanagement/verificationmanagement",
+  },
 };
 
 export function navigationToAppConfigWebView(config) {
@@ -178,10 +189,6 @@ export function navigateToRepostActivity(activityId) {
 
 export function navigateToAuth(origin) {
   navigate(Pages.Auth, origin);
-}
-
-export function navigateToPendingAuthListPage() {
-  navigate(Pages.PendingAuthListPage);
 }
 
 export function navigateToPostCarpool() {
@@ -264,6 +271,18 @@ export function navigateToLuckDraw(luckDrawId) {
   navigate(Pages.LuckDraw, luckDrawId);
 }
 
+export function navigateToCMS() {
+  navigate(Pages.CMS);
+}
+
+export function navigateToFeatureFlagManagement() {
+  navigate(Pages.FeatureFlagManagement);
+}
+
+export function navigateToVerificationManagement() {
+  navigate(Pages.VerificationManagement);
+}
+
 export function navigate(page, urlParam = null) {
   if (!page || !page.url) {
     return;
@@ -280,9 +299,9 @@ export function navigate(page, urlParam = null) {
   userRepo
     .fetchUserInfoOrSignup()
     .then((user) => {
-      let navUrl = url
+      let navUrl = url;
       if (page.companyRequired && !user.company) {
-        navUrl = '/pages/auth/auth'
+        navUrl = "/pages/auth/auth";
       }
       wx.navigateTo({
         url: navUrl,

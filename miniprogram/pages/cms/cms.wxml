@@ -1,0 +1,11 @@
+<toolbar isBack="{{true}}" bgColor="bg-white">
+  <view slot="backText" class="text-sm">Admin Console</view>
+</toolbar>
+<view class="plr pb-10 pt-8">
+  <view bindtap="onFeatureFlagManagementClick" class="bg-white rounded-lg p-5 py-6 py-4 mb-4 border-gray">
+     <view class="font-semibold text-black text-sm shrink-0">FeatureFlag Management</view>
+  </view>
+  <view bindtap="onVerificationManagementClick" class="bg-white rounded-lg p-5 py-6 py-4 mb-4 border-gray">
+    <view class="font-semibold text-black text-sm shrink-0">Verification Management</view>
+  </view>
+</view>

@@ -41,12 +41,12 @@ Page({
     // Update all users' checked status
     const pendingAuthUsers = this.data.pendingAuthUsers.map((user) => ({
       ...user,
-      checked: selectAllChecked,
+      checked: selectAllChecked, // Set all users' checked status
     }));
 
     // Set selectedUserIds accordingly
     const selectedUserIds = selectAllChecked
-      ? pendingAuthUsers.map((user) => user._id)
+      ? pendingAuthUsers.map((user) => user._id) // If all selected, include all user IDs
       : [];
 
     this.setData({
