@@ -122,12 +122,10 @@ export const Pages = {
   },
   LuckDraw: {
     authRequired: true,
-    companyRequired: true,
     url: "/pages/luck-draw/luck-draw?id=",
   },
   LuckDrawHistory: {
     authRequired: true,
-    companyRequired: true,
     url: "/pages/luck-draw/history/history?id=",
   },
   CMS: {

@@ -5,7 +5,7 @@ import {
   fetchLuckDrawHistory,
 } from "../../repository/luckDrawRepo";
 import { fetchUserInfo } from "../../repository/userRepo";
-import { navigateToLuckDrawHistory } from "../router";
+import { navigateToAuth, navigateToLuckDrawHistory } from "../router";
 
 const CHECK_DRAW_RESULT_DURATION = 500;
 const LUCK_DRAW_SUBSCRIPTION_TEMP_ID =
@@ -218,6 +218,12 @@ Page({
   },
 
   onJoinLuckDraw() {
+    const { userInfo } = this.data;
+    if (!userInfo || !userInfo.company) {
+      navigateToAuth();
+      return;
+    }
+
     const hasShownModal = wx.getStorageSync(ADS_MODAL_SHOWN_KEY);
 
     if (!hasShownModal) {
