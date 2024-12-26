@@ -1,7 +1,7 @@
 <!--components/circleitem/circle.wxml-->
 <view class="circle-item">
   <view class="flex justify-between">
-    <o-image class="w-full" className="rounded-lg h-20" url="{{circle.coverPic}}" useThumbnail="{{true}}" width="130" height="80" />
+    <o-image class="w-full" className="rounded-lg h-20" url="{{circle.coverPic}}" useThumbnail width="130" height="80" />
     <view wx:if="{{!circle.coverPic}}" class="circle-logo-bg center">
       <image lazy-load="true" class="circle-logo" src="{{circle.icon}}"></image>
     </view>
