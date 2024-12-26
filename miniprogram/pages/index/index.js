@@ -1,7 +1,13 @@
 const app = getApp();
-import { getAppConfig } from "../../repository/baseRepo";
-import { fetchUserInfo } from "../../repository/userRepo";
-import { navigateToOnboarding } from "../router";
+import {
+  getAppConfig
+} from "../../repository/baseRepo";
+import {
+  fetchUserInfo
+} from "../../repository/userRepo";
+import {
+  navigateToOnboarding
+} from "../router";
 
 const homeV2Enabled = true;
 
@@ -12,41 +18,42 @@ Page({
     navigationBarHeight: app.globalData.navigationBarHeight, // Safe area
     selectedGenderIndex: 0,
     homeV2Enabled,
-    pages: [
-      {
+    pages: [{
         id: "board",
         title: "Home",
         icon: "../../images/ic_board.png",
         iconActive: "../../images/ic_board_active.png",
-        isBeta: homeV2Enabled,
       },
       {
         id: "mall",
         title: "Mall",
         icon: "../../images/ic_mall.png",
         iconActive: "../../images/ic_mall_active.png",
-        isBeta: true,
       },
       {
         id: "connection",
         title: "Connection",
         icon: "../../images/ic_connect.png",
         iconActive: "../../images/ic_connect_active.png",
-        isBeta: false,
       },
       {
         id: "user",
         title: "User",
         icon: "../../images/ic_user.png",
         iconActive: "../../images/ic_user_active.png",
-        isBeta: false,
       },
     ],
   },
 
   onLoad(options) {
-    const { page, productId } = options;
-    const { windowWidth, statusBarHeight } = app.globalData;
+    const {
+      page,
+      productId
+    } = options;
+    const {
+      windowWidth,
+      statusBarHeight
+    } = app.globalData;
 
     if (productId) {
       wx.setStorageSync("shared_product_id", productId);
@@ -60,7 +67,9 @@ Page({
     });
 
     getAppConfig().then((config) => {
-      const { featureFlags } = config;
+      const {
+        featureFlags
+      } = config;
       let pages = [...this.data.pages];
 
       // Remove mall tab if explicitly disabled
@@ -112,7 +121,9 @@ Page({
   },
 
   checkAndFetchUserInfo() {
-    const { currentTab } = this.data;
+    const {
+      currentTab
+    } = this.data;
     if (
       currentTab === "user" ||
       currentTab === "mall" ||

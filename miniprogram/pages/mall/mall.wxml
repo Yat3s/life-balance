@@ -109,7 +109,7 @@
           <view class="flex gap-2 mb-2">
             <block wx:for="{{item.pictures}}" wx:for-item="pic" wx:key="index">
               <!-- <image wx:if="{{index < 3}}" src="{{pic}}" class="w-20 h-20 bg-gray-200" lazy-load="{{true}}" mode="aspectFill" /> -->
-              <o-image className="w-20 h-20 bg-gray-200" url="{{pic}}" useThumbnail width="120" height="120" />
+              <o-image className="w-20 h-20 bg-gray-200" url="{{pic}}" useThumbnail width="400" height="400" />
             </block>
             <view wx:if="{{item.pictures.length > 3}}" class="flex items-end text-more text-sm self-baseline">
               +{{item.pictures.length - 3}}
