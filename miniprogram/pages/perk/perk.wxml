@@ -43,7 +43,7 @@
                 <view class="flex items-center">
                   <!-- avatar -->
                   <view>
-                    <user-avatar wx:for="{{item.comments}}" wx:key="avatarUrl" userInfo="{{item.user}}" className="w-6 h-6 bg-gray-200 rounded-full {{index !== 0 ? '-ml-2' : ''}}" />
+                    <user-avatar useThumbnail wx:for="{{item.comments}}" wx:key="avatarUrl" userInfo="{{item.user}}" className="w-6 h-6 bg-gray-200 rounded-full {{index !== 0 ? '-ml-2' : ''}}" />
                   </view>
                 </view>
                 <view class="text-xs text-gray">{{item.commentCount}} 条评价</view>

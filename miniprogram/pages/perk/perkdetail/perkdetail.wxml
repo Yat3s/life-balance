@@ -63,7 +63,7 @@
           <view class="flex items-start gap-3">
             <view catchtap="onGoProfile" data-user-id="{{item.user._id}}" class="w-9 h-9 bg-gray-200 rounded-full">
               <!-- avatar -->
-              <user-avatar userInfo="{{item.user}}" className="w-9 h-9 rounded-full" />
+              <user-avatar useThumbnail userInfo="{{item.user}}" className="w-9 h-9 rounded-full" />
             </view>
             <view class="flex-1">
               <view class="flex items-start gap-1 justify-between w-full">

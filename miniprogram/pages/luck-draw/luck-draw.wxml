@@ -17,7 +17,7 @@
             <block wx:for="{{item.winners}}" wx:key="ticketId">
               <view class="relative {{index === 0 ? '' : '-ml-2'}}">
                 <view class="rounded-full border border-solid border-gray-300 shrink-0 w-5 h-5">
-                  <user-avatar className="w-full h-full rounded-full" userInfo="{{item.user}}" />
+                  <user-avatar useThumbnail className="w-full h-full rounded-full" userInfo="{{item.user}}" />
                 </view>
                 <view wx:if="{{item.user._openid === userInfo._openid}}" class="absolute -top-1 -left-1 w-3 h-3 bg-yellow-400 rounded-full flex items-center justify-center text-white" style="font-size: 8px;">
                   我
