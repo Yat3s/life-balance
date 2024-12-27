@@ -148,7 +148,6 @@ Component({
         appBarHeight,
         collapsed,
       });
-      console.log(e);
     },
 
     onJoinClicked() {
