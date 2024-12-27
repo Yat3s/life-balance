@@ -119,7 +119,7 @@
         <!-- Price and User Info -->
         <view class="mt-8 flex items-center justify-between">
           <view class="flex items-center gap-2">
-            <user-avatar className="w-8 h-8 rounded" userInfo="{{item.user}}" />
+            <user-avatar useThumbnail className="w-8 h-8 rounded" userInfo="{{item.user}}" />
             <view class="text-left">
               <view class="text-xs text-nickname truncate w-36">{{item.user.nickName}}</view>
               <view class="text-xxs text-time">{{item.formattedTime}}发布</view>
@@ -193,7 +193,7 @@
       <view class="flex justify-between mb-3">
         <!-- User name -->
         <view class="flex items-center gap-3dot5">
-          <user-avatar className="w-8 h-8 rounded" userInfo="{{selectedProduct.user}}" />
+          <user-avatar useThumbnail className="w-8 h-8 rounded" userInfo="{{selectedProduct.user}}" />
           <view class="text-left">
             <view class="text-xs text-nickname truncate w-36">
               {{selectedProduct.user.nickName}}
