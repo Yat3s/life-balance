@@ -15,7 +15,7 @@ Component({
   },
   data: {
     maxB25Spaces: 508,
-    maxZhongmengSpaces: 223,
+    maxZhongmengSpaces: 205,
     zhongmengSpaceIndicatorWidth: '100%',
     b25SpaceIndicatorWidth: '100%',
     loadingParkingSpace: true,

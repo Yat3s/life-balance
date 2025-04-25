@@ -23,7 +23,7 @@ Component({
   data: {
     parkingConfig: {
       b25: { maxSpaces: 508 },
-      zhongmeng: { maxSpaces: 223 },
+      zhongmeng: { maxSpaces: 205 },
     },
     loadingParkingSpace: true,
     parkingSpace: {
@@ -36,7 +36,7 @@ Component({
         indicators: [],
       },
       zhongmeng: {
-        remaining: 223,
+        remaining: 205,
         usedPercent: 0,
         initialColor: EMPTY_COLOR,
         finalColor: EMPTY_COLOR,
