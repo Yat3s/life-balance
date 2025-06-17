@@ -38,9 +38,7 @@ A WeChat mini-program designed to help Microsoft employees manage their daily li
 <img src="https://user-images.githubusercontent.com/14801837/179477557-c10b9e8e-0ca3-4392-9bd9-c1ac237ee37a.png" width="600" alt="Project Structure">
 
 ## Design Resources
-
-Access our Figma designs:
-
+- [Version 3.0](https://www.figma.com/design/K64kW1Q3OYykZmHxtIWRpZ/Life-Balance-3.0?node-id=0-1&t=drkECtF7OhyJZZOd-1)
 - [Version 2.0](https://www.figma.com/file/xcr9K6fz4NawX7086Fmec5/Life-Balance-2.0?node-id=0%3A1)
 - [Version 1.0](https://www.figma.com/file/NfBxrqreoYYNYy1s5e4Wlf/Life-Balance-1.0?node-id=0%3A1)
 
