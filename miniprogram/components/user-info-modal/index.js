@@ -1,5 +1,4 @@
 import { fetchUserInfo, updateUserInfo } from "../../repository/userRepo";
-const app = getApp();
 
 Component({
   options: {
@@ -21,6 +20,7 @@ Component({
   lifetimes: {
     attached() {
       fetchUserInfo().then((res) => {
+        if (!res) return;
         this.setData({
           userId: res._id,
         });
@@ -94,7 +94,7 @@ Component({
           updateData.avatarUrl = uploadResult.fileID;
         }
 
-        const res = await updateUserInfo(this.data.userId, updateData);
+        await updateUserInfo(this.data.userId, updateData);
 
         wx.hideLoading();
         wx.showToast({
@@ -102,7 +102,6 @@ Component({
           icon: "success",
         });
 
-        app.globalData.userInfo = res;
         this.onClose();
       } catch (error) {
         console.error("Update user info", error);

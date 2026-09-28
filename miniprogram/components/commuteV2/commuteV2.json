@@ -1,6 +1,7 @@
 {
   "component": true,
   "usingComponents": {
+    "rolling-number": "/components/rolling-number/index",
     "progressRing": "/components/progressring/progressring",
     "parkingSpaceIndicator": "/components/parkingspaceindicator/parkingspaceindicator"
   }

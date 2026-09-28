@@ -1,0 +1,40 @@
+.rolling-number {
+  display: inline-flex;
+  justify-content: flex-end;
+  min-width: 3ch;
+  height: 1.2em;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+  vertical-align: baseline;
+}
+
+.digit-window {
+  width: 1ch;
+  height: 1.2em;
+  overflow: hidden;
+}
+
+.digit-cell {
+  height: 1.2em;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.digit-strip-spinning {
+  animation-name: digit-roll;
+  animation-timing-function: cubic-bezier(0.16, 0.7, 0.18, 1);
+  animation-fill-mode: both;
+  will-change: transform;
+}
+
+@keyframes digit-roll {
+  from { transform: translateY(var(--reel-start)); }
+  to { transform: translateY(var(--reel-end)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .digit-strip-spinning {
+    animation: none;
+    transform: translateY(var(--reel-end));
+  }
+}

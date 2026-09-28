@@ -15,11 +15,23 @@ page {
 }
 
 .tab-container {
+  position: relative;
   display: flex;
   padding-top: 20rpx;
   padding-left: 24rpx;
   padding-right: 24rpx;
   border-top: 1rpx solid #f5f5f5;
+}
+
+.tab-indicator {
+  position: absolute;
+  top: 20rpx;
+  left: 24rpx;
+  height: 75rpx;
+  border-radius: 200rpx;
+  background: #faf7fd;
+  pointer-events: none;
+  transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1), width 360ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .tab,
@@ -28,17 +40,20 @@ page {
   align-items: center;
   justify-content: center;
   text-align: center;
-  transition: width 0.5s;
+  transition: width 360ms cubic-bezier(0.22, 1, 0.36, 1);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
   height: 75rpx;
   padding: 16rpx 0rpx;
 }
 
 .tab {
-  background: white;
+  background: transparent;
 }
 
 .tab-highlight {
-  background: #faf7fd;
+  background: transparent;
   border-radius: 200rpx;
 }
 
@@ -48,11 +63,40 @@ page {
   text-overflow: ellipsis;
   font-size: 10pt;
   font-weight: bold;
+  max-width: 100%;
+  opacity: 1;
+  transform: translateX(0);
+  transition: max-width 360ms cubic-bezier(0.22, 1, 0.36, 1), margin-left 360ms cubic-bezier(0.22, 1, 0.36, 1), opacity 200ms ease, transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tab .tab-text {
+  max-width: 0;
+  margin-left: 0;
+  opacity: 0;
+  transform: translateX(-8rpx);
 }
 
 .tab-icon {
+  position: relative;
   width: 36rpx;
   height: 36rpx;
+}
+
+.tab-icon-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 180ms ease;
+}
+
+.tab-icon-selected { opacity: 0; }
+.tab-highlight .tab-icon-default { opacity: 0; }
+.tab-highlight .tab-icon-selected { opacity: 1; }
+
+.tab-highlight .tab-icon {
+  animation: tab-icon-select 360ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .modal-main {
@@ -79,4 +123,14 @@ page {
   padding: 0 10rpx;
   color: white;
   background-color: rgb(90, 90, 248);
+}
+
+@keyframes tab-icon-select {
+  0%, 100% { transform: scale(1); }
+  45% { transform: scale(1.06); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tab, .tab-highlight, .tab-indicator, .tab-text, .tab-icon-image { transition: none; }
+  .tab-highlight .tab-icon { animation: none; }
 }

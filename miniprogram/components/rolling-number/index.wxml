@@ -1,0 +1,8 @@
+<view class="rolling-number" aria-role="text" aria-label="{{ready ? value : '加载中'}}">
+  <view wx:if="{{!ready}}" class="rolling-placeholder">--</view>
+  <view wx:for="{{reels}}" wx:key="id" wx:for-item="reel" class="digit-window" aria-hidden="true">
+    <view class="digit-strip {{reel.spinning ? 'digit-strip-spinning' : ''}}" style="{{reel.style}}">
+      <view wx:for="{{reel.digits}}" wx:key="id" wx:for-item="digit" class="digit-cell">{{digit.value}}</view>
+    </view>
+  </view>
+</view>

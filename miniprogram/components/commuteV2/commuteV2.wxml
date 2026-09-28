@@ -8,8 +8,8 @@
           <view class="">
             <view class="text-xs text-card mb-0dot5">B25 - 剩余车位</view>
             <view class="flex items-baseline">
-              <view class="text-2dot5xl font-bold {{parkingSpace.b25.remaining === 0 ? 'text-card' : ''}}">
-                {{parkingSpace.b25.remaining}}
+              <view class="parking-count text-2dot5xl font-bold {{hasParkingData && parkingSpace.b25.remaining === 0 ? 'text-card' : ''}}">
+                <rolling-number wx:if="{{parkingInitialized}}" value="{{parkingSpace.b25.remaining}}" />
               </view>
               <view class="text-card text-xs ml-0dot5">/{{parkingConfig.b25.maxSpaces}}</view>
             </view>
@@ -22,8 +22,8 @@
           <view class="">
             <view class="text-xs text-card mb-0dot5">中盟 - 剩余车位</view>
             <view class="flex items-baseline">
-              <view class="text-2dot5xl font-bold {{parkingSpace.zhongmeng.remaining === 0 ? 'text-card' : ''}}">
-                {{parkingSpace.zhongmeng.remaining}}
+              <view class="parking-count text-2dot5xl font-bold {{hasParkingData && parkingSpace.zhongmeng.remaining === 0 ? 'text-card' : ''}}">
+                <rolling-number wx:if="{{parkingInitialized}}" value="{{parkingSpace.zhongmeng.remaining}}" />
               </view>
               <view class="text-card text-xs ml-0dot5">/{{parkingConfig.zhongmeng.maxSpaces}}</view>
             </view>
