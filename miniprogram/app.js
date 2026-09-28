@@ -106,5 +106,6 @@ App({
 
   globalData: {
     userInfo: null,
+    profilePromptedUserIds: [],
   },
 });

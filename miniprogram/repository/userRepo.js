@@ -167,15 +167,21 @@ export function fetchUserInfoOrSignup() {
 }
 
 export function updateUserInfo(id, userInfo) {
+  const updateData = { ...userInfo, updatedAt: Date.now() };
   return baseCollectionRequestWrapper(
     db
       .collection(COLLECTION_USERS)
       .doc(id)
       .update({
-        data: { ...userInfo, updatedAt: Date.now() },
+        data: updateData,
       }),
     "updateUserInfo"
-  );
+  ).then((result) => {
+    if (app.globalData.userInfo?._id === id) {
+      app.globalData.userInfo = { ...app.globalData.userInfo, ...updateData };
+    }
+    return result;
+  });
 }
 
 export function updatePhoneNumber(userId, phoneNumberCloudId) {

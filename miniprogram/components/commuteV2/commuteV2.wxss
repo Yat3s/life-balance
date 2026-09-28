@@ -17,6 +17,11 @@
   color: #a5afc9;
 }
 
+.parking-count {
+  min-width: 3ch;
+  font-variant-numeric: tabular-nums;
+}
+
 .border-separator {
   border-color: #b8c2d1;
 }
