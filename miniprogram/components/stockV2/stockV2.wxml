@@ -1,6 +1,6 @@
 <view class="relative h-20">
   <!-- Loading State -->
-  <view class="absolute inset-0 flex items-center justify-center rounded-xl stock-border bg-home-card fade-in-out" hidden="{{!loadingStockData}}">
+  <view class="absolute inset-0 flex items-center justify-center rounded-xl stock-border bg-home-card fade-in-out" hidden="{{!loadingStockData || hasStockData}}">
     <image src="/images/ic_emoji_no.png" class="w-8 h-8 rotate-animation mr-3"></image>
     <view class="text-sm text-gray mr-1 text-loading">
       <span>微</span>
@@ -21,14 +21,24 @@
       <view class="dot"></view>
     </view>
   </view>
+  <view class="absolute inset-0 flex items-center justify-center rounded-xl stock-border bg-home-card" hidden="{{loadingStockData || hasStockData}}" bindtap="fetchAndProcessStockData" aria-role="button" aria-label="行情暂时不可用，点击重试">
+    <image src="/images/ic_emoji_no.png" class="w-8 h-8 mr-3" />
+    <view>
+      <view class="text-sm stock-title">行情暂时不可用</view>
+      <view class="text-xxs text-card-deep">点击重试</view>
+    </view>
+  </view>
   <!-- Loaded Content -->
-  <view class="absolute inset-0 p-4 flex items-center justify-between gap-1 rounded-xl stock-border bg-home-card fade-in-out" hidden="{{loadingStockData}}">
+  <view class="absolute inset-0 p-4 flex items-center justify-between gap-1 rounded-xl stock-border bg-home-card fade-in-out" hidden="{{!hasStockData}}">
     <view class="flex items-center gap-0dot5">
       <view>
         <view class="text-bold stock-title text-is-top">微软市值第一了吗？</view>
         <view class="flex items-baseline gap-1">
           <view class="font-bold stock-title">{{stockData.msft.price}}</view>
           <view class="text-xxs text-card-deep">{{stockData.msft.change}}%</view>
+        </view>
+        <view wx:if="{{usingCachedData || stockDataError}}" class="stock-status" bindtap="fetchAndProcessStockData">
+          {{loadingStockData ? '更新中…' : stockDataError ? '更新失败，点击重试' : '缓存 · ' + stockUpdatedAt + ' · 点击更新'}}
         </view>
       </view>
       <view class="w-8 h-8">
