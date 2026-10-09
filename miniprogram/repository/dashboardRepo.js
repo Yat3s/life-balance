@@ -73,7 +73,7 @@ export function fetchParkingSpace() {
 }
 
 export function fetchStockData() {
-  return cloudFunctionCall(FUNCTION_NAME, "fetchStockData");
+  return cloudFunctionCall("stockFunctions", "fetchStockData");
 }
 
 export function fetchLatestWechatGroups() {

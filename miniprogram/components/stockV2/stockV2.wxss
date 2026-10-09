@@ -39,6 +39,12 @@
   color: #919bac;
 }
 
+.stock-status {
+  color: #919bac;
+  font-size: 16rpx;
+  line-height: 22rpx;
+}
+
 @keyframes rotate-bounce-shake {
   0% {
     transform: rotate(0deg);
