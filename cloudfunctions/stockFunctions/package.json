@@ -1,0 +1,10 @@
+{
+  "name": "stockFunctions",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "dependencies": {
+    "request-promise": "^4.2.6",
+    "wx-server-sdk": "~2.5.3"
+  }
+}

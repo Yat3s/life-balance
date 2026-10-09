@@ -1,5 +1,7 @@
 import { fetchStockData } from "../../repository/dashboardRepo";
 
+const STOCK_REQUEST_TIMEOUT = 12000;
+
 Component({
   options: {
     addGlobalClass: true,
@@ -9,6 +11,10 @@ Component({
 
   data: {
     loadingStockData: true,
+    hasStockData: false,
+    stockDataError: false,
+    usingCachedData: false,
+    stockUpdatedAt: "",
     stockData: {
       msft: {
         price: "000.00",
@@ -36,36 +42,42 @@ Component({
 
   lifetimes: {
     attached() {
+      this._stockDetached = false;
       this.fetchAndProcessStockData();
+    },
+    detached() {
+      this._stockDetached = true;
+      clearTimeout(this._stockTimeout);
     },
   },
 
   methods: {
     processMarketCap(stock) {
-      if (!stock || !stock.mktcap) return stock;
-
-      try {
-        // Convert market cap from billions to trillions
-        const mktCapNum = parseFloat(stock.mktcap.replace("B", ""));
-        stock.mktcap = (mktCapNum / 1000).toFixed(2);
-        return stock;
-      } catch (error) {
-        console.error("Error processing market cap data:", error);
-        return { ...stock, mktcap: "0.00" };
+      if (!stock || !/^\d+(?:\.\d+)?B$/.test(stock.mktcap) ||
+          !Number.isFinite(parseFloat(stock.mktcap)) || parseFloat(stock.mktcap) <= 0) {
+        throw new Error("Invalid market cap");
       }
+      return { ...stock, mktcap: (parseFloat(stock.mktcap) / 1000).toFixed(2) };
     },
 
     async fetchAndProcessStockData() {
+      if (this._stockLoading || this._stockDetached) return;
+      this._stockLoading = true;
+      this.setData({ loadingStockData: true, stockDataError: false });
       try {
-        const response = await fetchStockData();
+        const timeout = new Promise((_, reject) => {
+          this._stockTimeout = setTimeout(() => reject(new Error("Stock request timed out")), STOCK_REQUEST_TIMEOUT);
+        });
+        const response = await Promise.race([fetchStockData(), timeout]);
+        if (this._stockDetached) return;
 
-        if (!response || !response.data || !response.data.stocks) {
+        if (!response || response.code !== 0 || !Array.isArray(response.data?.stocks)) {
           throw new Error("Invalid stock data received");
         }
 
         const { stocks, msft } = response.data;
 
-        if (stocks.length < 4) {
+        if (stocks.length < 4 || new Set(stocks.map((stock) => stock?.symbol)).size < 4) {
           throw new Error("Insufficient stock data");
         }
 
@@ -74,13 +86,23 @@ Component({
           this.processMarketCap(stock)
         );
         const processedMsft = this.processMarketCap(msft);
+        const change = processedMsft.formattedChange || processedMsft.change;
+        if (processedMsft.symbol !== "MSFT" || !Number.isFinite(Number(processedMsft.price)) ||
+            Number(processedMsft.price) <= 0 || !/^[+-]?\d+(?:\.\d+)?$/.test(change)) {
+          throw new Error("Invalid Microsoft quote");
+        }
+        const updatedAt = new Date(response.data.timestamp);
+        const stockUpdatedAt = Number.isFinite(updatedAt.getTime())
+          ? `${updatedAt.getMonth() + 1}/${updatedAt.getDate()}` : "上次数据";
 
         this.setData({
-          loadingStockData: false,
+          hasStockData: true,
+          usingCachedData: response.data.stale === true,
+          stockUpdatedAt,
           stockData: {
             msft: {
-              price: processedMsft.price || "0.00",
-              change: processedMsft.change || "0.00",
+              price: processedMsft.price,
+              change,
             },
             msftTop1: top1.symbol === "MSFT",
             top1: {
@@ -103,6 +125,11 @@ Component({
         });
       } catch (error) {
         console.error("Failed to fetch stock data:", error);
+        if (!this._stockDetached) this.setData({ stockDataError: true });
+      } finally {
+        clearTimeout(this._stockTimeout);
+        this._stockLoading = false;
+        if (!this._stockDetached) this.setData({ loadingStockData: false });
       }
     },
   },
