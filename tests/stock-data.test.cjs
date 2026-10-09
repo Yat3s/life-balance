@@ -66,11 +66,11 @@ function backend(options = {}) {
     }, { filename: relative });
     return module.exports;
   }
-  const utils = load('cloudfunctions/stockFunctions/lib/stock-utils.js', {
+  const utils = load('cloudfunctions/stockFunctions/stock-utils.js', {
     'wx-server-sdk': cloud, 'request-promise': http,
   });
   const action = load('cloudfunctions/stockFunctions/index.js', {
-    './lib/stock-utils': utils,
+    './stock-utils': utils,
   });
   return { utils, run: action.main, requests,
     get record() { return records.get('stockDataCacheV2') || records.get('stockDataCache'); },

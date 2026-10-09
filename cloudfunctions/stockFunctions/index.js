@@ -1,7 +1,7 @@
 const {
   getStockData,
   cacheOperations,
-} = require('./lib/stock-utils');
+} = require('./stock-utils');
 
 const SYMBOLS = ['MSFT', 'AAPL', 'NVDA', 'GOOG'];
 
