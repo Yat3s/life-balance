@@ -137,3 +137,27 @@ test("hidden pages settle immediately and detached components leave no timers", 
   h.detach();
   assert.equal(h.timers.size, 0);
 });
+
+test("settled text follows the latest count after queued animations and page hiding", () => {
+  const h = harness(111);
+  assert.equal(h.c.data.displayValue, "111");
+  assert.equal(h.c.data.rolling, false);
+
+  h.set(112);
+  assert.equal(h.c.data.rolling, true);
+  h.set(119);
+  h.finish();
+  assert.equal(h.c.data.rolling, true);
+  h.finish();
+  assert.equal(h.c.data.rolling, false);
+  assert.equal(h.c.data.displayValue, "119");
+
+  h.set(0);
+  h.hide();
+  assert.equal(h.c.data.rolling, false);
+  assert.equal(h.c.data.displayValue, "0");
+  assert.equal(h.timers.size, 0);
+  h.set(9);
+  assert.equal(h.c.data.displayValue, "9");
+  assert.equal(h.c.data.rolling, false);
+});
