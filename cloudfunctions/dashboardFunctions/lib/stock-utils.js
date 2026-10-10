@@ -5,10 +5,16 @@ cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 const db = cloud.database();
 
 const API_CONFIG = {
-  key: 'WEQGVELPMJ086QXP',
+  key: process.env.ALPHA_VANTAGE_API_KEY,
   baseUrl: 'https://www.alphavantage.co/query',
   rateLimit: 500, // API rate limit in ms
 };
+
+if (!API_CONFIG.key) {
+  throw new Error(
+    'Missing required ALPHA_VANTAGE_API_KEY environment variable'
+  );
+}
 
 const CACHE_CONFIG = {
   collection: 'appconfig',
