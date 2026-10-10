@@ -1,7 +1,6 @@
 .rolling-number {
   display: inline-flex;
   justify-content: flex-end;
-  min-width: 3ch;
   height: 1.2em;
   line-height: 1.2;
   font-variant-numeric: tabular-nums;
