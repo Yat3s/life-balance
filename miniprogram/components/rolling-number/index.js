@@ -10,6 +10,8 @@ Component({
   },
   data: {
     ready: false,
+    rolling: false,
+    displayValue: "",
     reels: [],
   },
   lifetimes: {
@@ -54,6 +56,8 @@ Component({
       const run = ++this._run;
       this.setData({
         ready: true,
+        rolling: false,
+        displayValue: String(value),
         reels: String(value).split("").map((digit, index) => ({
           id: `${run}-${index}`,
           digits: [{ id: 0, value: digit }],
@@ -104,7 +108,7 @@ Component({
           style: `--reel-start: ${direction < 0 ? offset : 0}em; --reel-end: ${direction < 0 ? 0 : offset}em; animation-duration: ${reelDuration}ms;`,
         };
       });
-      this.setData({ ready: true, reels });
+      this.setData({ ready: true, rolling: true, reels });
       this._reelTimer = setTimeout(() => {
         this._reelTimer = null;
         if (!this._attached) return;

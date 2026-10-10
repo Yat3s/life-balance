@@ -1,14 +1,17 @@
+.number-text {
+  display: inline;
+}
+
 .rolling-number {
   display: inline-flex;
   justify-content: flex-end;
   height: 1.2em;
   line-height: 1.2;
-  font-variant-numeric: tabular-nums;
   vertical-align: baseline;
 }
 
 .digit-window {
-  width: 1ch;
+  flex: none;
   height: 1.2em;
   overflow: hidden;
 }
