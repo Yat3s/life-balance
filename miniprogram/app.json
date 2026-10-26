@@ -13,6 +13,7 @@
     "pages/home/howto/howto",
     "pages/home/howto/howtodetail/howtodetail",
     "pages/home/weworkparking/weworkparking",
+    "pages/home/parkinghistory/parkinghistory",
     "pages/user/user",
     "pages/user/profile/profile",
     "pages/user/useractivity/useractivity",

@@ -1,0 +1,12 @@
+{
+  "year": 2026,
+  "papers": ["https://www.gov.cn/zhengce/zhengceku/202511/content_7047091.htm"],
+  "days": [
+    { "date": "2026-01-01", "isOffDay": true },
+    { "date": "2026-01-02", "isOffDay": true },
+    { "date": "2026-01-03", "isOffDay": true },
+    { "date": "2026-01-04", "isOffDay": false },
+    { "date": "2026-10-01", "isOffDay": true },
+    { "date": "2026-10-10", "isOffDay": false }
+  ]
+}

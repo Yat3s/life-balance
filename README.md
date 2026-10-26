@@ -55,5 +55,7 @@ To connect a group chat to Life Balance:
 
 ## Resources
 
+- [Peak-hour parking review: collection, retention, configuration and deployment](docs/parking-history.md)
+
 - [WeChat DevTools Download](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)  
 - [WeChat Mini Program API Docs](https://developers.weixin.qq.com/miniprogram/dev/api/)  

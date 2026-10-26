@@ -72,6 +72,10 @@ export function fetchParkingSpace() {
   return cloudFunctionCall(FUNCTION_NAME, "fetchParkingSpace");
 }
 
+export function fetchParkingHistory(date) {
+  return cloudFunctionCall("parkingHistory", "history", { date });
+}
+
 export function fetchStockData() {
   return cloudFunctionCall("stockFunctions", "fetchStockData");
 }

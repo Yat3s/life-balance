@@ -1,0 +1,15 @@
+{
+  "permissions": { "openapi": [] },
+  "triggers": [
+    {
+      "name": "parking-history-collect",
+      "type": "timer",
+      "config": "0 */5 * * * * *"
+    },
+    {
+      "name": "parking-history-cleanup",
+      "type": "timer",
+      "config": "0 5 0 * * * *"
+    }
+  ]
+}

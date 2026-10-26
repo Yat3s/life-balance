@@ -39,6 +39,7 @@
         <view class="shine w-40 h-4"></view>
       </block>
       <block>
+        <view catchtap="toParkingHistory" class="py-1 px-2 bg-link rounded-full text-xs text-link">早晚高峰车位回顾</view>
         <!-- Divider -->
         <view class="mt-1 border-dashed border-0 border-b-2 border-separator w-full"></view>
         <!-- Parking Full Tip -->

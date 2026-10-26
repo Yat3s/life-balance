@@ -1,5 +1,6 @@
 import {
   navigateToBusInfo,
+  navigateToParkingHistory,
   navigationToAppConfigWebView,
 } from '../../pages/router';
 import {
@@ -38,6 +39,10 @@ Component({
 
     toShuttleBusDetail() {
       navigateToBusInfo();
+    },
+
+    toParkingHistory() {
+      navigateToParkingHistory();
     },
 
     toParkingTip() {

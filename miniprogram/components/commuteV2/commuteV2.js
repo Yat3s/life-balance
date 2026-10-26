@@ -1,6 +1,7 @@
 import { getWeekdayIndexStr } from "../../common/util";
 import {
   navigateToBusInfo,
+  navigateToParkingHistory,
   navigationToAppConfigWebView,
 } from "../../pages/router";
 import {
@@ -136,6 +137,10 @@ Component({
 
     toShuttleBusDetail() {
       navigateToBusInfo();
+    },
+
+    toParkingHistory() {
+      navigateToParkingHistory();
     },
 
     toParkingTip() {

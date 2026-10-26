@@ -56,6 +56,10 @@ export const Pages = {
     authRequired: true,
     url: "/pages/home/weworkparking/weworkparking",
   },
+  ParkingHistory: {
+    authRequired: false,
+    url: "/pages/home/parkinghistory/parkinghistory",
+  },
   Profile: {
     authRequired: true,
     url: "/pages/user/profile/profile?&id=",
@@ -163,6 +167,10 @@ export function navigateToActivityPage() {
 
 export function navigateToBusInfo() {
   navigate(Pages.BusInfo);
+}
+
+export function navigateToParkingHistory() {
+  navigate(Pages.ParkingHistory);
 }
 
 export function navigateToActivityDetail(activityId) {

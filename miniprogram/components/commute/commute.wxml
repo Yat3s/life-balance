@@ -51,6 +51,7 @@
       </view>
     </view>
   </view>
+  <view catchtap="toParkingHistory" class="full-tip full-tip-underline margin-top">早晚高峰车位回顾</view>
   <!-- Shuttle bus -->
   <!-- <view class="flex align-center margin-top-sm" bindtap="toShuttleBusDetail">
     <image class="commute-icon" src="/images/ic_shuttle_bus.png"></image>
